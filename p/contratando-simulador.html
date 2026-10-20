@@ -338,11 +338,11 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
             </div>
           </div>
           <div class="field">
-            <label>Pruebas, por candidato evaluado (por bandas de volumen al mes)</label>
+            <label>Pruebas, por candidato evaluado (por tramos de volumen al mes: cada candidato paga la tarifa de su tramo)</label>
             <div id="bandasPruebas" class="note" style="margin:0"></div>
           </div>
           <div class="field">
-            <label for="precioOperativo">Por volumen: cargo operativo (menos de 2 SMLMV), por persona contratada</label>
+            <label for="precioOperativo">Por volumen: cargo operativo (menos de 2 SMLMV), por persona contratada, pauta incluida</label>
             <input type="number" id="precioOperativo" min="0" step="1000" value="101000">
             <small id="bandaCargo"></small>
           </div>
@@ -504,7 +504,7 @@ function planFlow(conversaciones) {
   return { nombre: 'Empresarial × ' + n, valor: 524000 * n };
 }
 
-// Pruebas ContratAndo por bandas: la tarifa de la banda aplica a todos los evaluados del mes (propuesta, por aprobar)
+// Pruebas ContratAndo por bandas escalonadas: cada candidato se cobra con la tarifa de su tramo (propuesta, por aprobar)
 const BANDAS_PRUEBAS = [
   { hasta: 100, cop: 20000 },
   { hasta: 300, cop: 16000 },
@@ -513,15 +513,17 @@ const BANDAS_PRUEBAS = [
   { hasta: Infinity, cop: 9000 }
 ];
 function precioPrueba(evaluados) { return (BANDAS_PRUEBAS.find(b => evaluados <= b.hasta) || BANDAS_PRUEBAS[0]).cop; }
+function costoPruebas(evaluados) { let total = 0, previo = 0; for (const b of BANDAS_PRUEBAS) { const n = Math.max(0, Math.min(evaluados, b.hasta) - previo); total += n * b.cop; previo = b.hasta; if (evaluados <= b.hasta) break; } return total; }
 // Por volumen: bandas por nivel del cargo, tomadas de las propuestas a Nexa (2026).
 // Menos de 2 SMLMV: valor fijo por contratado. Desde 2 SMLMV: % del salario mensual.
 const BANDAS_CARGO = [
   { desde: 2, hasta: 3, pct: 0.30 },
-  { desde: 3, hasta: 5, pct: 0.33 },
-  { desde: 5, hasta: 8, pct: 0.35 },
-  { desde: 8, hasta: 10, pct: 0.37 },
-  { desde: 10, hasta: 15, pct: 0.38 },
-  { desde: 15, hasta: Infinity, pct: 0.40 }
+  { desde: 3, hasta: 5, pct: 0.30 },
+  { desde: 5, hasta: 8, pct: 0.33 },
+  { desde: 8, hasta: 10, pct: 0.35 },
+  { desde: 10, hasta: 15, pct: 0.37 },
+  { desde: 15, hasta: 20, pct: 0.38 },
+  { desde: 20, hasta: Infinity, pct: 0.40 }
 ];
 function valorPorContratado(salario, precioOperativo) {
   const n = salario / SMMLV;
@@ -587,11 +589,11 @@ function calcular(s) {
   const plan = planFlow(candidatos);
   const tiempoCA = H * s.horasConCA * horaEquipo;
   const unitPrueba = precioPrueba(evaluados);
-  const pruebasCA = evaluados * unitPrueba;
+  const pruebasCA = costoPruebas(evaluados);
   const entrevistados = s.incluirVoz ? H * s.entrevistadosVozPorContratado : 0;
   const minutosVoz = entrevistados * s.minutosEntrevista;
   const vozCA = minutosVoz * s.precioMinutoVoz;
-  const lineaPruebasCA = ['Pruebas ContratAndo (' + evaluados + ' candidatos × ' + cop0(unitPrueba) + ')', pruebasCA];
+  const lineaPruebasCA = ['Pruebas ContratAndo (' + evaluados + ' candidatos, por tramos; promedio ' + cop0(evaluados ? pruebasCA / evaluados : 0) + ')', pruebasCA];
   const lineaVoz = s.incluirVoz ? [['Entrevista telefónica con IA (' + entrevistados + ' candidatos, ' + fmtNum(minutosVoz) + ' min × ' + cop0(s.precioMinutoVoz) + ')', vozCA]] : [];
   const pagoMeta = [['Plantillas de WhatsApp (se pagan a Meta)', meta]];
   const comunes = [...pagoMeta, ['Inversión en anuncios (se paga a Meta)', anuncios], ['Tiempo de tu equipo (' + fmtNum(H * s.horasConCA) + ' h)', tiempoCA]];
@@ -631,7 +633,7 @@ function calcular(s) {
     escenarios: esc,
     pruebas,
     pruebaElegida: pruebas.find(p => p.id === pruebaMercado.id),
-    pruebaCA: { unit: unitPrueba, mes: pruebasCA, anio: pruebasCA * 12 },
+    pruebaCA: { unit: evaluados ? pruebasCA / evaluados : unitPrueba, mes: pruebasCA, anio: pruebasCA * 12 },
     voz: { entrevistados, minutos: minutosVoz, mes: vozCA },
     tiempo: { hoy: tiempoHoy, ca: tiempoCA }
   };
@@ -767,7 +769,7 @@ function render() {
   }));
 
   let caExtra = '<p class="note">' + (ca.id !== 'volumen' ? 'Puesta a punto de la plataforma: ' + cop(r.configuracionInicial) + ', una sola vez. El asistente virtual y el resto del proceso van incluidos en la tarifa por candidato. ' : 'La pauta va incluida en el valor por persona contratada. ') + 'Las plantillas de WhatsApp' + (ca.id !== 'volumen' ? ' y la inversión en anuncios' : '') + ' se pagan directo a Meta. Tarifas de referencia, por aprobar.</p>';
-  $('bandaCargo').textContent = 'Con el salario que escribiste: ' + r.bandaCargo + '. Bandas: menos de 2 SMLMV, valor fijo; de 2 a 3 SMLMV, 30 %; de 3 a 5, 33 %; de 5 a 8, 35 %; de 8 a 10, 37 %; de 10 a 15, 38 %; desde 15, 40 % del salario.';
+  $('bandaCargo').textContent = 'Con el salario que escribiste: ' + r.bandaCargo + '. Bandas: menos de 2 SMLMV, valor fijo con pauta incluida; de 2 a 5 SMLMV, 30 %; de 5 a 8, 33 %; de 8 a 10, 35 %; de 10 a 15, 37 %; de 15 a 20, 38 %; desde 20, 40 % del salario.';
   try { localStorage.setItem('sim-escenario', JSON.stringify(escenarioSel)); } catch (e) {}
   $('bdCA').innerHTML = '<div class="bd"><h3>ContratAndo · ' + ca.nombre + '</h3>' + tablaPartes(ca.partes, ca.total) + caExtra + '</div>';
 
