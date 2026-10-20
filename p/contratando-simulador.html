@@ -142,6 +142,22 @@ tr.ours td { color: var(--fg); font-weight: 600; background: rgba(134,53,246,0.1
 .pill.no { background: rgba(239,68,68,0.14); color: var(--err); }
 .pill.dep { background: rgba(245,158,11,0.15); color: var(--warn); }
 a.btn { text-decoration: none; display: inline-block; }
+.scen[hidden] { display: none !important; }
+.plan3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 14px; }
+.plan3 .t { background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 4px; min-width: 0; }
+.plan3 .t.k { border-color: var(--violet); box-shadow: 0 0 0 1px var(--violet) inset; }
+.plan3 .t small { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.plan3 .t b { font-size: 21px; font-variant-numeric: tabular-nums; }
+.plan3 .t span { font-size: 13px; color: var(--muted); line-height: 1.45; }
+.steps { counter-reset: n; display: grid; gap: 4px; margin: 0 0 18px; padding: 0; list-style: none; }
+.steps li { counter-increment: n; position: relative; padding-left: 30px; font-size: 13.5px; color: var(--muted); line-height: 1.45; }
+.steps li:before { content: counter(n); position: absolute; left: 0; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--violet); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.cmp { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 14px; }
+.cmp th, .cmp td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
+.cmp th:first-child, .cmp td:first-child { text-align: left; }
+.cmp tr.best td { color: var(--fg); font-weight: 700; }
+.cmp tr.best td:first-child:after { content: " · recomendado"; color: var(--violet-soft); font-weight: 600; font-size: 12px; }
+.warn { margin-top: 10px; padding: 10px 12px; border-radius: 10px; border: 1px solid #6b4b16; background: rgba(255,170,40,.08); font-size: 13px; color: #FFD79A; }
 .values { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
 .value { padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); }
 .value h3 { font-size: 16px; margin-bottom: 6px; }
@@ -173,13 +189,13 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
   <section class="hero">
     <span class="tag" id="heroTag">Para tu empresa</span>
     <h1>¿Cuánto te cuesta <span class="v">contratar</span> hoy?</h1>
-    <p>Pon tus cifras y compara cuánto pagas con una empresa temporal, una firma de selección, por tu cuenta o con ContratAndo. También ves cuánto te cuestan las pruebas de evaluación.</p>
+    <p>Escribe cuántas personas contratas al mes y te mostramos, en pesos, lo que pagas hoy y lo que pagarías con ContratAndo. La opción que más ahorra suele ser <b>Plataforma</b>: pagas una sola vez la puesta a punto, tú haces la pauta y todo lo demás pasa dentro de ContratAndo.</p>
   </section>
 
   <div class="layout">
     <form class="panel" id="form" autocomplete="off">
       <h2>Tu operación</h2>
-      <p class="hint">Cambia cualquier dato y los resultados se actualizan al instante. Los valores iniciales son un ejemplo.</p>
+      <ol class="steps"><li>Cuántas personas contratas y su salario.</li><li>Cuántos candidatos necesitas por cada contratado.</li><li>Si aplicas pruebas y entrevista telefónica.</li></ol>
 
       <div class="field">
         <label for="empresa">Empresa</label>
@@ -207,7 +223,7 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
         </select>
       </div>
       <div class="field">
-        <label for="contrataciones">Personas que contratas al mes</label>
+        <label for="contrataciones">1 · Personas que contratas al mes</label>
         <div class="slider">
           <input type="range" id="contratacionesR" min="1" max="300" step="1" value="50" aria-label="Personas que contratas al mes">
           <input type="number" id="contrataciones" min="1" max="5000" step="1" value="50">
@@ -218,54 +234,63 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
         <input type="number" id="salario" min="0" step="10000" value="1750905">
         <small>Salario mínimo 2026: 1.750.905 COP.</small>
       </div>
-      <div class="row2">
-        <div class="field">
-          <label for="postulantes">Postulantes por contratado</label>
-          <input type="number" id="postulantes" min="1" step="1" value="10">
-        </div>
-        <div class="field">
-          <label for="evaluados">Evaluados por contratado</label>
-          <input type="number" id="evaluados" min="0" step="1" value="3">
-        </div>
-      </div>
-      <div class="row2">
-        <div class="field">
-          <label for="vacantes">Avisos que publicas al mes</label>
-          <input type="number" id="vacantes" min="0" step="1" value="4">
-        </div>
-        <div class="field">
-          <label for="usuarios">Personas de tu equipo</label>
-          <input type="number" id="usuarios" min="1" step="1" value="3">
-        </div>
-      </div>
-      <div class="row2">
-        <div class="field">
-          <label for="horasHoy">Horas por contratado hoy</label>
-          <input type="number" id="horasHoy" min="0" step="0.5" value="4">
-          <small>Revisar hojas de vida, llamar, citar y entrevistar.</small>
-        </div>
-        <div class="field">
-          <label for="horasConCA">Horas por contratado con ContratAndo</label>
-          <input type="number" id="horasConCA" min="0" step="0.5" value="1.5">
-          <small>Estimado: entrevistar y decidir. Ajústalo con tu equipo.</small>
-        </div>
-      </div>
       <div class="field">
-        <label for="salarioReclutador">Salario de quien selecciona</label>
-        <input type="number" id="salarioReclutador" min="0" step="50000" value="3000000">
+        <label for="postulantes">2 · Candidatos que necesitas por cada contratado</label>
+        <input type="number" id="postulantes" min="1" step="1" value="10">
+        <small>Son los que llegan desde tus anuncios a ContratAndo. Con 50 contratados y 10 por cada uno, llegan 500.</small>
       </div>
-      <label class="check"><input type="checkbox" id="incluirPruebas" checked> Aplico pruebas de evaluación a los candidatos</label>
+      <label class="check"><input type="checkbox" id="incluirPruebas" checked> 3 · Aplico pruebas psicométricas</label>
+      <div class="row2">
+        <div class="field">
+          <label for="evaluados">Candidatos con pruebas por contratado</label>
+          <input type="number" id="evaluados" min="0" step="1" value="3">
+          <small>Lo usual: solo a quienes ya pasaron el filtro, de 3 a 5.</small>
+        </div>
+        <div class="field">
+          <label for="baterias">Baterías por candidato</label>
+          <input type="number" id="baterias" min="1" step="1" value="1">
+          <small>Cada batería adicional cuenta como otra prueba.</small>
+        </div>
+      </div>
+      <div id="warnEval"></div>
       <label class="check"><input type="checkbox" id="incluirVoz"> Agrego entrevista telefónica con IA, con la rúbrica de mi empresa</label>
       <div class="field">
         <label for="entrevistadosVoz">Candidatos con entrevista telefónica por contratado</label>
         <input type="number" id="entrevistadosVoz" min="0" step="1" value="3">
-        <small>Se cobra por cada candidato que presenta la entrevista.</small>
+        <small>Se cobra por minuto de llamada.</small>
       </div>
-      <label class="check"><input type="checkbox" id="exonerada" checked> Mi empresa está exonerada de salud, SENA e ICBF (salarios menores a 10 mínimos)</label>
 
       <details class="adv" id="adv">
-        <summary>Supuestos del cálculo</summary>
+        <summary>Supuestos del cálculo (opcional)</summary>
         <div class="group">
+          <h3>Tu equipo</h3>
+          <div class="row2">
+            <div class="field">
+              <label for="horasHoy">Horas por contratado hoy</label>
+              <input type="number" id="horasHoy" min="0" step="0.5" value="4">
+              <small>Revisar hojas de vida, llamar, citar y entrevistar.</small>
+            </div>
+            <div class="field">
+              <label for="horasConCA">Horas por contratado con ContratAndo</label>
+              <input type="number" id="horasConCA" min="0" step="0.5" value="1.5">
+              <small>Estimado: entrevistar y decidir.</small>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="salarioReclutador">Salario de quien selecciona</label>
+              <input type="number" id="salarioReclutador" min="0" step="50000" value="3000000">
+            </div>
+            <div class="field">
+              <label for="usuarios">Personas de tu equipo</label>
+              <input type="number" id="usuarios" min="1" step="1" value="3">
+            </div>
+          </div>
+          <div class="field">
+            <label for="vacantes">Avisos que publicas al mes en portales</label>
+            <input type="number" id="vacantes" min="0" step="1" value="4">
+          </div>
+          <label class="check"><input type="checkbox" id="exonerada" checked> Mi empresa está exonerada de salud, SENA e ICBF (salarios menores a 10 mínimos)</label>
           <h3>Mercado</h3>
           <div class="row2">
             <div class="field">
@@ -338,7 +363,7 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
             </div>
           </div>
           <div class="field">
-            <label>Pruebas, por candidato evaluado (por tramos de volumen al mes: cada candidato paga la tarifa de su tramo)</label>
+            <label>Pruebas psicométricas, por batería presentada (por tramos de volumen al mes)</label>
             <div id="bandasPruebas" class="note" style="margin:0"></div>
           </div>
           <div class="field">
@@ -376,10 +401,15 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
       </section>
 
       <section class="card" aria-labelledby="t-esc">
-        <span class="tag">ContratAndo</span>
-        <h2 id="t-esc">Elige cómo quieres trabajar con nosotros</h2>
-        <p class="lead">El escenario que elijas es el que se compara arriba.</p>
-        <div class="scen" id="scen" role="radiogroup" aria-label="Escenario de ContratAndo"></div>
+        <span class="tag">Tu propuesta con ContratAndo</span>
+        <h2 id="t-esc">Así pagarías con <span class="v">Plataforma</span></h2>
+        <p class="lead">Pagas la puesta a punto una sola vez. Tú haces la pauta y la pagas directo a Meta. ContratAndo recibe a los candidatos, los filtra, les escribe, los evalúa y te los deja listos para entrevistar.</p>
+        <div class="plan3" id="plan3"></div>
+        <div id="payback"></div>
+        <h3 style="margin-top:22px;font-size:16px">Compara las tres formas de trabajar con nosotros</h3>
+        <div class="tablewrap"><table class="cmp" id="cmp"></table></div>
+        <p class="note">Toca una fila para ver el detalle de esa opción. Todas incluyen las pruebas y la entrevista telefónica que marcaste.</p>
+        <div class="scen" id="scen" role="radiogroup" aria-label="Escenario de ContratAndo" hidden></div>
         <div class="breakdowns" id="bdCA"></div>
       </section>
 
@@ -461,8 +491,9 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
           <li>Mensajes de WhatsApp en Colombia: tarifa de Meta para marketing, USD 0,0125 por mensaje (<a href="https://leadsales.io/blog/whatsapp-business-api-cuanto-cuesta/" target="_blank" rel="noopener">Leadsales</a>).</li>
           <li>Tiempo del equipo: horas por contratado × costo por hora de quien selecciona (costo laboral ÷ 182 horas al mes, con la jornada de 42 horas). Las horas son un estimado que ajustas tú.</li>
           <li>Supuestos que puedes cambiar: dólar a 4.000 COP, 6 meses por la temporal, honorario de la firma de un salario, inversión en anuncios por postulante y horas del equipo.</li>
-          <li>Asistente virtual en WhatsApp: planes de 234.000 (hasta 300 conversaciones), 331.000 (hasta 550) y 524.000 COP al mes (hasta 1.100); por encima se calcula por múltiplos y se confirma en la propuesta. Configuración inicial de 1.750.905 COP, una sola vez.</li>
-          <li>ContratAndo: pruebas a 20.000 COP por candidato evaluado y entrevista telefónica con IA, con rúbrica personalizada, a 50.000 COP por candidato que la presenta. En el escenario por volumen, el valor por persona contratada depende del nivel del cargo y no incluye pruebas ni entrevista telefónica.</li>
+          <li>El asistente virtual que responde a los candidatos por WhatsApp va incluido en la tarifa por candidato de ContratAndo.</li>
+          <li>ContratAndo, Plataforma: puesta a punto de 3.000.000 COP una vez; 4.000 COP por candidato que llega; pruebas psicométricas por batería presentada, por tramos de volumen al mes (de 12.000 a 5.400 COP; cada batería adicional cuenta como otra prueba); entrevista telefónica con IA a 650 COP por minuto; mínimo mensual de 500.000 COP por soporte. La pauta y las plantillas de WhatsApp las pagas directo a Meta.</li>
+          <li>ContratAndo, por persona contratada: menos de 2 SMLMV, valor fijo con pauta incluida; desde 2 SMLMV, de 30 % a 40 % del salario según la banda del cargo. Pruebas y entrevista telefónica se suman igual que en Plataforma.</li>
           <li>Las tarifas de ContratAndo de este simulador son de referencia; el valor de tu caso llega en la propuesta.</li>
         </ul>
       </section>
@@ -506,11 +537,11 @@ function planFlow(conversaciones) {
 
 // Pruebas ContratAndo por bandas escalonadas: cada candidato se cobra con la tarifa de su tramo (propuesta, por aprobar)
 const BANDAS_PRUEBAS = [
-  { hasta: 100, cop: 20000 },
-  { hasta: 300, cop: 16000 },
-  { hasta: 600, cop: 13000 },
-  { hasta: 1000, cop: 11000 },
-  { hasta: Infinity, cop: 9000 }
+  { hasta: 100, cop: 12000 },
+  { hasta: 300, cop: 9600 },
+  { hasta: 600, cop: 7800 },
+  { hasta: 1000, cop: 6600 },
+  { hasta: Infinity, cop: 5400 }
 ];
 function precioPrueba(evaluados) { return (BANDAS_PRUEBAS.find(b => evaluados <= b.hasta) || BANDAS_PRUEBAS[0]).cop; }
 function costoPruebas(evaluados) { let total = 0, previo = 0; for (const b of BANDAS_PRUEBAS) { const n = Math.max(0, Math.min(evaluados, b.hasta) - previo); total += n * b.cop; previo = b.hasta; if (evaluados <= b.hasta) break; } return total; }
@@ -537,6 +568,7 @@ function calcular(s) {
   const H = Math.max(0, Math.round(s.contrataciones));
   const candidatos = H * s.postulantesPorContratado;
   const evaluados = s.incluirPruebas ? H * s.evaluadosPorContratado : 0;
+  const baterias = evaluados * Math.max(1, Math.round(s.baterias || 1));
   const costoLab = costoLaboral(s.salario, s.exonerada);
   const horaEquipo = costoLaboral(s.salarioReclutador, s.exonerada) / HORAS_MES;
 
@@ -588,12 +620,12 @@ function calcular(s) {
   const meta = candidatos * s.mensajesPorCandidato * s.tarifaMetaUsd * s.trm;
   const plan = planFlow(candidatos);
   const tiempoCA = H * s.horasConCA * horaEquipo;
-  const unitPrueba = precioPrueba(evaluados);
-  const pruebasCA = costoPruebas(evaluados);
+  const unitPrueba = precioPrueba(baterias);
+  const pruebasCA = costoPruebas(baterias);
   const entrevistados = s.incluirVoz ? H * s.entrevistadosVozPorContratado : 0;
   const minutosVoz = entrevistados * s.minutosEntrevista;
   const vozCA = minutosVoz * s.precioMinutoVoz;
-  const lineaPruebasCA = ['Pruebas ContratAndo (' + evaluados + ' candidatos, por tramos; promedio ' + cop0(evaluados ? pruebasCA / evaluados : 0) + ')', pruebasCA];
+  const lineaPruebasCA = ['Pruebas psicométricas (' + baterias + ' ' + (baterias === 1 ? 'batería' : 'baterías') + ', promedio ' + cop0(baterias ? pruebasCA / baterias : 0) + ' cada una)', pruebasCA];
   const lineaVoz = s.incluirVoz ? [['Entrevista telefónica con IA (' + entrevistados + ' candidatos, ' + fmtNum(minutosVoz) + ' min × ' + cop0(s.precioMinutoVoz) + ')', vozCA]] : [];
   const pagoMeta = [['Plantillas de WhatsApp (se pagan a Meta)', meta]];
   const comunes = [...pagoMeta, ['Inversión en anuncios (se paga a Meta)', anuncios], ['Tiempo de tu equipo (' + fmtNum(H * s.horasConCA) + ' h)', tiempoCA]];
@@ -613,13 +645,13 @@ function calcular(s) {
 
   const esc = [];
   const pA = [lineaSetup, ...lineasPlataforma, ...comunes];
-  esc.push({ id: 'pruebas', nombre: 'Plataforma', partes: pA, total: sumar(pA) });
+  esc.push({ id: 'pruebas', nombre: 'Plataforma (tú haces la pauta)', partes: pA, total: sumar(pA) });
   const pC = [lineaSetup, ...lineasPlataforma, ['Gestión de anuncios con nuestro equipo', s.gestionPauta], ...comunes];
-  esc.push({ id: 'pauta', nombre: 'Plataforma + gestión de anuncios', partes: pC, total: sumar(pC) });
+  esc.push({ id: 'pauta', nombre: 'Plataforma + nosotros hacemos la pauta', partes: pC, total: sumar(pC) });
   // Por volumen: valor por contratado según banda del cargo; incluye la pauta. Pruebas y voz se suman por candidato.
   const vc = valorPorContratado(s.salario, s.precioOperativo);
   const pD = [['Servicio por persona contratada (' + H + ' × ' + cop0(vc.valor) + ') · ' + vc.banda, H * vc.valor], ...(evaluados > 0 ? [lineaPruebasCA] : []), ...lineaVoz, ...pagoMeta, ['Tiempo de tu equipo (' + fmtNum(H * s.horasConCA) + ' h)', tiempoCA]];
-  esc.push({ id: 'volumen', nombre: 'Por volumen', partes: pD, total: sumar(pD), banda: vc.banda });
+  esc.push({ id: 'volumen', nombre: 'Por persona contratada', partes: pD, total: sumar(pD), banda: vc.banda });
 
   const pruebas = PRUEBAS_REF.map(p => {
     const unit = p.cop != null ? p.cop : p.usd * s.trm;
@@ -627,13 +659,13 @@ function calcular(s) {
   });
 
   return {
-    H, candidatos, evaluados, costoLab, horaEquipo, plan,
+    H, candidatos, evaluados, costoLab, setup: s.setupPlataforma, horaEquipo, plan,
     configuracionInicial: s.setupPlataforma, bandaCargo: vc.banda, unitPrueba,
     alternativas: [temporal, firma, tu],
     escenarios: esc,
     pruebas,
     pruebaElegida: pruebas.find(p => p.id === pruebaMercado.id),
-    pruebaCA: { unit: evaluados ? pruebasCA / evaluados : unitPrueba, mes: pruebasCA, anio: pruebasCA * 12 },
+    pruebaCA: { unit: evaluados ? pruebasCA / evaluados : unitPrueba, mes: pruebasCA, anio: pruebasCA * 12 }, baterias, porLeads, consumo, ajusteMinimo, anuncios, meta, tiempoCA,
     voz: { entrevistados, minutos: minutosVoz, mes: vozCA },
     tiempo: { hoy: tiempoHoy, ca: tiempoCA }
   };
@@ -677,6 +709,7 @@ function leer() {
     salario: num('salario', SMMLV),
     postulantesPorContratado: num('postulantes', 10),
     evaluadosPorContratado: num('evaluados', 3),
+    baterias: num('baterias', 1),
     vacantesMes: num('vacantes', 4),
     usuarios: Math.max(1, num('usuarios', 3)),
     horasHoy: num('horasHoy', 4),
@@ -718,7 +751,7 @@ function render() {
   const s = leer();
   const r = calcular(s);
   ultimo = { s, r };
-  $('bandasPruebas').innerHTML = BANDAS_PRUEBAS.map((b, k) => { const desde = k ? BANDAS_PRUEBAS[k - 1].hasta + 1 : 1; const txt = b.hasta === Infinity ? 'Más de ' + BANDAS_PRUEBAS[k - 1].hasta : desde + ' a ' + b.hasta; return (r.evaluados > 0 && r.unitPrueba === b.cop && precioPrueba(r.evaluados) === b.cop ? '<b>' : '') + txt + ' evaluados: ' + cop0(b.cop) + (precioPrueba(r.evaluados) === b.cop && r.evaluados > 0 ? '</b>' : ''); }).join(' · ');
+  $('bandasPruebas').innerHTML = BANDAS_PRUEBAS.map((b, k) => { const desde = k ? BANDAS_PRUEBAS[k - 1].hasta + 1 : 1; const txt = b.hasta === Infinity ? 'Más de ' + BANDAS_PRUEBAS[k - 1].hasta : desde + ' a ' + b.hasta; const on = r.baterias > 0 && r.baterias > (k ? BANDAS_PRUEBAS[k - 1].hasta : 0); return (on ? '<b>' : '') + txt + ': ' + cop0(b.cop) + (on ? '</b>' : ''); }).join(' · ');
   const H = r.H;
   $('hLabel').textContent = H + ' ' + plural(H, 'persona', 'personas');
   $('evLabel').textContent = r.evaluados + ' ' + plural(r.evaluados, 'candidato', 'candidatos');
@@ -778,9 +811,32 @@ function render() {
   // Pruebas
   const tb = $('tPruebas').querySelector('tbody');
   const filas = r.pruebas.map(p => '<tr><td>' + p.nombre + '</td><td>' + p.detalle + '</td><td class="num">' + cop(p.unit) + '</td><td class="num">' + cop(p.mes) + '</td><td class="num">' + cop(p.anio) + '</td></tr>');
-  filas.push('<tr class="ours"><td>ContratAndo</td><td>10 pruebas para asignar por vacante · banda de ' + r.evaluados + ' evaluados al mes</td><td class="num">' + cop(r.pruebaCA.unit) + '</td><td class="num">' + cop(r.pruebaCA.mes) + '</td><td class="num">' + cop(r.pruebaCA.anio) + '</td></tr>');
+  filas.push('<tr class="ours"><td>ContratAndo</td><td>10 pruebas para asignar por vacante; precio promedio por tramos con ' + r.baterias + ' baterías al mes</td><td class="num">' + cop(r.pruebaCA.unit) + '</td><td class="num">' + cop(r.pruebaCA.mes) + '</td><td class="num">' + cop(r.pruebaCA.anio) + '</td></tr>');
   tb.innerHTML = r.evaluados > 0 ? filas.join('') : '<tr><td colspan="5">Activa «Aplico pruebas de evaluación» y escribe cuántos candidatos evalúas por contratado.</td></tr>';
 
+  // Bloque Plataforma: tres pagos claros
+  const pl = r.escenarios.find(e => e.id === 'pruebas');
+  const vol = r.escenarios.find(e => e.id === 'volumen');
+  const pagoCA = r.consumo + r.ajusteMinimo;
+  $('plan3').innerHTML =
+    '<div class="t"><small>Pago único</small><b>' + cop(r.setup) + '</b><span>Puesta a punto: vacantes, reglas, mensajes, pruebas y asistente.</span></div>' +
+    '<div class="t k"><small>Mensualidad a ContratAndo</small><b>' + cop(pagoCA) + '</b><span>' + r.candidatos + ' candidatos × ' + cop0(s.precioLead) + (r.baterias ? ' + pruebas' : '') + (r.voz.entrevistados ? ' + minutos de entrevista' : '') + '. Mínimo ' + cop0(s.minimoMensual) + ' por soporte.</span></div>' +
+    '<div class="t"><small>Pagas directo a Meta</small><b>' + cop(r.anuncios + r.meta) + '</b><span>Tu pauta (' + cop0(r.anuncios) + ') y las plantillas de WhatsApp (' + cop0(r.meta) + ').</span></div>' +
+    '<div class="t"><small>Por persona contratada</small><b>' + (H ? cop((pagoCA + r.anuncios + r.meta) / H) : '—') + '</b><span>Mensualidad + Meta, sin contar el tiempo de tu equipo.</span></div>';
+  const ahorroVol = vol.total - pl.total;
+  const mejorAlt = r.alternativas.slice().sort((a, b) => a.total - b.total)[0];
+  const ahorroAlt = mejorAlt.total - pl.total;
+  let pb = '';
+  if (ahorroVol > 0) pb += '<p class="note">Frente a pagar <b>por persona contratada</b>, con Plataforma ahorras <b>' + cop(ahorroVol) + ' al mes</b>: la puesta a punto se recupera en ' + Math.max(1, Math.ceil(r.setup / ahorroVol)) + ' ' + (Math.ceil(r.setup / ahorroVol) <= 1 ? 'mes' : 'meses') + '.</p>';
+  if (ahorroAlt > 0) pb += '<p class="note">Frente a «' + mejorAlt.nombre + '», tu opción más económica hoy, ahorras <b>' + cop(ahorroAlt) + ' al mes</b>.</p>';
+  $('payback').innerHTML = pb;
+  const orden = r.escenarios.slice();
+  const best = orden.slice().sort((a, b) => a.total - b.total)[0].id;
+  $('cmp').innerHTML = '<tr><th>Opción</th><th>Pago único</th><th>Al mes</th><th>Por persona</th></tr>' + orden.map(e =>
+    '<tr class="' + (e.id === best ? 'best' : '') + '" data-id="' + e.id + '" style="cursor:pointer' + (e.id === escenarioSel ? ';background:rgba(134,53,246,.10)' : '') + '"><td>' + e.nombre + '</td><td>' + (e.id === 'volumen' ? '—' : cop(r.setup)) + '</td><td>' + cop(e.total) + '</td><td>' + (H ? cop(e.total / H) : '—') + '</td></tr>').join('');
+  $('cmp').querySelectorAll('tr[data-id]').forEach(tr => tr.addEventListener('click', () => { escenarioSel = tr.dataset.id; render(); }));
+  const evPor = s.evaluadosPorContratado * Math.max(1, Math.round(s.baterias || 1));
+  $('warnEval').innerHTML = s.incluirPruebas && evPor > 5 ? '<div class="warn">Estás aplicando ' + evPor + ' pruebas por cada contratado. Lo usual es evaluar solo a quienes pasaron el filtro (3 a 5). Es lo que más sube el costo.</div>' : '';
   guardar();
 }
 
@@ -826,7 +882,7 @@ $('form').addEventListener('change', render);
 $('form').addEventListener('submit', e => e.preventDefault());
 
 // Recordar los datos en este navegador
-const CAMPOS = ['empresa','contacto','ciudad','cargo','contrataciones','salario','postulantes','evaluados','vacantes','usuarios','horasHoy','horasConCA','salarioReclutador','incluirPruebas','incluirVoz','entrevistadosVoz','exonerada','margenTemporal','mesesTemporal','honorarioFirmaPct','precioAviso','trm','softwareRef','pruebaRef','setupPlataforma','precioLead','minimoMensual','precioMinutoVoz','minutosEntrevista','gestionPauta','precioOperativo','costoPorPostulante','mensajes','tarifaMeta','incluirAsistente'];
+const CAMPOS = ['empresa','contacto','ciudad','cargo','contrataciones','salario','postulantes','evaluados','baterias','vacantes','usuarios','horasHoy','horasConCA','salarioReclutador','incluirPruebas','incluirVoz','entrevistadosVoz','exonerada','margenTemporal','mesesTemporal','honorarioFirmaPct','precioAviso','trm','softwareRef','pruebaRef','setupPlataforma','precioLead','minimoMensual','precioMinutoVoz','minutosEntrevista','gestionPauta','precioOperativo','costoPorPostulante','mensajes','tarifaMeta','incluirAsistente'];
 const CLAVE = 'simulador-contratando-v3';
 function guardar() {
   try {
