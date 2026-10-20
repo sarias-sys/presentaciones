@@ -13,8 +13,42 @@ html,body{margin:0;height:100%;background:#05080e;overflow:hidden;font-family:'P
 #lienzo{position:relative;width:1920px;height:1080px;transform-origin:center center;flex:none}
 .slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .35s ease}
 .slide.activa{opacity:1;visibility:visible}
-.slide section{position:absolute;inset:0;width:1920px;height:1080px;box-sizing:border-box;overflow:hidden}
+.slide section{position:absolute;inset:0;width:1920px;height:1080px;box-sizing:border-box;overflow:hidden;background:radial-gradient(circle at 88% 8%,rgba(134,53,246,.22) 0,rgba(134,53,246,0) 45%),#080D15;color:#F8F9FC;padding:96px 112px 120px;display:flex;flex-direction:column;gap:32px}
 .slide section *{margin:0;box-sizing:border-box}
+.slide section:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(237,237,237,.035) 0 1px,transparent 1px 64px),repeating-linear-gradient(0deg,rgba(237,237,237,.035) 0 1px,transparent 1px 64px);pointer-events:none}
+.slide section>*{position:relative}
+.logo{position:absolute!important;right:112px;top:44px;width:220px;height:50px;object-fit:contain}
+.num{position:absolute!important;right:112px;bottom:52px;font-size:20px;color:#9A9FB0}
+.k{font-size:19px;font-weight:600;color:#C4B5FD;letter-spacing:3px;text-transform:uppercase}
+h1{font-size:76px;font-weight:700;line-height:1.05;letter-spacing:-.01em}
+h2{font-size:52px;font-weight:700;line-height:1.08;letter-spacing:-.01em;max-width:1500px}
+.v{color:#9B5CFF}
+.lead{font-size:26px;line-height:1.5;color:#D9DBE3;max-width:1300px}
+.row{display:grid;gap:22px}
+.c{background:#10131D;border:1px solid #262B3A;border-radius:20px;padding:26px 28px;display:flex;flex-direction:column;gap:10px}
+.c.p{background:#8635F6;border-color:#8635F6}
+.c h3{font-size:26px;font-weight:600}
+.c p,.c li{font-size:20px;line-height:1.5;color:#C9CCD6}
+.c.p p,.c.p li{color:#fff}
+.c ul{padding-left:24px;display:flex;flex-direction:column;gap:4px}
+.tag{font-size:15px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#B794F6}
+.step{display:flex;gap:14px;align-items:flex-start}.step i{flex:none;width:40px;height:40px;border-radius:50%;background:#8635F6;color:#fff;font-style:normal;font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center}
+.step b{display:block;font-size:22px;font-weight:600}.step span{font-size:18px;color:#C9CCD6;line-height:1.45}
+.kb{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.kb div{background:#0B0E16;border:1px solid #262B3A;border-radius:14px;padding:14px}
+.kb b{display:block;font-size:17px}.kb span{font-size:14.5px;color:#9EA3B3;line-height:1.4;display:block;margin-top:4px}
+.kb .ap{border-color:#8635F6}.kb .re{border-color:#5a2a3a}
+.rule{display:flex;gap:12px;align-items:center;font-size:18px;color:#D9DBE3}.rule em{font-style:normal;background:#1A1F2E;border-radius:999px;padding:5px 12px}.rule .ok{color:#7CF0A9}.rule .no{color:#FF8A9A}
+table.m{width:100%;border-collapse:separate;border-spacing:0;font-size:19px}
+table.m th{font-size:20px;font-weight:600;text-align:center;padding:14px 10px;background:#10131D;border-bottom:1px solid #262B3A}
+table.m th:first-child{text-align:left;border-radius:16px 0 0 0}table.m th:last-child{border-radius:0 16px 0 0}
+table.m th small{display:block;font-size:14px;font-weight:400;color:#9EA3B3;margin-top:2px}
+table.m td{padding:11px 10px;border-bottom:1px solid #1E2230;text-align:center;color:#C9CCD6}
+table.m td:first-child{text-align:left;color:#EDEDED}
+table.m .y{color:#B794F6;font-weight:700;font-size:22px}table.m .n{color:#4A4F60}
+table.m th.hl,table.m td.hl{background:rgba(134,53,246,.12)}
+.note{font-size:17px;color:#9EA3B3;line-height:1.5}
+.cta{display:inline-flex;align-items:center;gap:10px;background:#8635F6;color:#fff;text-decoration:none;font-weight:600;font-size:24px;padding:18px 30px;border-radius:14px}
 #controles{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:rgba(16,19,29,.85);border:1px solid #262B3A;border-radius:999px;padding:6px 8px;color:#EDEDED;font-size:14px;z-index:5;transition:opacity .3s}
 #controles button{width:40px;height:40px;border-radius:999px;border:0;background:transparent;color:#F8F9FC;font-size:18px;cursor:pointer}
 #controles button:hover,#controles button:focus-visible{background:#262B3A;outline:none}
@@ -24,346 +58,69 @@ body.quieto #controles{opacity:0}
 </head>
 <body>
 <div id="escenario"><div id="lienzo">
-<div class="slide" role="group" aria-roledescription="diapositiva" aria-label="1 de 12"><section id="cover" data-transition="fade" style="background:radial-gradient(circle at 82% 30%, rgba(134,53,246,0.40) 0%, rgba(134,53,246,0) 55%), #080D15;color:#F8F9FC;font-family:'Poppins', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:space-between">
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(90deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(0deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<img src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo" style="width:520px;height:117px;object-fit:contain">
-<div style="display:flex;flex-direction:column;gap:36px;width:1250px">
-<p style="font-size:24px;font-weight:600;color:#EDE9FE;letter-spacing:3px;text-transform:uppercase">ContratAndo by DesarrollAndo</p>
-<h1 style="font-size:104px;font-weight:700;line-height:1.05;letter-spacing:-0.01em;color:#F8F9FC">Deja de perseguir candidatos. Contrata a los que <span style="color:#8635F6">cumplen</span>.</h1>
-<p style="font-size:36px;line-height:1.5;color:#EDEDED">Tus candidatos, filtrados y contactados de forma automática, para que tu equipo solo entreviste a quien cumple.</p>
-</div>
-<p style="font-size:24px;color:#EDEDED">Sergio Arias · sarias@desarrollandoando.com</p>
-
-</section>
-</div>
-<div class="slide" role="group" aria-roledescription="diapositiva" aria-label="2 de 12"><section id="hoy" data-transition="fade" style="background:radial-gradient(circle at 88% 8%, rgba(134,53,246,0.22) 0%, rgba(134,53,246,0) 45%), #080D15;color:#F8F9FC;font-family:'Poppins', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(90deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(0deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<img src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo" style="position:absolute;right:128px;top:48px;width:240px;height:54px;object-fit:contain">
-<div style="display:flex;flex-direction:column;gap:16px">
-<p style="font-size:24px;font-weight:600;color:#EDE9FE;letter-spacing:3px;text-transform:uppercase">El cambio</p>
-<h2 style="font-size:72px;font-weight:700;line-height:1.05;letter-spacing:-0.01em;color:#F8F9FC">Tu equipo deja de filtrar y se dedica a <span style="color:#8635F6">decidir</span></h2>
-</div>
-<div style="display:flex;gap:32px;flex:1">
-<div style="flex:1;display:flex;flex-direction:column;gap:24px;background:#10131D;padding:48px;border:1px solid #262B3A;border-radius:24px">
-<h3 style="font-size:40px;font-weight:600;color:#EDEDED">Hoy</h3>
-<ul style="font-size:30px;line-height:1.5;color:#EDEDED;padding:0 0 0 36px">
-<li>Revisas hojas de vida una por una</li>
-<li>Llamas a quien no contesta</li>
-<li>Sigues el proceso en Excel y WhatsApp</li>
-<li>Cada vacante empieza de cero</li>
-</ul>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;gap:24px;background:#8635F6;padding:48px;border-radius:24px">
-<h3 style="font-size:40px;font-weight:700;color:#FFFFFF">Con ContratAndo</h3>
-<ul style="font-size:30px;line-height:1.5;font-weight:600;color:#FFFFFF;padding:0 0 0 36px">
-<li>Las reglas filtran por tus requisitos</li>
-<li>WhatsApp y llamada salen solos</li>
-<li>Todo el proceso en un tablero</li>
-<li>Duplicas la vacante y sigues</li>
-</ul>
-</div>
-</div>
-<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#EDEDED">2</p>
-
-</section>
-</div>
-<div class="slide" role="group" aria-roledescription="diapositiva" aria-label="3 de 12"><section id="reto" data-transition="fade" style="background:radial-gradient(circle at 88% 8%, rgba(134,53,246,0.22) 0%, rgba(134,53,246,0) 45%), #080D15;color:#F8F9FC;font-family:'Poppins', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(90deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(0deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<img src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo" style="position:absolute;right:128px;top:48px;width:240px;height:54px;object-fit:contain">
-<div style="display:flex;flex-direction:column;gap:16px">
-<p style="font-size:24px;font-weight:600;color:#EDE9FE;letter-spacing:3px;text-transform:uppercase">Tu reto</p>
-<h2 style="font-size:72px;font-weight:700;line-height:1.05;letter-spacing:-0.01em;color:#F8F9FC">Contratar todos los meses, en <span style="color:#8635F6">volumen</span></h2>
-</div>
-<div style="display:flex;gap:32px;flex:1">
-<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#10131D;padding:48px;border:1px solid #262B3A;border-radius:24px">
-<h3 style="font-size:44px;font-weight:600;line-height:1.2;color:#8635F6">Muchos postulantes</h3>
-<p style="font-size:30px;line-height:1.5;color:#EDEDED">Revisar hoja por hoja cada postulación consume el día de tu equipo</p>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#10131D;padding:48px;border:1px solid #262B3A;border-radius:24px">
-<h3 style="font-size:44px;font-weight:600;line-height:1.2;color:#F8F9FC">Perfiles en demanda</h3>
-<p style="font-size:30px;line-height:1.5;color:#EDEDED">Compites con muchas empresas por los mismos candidatos en los portales</p>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#10131D;padding:48px;border:1px solid #262B3A;border-radius:24px">
-<h3 style="font-size:44px;font-weight:600;line-height:1.2;color:#F8F9FC">Todos los meses</h3>
-<p style="font-size:30px;line-height:1.5;color:#EDEDED">Publicar, filtrar, llamar y citar se repite con cada vacante</p>
-</div>
-</div>
-<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#EDEDED">3</p>
-
-</section>
-</div>
-<div class="slide" role="group" aria-roledescription="diapositiva" aria-label="4 de 12"><section id="como" data-transition="fade" style="background:radial-gradient(circle at 88% 8%, rgba(134,53,246,0.22) 0%, rgba(134,53,246,0) 45%), #080D15;color:#F8F9FC;font-family:'Poppins', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(90deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(0deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<img src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo" style="position:absolute;right:128px;top:48px;width:240px;height:54px;object-fit:contain">
-<div style="display:flex;flex-direction:column;gap:16px">
-<p style="font-size:24px;font-weight:600;color:#EDE9FE;letter-spacing:3px;text-transform:uppercase">Cómo funciona</p>
-<h2 style="font-size:72px;font-weight:700;line-height:1.05;letter-spacing:-0.01em;color:#F8F9FC">De la vacante a la entrevista en <span style="color:#8635F6">cinco pasos</span></h2>
-</div>
-<div style="display:grid;grid-template-columns:repeat(5, 1fr);gap:24px">
-<div style="display:flex;flex-direction:column;gap:16px;background:#10131D;padding:36px;border:1px solid #262B3A;border-radius:16px">
-<p style="font-size:48px;font-weight:700;color:#8635F6">1</p>
-<h3 style="font-size:32px;font-weight:600;line-height:1.2;color:#F8F9FC">Publicas la vacante</h3>
-<p style="font-size:24px;line-height:1.5;color:#EDEDED">Cargo, requisitos y preguntas de filtro</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:16px;background:#10131D;padding:36px;border:1px solid #262B3A;border-radius:16px">
-<p style="font-size:48px;font-weight:700;color:#8635F6">2</p>
-<h3 style="font-size:32px;font-weight:600;line-height:1.2;color:#F8F9FC">Llegan candidatos</h3>
-<p style="font-size:24px;line-height:1.5;color:#EDEDED">Desde anuncios en Meta o tu enlace</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:16px;background:#10131D;padding:36px;border:1px solid #262B3A;border-radius:16px">
-<p style="font-size:48px;font-weight:700;color:#8635F6">3</p>
-<h3 style="font-size:32px;font-weight:600;line-height:1.2;color:#F8F9FC">Se filtran solos</h3>
-<p style="font-size:24px;line-height:1.5;color:#EDEDED">Las reglas los mueven a apto o rechazado</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:16px;background:#10131D;padding:36px;border:1px solid #262B3A;border-radius:16px">
-<p style="font-size:48px;font-weight:700;color:#8635F6">4</p>
-<h3 style="font-size:32px;font-weight:600;line-height:1.2;color:#F8F9FC">Se contactan solos</h3>
-<p style="font-size:24px;line-height:1.5;color:#EDEDED">WhatsApp y llamada de entrevista con IA</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:16px;background:#8635F6;padding:36px;border-radius:16px">
-<p style="font-size:48px;font-weight:700;color:#FFFFFF">5</p>
-<h3 style="font-size:32px;font-weight:700;line-height:1.2;color:#FFFFFF">Tu equipo decide</h3>
-<p style="font-size:24px;line-height:1.5;font-weight:600;color:#FFFFFF">Solo entrevista a quien cumple</p>
-</div>
-</div>
-<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#EDEDED">4</p>
-
-</section>
-</div>
-<div class="slide" role="group" aria-roledescription="diapositiva" aria-label="5 de 12"><section id="formulario" data-transition="fade" style="background:radial-gradient(circle at 88% 8%, rgba(134,53,246,0.22) 0%, rgba(134,53,246,0) 45%), #080D15;color:#F8F9FC;font-family:'Poppins', Arial, sans-serif;padding:128px 128px 160px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(90deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(0deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<img src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo" style="position:absolute;right:128px;top:48px;width:240px;height:54px;object-fit:contain">
-<div style="display:flex;flex-direction:column;gap:24px">
-<p style="font-size:24px;font-weight:600;color:#EDE9FE;letter-spacing:3px;text-transform:uppercase">Filtro automático</p>
-<h2 style="font-size:72px;font-weight:700;line-height:1.05;letter-spacing:-0.01em;color:#F8F9FC">Tus requisitos se vuelven <span style="color:#8635F6">reglas</span></h2>
-<p style="font-size:30px;line-height:1.5;color:#EDEDED">Cuando el candidato termina el formulario, ContratAndo lo ubica en la etapa que corresponde. Tu equipo solo ve a quien cumple.</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:20px">
-<div style="display:flex;flex-direction:column;gap:8px;background:#10131D;padding:32px;border:1px solid #262B3A;border-radius:16px">
-<p style="font-size:24px;font-weight:600;color:#EDE9FE;letter-spacing:2px;text-transform:uppercase">Pregunta de filtro</p>
-<p style="font-size:32px;font-weight:600;color:#F8F9FC">¿Cuánta experiencia tienes en ventas?</p>
-</div>
-<div style="display:flex;gap:20px">
-<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#10131D;padding:32px;border:1px solid #10B981;border-radius:16px">
-<p style="font-size:26px;font-weight:600;color:#10B981">1 año o más</p>
-<p style="font-size:28px;color:#F8F9FC">pasa a Apto</p>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;gap:8px;background:#10131D;padding:32px;border:1px solid #EF4444;border-radius:16px">
-<p style="font-size:26px;font-weight:600;color:#EF4444">Sin experiencia</p>
-<p style="font-size:28px;color:#F8F9FC">pasa a Rechazado</p>
-</div>
-</div>
-<p style="font-size:24px;line-height:1.5;color:#EDEDED">Ejemplo ilustrativo: las preguntas y reglas se definen con tu equipo.</p>
-</div>
-<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#EDEDED">5</p>
-
-</section>
-</div>
-<div class="slide" role="group" aria-roledescription="diapositiva" aria-label="6 de 12"><section id="tablero" data-transition="fade" style="background:radial-gradient(circle at 88% 8%, rgba(134,53,246,0.22) 0%, rgba(134,53,246,0) 45%), #080D15;color:#F8F9FC;font-family:'Poppins', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(90deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(0deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<img src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo" style="position:absolute;right:128px;top:48px;width:240px;height:54px;object-fit:contain">
-<div style="display:flex;flex-direction:column;gap:16px">
-<p style="font-size:24px;font-weight:600;color:#EDE9FE;letter-spacing:3px;text-transform:uppercase">Tablero por etapas</p>
-<h2 style="font-size:72px;font-weight:700;line-height:1.05;letter-spacing:-0.01em;color:#F8F9FC">Todo el proceso en una sola <span style="color:#8635F6">vista</span></h2>
-</div>
-<div style="display:flex;gap:20px;flex:1">
-<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#10131D;padding:28px;border:1px solid #262B3A;border-top:6px solid #1F679E;border-radius:16px">
-<h3 style="font-size:30px;font-weight:600;color:#F8F9FC">Nuevo</h3>
-<p style="font-size:24px;line-height:1.5;color:#EDEDED">Recibe WhatsApp para completar</p>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#10131D;padding:28px;border:1px solid #262B3A;border-top:6px solid #F59E0B;border-radius:16px">
-<h3 style="font-size:30px;font-weight:600;color:#F8F9FC">En revisión</h3>
-<p style="font-size:24px;line-height:1.5;color:#EDEDED">Formulario completo</p>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#10131D;padding:28px;border:1px solid #262B3A;border-top:6px solid #8635F6;border-radius:16px">
-<h3 style="font-size:30px;font-weight:600;color:#F8F9FC">Apto</h3>
-<p style="font-size:24px;line-height:1.5;color:#EDEDED">Recibe la llamada de entrevista</p>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#10131D;padding:28px;border:1px solid #262B3A;border-top:6px solid #10B981;border-radius:16px">
-<h3 style="font-size:30px;font-weight:600;color:#F8F9FC">Entrevista</h3>
-<p style="font-size:24px;line-height:1.5;color:#EDEDED">Tu equipo lo cita</p>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#10131D;padding:28px;border:1px solid #262B3A;border-top:6px solid #EF4444;border-radius:16px">
-<h3 style="font-size:30px;font-weight:600;color:#F8F9FC">Rechazado</h3>
-<p style="font-size:24px;line-height:1.5;color:#EDEDED">No cumple un requisito</p>
-</div>
-</div>
-<p style="font-size:30px;line-height:1.5;color:#EDEDED">Las etapas se ajustan a tu proceso: las nombras, las ordenas y a cada una le pones sus mensajes y reglas.</p>
-<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#EDEDED">6</p>
-
-</section>
-</div>
-<div class="slide" role="group" aria-roledescription="diapositiva" aria-label="7 de 12"><section id="whatsapp" data-transition="fade" style="background:radial-gradient(circle at 88% 8%, rgba(134,53,246,0.22) 0%, rgba(134,53,246,0) 45%), #080D15;color:#F8F9FC;font-family:'Poppins', Arial, sans-serif;padding:128px 128px 160px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(90deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(0deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<img src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo" style="position:absolute;right:128px;top:48px;width:240px;height:54px;object-fit:contain">
-<div style="display:flex;flex-direction:column;gap:24px">
-<p style="font-size:24px;font-weight:600;color:#EDE9FE;letter-spacing:3px;text-transform:uppercase">WhatsApp automático</p>
-<h2 style="font-size:72px;font-weight:700;line-height:1.05;letter-spacing:-0.01em;color:#F8F9FC">El mensaje correcto, en el momento <span style="color:#8635F6">correcto</span></h2>
-<p style="font-size:30px;line-height:1.5;color:#EDEDED">Cada etapa envía su propia plantilla por WhatsApp, aprobada por Meta.</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:20px">
-<div style="display:flex;gap:24px;align-items:center;background:#10131D;padding:32px;border:1px solid #262B3A;border-radius:16px">
-<x-icon name="Chat" style="color:#25D366;width:48px;height:48px"></x-icon>
-<p style="font-size:28px;line-height:1.5;color:#F8F9FC">Al llegar: invitación a completar la postulación</p>
-</div>
-<div style="display:flex;gap:24px;align-items:center;background:#10131D;padding:32px;border:1px solid #262B3A;border-radius:16px">
-<x-icon name="Clock" style="color:#25D366;width:48px;height:48px"></x-icon>
-<p style="font-size:28px;line-height:1.5;color:#F8F9FC">Citación y aviso en cada cambio de etapa</p>
-</div>
-<div style="display:flex;gap:24px;align-items:center;background:#10131D;padding:32px;border:1px solid #262B3A;border-radius:16px">
-<x-icon name="PaperPlane" style="color:#25D366;width:48px;height:48px"></x-icon>
-<p style="font-size:28px;line-height:1.5;color:#F8F9FC">Un asistente virtual en WhatsApp resuelve las dudas del candidato</p>
-</div>
-</div>
-<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#EDEDED">7</p>
-
-</section>
-</div>
-<div class="slide" role="group" aria-roledescription="diapositiva" aria-label="8 de 12"><section id="voz" data-transition="fade" style="background:radial-gradient(circle at 15% 85%, rgba(134,53,246,0.30) 0%, rgba(134,53,246,0) 50%), #080D15;color:#F8F9FC;font-family:'Poppins', Arial, sans-serif;padding:128px 128px 160px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(90deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(0deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<img src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo" style="position:absolute;right:128px;top:48px;width:240px;height:54px;object-fit:contain">
-<div style="display:flex;flex-direction:column;gap:24px">
-<p style="font-size:24px;font-weight:600;color:#EDE9FE;letter-spacing:3px;text-transform:uppercase">Entrevista por voz con IA</p>
-<h2 style="font-size:72px;font-weight:700;line-height:1.05;letter-spacing:-0.01em;color:#F8F9FC">Cada apto recibe su primera entrevista sin que tu equipo <span style="color:#8635F6">marque</span></h2>
-</div>
-<div style="display:flex;flex-direction:column;gap:20px">
-<div style="display:flex;flex-direction:column;gap:8px;background:#10131D;padding:32px;border:1px solid #262B3A;border-radius:16px">
-<h3 style="font-size:32px;font-weight:600;color:#F8F9FC">Llama y pregunta</h3>
-<p style="font-size:28px;line-height:1.5;color:#EDEDED">Un agente de voz llama al candidato cuando queda apto</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:8px;background:#10131D;padding:32px;border:1px solid #262B3A;border-radius:16px">
-<h3 style="font-size:32px;font-weight:600;color:#F8F9FC">Califica</h3>
-<p style="font-size:28px;line-height:1.5;color:#EDEDED">Deja grabación, transcripción, resumen y una nota</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:8px;background:#10131D;padding:32px;border:1px solid #262B3A;border-radius:16px">
-<h3 style="font-size:32px;font-weight:600;color:#F8F9FC">Mueve al candidato</h3>
-<p style="font-size:28px;line-height:1.5;color:#EDEDED">Con la nota que tú defines, pasa a entrevista o sale del proceso</p>
-</div>
-</div>
-<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#EDEDED">8</p>
-
-</section>
-</div>
-<div class="slide" role="group" aria-roledescription="diapositiva" aria-label="9 de 12"><section id="pruebas" data-transition="fade" style="background:radial-gradient(circle at 88% 8%, rgba(134,53,246,0.22) 0%, rgba(134,53,246,0) 45%), #080D15;color:#F8F9FC;font-family:'Poppins', Arial, sans-serif;padding:128px 128px 160px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(90deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(0deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<img src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo" style="position:absolute;right:128px;top:48px;width:240px;height:54px;object-fit:contain">
-<div style="display:flex;flex-direction:column;gap:24px">
-<p style="font-size:24px;font-weight:600;color:#EDE9FE;letter-spacing:3px;text-transform:uppercase">Pruebas psicométricas</p>
-<h2 style="font-size:72px;font-weight:700;line-height:1.05;letter-spacing:-0.01em;color:#F8F9FC">Mide lo que la hoja de vida no <span style="color:#8635F6">muestra</span></h2>
-<p style="font-size:30px;line-height:1.5;color:#EDEDED">Asignas pruebas a la vacante, el candidato las responde en línea y el resultado queda en su ficha.</p>
-</div>
-<div style="display:flex;flex-direction:column;align-items:center;gap:16px;background:#10131D;padding:64px;border:1px solid #262B3A;border-radius:24px">
-<p style="font-size:176px;font-weight:700;line-height:1;color:#8635F6">10</p>
-<p style="font-size:36px;font-weight:600;text-align:center;color:#F8F9FC">pruebas en línea</p>
-<p style="font-size:28px;line-height:1.5;color:#EDEDED;text-align:center">cognitivas, conductuales y situacionales, ajustadas al nivel y al área del cargo</p>
-</div>
-<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#EDEDED">9</p>
-
-</section>
-</div>
-<div class="slide" role="group" aria-roledescription="diapositiva" aria-label="10 de 12"><section id="equipo" data-transition="fade" style="background:radial-gradient(circle at 88% 8%, rgba(134,53,246,0.22) 0%, rgba(134,53,246,0) 45%), #080D15;color:#F8F9FC;font-family:'Poppins', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(90deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(0deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<img src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo" style="position:absolute;right:128px;top:48px;width:240px;height:54px;object-fit:contain">
-<div style="display:flex;flex-direction:column;gap:16px">
-<p style="font-size:24px;font-weight:600;color:#EDE9FE;letter-spacing:3px;text-transform:uppercase">Para tu equipo</p>
-<h2 style="font-size:72px;font-weight:700;line-height:1.05;letter-spacing:-0.01em;color:#F8F9FC">Hecho para contratar en <span style="color:#8635F6">volumen</span></h2>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
-<div style="display:flex;flex-direction:column;gap:12px;background:#10131D;padding:40px;border:1px solid #262B3A;border-radius:16px">
-<h3 style="font-size:36px;font-weight:600;color:#F8F9FC">Varias vacantes a la vez</h3>
-<p style="font-size:28px;line-height:1.5;color:#EDEDED">Duplicas una vacante que funciona y abres la siguiente con todo configurado</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:12px;background:#10131D;padding:40px;border:1px solid #262B3A;border-radius:16px">
-<h3 style="font-size:36px;font-weight:600;color:#F8F9FC">Comparte un perfil</h3>
-<p style="font-size:28px;line-height:1.5;color:#EDEDED">Envías al jefe un enlace con todo el candidato; vence en 7 días</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:12px;background:#10131D;padding:40px;border:1px solid #262B3A;border-radius:16px">
-<h3 style="font-size:36px;font-weight:600;color:#F8F9FC">Documentos de contratación</h3>
-<p style="font-size:28px;line-height:1.5;color:#EDEDED">El seleccionado sube sus documentos desde un enlace</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:12px;background:#10131D;padding:40px;border:1px solid #262B3A;border-radius:16px">
-<h3 style="font-size:36px;font-weight:600;color:#F8F9FC">Usuarios y permisos</h3>
-<p style="font-size:28px;line-height:1.5;color:#EDEDED">Defines qué puede hacer cada persona en cada etapa</p>
-</div>
-</div>
-<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#EDEDED">10</p>
-
-</section>
-</div>
-<div class="slide" role="group" aria-roledescription="diapositiva" aria-label="11 de 12"><section id="opciones" data-transition="fade" style="background:radial-gradient(circle at 88% 8%, rgba(134,53,246,0.22) 0%, rgba(134,53,246,0) 45%), #080D15;color:#F8F9FC;font-family:'Poppins', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(90deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(0deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<img src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo" style="position:absolute;right:128px;top:48px;width:240px;height:54px;object-fit:contain">
-<div style="display:flex;flex-direction:column;gap:16px">
-<p style="font-size:24px;font-weight:600;color:#EDE9FE;letter-spacing:3px;text-transform:uppercase">Cómo trabajar juntos</p>
-<h2 style="font-size:72px;font-weight:700;line-height:1.05;letter-spacing:-0.01em;color:#F8F9FC">Elige cómo quieres <span style="color:#8635F6">contratar</span></h2>
-</div>
-<div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:24px;flex:1">
-<div style="display:flex;flex-direction:column;gap:16px;background:#10131D;padding:36px;border:1px solid #262B3A;border-radius:16px">
-<h3 style="font-size:32px;font-weight:600;line-height:1.2;color:#F8F9FC">Software</h3>
-<p style="font-size:24px;line-height:1.5;color:#EDEDED">Tu equipo usa la plataforma: vacantes, filtros, tablero y WhatsApp automático. Conectas tu cuenta de Meta.</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:16px;background:#10131D;padding:36px;border:1px solid #262B3A;border-radius:16px">
-<h3 style="font-size:32px;font-weight:600;line-height:1.2;color:#F8F9FC">Software + pruebas</h3>
-<p style="font-size:24px;line-height:1.5;color:#EDEDED">Todo lo anterior, con pruebas psicométricas asignadas por vacante.</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:16px;background:#10131D;padding:36px;border:1px solid #262B3A;border-radius:16px">
-<h3 style="font-size:32px;font-weight:600;line-height:1.2;color:#F8F9FC">Con pauta</h3>
-<p style="font-size:24px;line-height:1.5;color:#EDEDED">Además, nuestro equipo monta y optimiza tus anuncios con IA para traerte candidatos.</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:16px;background:#8635F6;padding:36px;border-radius:16px">
-<h3 style="font-size:32px;font-weight:700;line-height:1.2;color:#FFFFFF">Por volumen</h3>
-<p style="font-size:24px;line-height:1.5;font-weight:600;color:#FFFFFF">Nos encargamos del proceso completo y tu equipo entrevista a los que cumplen.</p>
-</div>
-</div>
-<p style="font-size:28px;line-height:1.5;color:#EDEDED">El valor de la opción que elijas, con lo que incluye y lo que va aparte, llega por escrito en tu propuesta.</p>
-<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#EDEDED">11</p>
-
-</section>
-</div>
-<div class="slide" role="group" aria-roledescription="diapositiva" aria-label="12 de 12"><section id="sigue" data-transition="fade" style="background:radial-gradient(circle at 80% 20%, rgba(134,53,246,0.40) 0%, rgba(134,53,246,0) 55%), #080D15;color:#F8F9FC;font-family:'Poppins', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(90deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<div style="position:absolute;left:0px;top:0px;width:1920px;height:1080px;background:repeating-linear-gradient(0deg, rgba(237,237,237,0.04) 0px, rgba(237,237,237,0.04) 1px, rgba(237,237,237,0) 1px, rgba(237,237,237,0) 64px)"></div>
-<img src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo" style="position:absolute;right:128px;top:48px;width:240px;height:54px;object-fit:contain">
-<div style="display:flex;flex-direction:column;gap:16px">
-<p style="font-size:24px;font-weight:600;color:#EDE9FE;letter-spacing:3px;text-transform:uppercase">Siguientes pasos</p>
-<h2 style="font-size:80px;font-weight:700;line-height:1.05;letter-spacing:-0.01em;color:#F8F9FC">Tu próxima vacante, ya <span style="color:#8635F6">filtrada</span></h2>
-</div>
-<div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:32px">
-<div style="display:flex;flex-direction:column;gap:16px;background:#10131D;padding:40px;border:1px solid #262B3A;border-radius:16px">
-<p style="font-size:48px;font-weight:700;color:#8635F6">1</p>
-<h3 style="font-size:34px;font-weight:600;line-height:1.2;color:#F8F9FC">Definimos tus perfiles</h3>
-<p style="font-size:26px;line-height:1.5;color:#EDEDED">Cargos, volumen al mes, requisitos y quién decide</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:16px;background:#10131D;padding:40px;border:1px solid #262B3A;border-radius:16px">
-<p style="font-size:48px;font-weight:700;color:#8635F6">2</p>
-<h3 style="font-size:34px;font-weight:600;line-height:1.2;color:#F8F9FC">Recibes tu propuesta</h3>
-<p style="font-size:26px;line-height:1.5;color:#EDEDED">Por escrito, con el valor y lo que incluye</p>
-</div>
-<div style="display:flex;flex-direction:column;gap:16px;background:#10131D;padding:40px;border:1px solid #262B3A;border-radius:16px">
-<p style="font-size:48px;font-weight:700;color:#8635F6">3</p>
-<h3 style="font-size:34px;font-weight:600;line-height:1.2;color:#F8F9FC">Activamos tu cuenta</h3>
-<p style="font-size:26px;line-height:1.5;color:#EDEDED">Tu primera vacante lista para recibir candidatos</p>
-</div>
-</div>
-<div style="display:flex;align-items:center;gap:32px">
-<a href="https://crm.desarrollando.co/contratando?tab=agendar&amp;origen=presentacion" target="_blank" rel="noopener" style="font-size:30px;font-weight:600;color:#FFFFFF;background:#8635F6;padding:24px 40px;border-radius:12px;text-decoration:none">Agendar diagnóstico →</a>
-<p style="font-size:26px;color:#EDEDED">Sergio Arias · sarias@desarrollandoando.com</p>
-</div>
-<p style="position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#EDEDED">12</p>
-
-</section>
-</div>
+<div class="slide" role="group" aria-roledescription="diapositiva" aria-label="1 de 6"><section style="background:radial-gradient(circle at 82% 30%,rgba(134,53,246,.40) 0,rgba(134,53,246,0) 55%),#080D15"><img class="logo" src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo"><div style="display:flex;flex-direction:column;gap:22px;margin-top:40px">
+<p class="k">ContratAndo by DesarrollAndo</p>
+<h1 style="max-width:1450px">Deja de perseguir candidatos. Contrata a los que <span class="v">cumplen</span>.</h1>
+<p class="lead">Tus candidatos llegan, se filtran con tus requisitos y se contactan solos por WhatsApp y llamada con IA. Tu equipo solo entrevista a quien cumple y decide a quién contratar.</p></div>
+<div class="row" style="grid-template-columns:1fr 1fr 1.1fr;margin-top:auto">
+<div class="c"><span class="tag">Hoy</span><ul><li>Revisas hojas de vida una por una</li><li>Llamas a quien no contesta</li><li>Sigues el proceso en Excel y WhatsApp</li><li>Cada vacante empieza de cero</li></ul></div>
+<div class="c p"><span class="tag" style="color:#EDE9FE">Con ContratAndo</span><ul><li>Las reglas filtran por tus requisitos</li><li>WhatsApp y llamada salen solos</li><li>Todo el proceso en un tablero</li><li>Duplicas la vacante y sigues</li></ul></div>
+<div class="c"><span class="tag">Para empresas que contratan en volumen</span><p>Muchos postulantes que revisar, perfiles que todas las empresas buscan y el mismo proceso repetido todos los meses: publicar, filtrar, llamar y citar.</p><p style="color:#EDEDED;font-weight:600">Sergio Arias · sarias@desarrollandoando.com</p></div>
+</div><p class="num">1 / 6</p></section></div><div class="slide" role="group" aria-roledescription="diapositiva" aria-label="2 de 6"><section><img class="logo" src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo"><div><p class="k">Cómo funciona</p><h2>De la vacante a la entrevista en <span class="v">cinco pasos</span></h2></div>
+<div class="row" style="grid-template-columns:repeat(5,1fr)">
+<div class="step"><i>1</i><div><b>Publicas la vacante</b><span>Cargo, requisitos y preguntas de filtro</span></div></div>
+<div class="step"><i>2</i><div><b>Llegan candidatos</b><span>Desde anuncios en Meta o tu enlace</span></div></div>
+<div class="step"><i>3</i><div><b>Se filtran solos</b><span>Las reglas los mueven a apto o rechazado</span></div></div>
+<div class="step"><i>4</i><div><b>Se contactan solos</b><span>WhatsApp automático y llamada con IA, si la activas</span></div></div>
+<div class="step"><i>5</i><div><b>Tu equipo decide</b><span>Solo entrevista a quien cumple</span></div></div></div>
+<div class="row" style="grid-template-columns:1fr 1.45fr;flex:1">
+<div class="c"><span class="tag">Filtro automático</span><h3>Tus requisitos se vuelven reglas</h3><p>Cuando el candidato termina el formulario, ContratAndo lo ubica en la etapa que corresponde.</p>
+<div style="background:#0B0E16;border:1px solid #262B3A;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;margin-top:4px"><p style="color:#EDEDED;font-size:19px">¿Cuánta experiencia tienes en el cargo?</p><div class="rule"><em>6 meses o más</em><span class="ok">→ Apto</span></div><div class="rule"><em>Sin experiencia</em><span class="no">→ Rechazado</span></div></div>
+<p>También puedes filtrar por:</p><ul><li>Ciudad o barrio donde vive</li><li>Disponibilidad de horario y turnos</li><li>Aspiración salarial</li><li>Estudios, licencias o certificados que pide el cargo</li></ul>
+<p class="note">Ejemplo ilustrativo: las preguntas y reglas se definen con tu equipo.</p></div>
+<div class="c"><span class="tag">Tablero por etapas</span><h3>Todo el proceso en una sola vista</h3>
+<div class="kb"><div><b>Nuevo</b><span>Recibe WhatsApp para completar</span></div><div><b>En revisión</b><span>Formulario completo</span></div><div class="ap"><b>Apto</b><span>Recibe la llamada de entrevista</span></div><div><b>Entrevista</b><span>Tu equipo lo cita</span></div><div class="re"><b>Rechazado</b><span>No cumple un requisito</span></div></div>
+<p>Las etapas se ajustan a tu proceso: las nombras, las ordenas y a cada una le pones sus mensajes y reglas. Ves cuántos candidatos hay en cada etapa y en qué va cada uno.</p>
+<div class="row" style="grid-template-columns:1fr 1fr;gap:16px;margin-top:6px">
+<div style="background:#0B0E16;border:1px solid #262B3A;border-radius:14px;padding:18px"><p style="color:#EDEDED;font-weight:600;font-size:20px;margin-bottom:6px">En la ficha de cada candidato</p><ul><li>Datos y respuestas del formulario</li><li>Grabación, resumen y nota de la entrevista por voz</li><li>Resultados de sus pruebas</li><li>Mensajes enviados y notas de tu equipo</li></ul></div>
+<div style="background:#0B0E16;border:1px solid #262B3A;border-radius:14px;padding:18px"><p style="color:#EDEDED;font-weight:600;font-size:20px;margin-bottom:6px">Al mover a un candidato</p><ul><li>Sale el WhatsApp de esa etapa</li><li>Se aplican las reglas que definiste</li><li>Puedes moverlo tú, arrastrando la tarjeta</li><li>Puedes etiquetar o mover varios a la vez</li></ul></div></div></div></div><p class="num">2 / 6</p></section></div><div class="slide" role="group" aria-roledescription="diapositiva" aria-label="3 de 6"><section><img class="logo" src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo"><div><p class="k">Contacto y evaluación automáticos</p><h2>Cada candidato recibe su mensaje y, si los activas, su entrevista y sus pruebas, <span class="v">sin que tu equipo marque</span></h2></div>
+<div class="row" style="grid-template-columns:repeat(3,1fr)">
+<div class="c"><span class="tag">WhatsApp automático</span><h3>El mensaje correcto, en el momento correcto</h3><ul><li>Cada etapa envía su propia plantilla de WhatsApp, aprobada por Meta</li><li>Al llegar: invitación a completar la postulación</li><li>Citación y aviso en cada cambio de etapa</li><li>Un asistente virtual en WhatsApp responde las dudas frecuentes del candidato</li></ul></div>
+<div class="c p"><span class="tag" style="color:#EDE9FE">Entrevista por voz con IA</span><h3>La primera entrevista, sin marcar</h3><ul><li><b>Llama y pregunta:</b> un agente de voz llama al candidato cuando queda apto</li><li><b>Califica:</b> deja grabación, transcripción, resumen y una nota con la rúbrica de tu empresa</li><li><b>Mueve al candidato:</b> con la nota mínima que tú defines, pasa a entrevista o queda para revisión de tu equipo</li></ul></div>
+<div class="c"><span class="tag">Pruebas psicométricas</span><h3>Mide lo que la hoja de vida no muestra</h3><p style="font-size:64px;font-weight:700;color:#B794F6;line-height:1">10</p><p>pruebas en línea: cognitivas, conductuales y situacionales, ajustadas al nivel y al área del cargo.</p><p>Las asignas a la vacante, el candidato las responde en línea y el resultado queda en su ficha.</p></div></div>
+<div class="c" style="margin-top:auto"><span class="tag">Ejemplo: el recorrido de un candidato</span>
+<div class="row" style="grid-template-columns:repeat(6,1fr);gap:14px;margin-top:6px">
+<div class="step"><i>1</i><div><b style="font-size:19px">Se postula</b><span>Desde el anuncio o tu enlace</span></div></div>
+<div class="step"><i>2</i><div><b style="font-size:19px">Recibe WhatsApp</b><span>Con el enlace para completar su postulación</span></div></div>
+<div class="step"><i>3</i><div><b style="font-size:19px">Queda apto</b><span>Cumple las reglas de la vacante</span></div></div>
+<div class="step"><i>4</i><div><b style="font-size:19px">Lo llaman</b><span>Si la activas, el agente de voz le hace la primera entrevista</span></div></div>
+<div class="step"><i>5</i><div><b style="font-size:19px">Responde pruebas</b><span>Si las asignas, en línea desde su celular</span></div></div>
+<div class="step"><i>6</i><div><b style="font-size:19px">Lo citan</b><span>Tu equipo ve su ficha completa y decide</span></div></div></div>
+<p class="note">Ejemplo ilustrativo. Los pasos, mensajes y horarios se configuran para cada vacante.</p></div><p class="num">3 / 6</p></section></div><div class="slide" role="group" aria-roledescription="diapositiva" aria-label="4 de 6"><section><img class="logo" src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo"><div><p class="k">Para tu equipo</p><h2>Hecho para tu <span class="v">equipo de selección</span></h2></div>
+<div class="row" style="grid-template-columns:repeat(4,1fr)">
+<div class="c"><h3>Varias vacantes a la vez</h3><p>Duplicas una vacante que funciona y abres la siguiente con todo configurado.</p></div>
+<div class="c"><h3>Comparte un perfil</h3><p>Envías al jefe un enlace de solo lectura con todo el candidato; vence en 7 días y lo puedes revocar.</p></div>
+<div class="c"><h3>Documentos de contratación</h3><p>El seleccionado sube sus documentos desde un enlace, sin cadenas de correos.</p></div>
+<div class="c"><h3>Usuarios y permisos</h3><p>Defines qué puede ver y hacer cada persona.</p></div></div>
+<div class="row" style="grid-template-columns:1fr 1fr">
+<div class="c"><span class="tag">Lo que hace ContratAndo</span><ul><li>Recibe a los candidatos desde tus anuncios o tu enlace</li><li>Los filtra con tus reglas y los ordena en el tablero</li><li>Les escribe, los llama y los evalúa</li><li>Guarda todo en la ficha de cada candidato</li></ul></div>
+<div class="c"><span class="tag">Lo que decide tu equipo</span><ul><li>Los requisitos y las preguntas de filtro</li><li>La nota mínima para pasar a entrevista</li><li>A quién entrevista y a quién contrata</li><li>Cuándo abrir o cerrar cada vacante</li></ul><p class="note" style="margin-top:6px">Contratar es siempre decisión de tu empresa.</p></div></div>
+<div class="row" style="grid-template-columns:repeat(4,1fr);margin-top:auto">
+<div class="c"><h3 style="font-size:22px">Tu cuenta de Meta</h3><p>Conectas tu cuenta de Meta para anuncios y WhatsApp, o te ayudamos con la pauta.</p></div>
+<div class="c"><h3 style="font-size:22px">Plantillas aprobadas</h3><p>Cada mensaje de WhatsApp sale con una plantilla aprobada por Meta.</p></div>
+<div class="c"><h3 style="font-size:22px">Tratamiento de datos</h3><p>El candidato acepta la política de tratamiento de datos, publicada en línea, al postularse.</p></div>
+<div class="c"><h3 style="font-size:22px">Soporte</h3><p>En días hábiles, de 8:00 a. m. a 6:00 p. m.</p></div></div><p class="num">4 / 6</p></section></div><div class="slide" role="group" aria-roledescription="diapositiva" aria-label="5 de 6"><section><img class="logo" src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo"><div><p class="k">Cómo trabajar juntos</p><h2>Elige cómo quieres <span class="v">contratar</span></h2></div>
+<table class="m"><tr><th style="width:34%">Qué incluye</th><th>Software<small>Tu equipo usa la plataforma</small></th><th>Software + pruebas<small>Con pruebas psicométricas</small></th><th>Con pauta<small>Montamos tu pauta</small></th><th class="hl">Por volumen<small>Nos encargamos del proceso</small></th></tr><tr><td>Vacantes, formularios y filtros automáticos</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="hl y">✓</td></tr><tr><td>Tablero por etapas y WhatsApp automático</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="hl y">✓</td></tr><tr><td>Pruebas psicométricas por vacante</td><td class="n">—</td><td class="y">✓</td><td>Opcional</td><td class="hl">Opcional</td></tr><tr><td>Entrevista por voz con IA y rúbrica propia</td><td>Opcional</td><td>Opcional</td><td>Opcional</td><td class="hl">Opcional</td></tr><tr><td>Montamos y gestionamos tus anuncios en Meta</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td><td class="hl y">✓</td></tr><tr><td>Nuestro equipo opera filtro, contacto y citación</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="hl y">✓</td></tr><tr><td>Tu equipo entrevista y decide</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="hl y">✓</td></tr></table>
+<div class="row" style="grid-template-columns:1.4fr 1fr;margin-top:10px">
+<p class="note" style="font-size:19px">En «Software» y «Software + pruebas» conectas tu cuenta de Meta. Los cobros de Meta por plantillas de WhatsApp y el presupuesto de anuncios van aparte. El valor de la opción que elijas, con lo que incluye y lo que va aparte, llega por escrito en tu propuesta.</p>
+<p class="note" style="font-size:19px">«Por volumen» depende del nivel del cargo y de cuántas personas necesitas al mes. Pruebas y entrevista por voz se suman por candidato si las agregas.</p></div><p class="num">5 / 6</p></section></div><div class="slide" role="group" aria-roledescription="diapositiva" aria-label="6 de 6"><section><img class="logo" src="../assets/logo-contratando.png" alt="ContratAndo by DesarrollAndo"><div><p class="k">Siguientes pasos</p><h2>Tu próxima vacante, <span class="v">ya filtrada</span></h2></div>
+<div class="row" style="grid-template-columns:repeat(3,1fr)">
+<div class="c"><div class="step"><i>1</i><div><b>Definimos tus perfiles</b><span>Cargos, volumen al mes, ciudades, requisitos y quién decide.</span></div></div></div>
+<div class="c"><div class="step"><i>2</i><div><b>Recibes tu propuesta</b><span>Por escrito, con el valor, lo que incluye y lo que va aparte.</span></div></div></div>
+<div class="c"><div class="step"><i>3</i><div><b>Activamos tu cuenta</b><span>Te mostramos el borrador de tu primera vacante. Nada se publica sin tu aprobación.</span></div></div></div></div>
+<div class="row" style="grid-template-columns:1.3fr 1fr;align-items:end;margin-top:20px">
+<div class="c"><span class="tag">Para tu propuesta necesitamos</span><ul><li>Cargo, salario y horario de cada vacante</li><li>Cuántas personas necesitas al mes y en qué ciudades</li><li>Requisitos indispensables y deseables</li><li>Quién entrevista y quién aprueba la contratación</li></ul></div>
+<div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start"><a class="cta" href="https://crm.desarrollando.co/contratando?tab=agendar&amp;origen=presentacion">Agendar diagnóstico →</a><p style="font-size:22px;color:#EDEDED">Sergio Arias · sarias@desarrollandoando.com</p></div></div><p class="num">6 / 6</p></section></div>
 </div></div>
 <div id="controles">
 <button type="button" id="ant" aria-label="Diapositiva anterior">←</button>
