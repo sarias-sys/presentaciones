@@ -384,8 +384,7 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
             <div id="bandasPruebas" class="note" style="margin:0"></div>
           </div>
           <div class="field">
-            <label for="precioOperativo">Por volumen: cargo operativo (menos de 2 SMLMV), por persona contratada, pauta incluida</label>
-            <input type="number" id="precioOperativo" min="0" step="1000" value="101000">
+            <label>Por persona contratada: % de un salario mensual según el nivel, pauta incluida</label>
             <small id="bandaCargo"></small>
           </div>
           <div class="field">
@@ -511,7 +510,7 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
           <li>Supuestos que puedes cambiar: dólar a 4.000 COP, 6 meses por la temporal, honorario de la firma de un salario, inversión en anuncios por postulante y horas del equipo.</li>
           <li>El asistente virtual que responde a los candidatos por WhatsApp va incluido en la tarifa por candidato de ContratAndo.</li>
           <li>ContratAndo, Plataforma: puesta a punto de 3.000.000 COP una vez; 4.000 COP por candidato que llega; pruebas psicométricas por batería presentada, por tramos de volumen al mes (de 12.000 a 5.400 COP; cada batería adicional cuenta como otra prueba); entrevista telefónica con IA a 650 COP por minuto; mínimo mensual de 500.000 COP por soporte. La pauta y las plantillas de WhatsApp las pagas directo a Meta.</li>
-          <li>ContratAndo, por persona contratada: menos de 2 SMLMV, valor fijo con pauta incluida; desde 2 SMLMV, de 30 % a 40 % del salario según la banda del cargo. Pruebas y entrevista telefónica se suman igual que en Plataforma.</li>
+          <li>ContratAndo, por persona contratada: de 30 % a 16 % de un salario mensual según el nivel del cargo, con la pauta de referencia incluida; un salario más alto nunca paga menos que el más alto del nivel anterior. Pruebas y entrevista telefónica se suman igual que en Plataforma.</li>
           <li>Las tarifas de ContratAndo de este simulador son de referencia; el valor de tu caso llega en la propuesta.</li>
         </ul>
       </section>
@@ -563,23 +562,28 @@ const BANDAS_PRUEBAS = [
 ];
 function precioPrueba(evaluados) { return (BANDAS_PRUEBAS.find(b => evaluados <= b.hasta) || BANDAS_PRUEBAS[0]).cop; }
 function costoPruebas(evaluados) { let total = 0, previo = 0; for (const b of BANDAS_PRUEBAS) { const n = Math.max(0, Math.min(evaluados, b.hasta) - previo); total += n * b.cop; previo = b.hasta; if (evaluados <= b.hasta) break; } return total; }
-// Por volumen: bandas por nivel del cargo, tomadas de las propuestas a Nexa (2026).
-// Menos de 2 SMLMV: valor fijo por contratado. Desde 2 SMLMV: % del salario mensual.
+// Por persona contratada: % de un salario mensual, que baja a medida que sube el nivel. Pauta incluida en todos los niveles.
+// Propuesta por aprobar (oct 2026). El valor nunca baja del tope del nivel anterior, para que un salario más alto no pague menos.
 const BANDAS_CARGO = [
-  { desde: 2, hasta: 3, pct: 0.30 },
-  { desde: 3, hasta: 5, pct: 0.30 },
-  { desde: 5, hasta: 8, pct: 0.33 },
-  { desde: 8, hasta: 10, pct: 0.35 },
-  { desde: 10, hasta: 15, pct: 0.37 },
-  { desde: 15, hasta: 20, pct: 0.38 },
-  { desde: 20, hasta: Infinity, pct: 0.40 }
+  { desde: 0, hasta: 2, pct: 0.30, nombre: 'Operativo' },
+  { desde: 2, hasta: 3, pct: 0.28, nombre: 'Técnico o analista junior' },
+  { desde: 3, hasta: 5, pct: 0.26, nombre: 'Profesional' },
+  { desde: 5, hasta: 8, pct: 0.24, nombre: 'Coordinador o especialista' },
+  { desde: 8, hasta: 10, pct: 0.22, nombre: 'Jefe de área' },
+  { desde: 10, hasta: 15, pct: 0.20, nombre: 'Gerente' },
+  { desde: 15, hasta: 20, pct: 0.18, nombre: 'Gerente senior' },
+  { desde: 20, hasta: Infinity, pct: 0.16, nombre: 'Director' }
 ];
-function valorPorContratado(salario, precioOperativo) {
+function valorPorContratado(salario) {
   const n = salario / SMMLV;
-  if (n < 2) return { valor: precioOperativo, banda: 'Operativo (menos de 2 SMLMV): valor fijo' };
-  const b = BANDAS_CARGO.find(x => n >= x.desde && n < x.hasta) || BANDAS_CARGO[BANDAS_CARGO.length - 1];
-  const rango = b.hasta === Infinity ? 'desde ' + b.desde + ' SMLMV' : 'de ' + b.desde + ' a ' + b.hasta + ' SMLMV';
-  return { valor: salario * b.pct, banda: 'Cargo ' + rango + ': ' + Math.round(b.pct * 100) + ' % del salario' };
+  const i = Math.max(0, BANDAS_CARGO.findIndex(x => n >= x.desde && n < x.hasta));
+  const b = BANDAS_CARGO[i];
+  const piso = i > 0 ? b.desde * SMMLV * BANDAS_CARGO[i - 1].pct : 0;
+  const valor = Math.max(salario * b.pct, piso);
+  const rango = b.hasta === Infinity ? 'desde ' + b.desde + ' SMLMV' : (b.desde ? 'de ' + b.desde + ' a ' + b.hasta + ' SMLMV' : 'menos de 2 SMLMV');
+  const enPiso = valor > salario * b.pct;
+  const equiv = salario > 0 ? (Math.round(valor / salario * 1000) / 10).toString().replace('.', ',') : '0';
+  return { valor, pct: b.pct, enPiso, equiv, banda: b.nombre + ' (' + rango + '), ' + (enPiso ? 'mínimo del nivel, ' + cop0(valor) + ' (equivale al ' + equiv + ' % de tu salario)' : Math.round(b.pct * 100) + ' % del salario') };
 }
 
 // Niveles del selector: rango en SMLMV y salario sugerido (punto medio del rango)
@@ -680,7 +684,7 @@ function calcular(s) {
   const pC = [lineaSetup, ...lineasPlataforma, ['Gestión de anuncios con nuestro equipo', s.gestionPauta], ...comunes];
   esc.push({ id: 'pauta', nombre: 'Plataforma + nosotros hacemos la pauta', partes: pC, total: sumar(pC) });
   // Por volumen: valor por contratado según banda del cargo; incluye la pauta. Pruebas y voz se suman por candidato.
-  const vc = valorPorContratado(s.salario, s.precioOperativo);
+  const vc = valorPorContratado(s.salario);
   const pD = [['Servicio por persona contratada (' + H + ' × ' + cop0(vc.valor) + ') · ' + vc.banda, H * vc.valor], ...(evaluados > 0 ? [lineaPruebasCA] : []), ...lineaVoz, ...pagoMeta, ['Tiempo de tu equipo (' + fmtNum(H * s.horasConCA) + ' h)', tiempoCA]];
   esc.push({ id: 'volumen', nombre: 'Por persona contratada', partes: pD, total: sumar(pD), banda: vc.banda });
 
@@ -719,7 +723,7 @@ try { const g = JSON.parse(localStorage.getItem('sim-escenario') || 'null'); if 
 const DESC = {
   pruebas: 'Tú haces la pauta y usas la plataforma. Pagas por candidato que llega, más pruebas y minutos de entrevista si los usas, con un mínimo mensual por soporte.',
   pauta: 'Igual que «Plataforma», y nuestro equipo monta y gestiona tus anuncios.',
-  volumen: 'Pagas por persona contratada, según la banda del cargo; la pauta va incluida. Pruebas y entrevista telefónica se suman por candidato.'
+  volumen: 'Pagas por persona contratada un % de su salario mensual, que baja según el nivel del cargo; la pauta de referencia va incluida. Pruebas y entrevista telefónica se suman por candidato.'
 };
 
 // Opciones de pruebas de referencia
@@ -764,7 +768,6 @@ function leer() {
     precioLead: num('precioLead', 4000),
     minimoMensual: num('minimoMensual', 500000),
     gestionPauta: num('gestionPauta', 1200000),
-    precioOperativo: num('precioOperativo', 101000),
     costoPorPostulante: num('costoPorPostulante', 3000),
     horasConCA: num('horasConCA', 1.5),
     mensajesPorCandidato: num('mensajes', 3),
@@ -786,9 +789,8 @@ function render() {
   ultimo = { s, r };
   $('bandasPruebas').innerHTML = BANDAS_PRUEBAS.map((b, k) => { const desde = k ? BANDAS_PRUEBAS[k - 1].hasta + 1 : 1; const txt = b.hasta === Infinity ? 'Más de ' + BANDAS_PRUEBAS[k - 1].hasta : desde + ' a ' + b.hasta; const on = r.baterias > 0 && r.baterias > (k ? BANDAS_PRUEBAS[k - 1].hasta : 0); return (on ? '<b>' : '') + txt + ': ' + cop0(b.cop) + (on ? '</b>' : ''); }).join(' · ');
   const H = r.H;
-  const vcN = valorPorContratado(s.salario, s.precioOperativo);
-  const esOp = s.salario / SMMLV < 2;
-  $('feeNivel').innerHTML = 'Con la opción «por persona contratada», el valor de referencia sería <b>' + cop(vcN.valor) + '</b> por persona' + (esOp ? ' (valor fijo, pauta incluida).' : ' (' + vcN.banda.split(': ')[1] + '; si la pauta va incluida o se cobra aparte se define en la propuesta).') + (H ? ' Si contratas ' + H + ' ' + plural(H, 'persona', 'personas') + ' en el mes: ' + cop(vcN.valor * H) + ' de referencia, sin pruebas ni entrevista telefónica. Precio sujeto a la propuesta formal.' : '');
+  const vcN = valorPorContratado(s.salario);
+  $('feeNivel').innerHTML = 'Con la opción «por persona contratada», el valor de referencia sería <b>' + cop(vcN.valor) + '</b> por persona, pauta de referencia incluida. ' + (vcN.enPiso ? 'Es el mínimo del nivel: lo mismo que paga el salario más alto del nivel anterior (equivale al ' + vcN.equiv + ' % de tu salario).' : 'Es el ' + Math.round(vcN.pct * 100) + ' % del salario.') + (H ? ' Si contratas ' + H + ' ' + plural(H, 'persona', 'personas') + ' en el mes: ' + cop(vcN.valor * H) + ' de referencia, sin pruebas, entrevista telefónica ni plantillas de WhatsApp. Tarifas de referencia; el valor de tu caso llega en la propuesta.' : '');
   $('hLabel').textContent = H + ' ' + plural(H, 'persona', 'personas');
   $('evLabel').textContent = r.evaluados + ' ' + plural(r.evaluados, 'candidato', 'candidatos');
   const emp = $('empresa').value.trim();
@@ -841,8 +843,8 @@ function render() {
     if (nuevo) nuevo.focus();
   }));
 
-  let caExtra = '<p class="note">' + (ca.id !== 'volumen' ? 'Puesta a punto de la plataforma: ' + cop(r.configuracionInicial) + ', una sola vez. El asistente virtual y el resto del proceso van incluidos en la tarifa por candidato. ' : (r.bandaCargo.indexOf('Operativo') === 0 ? 'En cargos operativos la pauta va incluida en el valor por persona contratada. ' : 'En esta banda, si la pauta va incluida se confirma en la propuesta. ')) + 'Las plantillas de WhatsApp' + (ca.id !== 'volumen' ? ' y la inversión en anuncios' : '') + ' se pagan directo a Meta. Tarifas de referencia, por aprobar.</p>';
-  $('bandaCargo').textContent = 'Con el salario que escribiste: ' + r.bandaCargo + '. Bandas: menos de 2 SMLMV, valor fijo con pauta incluida; de 2 a 3 SMLMV, 30 %; de 3 a 5, 30 %; de 5 a 8, 33 %; de 8 a 10, 35 %; de 10 a 15, 37 %; de 15 a 20, 38 %; desde 20, 40 % del salario.';
+  let caExtra = '<p class="note">' + (ca.id !== 'volumen' ? 'Puesta a punto de la plataforma: ' + cop(r.configuracionInicial) + ', una sola vez. El asistente virtual y el resto del proceso van incluidos en la tarifa por candidato. ' : 'La pauta de referencia va incluida en el valor por persona contratada; su alcance se define en la propuesta. ') + 'Las plantillas de WhatsApp' + (ca.id !== 'volumen' ? ' y la inversión en anuncios' : '') + ' se pagan directo a Meta. Tarifas de referencia; el valor de tu caso llega en la propuesta.</p>';
+  $('bandaCargo').textContent = 'Tu cargo queda en ' + r.bandaCargo + '. Niveles: ' + BANDAS_CARGO.map(b => (b.hasta === Infinity ? 'desde ' + b.desde : (b.desde ? b.desde + ' a ' + b.hasta : 'menos de 2')) + ' SMLMV, ' + Math.round(b.pct * 100) + ' %').join('; ') + '. Al subir de nivel, el valor nunca es menor que el del salario más alto del nivel anterior: un salario más alto nunca paga menos.';
   try { localStorage.setItem('sim-escenario', JSON.stringify(escenarioSel)); } catch (e) {}
   $('bdCA').innerHTML = '<div class="bd"><h3>ContratAndo · ' + ca.nombre + '</h3>' + tablaPartes(ca.partes, ca.total) + caExtra + '</div>';
 
@@ -922,7 +924,7 @@ $('form').addEventListener('change', render);
 $('form').addEventListener('submit', e => e.preventDefault());
 
 // Recordar los datos en este navegador
-const CAMPOS = ['empresa','contacto','ciudad','cargo','contrataciones','salario','postulantes','evaluados','baterias','vacantes','usuarios','horasHoy','horasConCA','salarioReclutador','incluirPruebas','incluirVoz','entrevistadosVoz','exonerada','margenTemporal','mesesTemporal','honorarioFirmaPct','precioAviso','trm','softwareRef','pruebaRef','setupPlataforma','precioLead','minimoMensual','precioMinutoVoz','minutosEntrevista','gestionPauta','precioOperativo','costoPorPostulante','mensajes','tarifaMeta','incluirAsistente'];
+const CAMPOS = ['empresa','contacto','ciudad','cargo','contrataciones','salario','postulantes','evaluados','baterias','vacantes','usuarios','horasHoy','horasConCA','salarioReclutador','incluirPruebas','incluirVoz','entrevistadosVoz','exonerada','margenTemporal','mesesTemporal','honorarioFirmaPct','precioAviso','trm','softwareRef','pruebaRef','setupPlataforma','precioLead','minimoMensual','precioMinutoVoz','minutosEntrevista','gestionPauta','costoPorPostulante','mensajes','tarifaMeta','incluirAsistente'];
 const CLAVE = 'simulador-contratando-v3';
 function guardar() {
   try {
