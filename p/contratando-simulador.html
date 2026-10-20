@@ -189,7 +189,7 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
   <section class="hero">
     <span class="tag" id="heroTag">Para tu empresa</span>
     <h1>¿Cuánto te cuesta <span class="v">contratar</span> hoy?</h1>
-    <p>Escribe cuántas personas contratas al mes y te mostramos, en pesos, lo que pagas hoy y lo que pagarías con ContratAndo. La opción que más ahorra suele ser <b>Plataforma</b>: pagas una sola vez la puesta a punto, tú haces la pauta y todo lo demás pasa dentro de ContratAndo.</p>
+    <p>Escribe cuántas personas contratas al mes y te mostramos, en pesos, lo que pagas hoy y lo que pagarías con ContratAndo. Con volúmenes como el tuyo, <b>Plataforma</b> suele ser la más económica (compruébalo con tus datos): pagas una sola vez la puesta a punto, tú haces la pauta y todo lo demás pasa dentro de ContratAndo.</p>
   </section>
 
   <div class="layout">
@@ -363,7 +363,7 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
             </div>
           </div>
           <div class="field">
-            <label>Pruebas psicométricas, por batería presentada (por tramos de volumen al mes)</label>
+            <label>Pruebas psicométricas, por batería presentada. Cada tramo se cobra a su tarifa: las primeras 100 del mes a la primera tarifa, de la 101 a la 300 a la segunda, y así.</label>
             <div id="bandasPruebas" class="note" style="margin:0"></div>
           </div>
           <div class="field">
@@ -403,7 +403,7 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
       <section class="card" aria-labelledby="t-esc">
         <span class="tag">Tu propuesta con ContratAndo</span>
         <h2 id="t-esc">Así pagarías con <span class="v">Plataforma</span></h2>
-        <p class="lead">Pagas la puesta a punto una sola vez. Tú haces la pauta y la pagas directo a Meta. ContratAndo recibe a los candidatos, los filtra, les escribe, los evalúa y te los deja listos para entrevistar.</p>
+        <p class="lead">Pagas la puesta a punto una sola vez. Tú haces la pauta y la pagas directo a Meta. ContratAndo recibe a los candidatos, los filtra, les escribe y, si activas pruebas, los evalúa. Tu equipo entrevista y decide.</p>
         <div class="plan3" id="plan3"></div>
         <div id="payback"></div>
         <h3 style="margin-top:22px;font-size:16px">Compara las tres formas de trabajar con nosotros</h3>
@@ -601,7 +601,7 @@ function calcular(s) {
   const portales = s.vacantesMes * s.precioAviso;
   const pruebaMercado = PRUEBAS_REF.find(p => p.id === s.pruebaRef) || PRUEBAS_REF[0];
   const precioPruebaMercado = pruebaMercado.cop != null ? pruebaMercado.cop : pruebaMercado.usd * s.trm;
-  const pruebasMercado = evaluados * precioPruebaMercado;
+  const pruebasMercado = evaluados * Math.max(1, Math.round(s.baterias || 1)) * precioPruebaMercado;
   const tiempoHoy = H * s.horasHoy * horaEquipo;
   const tu = {
     id: 'tu', nombre: 'Lo haces tú',
@@ -655,7 +655,8 @@ function calcular(s) {
 
   const pruebas = PRUEBAS_REF.map(p => {
     const unit = p.cop != null ? p.cop : p.usd * s.trm;
-    return { ...p, unit, mes: unit * evaluados, anio: unit * evaluados * 12 };
+    const nb = evaluados * Math.max(1, Math.round(s.baterias || 1));
+    return { ...p, unit, mes: unit * nb, anio: unit * nb * 12 };
   });
 
   return {
@@ -665,7 +666,7 @@ function calcular(s) {
     escenarios: esc,
     pruebas,
     pruebaElegida: pruebas.find(p => p.id === pruebaMercado.id),
-    pruebaCA: { unit: evaluados ? pruebasCA / evaluados : unitPrueba, mes: pruebasCA, anio: pruebasCA * 12 }, baterias, porLeads, consumo, ajusteMinimo, anuncios, meta, tiempoCA,
+    pruebaCA: { unit: baterias ? pruebasCA / baterias : unitPrueba, mes: pruebasCA, anio: pruebasCA * 12 }, baterias, porLeads, consumo, ajusteMinimo, anuncios, meta, tiempoCA,
     voz: { entrevistados, minutos: minutosVoz, mes: vozCA },
     tiempo: { hoy: tiempoHoy, ca: tiempoCA }
   };
@@ -801,7 +802,7 @@ function render() {
     if (nuevo) nuevo.focus();
   }));
 
-  let caExtra = '<p class="note">' + (ca.id !== 'volumen' ? 'Puesta a punto de la plataforma: ' + cop(r.configuracionInicial) + ', una sola vez. El asistente virtual y el resto del proceso van incluidos en la tarifa por candidato. ' : 'La pauta va incluida en el valor por persona contratada. ') + 'Las plantillas de WhatsApp' + (ca.id !== 'volumen' ? ' y la inversión en anuncios' : '') + ' se pagan directo a Meta. Tarifas de referencia, por aprobar.</p>';
+  let caExtra = '<p class="note">' + (ca.id !== 'volumen' ? 'Puesta a punto de la plataforma: ' + cop(r.configuracionInicial) + ', una sola vez. El asistente virtual y el resto del proceso van incluidos en la tarifa por candidato. ' : (r.bandaCargo.indexOf('Operativo') === 0 ? 'En cargos operativos la pauta va incluida en el valor por persona contratada. ' : 'En esta banda, si la pauta va incluida se confirma en la propuesta. ')) + 'Las plantillas de WhatsApp' + (ca.id !== 'volumen' ? ' y la inversión en anuncios' : '') + ' se pagan directo a Meta. Tarifas de referencia, por aprobar.</p>';
   $('bandaCargo').textContent = 'Con el salario que escribiste: ' + r.bandaCargo + '. Bandas: menos de 2 SMLMV, valor fijo con pauta incluida; de 2 a 5 SMLMV, 30 %; de 5 a 8, 33 %; de 8 a 10, 35 %; de 10 a 15, 37 %; de 15 a 20, 38 %; desde 20, 40 % del salario.';
   try { localStorage.setItem('sim-escenario', JSON.stringify(escenarioSel)); } catch (e) {}
   $('bdCA').innerHTML = '<div class="bd"><h3>ContratAndo · ' + ca.nombre + '</h3>' + tablaPartes(ca.partes, ca.total) + caExtra + '</div>';
@@ -811,7 +812,7 @@ function render() {
   // Pruebas
   const tb = $('tPruebas').querySelector('tbody');
   const filas = r.pruebas.map(p => '<tr><td>' + p.nombre + '</td><td>' + p.detalle + '</td><td class="num">' + cop(p.unit) + '</td><td class="num">' + cop(p.mes) + '</td><td class="num">' + cop(p.anio) + '</td></tr>');
-  filas.push('<tr class="ours"><td>ContratAndo</td><td>10 pruebas para asignar por vacante; precio promedio por tramos con ' + r.baterias + ' baterías al mes</td><td class="num">' + cop(r.pruebaCA.unit) + '</td><td class="num">' + cop(r.pruebaCA.mes) + '</td><td class="num">' + cop(r.pruebaCA.anio) + '</td></tr>');
+  filas.push('<tr class="ours"><td>ContratAndo</td><td>Catálogo de 10 pruebas; eliges cuáles aplicar en cada vacante. Precio promedio de ' + r.baterias + ' baterías al mes</td><td class="num">' + cop(r.pruebaCA.unit) + '</td><td class="num">' + cop(r.pruebaCA.mes) + '</td><td class="num">' + cop(r.pruebaCA.anio) + '</td></tr>');
   tb.innerHTML = r.evaluados > 0 ? filas.join('') : '<tr><td colspan="5">Activa «Aplico pruebas de evaluación» y escribe cuántos candidatos evalúas por contratado.</td></tr>';
 
   // Bloque Plataforma: tres pagos claros
@@ -820,19 +821,19 @@ function render() {
   const pagoCA = r.consumo + r.ajusteMinimo;
   $('plan3').innerHTML =
     '<div class="t"><small>Pago único</small><b>' + cop(r.setup) + '</b><span>Puesta a punto: vacantes, reglas, mensajes, pruebas y asistente.</span></div>' +
-    '<div class="t k"><small>Mensualidad a ContratAndo</small><b>' + cop(pagoCA) + '</b><span>' + r.candidatos + ' candidatos × ' + cop0(s.precioLead) + (r.baterias ? ' + pruebas' : '') + (r.voz.entrevistados ? ' + minutos de entrevista' : '') + '. Mínimo ' + cop0(s.minimoMensual) + ' por soporte.</span></div>' +
+    '<div class="t k"><small>Mensualidad a ContratAndo</small><b>' + cop(pagoCA) + '</b><span>' + r.candidatos + ' candidatos × ' + cop0(s.precioLead) + (r.baterias ? ' + pruebas' : '') + (r.voz.entrevistados ? ' + minutos de entrevista' : '') + '. Si el consumo del mes es menor, pagas el mínimo de ' + cop0(s.minimoMensual) + ' por soporte.</span></div>' +
     '<div class="t"><small>Pagas directo a Meta</small><b>' + cop(r.anuncios + r.meta) + '</b><span>Tu pauta (' + cop0(r.anuncios) + ') y las plantillas de WhatsApp (' + cop0(r.meta) + ').</span></div>' +
-    '<div class="t"><small>Por persona contratada</small><b>' + (H ? cop((pagoCA + r.anuncios + r.meta) / H) : '—') + '</b><span>Mensualidad + Meta, sin contar el tiempo de tu equipo.</span></div>';
+    '<div class="t"><small>Por persona contratada (ContratAndo + Meta)</small><b>' + (H ? cop((pagoCA + r.anuncios + r.meta) / H) : '—') + '</b><span>Mensualidad + Meta, sin contar el tiempo de tu equipo.</span></div>';
   const ahorroVol = vol.total - pl.total;
   const mejorAlt = r.alternativas.slice().sort((a, b) => a.total - b.total)[0];
   const ahorroAlt = mejorAlt.total - pl.total;
   let pb = '';
-  if (ahorroVol > 0) pb += '<p class="note">Frente a pagar <b>por persona contratada</b>, con Plataforma ahorras <b>' + cop(ahorroVol) + ' al mes</b>: la puesta a punto se recupera en ' + Math.max(1, Math.ceil(r.setup / ahorroVol)) + ' ' + (Math.ceil(r.setup / ahorroVol) <= 1 ? 'mes' : 'meses') + '.</p>';
+  if (ahorroVol > 0) pb += '<p class="note">Si tu pauta te cuesta cerca de ' + cop0(s.costoPorPostulante) + ' por candidato, frente a pagar <b>por persona contratada</b> con Plataforma ahorrarías <b>' + cop(ahorroVol) + ' al mes</b> y recuperarías la puesta a punto en ' + Math.max(1, Math.ceil(r.setup / ahorroVol)) + ' ' + (Math.ceil(r.setup / ahorroVol) <= 1 ? 'mes' : 'meses') + '.</p>';
   if (ahorroAlt > 0) pb += '<p class="note">Frente a «' + mejorAlt.nombre + '», tu opción más económica hoy, ahorras <b>' + cop(ahorroAlt) + ' al mes</b>.</p>';
   $('payback').innerHTML = pb;
   const orden = r.escenarios.slice();
   const best = orden.slice().sort((a, b) => a.total - b.total)[0].id;
-  $('cmp').innerHTML = '<tr><th>Opción</th><th>Pago único</th><th>Al mes</th><th>Por persona</th></tr>' + orden.map(e =>
+  $('cmp').innerHTML = '<tr><th>Opción</th><th>Pago único</th><th>Costo total al mes<br><small style="font-weight:400">ContratAndo + Meta + tiempo de tu equipo</small></th><th>Por persona, todo incluido</th></tr>' + orden.map(e =>
     '<tr class="' + (e.id === best ? 'best' : '') + '" data-id="' + e.id + '" style="cursor:pointer' + (e.id === escenarioSel ? ';background:rgba(134,53,246,.10)' : '') + '"><td>' + e.nombre + '</td><td>' + (e.id === 'volumen' ? '—' : cop(r.setup)) + '</td><td>' + cop(e.total) + '</td><td>' + (H ? cop(e.total / H) : '—') + '</td></tr>').join('');
   $('cmp').querySelectorAll('tr[data-id]').forEach(tr => tr.addEventListener('click', () => { escenarioSel = tr.dataset.id; render(); }));
   const evPor = s.evaluadosPorContratado * Math.max(1, Math.round(s.baterias || 1));
