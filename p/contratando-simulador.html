@@ -157,6 +157,8 @@ a.btn { text-decoration: none; display: inline-block; }
 .cmp th:first-child, .cmp td:first-child { text-align: left; }
 .cmp tr.best td { color: var(--fg); font-weight: 700; }
 .cmp tr.best td:first-child:after { content: " · nuestra propuesta"; color: var(--violet-soft); font-weight: 600; font-size: 12px; }
+.fee { margin-top: 4px; padding: 10px 12px; border-radius: 10px; background: rgba(134,53,246,.14); border: 1px solid var(--violet); font-size: 13px; color: var(--fg); line-height: 1.45; }
+.fee b { font-size: 16px; }
 .warn { margin-top: 10px; padding: 10px 12px; border-radius: 10px; border: 1px solid #6b4b16; background: rgba(255,170,40,.08); font-size: 13px; color: #FFD79A; }
 .values { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
 .value { padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); }
@@ -230,9 +232,24 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
         </div>
       </div>
       <div class="field">
+        <label for="nivel">Nivel del cargo</label>
+        <small>Los nombres son ejemplos; lo que cuenta es el salario. Cada rango incluye el valor inicial y no el final (3 SMLMV exactos ya es Profesional).</small>
+        <select id="nivel">
+          <option value="0">Operativo · auxiliar, asesor, mesero (menos de 2 SMLMV)</option>
+          <option value="1">Técnico o analista junior (2 a 3 SMLMV)</option>
+          <option value="2">Profesional (3 a 5 SMLMV)</option>
+          <option value="3">Coordinador o especialista (5 a 8 SMLMV)</option>
+          <option value="4">Jefe de área (8 a 10 SMLMV)</option>
+          <option value="5">Gerente (10 a 15 SMLMV)</option>
+          <option value="6">Gerente senior (15 a 20 SMLMV)</option>
+          <option value="7">Director (desde 20 SMLMV)</option>
+        </select>
+        <div class="fee" id="feeNivel" aria-live="polite"></div>
+      </div>
+      <div class="field">
         <label for="salario">Salario mensual del cargo (COP)</label>
         <input type="number" id="salario" min="0" step="10000" value="1750905">
-        <small>Salario mínimo 2026: 1.750.905 COP.</small>
+        <small>Se llena con un salario del nivel elegido; cámbialo por el real. Salario mínimo 2026: 1.750.905 COP.</small>
       </div>
       <div class="field">
         <label for="postulantes">2 · Candidatos que necesitas por cada contratado</label>
@@ -565,6 +582,19 @@ function valorPorContratado(salario, precioOperativo) {
   return { valor: salario * b.pct, banda: 'Cargo ' + rango + ': ' + Math.round(b.pct * 100) + ' % del salario' };
 }
 
+// Niveles del selector: rango en SMLMV y salario sugerido (punto medio del rango)
+const NIVELES = [
+  { desde: 0, hasta: 2, sugerido: 1 },
+  { desde: 2, hasta: 3, sugerido: 2.5 },
+  { desde: 3, hasta: 5, sugerido: 4 },
+  { desde: 5, hasta: 8, sugerido: 6.5 },
+  { desde: 8, hasta: 10, sugerido: 9 },
+  { desde: 10, hasta: 15, sugerido: 12.5 },
+  { desde: 15, hasta: 20, sugerido: 17.5 },
+  { desde: 20, hasta: Infinity, sugerido: 25 }
+];
+function nivelDeSalario(salario) { const n = salario / SMMLV; const i = NIVELES.findIndex(x => n >= x.desde && n < x.hasta); return i < 0 ? 0 : i; }
+
 function calcular(s) {
   const H = Math.max(0, Math.round(s.contrataciones));
   const candidatos = H * s.postulantesPorContratado;
@@ -756,6 +786,9 @@ function render() {
   ultimo = { s, r };
   $('bandasPruebas').innerHTML = BANDAS_PRUEBAS.map((b, k) => { const desde = k ? BANDAS_PRUEBAS[k - 1].hasta + 1 : 1; const txt = b.hasta === Infinity ? 'Más de ' + BANDAS_PRUEBAS[k - 1].hasta : desde + ' a ' + b.hasta; const on = r.baterias > 0 && r.baterias > (k ? BANDAS_PRUEBAS[k - 1].hasta : 0); return (on ? '<b>' : '') + txt + ': ' + cop0(b.cop) + (on ? '</b>' : ''); }).join(' · ');
   const H = r.H;
+  const vcN = valorPorContratado(s.salario, s.precioOperativo);
+  const esOp = s.salario / SMMLV < 2;
+  $('feeNivel').innerHTML = 'Con la opción «por persona contratada», el valor de referencia sería <b>' + cop(vcN.valor) + '</b> por persona' + (esOp ? ' (valor fijo, pauta incluida).' : ' (' + vcN.banda.split(': ')[1] + '; si la pauta va incluida o se cobra aparte se define en la propuesta).') + (H ? ' Si contratas ' + H + ' ' + plural(H, 'persona', 'personas') + ' en el mes: ' + cop(vcN.valor * H) + ' de referencia, sin pruebas ni entrevista telefónica. Precio sujeto a la propuesta formal.' : '');
   $('hLabel').textContent = H + ' ' + plural(H, 'persona', 'personas');
   $('evLabel').textContent = r.evaluados + ' ' + plural(r.evaluados, 'candidato', 'candidatos');
   const emp = $('empresa').value.trim();
@@ -809,7 +842,7 @@ function render() {
   }));
 
   let caExtra = '<p class="note">' + (ca.id !== 'volumen' ? 'Puesta a punto de la plataforma: ' + cop(r.configuracionInicial) + ', una sola vez. El asistente virtual y el resto del proceso van incluidos en la tarifa por candidato. ' : (r.bandaCargo.indexOf('Operativo') === 0 ? 'En cargos operativos la pauta va incluida en el valor por persona contratada. ' : 'En esta banda, si la pauta va incluida se confirma en la propuesta. ')) + 'Las plantillas de WhatsApp' + (ca.id !== 'volumen' ? ' y la inversión en anuncios' : '') + ' se pagan directo a Meta. Tarifas de referencia, por aprobar.</p>';
-  $('bandaCargo').textContent = 'Con el salario que escribiste: ' + r.bandaCargo + '. Bandas: menos de 2 SMLMV, valor fijo con pauta incluida; de 2 a 5 SMLMV, 30 %; de 5 a 8, 33 %; de 8 a 10, 35 %; de 10 a 15, 37 %; de 15 a 20, 38 %; desde 20, 40 % del salario.';
+  $('bandaCargo').textContent = 'Con el salario que escribiste: ' + r.bandaCargo + '. Bandas: menos de 2 SMLMV, valor fijo con pauta incluida; de 2 a 3 SMLMV, 30 %; de 3 a 5, 30 %; de 5 a 8, 33 %; de 8 a 10, 35 %; de 10 a 15, 37 %; de 15 a 20, 38 %; desde 20, 40 % del salario.';
   try { localStorage.setItem('sim-escenario', JSON.stringify(escenarioSel)); } catch (e) {}
   $('bdCA').innerHTML = '<div class="bd"><h3>ContratAndo · ' + ca.nombre + '</h3>' + tablaPartes(ca.partes, ca.total) + caExtra + '</div>';
 
@@ -912,6 +945,15 @@ function cargar() {
   $('contratacionesR').value = Math.min(300, Math.max(1, +$('contrataciones').value || 1));
 }
 cargar();
+$('nivel').value = String(nivelDeSalario(num('salario', SMMLV)));
+$('nivel').addEventListener('change', e => {
+  e.stopPropagation();
+  const n = NIVELES[+e.target.value];
+  $('salario').value = Math.round(n.sugerido * SMMLV / 10000) * 10000;
+  if (+e.target.value === 0) $('salario').value = SMMLV;
+  render();
+});
+$('salario').addEventListener('input', () => { $('nivel').value = String(nivelDeSalario(num('salario', SMMLV))); });
 render();
 </script>
 
