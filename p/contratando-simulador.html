@@ -98,7 +98,7 @@ details.adv h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.1
 .headline p { margin: 0; font-weight: 600; }
 .headline.neutral { background: var(--surface-2); color: var(--fg); border: 1px solid var(--line); }
 .bars { display: grid; gap: 14px; margin-top: 22px; }
-.bar { display: grid; grid-template-columns: 190px minmax(0, 1fr) 150px; gap: 12px; align-items: center; }
+.bar { display: grid; grid-template-columns: 200px minmax(0, 1fr) 170px; gap: 12px; align-items: center; }
 .bar .name { font-size: 14px; font-weight: 600; color: var(--fg); }
 .bar .name small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
 .bar .track { height: 18px; background: var(--surface-2); border-radius: 9px; overflow: hidden; }
@@ -156,7 +156,7 @@ a.btn { text-decoration: none; display: inline-block; }
 .cmp th, .cmp td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
 .cmp th:first-child, .cmp td:first-child { text-align: left; }
 .cmp tr.best td { color: var(--fg); font-weight: 700; }
-.cmp tr.best td:first-child:after { content: " · recomendado"; color: var(--violet-soft); font-weight: 600; font-size: 12px; }
+.cmp tr.best td:first-child:after { content: " · nuestra propuesta"; color: var(--violet-soft); font-weight: 600; font-size: 12px; }
 .warn { margin-top: 10px; padding: 10px 12px; border-radius: 10px; border: 1px solid #6b4b16; background: rgba(255,170,40,.08); font-size: 13px; color: #FFD79A; }
 .values { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
 .value { padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); }
@@ -304,7 +304,7 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
           </div>
           <p class="hint" style="margin-top:-8px">Supuesto: 6 meses. La ley permite contratar por temporal hasta 6 meses, prorrogables por 6 más.</p>
           <div class="field">
-            <label for="honorarioFirmaPct">Honorario de la firma de selección (% de un salario mensual)</label>
+            <label for="honorarioFirmaPct">Honorario de la agencia de selección (% de un salario mensual)</label>
             <input type="number" id="honorarioFirmaPct" min="0" step="5" value="100">
             <small>Supuesto: un salario. En cargos medios se cobra entre 15 % y 35 % del salario anual; en selección masiva se negocia por volumen.</small>
           </div>
@@ -394,7 +394,8 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
     <div class="results">
       <section class="card" aria-labelledby="t-resumen">
         <span class="tag">Resumen</span>
-        <h2 id="t-resumen">Lo que te cuesta contratar a <span id="hLabel">50 personas</span> en un mes</h2>
+        <h2 id="t-resumen">Lo que te cuesta cada persona contratada</h2>
+        <p class="lead">Para <span id="hLabel">50 personas</span> al mes: lo que pagas además del salario a una empresa temporal (su margen) o a una agencia de selección (su honorario), o lo que te cuesta hacerlo tú con un software de reclutamiento (ATS), frente a ContratAndo Plataforma.</p>
         <div class="headline" id="headline"></div>
         <div class="bars" id="bars"></div>
         <p class="note" id="noteResumen"></p>
@@ -417,7 +418,7 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
         <span class="tag">Detalle</span>
         <h2 id="t-alt">De dónde sale cada cifra</h2>
         <div class="breakdowns" id="bdAlt"></div>
-        <p class="note">La empresa temporal también administra la nómina de las personas mientras están con ella. Con ContratAndo y con la firma de selección contratas directo y la nómina la manejas tú.</p>
+        <p class="note">La empresa temporal también administra la nómina de las personas mientras están con ella. Con ContratAndo y con la agencia de selección contratas directo y la nómina la manejas tú.</p>
       </section>
 
       <section class="card" aria-labelledby="t-pruebas">
@@ -437,7 +438,7 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
         <h2 id="t-matrix">Qué hace cada opción por ti</h2>
         <div class="tablewrap">
           <table class="matrix">
-            <thead><tr><th></th><th class="us">ContratAndo</th><th>Empresa temporal</th><th>Firma de selección</th><th>Software de reclutamiento</th><th>Portales de empleo</th></tr></thead>
+            <thead><tr><th></th><th class="us">ContratAndo</th><th>Empresa temporal</th><th>Agencia de selección</th><th>Software ATS</th><th>Portales de empleo</th></tr></thead>
             <tbody>
               <tr><td>Te trae candidatos</td><td class="us"><span class="pill si">Sí</span>con anuncios en Meta conectados a la vacante</td><td><span class="pill si">Sí</span>con su propio proceso</td><td><span class="pill si">Sí</span>con su propio proceso</td><td><span class="pill dep">Parcial</span>publica en portales</td><td><span class="pill dep">Parcial</span>compites con todas las empresas por los mismos perfiles</td></tr>
               <tr><td>Filtra con tus requisitos</td><td class="us"><span class="pill si">Sí</span>reglas automáticas que tú defines</td><td><span class="pill dep">Ellos</span>según el perfil que acuerdas</td><td><span class="pill dep">Ellos</span>según el perfil que acuerdas</td><td><span class="pill dep">Depende</span>del plan</td><td><span class="pill dep">Parcial</span>filtros del portal</td></tr>
@@ -587,7 +588,7 @@ function calcular(s) {
   // 2. Firma de selección: honorario por persona contratada
   const honorario = s.salario * s.honorarioFirmaPct;
   const firma = {
-    id: 'firma', nombre: 'Firma de selección',
+    id: 'firma', nombre: 'Agencia de selección externa',
     total: H * honorario,
     partes: [
       ['Honorario por persona (' + pct(s.honorarioFirmaPct) + ' de un salario)', honorario, 'ref'],
@@ -604,7 +605,7 @@ function calcular(s) {
   const pruebasMercado = evaluados * Math.max(1, Math.round(s.baterias || 1)) * precioPruebaMercado;
   const tiempoHoy = H * s.horasHoy * horaEquipo;
   const tu = {
-    id: 'tu', nombre: 'Lo haces tú',
+    id: 'tu', nombre: 'Software ATS + tu equipo',
     total: portales + software + pruebasMercado + tiempoHoy,
     partes: [
       ['Avisos en portales (' + s.vacantesMes + ' al mes)', portales],
@@ -700,6 +701,7 @@ const DESC = {
     o.textContent = p.nombre + (p.cop != null ? ' · ' + cop(p.cop) : ' · USD ' + String(p.usd).replace('.', ','));
     sel.appendChild(o);
   });
+  sel.value = 'hravatar';
 })();
 
 function num(id, def) { const v = parseFloat($(id).value); return isFinite(v) ? Math.max(0, v) : def; }
@@ -760,33 +762,37 @@ function render() {
   $('heroTag').textContent = emp ? 'Para ' + emp : 'Para tu empresa';
 
   const ca = r.escenarios.find(e => e.id === escenarioSel);
-  const opciones = [...r.alternativas, { ...ca, nombre: 'ContratAndo', sub: ca.nombre, ca: true }];
-  const max = Math.max(...opciones.map(o => o.total), 1);
+  const plat = r.escenarios.find(e => e.id === 'pruebas');
+  const platPer = H ? plat.total / H : 0;
+  const opciones = [...r.alternativas, { ...plat, nombre: 'ContratAndo Plataforma', sub: 'Tú haces la pauta. Incluye lo que pagas a Meta y el tiempo de tu equipo; sin la puesta a punto', ca: true }];
+  const max = Math.max(...opciones.map(o => H ? o.total / H : 0), 1);
 
-  // Titular
+  // Titular: ahorro por persona frente a la alternativa externa más económica
   const alt = r.alternativas.slice().sort((a, b) => a.total - b.total);
   const masBarata = alt[0];
   const hl = $('headline');
   if (H === 0) {
     hl.className = 'headline neutral';
     hl.innerHTML = '<p>Escribe cuántas personas contratas al mes.</p>';
-  } else if (ca.total < masBarata.total) {
-    const ahorro = masBarata.total - ca.total;
+  } else if (plat.total < masBarata.total) {
+    const ahorroPer = (masBarata.total - plat.total) / H;
     hl.className = 'headline';
-    hl.innerHTML = '<span class="big">' + cop(ahorro) + ' menos al mes</span><p>que tu opción más económica hoy, «' + masBarata.nombre + '». En un año son ' + cop(ahorro * 12) + '.</p>';
+    hl.innerHTML = '<span class="big">Ahorrarías ' + cop(ahorroPer) + ' por persona</span><p>frente a «' + masBarata.nombre + '», tu alternativa más económica, con estos supuestos. Son ' + cop(masBarata.total - plat.total) + ' al mes; en 12 meses, ' + cop((masBarata.total - plat.total) * 12 - r.setup) + ' ya descontada la puesta a punto.</p>';
   } else {
     hl.className = 'headline neutral';
-    hl.innerHTML = '<span class="big">' + cop(ca.total) + ' al mes</span><p>Con este volumen, «' + masBarata.nombre + '» cuesta ' + cop(ca.total - masBarata.total) + ' menos. Prueba otro escenario de ContratAndo o ajusta tus datos.</p>';
+    hl.innerHTML = '<span class="big">' + cop(platPer) + ' por persona</span><p>Con estos datos, «' + masBarata.nombre + '» cuesta ' + cop((plat.total - masBarata.total) / H) + ' menos por persona. En el diagnóstico revisamos tu caso.</p>';
   }
 
   $('bars').innerHTML = opciones.map(o => {
-    const w = Math.max(1.5, (o.total / max) * 100);
-    const per = H > 0 ? cop(o.total / H) + ' por persona' : '';
-    return '<div class="bar' + (o.ca ? ' ca' : '') + '"><div class="name">' + o.nombre + (o.sub ? '<small>' + o.sub + '</small>' : '') + '</div>' +
+    const per = H ? o.total / H : 0;
+    const w = Math.max(1.5, (per / max) * 100);
+    const dif = !o.ca && H ? (o.total - plat.total) / H : 0;
+    const sub = o.ca ? o.sub : (dif > 0 ? 'Con Plataforma ahorras ' + cop(dif) + ' por persona' : 'Esta opción cuesta ' + cop(-dif) + ' menos por persona que Plataforma');
+    return '<div class="bar' + (o.ca ? ' ca' : '') + '"><div class="name">' + o.nombre + '<small>' + sub + '</small></div>' +
       '<div class="track" aria-hidden="true"><div class="fill" style="width:' + w.toFixed(1) + '%"></div></div>' +
-      '<div class="val">' + cop(o.total) + '<small>' + per + '</small></div></div>';
+      '<div class="val">' + (H ? cop(per) : '—') + '<small>por persona · ' + cop(o.total) + ' al mes</small></div></div>';
   }).join('');
-  $('noteResumen').textContent = 'Empresa temporal: su margen durante los ' + s.mesesTemporal + ' meses que cada persona está con ella. Firma de selección: su honorario por persona. Lo haces tú: avisos, software, pruebas y el tiempo de tu equipo. ContratAndo: escenario «' + ca.nombre + '», con los mensajes y los anuncios que se pagan a Meta. Las horas de tu equipo son un estimado: ajústalas en el panel.';
+  $('noteResumen').textContent = 'Empresa temporal: su margen durante los ' + s.mesesTemporal + ' meses que cada persona está con ella. Agencia de selección: su honorario por persona contratada. Software ATS + tu equipo: avisos en portales, la licencia del software, pruebas con otro proveedor y las horas de tu equipo. ContratAndo Plataforma: lo que pagas por candidato que llega, las pruebas y los minutos de entrevista (mínimo ' + cop0(s.minimoMensual) + ' al mes), tu pauta y las plantillas que pagas a Meta, y las horas de tu equipo; la puesta a punto se paga una sola vez y no está en esta cifra. En la temporal y la agencia no se cuentan horas de tu equipo. Las pruebas con otro proveedor se calculan con «' + (r.pruebaElegida ? r.pruebaElegida.nombre : '') + '»; cámbiala en el panel. Las horas son un estimado. Tarifas de ContratAndo de referencia, por aprobar: el valor de tu caso llega en la propuesta.';
 
   // Escenarios
   $('scen').innerHTML = r.escenarios.map(e =>
@@ -832,8 +838,8 @@ function render() {
   if (ahorroAlt > 0) pb += '<p class="note">Frente a «' + mejorAlt.nombre + '», tu opción más económica hoy, ahorras <b>' + cop(ahorroAlt) + ' al mes</b>.</p>';
   $('payback').innerHTML = pb;
   const orden = r.escenarios.slice();
-  const best = orden.slice().sort((a, b) => a.total - b.total)[0].id;
-  $('cmp').innerHTML = '<tr><th>Opción</th><th>Pago único</th><th>Costo total al mes<br><small style="font-weight:400">ContratAndo + Meta + tiempo de tu equipo</small></th><th>Por persona, todo incluido</th></tr>' + orden.map(e =>
+  const best = 'pruebas';
+  $('cmp').innerHTML = '<tr><th>Opción</th><th>Pago único</th><th>Costo total al mes<br><small style="font-weight:400">ContratAndo + Meta + tiempo de tu equipo</small></th><th>Por persona al mes<br><small style="font-weight:400">sin la puesta a punto</small></th></tr>' + orden.map(e =>
     '<tr class="' + (e.id === best ? 'best' : '') + '" data-id="' + e.id + '" style="cursor:pointer' + (e.id === escenarioSel ? ';background:rgba(134,53,246,.10)' : '') + '"><td>' + e.nombre + '</td><td>' + (e.id === 'volumen' ? '—' : cop(r.setup)) + '</td><td>' + cop(e.total) + '</td><td>' + (H ? cop(e.total / H) : '—') + '</td></tr>').join('');
   $('cmp').querySelectorAll('tr[data-id]').forEach(tr => tr.addEventListener('click', () => { escenarioSel = tr.dataset.id; render(); }));
   const evPor = s.evaluadosPorContratado * Math.max(1, Math.round(s.baterias || 1));
@@ -901,7 +907,7 @@ function cargar() {
   } catch (e) {}
   // Valores guardados que ya no existen vuelven al valor inicial
   if (!$('softwareRef').value) $('softwareRef').value = 'manatal';
-  if (!$('pruebaRef').value) $('pruebaRef').value = PRUEBAS_REF[0].id;
+  if (!$('pruebaRef').value) $('pruebaRef').value = 'hravatar';
   if (!['software', 'pruebas', 'pauta', 'volumen'].includes(escenarioSel)) escenarioSel = 'pruebas';
   $('contratacionesR').value = Math.min(300, Math.max(1, +$('contrataciones').value || 1));
 }
