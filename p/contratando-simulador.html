@@ -309,28 +309,42 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
           <h3>ContratAndo</h3>
           <div class="row2">
             <div class="field">
-              <label for="licencia">Licencia mensual</label>
-              <input type="number" id="licencia" min="0" step="50000" value="1500000">
+              <label for="setupPlataforma">Puesta a punto de la plataforma (una vez)</label>
+              <input type="number" id="setupPlataforma" min="0" step="100000" value="3000000">
             </div>
             <div class="field">
-              <label for="precioPruebaCA">Pruebas, por candidato</label>
-              <input type="number" id="precioPruebaCA" min="0" step="1000" value="20000">
+              <label for="precioLead">Por candidato que llega a ContratAndo</label>
+              <input type="number" id="precioLead" min="0" step="500" value="4000">
             </div>
           </div>
           <div class="row2">
             <div class="field">
-              <label for="gestionPauta">Gestión de anuncios al mes</label>
-              <input type="number" id="gestionPauta" min="0" step="50000" value="1200000">
+              <label for="minimoMensual">Mínimo mensual por soporte</label>
+              <input type="number" id="minimoMensual" min="0" step="50000" value="500000">
             </div>
             <div class="field">
-              <label for="precioVozCA">Entrevista telefónica, por candidato</label>
-              <input type="number" id="precioVozCA" min="0" step="1000" value="50000">
+              <label for="gestionPauta">Gestión de anuncios al mes (si la hacemos)</label>
+              <input type="number" id="gestionPauta" min="0" step="50000" value="1200000">
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="precioMinutoVoz">Entrevista telefónica, por minuto</label>
+              <input type="number" id="precioMinutoVoz" min="0" step="50" value="650">
+            </div>
+            <div class="field">
+              <label for="minutosEntrevista">Minutos por entrevista</label>
+              <input type="number" id="minutosEntrevista" min="0" step="0.5" value="5">
             </div>
           </div>
           <div class="field">
-            <label for="precioPorContratado">Por volumen, por persona contratada</label>
-            <input type="number" id="precioPorContratado" min="0" step="10000" value="350000">
-            <small>Depende del nivel del cargo: ajústalo para tu caso. No incluye pruebas ni entrevista telefónica; esas se suman por candidato.</small>
+            <label>Pruebas, por candidato evaluado (por bandas de volumen al mes)</label>
+            <div id="bandasPruebas" class="note" style="margin:0"></div>
+          </div>
+          <div class="field">
+            <label for="precioOperativo">Por volumen: cargo operativo (menos de 2 SMLMV), por persona contratada</label>
+            <input type="number" id="precioOperativo" min="0" step="1000" value="101000">
+            <small id="bandaCargo"></small>
           </div>
           <div class="field">
             <label for="costoPorPostulante">Inversión en anuncios por postulante (COP, supuesto)</label>
@@ -347,7 +361,7 @@ textarea#resumen { width: 100%; min-height: 160px; font: inherit; font-size: 13p
               <input type="number" id="tarifaMeta" min="0" step="0.0001" value="0.0125">
             </div>
           </div>
-          <label class="check"><input type="checkbox" id="incluirAsistente" checked> Incluir asistente virtual que responde a los candidatos por WhatsApp</label>
+          <label class="check" hidden><input type="checkbox" id="incluirAsistente" checked> Incluir asistente virtual que responde a los candidatos por WhatsApp</label>
         </div>
       </details>
     </form>
@@ -490,6 +504,33 @@ function planFlow(conversaciones) {
   return { nombre: 'Empresarial × ' + n, valor: 524000 * n };
 }
 
+// Pruebas ContratAndo por bandas: la tarifa de la banda aplica a todos los evaluados del mes (propuesta, por aprobar)
+const BANDAS_PRUEBAS = [
+  { hasta: 100, cop: 20000 },
+  { hasta: 300, cop: 16000 },
+  { hasta: 600, cop: 13000 },
+  { hasta: 1000, cop: 11000 },
+  { hasta: Infinity, cop: 9000 }
+];
+function precioPrueba(evaluados) { return (BANDAS_PRUEBAS.find(b => evaluados <= b.hasta) || BANDAS_PRUEBAS[0]).cop; }
+// Por volumen: bandas por nivel del cargo, tomadas de las propuestas a Nexa (2026).
+// Menos de 2 SMLMV: valor fijo por contratado. Desde 2 SMLMV: % del salario mensual.
+const BANDAS_CARGO = [
+  { desde: 2, hasta: 3, pct: 0.30 },
+  { desde: 3, hasta: 5, pct: 0.33 },
+  { desde: 5, hasta: 8, pct: 0.35 },
+  { desde: 8, hasta: 10, pct: 0.37 },
+  { desde: 10, hasta: 15, pct: 0.38 },
+  { desde: 15, hasta: Infinity, pct: 0.40 }
+];
+function valorPorContratado(salario, precioOperativo) {
+  const n = salario / SMMLV;
+  if (n < 2) return { valor: precioOperativo, banda: 'Operativo (menos de 2 SMLMV): valor fijo' };
+  const b = BANDAS_CARGO.find(x => n >= x.desde && n < x.hasta) || BANDAS_CARGO[BANDAS_CARGO.length - 1];
+  const rango = b.hasta === Infinity ? 'desde ' + b.desde + ' SMLMV' : 'de ' + b.desde + ' a ' + b.hasta + ' SMLMV';
+  return { valor: salario * b.pct, banda: 'Cargo ' + rango + ': ' + Math.round(b.pct * 100) + ' % del salario' };
+}
+
 function calcular(s) {
   const H = Math.max(0, Math.round(s.contrataciones));
   const candidatos = H * s.postulantesPorContratado;
@@ -540,35 +581,43 @@ function calcular(s) {
   };
 
   // 4. ContratAndo: escenarios
+  // La empresa paga a Meta los anuncios y las plantillas de WhatsApp; el asistente y el resto del proceso van en la tarifa por candidato.
   const anuncios = candidatos * s.costoPorPostulante;
   const meta = candidatos * s.mensajesPorCandidato * s.tarifaMetaUsd * s.trm;
   const plan = planFlow(candidatos);
-  const asistente = s.incluirAsistente ? plan.valor : 0;
   const tiempoCA = H * s.horasConCA * horaEquipo;
-  const pruebasCA = evaluados * s.precioPruebaCA;
-  const comunes = [
-    ['Mensajes de WhatsApp (se pagan a Meta)', meta],
-    ...(s.incluirAsistente ? [['Asistente virtual en WhatsApp (plan ' + plan.nombre + ')', asistente]] : []),
-    ['Inversión en anuncios (se paga a Meta)', anuncios],
-    ['Tiempo de tu equipo (' + fmtNum(H * s.horasConCA) + ' h)', tiempoCA]
-  ];
-  const sumar = partes => partes.reduce((a, p) => a + (p[2] === 'ref' ? 0 : p[1]), 0);
-  const lineaPruebasCA = ['Pruebas ContratAndo (' + evaluados + ' candidatos)', pruebasCA];
-  // Entrevista telefónica con IA y rúbrica personalizada: se cobra por candidato que la presenta, en cualquier escenario
+  const unitPrueba = precioPrueba(evaluados);
+  const pruebasCA = evaluados * unitPrueba;
   const entrevistados = s.incluirVoz ? H * s.entrevistadosVozPorContratado : 0;
-  const vozCA = entrevistados * s.precioVozCA;
-  const lineaVoz = s.incluirVoz ? [['Entrevista telefónica con IA (' + entrevistados + ' candidatos)', vozCA]] : [];
+  const minutosVoz = entrevistados * s.minutosEntrevista;
+  const vozCA = minutosVoz * s.precioMinutoVoz;
+  const lineaPruebasCA = ['Pruebas ContratAndo (' + evaluados + ' candidatos × ' + cop0(unitPrueba) + ')', pruebasCA];
+  const lineaVoz = s.incluirVoz ? [['Entrevista telefónica con IA (' + entrevistados + ' candidatos, ' + fmtNum(minutosVoz) + ' min × ' + cop0(s.precioMinutoVoz) + ')', vozCA]] : [];
+  const pagoMeta = [['Plantillas de WhatsApp (se pagan a Meta)', meta]];
+  const comunes = [...pagoMeta, ['Inversión en anuncios (se paga a Meta)', anuncios], ['Tiempo de tu equipo (' + fmtNum(H * s.horasConCA) + ' h)', tiempoCA]];
+  const sumar = partes => partes.reduce((a, p) => a + (p[2] === 'ref' ? 0 : p[1]), 0);
+
+  // Plataforma: tarifa por candidato que llega + pruebas + minutos de voz, con un mínimo mensual por soporte
+  const porLeads = candidatos * s.precioLead;
+  const consumo = porLeads + (s.incluirPruebas ? pruebasCA : 0) + vozCA;
+  const ajusteMinimo = Math.max(0, s.minimoMensual - consumo);
+  const lineasPlataforma = [
+    ['Candidatos que llegan a ContratAndo (' + candidatos + ' × ' + cop0(s.precioLead) + ')', porLeads],
+    ...(evaluados > 0 ? [lineaPruebasCA] : []),
+    ...lineaVoz,
+    ...(ajusteMinimo > 0 ? [['Ajuste al mínimo mensual por soporte (' + cop0(s.minimoMensual) + ')', ajusteMinimo]] : [])
+  ];
+  const lineaSetup = ['Puesta a punto de la plataforma (una vez, no se suma al mes)', s.setupPlataforma, 'ref'];
 
   const esc = [];
-  const pA = [['Licencia mensual de ContratAndo', s.licencia], ['Pruebas con otro proveedor (' + evaluados + ' candidatos)', pruebasMercado], ...lineaVoz, ...comunes];
-  esc.push({ id: 'software', nombre: 'Software', partes: pA, total: sumar(pA) });
-  const pB = [['Licencia mensual de ContratAndo', s.licencia], lineaPruebasCA, ...lineaVoz, ...comunes];
-  esc.push({ id: 'pruebas', nombre: 'Software + pruebas', partes: pB, total: sumar(pB) });
-  const pC = [['Licencia mensual de ContratAndo', s.licencia], lineaPruebasCA, ...lineaVoz, ['Gestión de anuncios con IA', s.gestionPauta], ...comunes];
-  esc.push({ id: 'pauta', nombre: 'Con gestión de anuncios', partes: pC, total: sumar(pC) });
-  // Por volumen: el valor por contratado depende del nivel del cargo y NO incluye pruebas ni entrevista de voz; esas se suman por candidato
-  const pD = [['Servicio por persona contratada, según nivel del cargo (' + H + ')', H * s.precioPorContratado], ...(evaluados > 0 ? [lineaPruebasCA] : []), ...lineaVoz, ...comunes];
-  esc.push({ id: 'volumen', nombre: 'Por volumen', partes: pD, total: sumar(pD) });
+  const pA = [lineaSetup, ...lineasPlataforma, ...comunes];
+  esc.push({ id: 'pruebas', nombre: 'Plataforma', partes: pA, total: sumar(pA) });
+  const pC = [lineaSetup, ...lineasPlataforma, ['Gestión de anuncios con nuestro equipo', s.gestionPauta], ...comunes];
+  esc.push({ id: 'pauta', nombre: 'Plataforma + gestión de anuncios', partes: pC, total: sumar(pC) });
+  // Por volumen: valor por contratado según banda del cargo; incluye la pauta. Pruebas y voz se suman por candidato.
+  const vc = valorPorContratado(s.salario, s.precioOperativo);
+  const pD = [['Servicio por persona contratada (' + H + ' × ' + cop0(vc.valor) + ') · ' + vc.banda, H * vc.valor], ...(evaluados > 0 ? [lineaPruebasCA] : []), ...lineaVoz, ...pagoMeta, ['Tiempo de tu equipo (' + fmtNum(H * s.horasConCA) + ' h)', tiempoCA]];
+  esc.push({ id: 'volumen', nombre: 'Por volumen', partes: pD, total: sumar(pD), banda: vc.banda });
 
   const pruebas = PRUEBAS_REF.map(p => {
     const unit = p.cop != null ? p.cop : p.usd * s.trm;
@@ -577,17 +626,18 @@ function calcular(s) {
 
   return {
     H, candidatos, evaluados, costoLab, horaEquipo, plan,
-    configuracionInicial: s.incluirAsistente ? 1750905 : 0,
+    configuracionInicial: s.setupPlataforma, bandaCargo: vc.banda, unitPrueba,
     alternativas: [temporal, firma, tu],
     escenarios: esc,
     pruebas,
     pruebaElegida: pruebas.find(p => p.id === pruebaMercado.id),
-    pruebaCA: { unit: s.precioPruebaCA, mes: pruebasCA, anio: pruebasCA * 12 },
-    voz: { entrevistados, unit: s.precioVozCA, mes: vozCA },
+    pruebaCA: { unit: unitPrueba, mes: pruebasCA, anio: pruebasCA * 12 },
+    voz: { entrevistados, minutos: minutosVoz, mes: vozCA },
     tiempo: { hoy: tiempoHoy, ca: tiempoCA }
   };
 }
 
+function cop0(n) { return '$' + Math.round(n).toLocaleString('es-CO'); }
 function pct(x) { return (Math.round(x * 1000) / 10).toString().replace('.', ',') + ' %'; }
 function fmtNum(n) { return (Math.round(n * 10) / 10).toLocaleString('es-CO'); }
 
@@ -598,12 +648,12 @@ const $ = id => document.getElementById(id);
 const cop = n => Math.round(n).toLocaleString('es-CO') + ' COP';
 const plural = (n, s, p) => n === 1 ? s : p;
 let escenarioSel = 'pruebas';
+try { const g = JSON.parse(localStorage.getItem('sim-escenario') || 'null'); if (g && ['pruebas','pauta','volumen'].includes(g)) escenarioSel = g; } catch (e) {}
 
 const DESC = {
-  software: 'Tu equipo usa la plataforma: vacantes, reglas, tablero y WhatsApp automático. Las pruebas, con tu proveedor.',
-  pruebas: 'Lo anterior con las 10 pruebas de ContratAndo.',
-  pauta: 'Además, nuestro equipo monta y optimiza tus anuncios con IA.',
-  volumen: 'Pagas por persona contratada, según el nivel del cargo. Pruebas y entrevista telefónica se suman por candidato.'
+  pruebas: 'Tú haces la pauta y usas la plataforma. Pagas por candidato que llega, más pruebas y minutos de entrevista si los usas, con un mínimo mensual por soporte.',
+  pauta: 'Igual que «Plataforma», y nuestro equipo monta y gestiona tus anuncios.',
+  volumen: 'Pagas por persona contratada, según la banda del cargo; la pauta va incluida. Pruebas y entrevista telefónica se suman por candidato.'
 };
 
 // Opciones de pruebas de referencia
@@ -632,7 +682,8 @@ function leer() {
     incluirPruebas: $('incluirPruebas').checked,
     incluirVoz: $('incluirVoz').checked,
     entrevistadosVozPorContratado: num('entrevistadosVoz', 3),
-    precioVozCA: num('precioVozCA', 50000),
+    precioMinutoVoz: num('precioMinutoVoz', 650),
+    minutosEntrevista: num('minutosEntrevista', 5),
     exonerada: $('exonerada').checked,
     margenTemporal: num('margenTemporal', 10) / 100,
     mesesTemporal: num('mesesTemporal', 6),
@@ -641,10 +692,11 @@ function leer() {
     trm: num('trm', 4000),
     softwareRef: $('softwareRef').value,
     pruebaRef: $('pruebaRef').value,
-    licencia: num('licencia', 1500000),
-    precioPruebaCA: num('precioPruebaCA', 20000),
+    setupPlataforma: num('setupPlataforma', 3000000),
+    precioLead: num('precioLead', 4000),
+    minimoMensual: num('minimoMensual', 500000),
     gestionPauta: num('gestionPauta', 1200000),
-    precioPorContratado: num('precioPorContratado', 350000),
+    precioOperativo: num('precioOperativo', 101000),
     costoPorPostulante: num('costoPorPostulante', 3000),
     horasConCA: num('horasConCA', 1.5),
     mensajesPorCandidato: num('mensajes', 3),
@@ -664,6 +716,7 @@ function render() {
   const s = leer();
   const r = calcular(s);
   ultimo = { s, r };
+  $('bandasPruebas').innerHTML = BANDAS_PRUEBAS.map((b, k) => { const desde = k ? BANDAS_PRUEBAS[k - 1].hasta + 1 : 1; const txt = b.hasta === Infinity ? 'Más de ' + BANDAS_PRUEBAS[k - 1].hasta : desde + ' a ' + b.hasta; return (r.evaluados > 0 && r.unitPrueba === b.cop && precioPrueba(r.evaluados) === b.cop ? '<b>' : '') + txt + ' evaluados: ' + cop0(b.cop) + (precioPrueba(r.evaluados) === b.cop && r.evaluados > 0 ? '</b>' : ''); }).join(' · ');
   const H = r.H;
   $('hLabel').textContent = H + ' ' + plural(H, 'persona', 'personas');
   $('evLabel').textContent = r.evaluados + ' ' + plural(r.evaluados, 'candidato', 'candidatos');
@@ -713,7 +766,9 @@ function render() {
     if (nuevo) nuevo.focus();
   }));
 
-  let caExtra = '<p class="note">' + (s.incluirAsistente ? 'Configuración inicial del asistente virtual: ' + cop(r.configuracionInicial) + ', una sola vez. ' : '') + 'Los mensajes de WhatsApp y la inversión en anuncios se pagan directo a Meta.</p>';
+  let caExtra = '<p class="note">' + (ca.id !== 'volumen' ? 'Puesta a punto de la plataforma: ' + cop(r.configuracionInicial) + ', una sola vez. El asistente virtual y el resto del proceso van incluidos en la tarifa por candidato. ' : 'La pauta va incluida en el valor por persona contratada. ') + 'Las plantillas de WhatsApp' + (ca.id !== 'volumen' ? ' y la inversión en anuncios' : '') + ' se pagan directo a Meta. Tarifas de referencia, por aprobar.</p>';
+  $('bandaCargo').textContent = 'Con el salario que escribiste: ' + r.bandaCargo + '. Bandas: menos de 2 SMLMV, valor fijo; de 2 a 3 SMLMV, 30 %; de 3 a 5, 33 %; de 5 a 8, 35 %; de 8 a 10, 37 %; de 10 a 15, 38 %; desde 15, 40 % del salario.';
+  try { localStorage.setItem('sim-escenario', JSON.stringify(escenarioSel)); } catch (e) {}
   $('bdCA').innerHTML = '<div class="bd"><h3>ContratAndo · ' + ca.nombre + '</h3>' + tablaPartes(ca.partes, ca.total) + caExtra + '</div>';
 
   $('bdAlt').innerHTML = r.alternativas.map(a => '<div class="bd"><h3>' + a.nombre + '</h3>' + tablaPartes(a.partes, a.total) + '</div>').join('');
@@ -721,7 +776,7 @@ function render() {
   // Pruebas
   const tb = $('tPruebas').querySelector('tbody');
   const filas = r.pruebas.map(p => '<tr><td>' + p.nombre + '</td><td>' + p.detalle + '</td><td class="num">' + cop(p.unit) + '</td><td class="num">' + cop(p.mes) + '</td><td class="num">' + cop(p.anio) + '</td></tr>');
-  filas.push('<tr class="ours"><td>ContratAndo</td><td>10 pruebas para asignar por vacante</td><td class="num">' + cop(r.pruebaCA.unit) + '</td><td class="num">' + cop(r.pruebaCA.mes) + '</td><td class="num">' + cop(r.pruebaCA.anio) + '</td></tr>');
+  filas.push('<tr class="ours"><td>ContratAndo</td><td>10 pruebas para asignar por vacante · banda de ' + r.evaluados + ' evaluados al mes</td><td class="num">' + cop(r.pruebaCA.unit) + '</td><td class="num">' + cop(r.pruebaCA.mes) + '</td><td class="num">' + cop(r.pruebaCA.anio) + '</td></tr>');
   tb.innerHTML = r.evaluados > 0 ? filas.join('') : '<tr><td colspan="5">Activa «Aplico pruebas de evaluación» y escribe cuántos candidatos evalúas por contratado.</td></tr>';
 
   guardar();
@@ -740,7 +795,9 @@ function resumenTexto() {
   l.push('');
   r.alternativas.forEach(a => l.push(a.nombre + ': ' + cop(a.total) + ' al mes'));
   l.push('ContratAndo (' + ca.nombre + '): ' + cop(ca.total) + ' al mes');
-  if (r.voz.entrevistados > 0) l.push('Entrevista telefónica con IA para ' + r.voz.entrevistados + ' candidatos al mes: ' + cop(r.voz.mes));
+  if (r.voz.entrevistados > 0) l.push('Entrevista telefónica con IA para ' + r.voz.entrevistados + ' candidatos (' + fmtNum(r.voz.minutos) + ' min) al mes: ' + cop(r.voz.mes));
+  if (ca.id !== 'volumen') l.push('Puesta a punto de la plataforma: ' + cop(r.configuracionInicial) + ', una sola vez');
+  else l.push(r.bandaCargo);
   if (r.evaluados > 0) l.push('Pruebas para ' + r.evaluados + ' candidatos al mes: ContratAndo ' + cop(r.pruebaCA.mes) + '; ' + r.pruebaElegida.nombre + ' ' + cop(r.pruebaElegida.mes));
   l.push('');
   l.push('Valores antes de IVA. Cálculo de referencia, no es una cotización.');
@@ -767,7 +824,7 @@ $('form').addEventListener('change', render);
 $('form').addEventListener('submit', e => e.preventDefault());
 
 // Recordar los datos en este navegador
-const CAMPOS = ['empresa','contacto','ciudad','cargo','contrataciones','salario','postulantes','evaluados','vacantes','usuarios','horasHoy','horasConCA','salarioReclutador','incluirPruebas','incluirVoz','entrevistadosVoz','exonerada','margenTemporal','mesesTemporal','honorarioFirmaPct','precioAviso','trm','softwareRef','pruebaRef','licencia','precioPruebaCA','precioVozCA','gestionPauta','precioPorContratado','costoPorPostulante','mensajes','tarifaMeta','incluirAsistente'];
+const CAMPOS = ['empresa','contacto','ciudad','cargo','contrataciones','salario','postulantes','evaluados','vacantes','usuarios','horasHoy','horasConCA','salarioReclutador','incluirPruebas','incluirVoz','entrevistadosVoz','exonerada','margenTemporal','mesesTemporal','honorarioFirmaPct','precioAviso','trm','softwareRef','pruebaRef','setupPlataforma','precioLead','minimoMensual','precioMinutoVoz','minutosEntrevista','gestionPauta','precioOperativo','costoPorPostulante','mensajes','tarifaMeta','incluirAsistente'];
 const CLAVE = 'simulador-contratando-v3';
 function guardar() {
   try {
