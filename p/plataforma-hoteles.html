@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Plataforma DesarrollAndo Hoteles · maqueta</title>
+<link rel="icon" href="../assets/isotipo-desarrollando.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+<style>
+:root{
+  --escenario:#111827;--fondo:#ededed;--tarjeta:#f7f7f8;--texto:#111827;--suave:#4b5563;--linea:rgba(17,24,39,.1);
+  --azul:#2b599e;--celeste:#85caee;--violeta:#5a5396;--naranja:#d4790f;
+  --blanco-suave:rgba(255,255,255,.76);--linea-osc:rgba(255,255,255,.12);
+  --verde:#2f5d4e;--crema:#faf8f4;--tinta:#1f2421;--gris-web:#5b625e;
+  --rad:8px;--rad-lg:14px;
+  --curva:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Poppins,ui-sans-serif,system-ui,sans-serif;background:var(--escenario);color:#fff;line-height:1.5}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--celeste);outline-offset:3px}
+.claro :focus-visible{outline-color:var(--azul)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+@media (min-width:900px){.wrap{padding:0 40px}}
+
+/* Barra superior */
+.top{position:sticky;top:0;z-index:20;background:rgba(17,24,39,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--linea-osc)}
+.top .wrap{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding-top:10px;padding-bottom:10px}
+.top .marca{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;font-size:17px;white-space:nowrap}
+.top .marca img{width:30px;height:30px;object-fit:contain}
+.top .marca span{color:var(--celeste)}
+@media (max-width:700px){.top{position:static}.planes-sel{margin-left:0}}
+.vistas,.planes-sel{display:flex;gap:4px;padding:4px;border-radius:var(--rad);background:rgba(255,255,255,.06);flex-wrap:wrap}
+.vistas button,.planes-sel button,.seg button{border:0;background:transparent;color:var(--blanco-suave);font-size:13px;font-weight:500;padding:8px 12px;border-radius:6px}
+.vistas button[aria-pressed=true]{background:var(--azul);color:#fff;font-weight:600}
+.planes-sel button[aria-pressed=true]{background:var(--celeste);color:var(--escenario);font-weight:600}
+.planes-sel{margin-left:auto}
+.planes-sel .etq{font-size:12px;color:var(--blanco-suave);padding:8px 6px 8px 8px}
+.aviso-maqueta{font-size:12px;color:var(--blanco-suave);background:rgba(133,202,238,.1);border-bottom:1px solid var(--linea-osc)}
+.aviso-maqueta .wrap{padding-top:6px;padding-bottom:6px}
+.vista{display:none}
+.vista.activa{display:block;animation:entra .5s var(--curva)}
+@keyframes entra{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.vista.activa{animation:none}html{scroll-behavior:auto}}
+
+/* ===== Vista 1: planes (escenario oscuro) ===== */
+#planes{background:var(--escenario);background-image:radial-gradient(60rem 30rem at 85% -5%,rgba(133,202,238,.16),transparent 60%),radial-gradient(50rem 30rem at 0% 25%,rgba(90,83,150,.24),transparent 60%),radial-gradient(40rem 30rem at 60% 70%,rgba(43,89,158,.16),transparent 60%)}
+.kicker{font-family:ui-monospace,monospace;font-size:13px;letter-spacing:.12em;color:var(--celeste)}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.16em;color:var(--celeste)}
+.hl{color:var(--celeste)}
+.hero{display:grid;gap:32px;padding:56px 0 40px;align-items:center}
+@media (min-width:980px){.hero{grid-template-columns:1.05fr 1fr}}
+.hero h1{margin:14px 0;font-size:clamp(36px,5vw,58px);line-height:1.06;font-weight:700}
+.hero p{margin:0 0 24px;font-size:clamp(17px,1.6vw,20px);font-weight:300;color:var(--blanco-suave);max-width:640px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:var(--rad);padding:13px 20px;font-weight:600;font-size:16px;text-decoration:none;border:1px solid transparent;transition:transform .2s var(--curva)}
+.btn:hover{transform:translateY(-2px)}
+.btn-pri{background:var(--azul);color:#fff}
+.btn-sec{border-color:rgba(255,255,255,.24);color:#fff;background:transparent}
+.collage{display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:200px 200px;gap:12px}
+.collage figure{margin:0;position:relative;border-radius:var(--rad-lg);overflow:hidden;border:1px solid var(--linea-osc)}
+.collage figure:first-child{grid-row:1/3}
+.collage img{width:100%;height:100%;object-fit:cover}
+.collage figcaption{position:absolute;left:12px;bottom:12px;right:12px;background:rgba(17,24,39,.84);border-radius:var(--rad);padding:8px 12px;font-size:13px}
+.collage figcaption span{display:block;color:var(--blanco-suave);font-size:12px}
+@media (max-width:560px){.collage{grid-template-columns:1fr;grid-template-rows:none}.collage figure{height:200px}.collage figure:first-child{grid-row:auto}}
+.hero p.nota-ilus{font-size:12px;color:rgba(255,255,255,.6);margin:8px 0 0}
+.plan .precio.medida{font-size:24px}
+
+.bloque{padding:56px 0}
+.bloque h2{margin:10px 0 12px;font-size:clamp(28px,3.4vw,42px);line-height:1.1;font-weight:600}
+.bloque .sub{margin:0 0 28px;font-size:17px;font-weight:300;color:var(--blanco-suave);max-width:720px}
+.modulo{border:1px solid var(--linea-osc);background:rgba(255,255,255,.04);border-radius:var(--rad-lg);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+
+/* Calculadora */
+.calc{display:grid;gap:28px;padding:28px}
+@media (min-width:900px){.calc{grid-template-columns:1.1fr 1fr;padding:36px}}
+.campo{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.campo label{display:flex;justify-content:space-between;gap:12px;font-size:15px}
+.campo output{font-weight:700}
+.campo input[type=range]{width:100%;accent-color:var(--celeste);height:28px}
+.campo small{font-size:13px;color:rgba(255,255,255,.7)}
+.res{background:rgba(90,83,150,.35);border:1px solid var(--linea-osc);border-radius:var(--rad);padding:26px;display:flex;flex-direction:column;gap:12px}
+.res .grande{font-size:clamp(36px,4vw,50px);font-weight:700;line-height:1}
+.res .grande small{font-size:17px;font-weight:400}
+.equiv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.equiv div{background:rgba(17,24,39,.4);border-radius:6px;padding:10px 12px;font-size:13px}
+.equiv strong{display:block;font-size:20px;color:var(--celeste)}
+.letra{font-size:12.5px;color:rgba(255,255,255,.7);line-height:1.55}
+
+/* Cómo funciona */
+.pasos{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));counter-reset:p}
+.paso{padding:22px;display:flex;flex-direction:column;gap:10px;transition:transform .3s var(--curva),border-color .3s}
+.paso:hover{transform:translateY(-3px);border-color:var(--celeste)}
+.paso .idx{font-family:ui-monospace,monospace;font-size:34px;font-weight:300;color:rgba(255,255,255,.35);line-height:1}
+.paso svg{width:28px;height:28px;stroke:var(--celeste)}
+.paso h3{margin:0;font-size:19px;font-weight:600}
+.paso p{margin:0;font-size:14.5px;color:var(--blanco-suave);font-weight:300}
+
+/* Planes */
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.seg{display:flex;gap:4px;padding:4px;border-radius:var(--rad);background:rgba(255,255,255,.06)}
+.seg button[aria-pressed=true]{background:var(--azul);color:#fff;font-weight:600}
+.tarjetas{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,214px),1fr));align-items:stretch}
+.plan{padding:24px;display:flex;flex-direction:column;gap:14px;position:relative;transition:transform .3s var(--curva),border-color .3s}
+.plan:hover{transform:translateY(-3px);border-color:var(--celeste)}
+.plan.reco{background:rgba(90,83,150,.34);border:2px solid var(--celeste)}
+.plan .tag{align-self:flex-start;font-size:11.5px;font-weight:700;letter-spacing:.1em;background:var(--celeste);color:var(--escenario);padding:4px 10px;border-radius:6px}
+.plan h3{margin:0;font-size:24px;font-weight:600}
+.plan .uni{font-size:13px;color:var(--celeste);font-weight:500}
+.plan .para{font-size:14px;color:var(--blanco-suave);margin:0;min-height:42px}
+.plan .precio{font-size:30px;font-weight:700;line-height:1.1}
+.plan .per{font-size:12.5px;color:rgba(255,255,255,.7)}
+.plan ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;font-size:14px;flex:1}
+.plan li{display:flex;gap:8px}
+.plan li svg{flex:none;margin-top:3px;width:16px;height:16px;stroke:var(--celeste)}
+.plan .btn{justify-content:center;font-size:15px;padding:12px}
+.letra-planes{margin-top:14px;padding:18px 22px;display:flex;flex-direction:column;gap:8px;font-size:14px;color:rgba(255,255,255,.8)}
+.letra-planes strong{color:#fff}
+.tabla-caja{overflow-x:auto;border:1px solid var(--linea-osc);border-radius:var(--rad)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:14px}
+th,td{padding:12px 16px;text-align:left;vertical-align:top}
+thead th{background:rgba(255,255,255,.06);font-weight:600}
+tbody tr{border-top:1px solid rgba(255,255,255,.1)}
+tbody th{font-weight:500}
+tbody td{color:rgba(255,255,255,.82)}
+.col-reco{color:var(--celeste)}
+
+/* FAQ */
+.faq{display:grid;gap:10px}
+.faq details{padding:18px 22px}
+.faq summary{cursor:pointer;font-weight:600;font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.faq summary::after{content:"+";color:var(--celeste);font-weight:400;font-size:22px;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin:10px 0 0;color:var(--blanco-suave);font-size:15px;font-weight:300}
+.pie{border-top:1px solid var(--linea-osc);padding:24px 0 40px;font-size:13px;color:rgba(255,255,255,.7);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+
+/* ===== Vista 2: panel del dueño (claro) ===== */
+.claro{background:var(--fondo);color:var(--texto)}
+.panel{display:flex;flex-wrap:wrap;max-width:1360px;margin:0 auto}
+.lateral{flex:1 1 220px;max-width:250px;padding:24px 16px;display:flex;flex-direction:column;gap:4px}
+.lateral img{width:132px;margin:0 10px 16px}
+.lateral a{text-decoration:none;padding:10px 12px;border-radius:6px;font-size:14px;color:var(--suave)}
+.lateral a.on{background:#fff;color:var(--texto);font-weight:600}
+.mi-plan{margin-top:14px;padding:14px 12px;border-radius:var(--rad);background:#fff;border:1px solid var(--linea);font-size:13px}
+.mi-plan a{padding:0;color:var(--azul);font-weight:600}
+@media (max-width:700px){.lateral{max-width:none;flex-direction:row;flex-wrap:wrap;align-items:center}.lateral img{width:110px;margin:0 8px 0 0}.mi-plan{display:none}}
+.contenido{flex:999 1 640px;min-width:0;padding:24px 20px 48px;display:flex;flex-direction:column;gap:18px}
+@media (min-width:900px){.contenido{padding:28px 40px 56px 8px}}
+.cab{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between}
+.cab small{color:var(--suave);font-size:13px}
+.cab h1{margin:4px 0 0;font-size:clamp(24px,3vw,30px);font-weight:600;line-height:1.15}
+.cab .btn{font-size:15px;padding:11px 16px}
+.alerta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:#fff7ea;border:1px solid var(--naranja);border-radius:var(--rad);padding:14px 18px;font-size:14px}
+.alerta button{border:1px solid var(--azul);background:#fff;color:var(--azul);font-weight:600;font-size:14px;padding:8px 14px;border-radius:6px}
+.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
+.caja{background:var(--tarjeta);border:1px solid var(--linea);border-radius:var(--rad);padding:18px}
+.kpi small{display:block;font-size:13px;color:var(--suave)}
+.kpi strong{display:block;font-size:27px;line-height:1.15;margin:4px 0}
+.kpi span{font-size:12px;color:var(--suave)}
+.kpi.destacado{background:var(--escenario);color:#fff;border-color:var(--escenario)}
+.kpi.destacado small,.kpi.destacado span{color:var(--blanco-suave)}
+.kpi.destacado strong{color:var(--celeste)}
+.caja h2{margin:0 0 14px;font-size:17px;font-weight:600}
+.cupos{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))}
+.cupo div:first-child{display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px}
+.barra{height:8px;border-radius:4px;background:#dfe3e8;overflow:hidden}
+.barra i{display:block;height:100%;border-radius:4px;background:var(--azul);transition:width .6s var(--curva)}
+.barra i.alto{background:var(--naranja)}
+.fila2{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.lista-barras{display:flex;flex-direction:column;gap:12px}
+.lb{display:grid;grid-template-columns:minmax(110px,150px) 1fr 52px;gap:10px;align-items:center;font-size:14px}
+.lb strong{text-align:right}
+.lb .barra{height:10px}
+.lb .barra i.vi{background:var(--violeta)}
+.pend{display:flex;flex-direction:column;gap:10px}
+.pend div{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--linea);border-radius:6px;padding:12px 14px;font-size:14px}
+.pend small{display:block;color:var(--suave);font-size:13px}
+.chip{font-size:12px;font-weight:600;padding:4px 8px;border-radius:6px;background:#e8eef7;color:var(--azul)}
+.chip.ok{background:#e6f4ea;color:#1f6b3a}
+.chip.libre{background:#eef0f2;color:var(--suave)}
+.mejora{background:#fff;border:1px dashed rgba(17,24,39,.25);border-radius:var(--rad);padding:16px 20px;font-size:14px;color:var(--suave)}
+.mejora a{color:var(--azul);font-weight:600}
+.recep-osc{background:var(--escenario);color:#fff;border-radius:var(--rad);padding:22px}
+.recep-osc h2{margin:6px 0 14px;font-size:20px;font-weight:600}
+.mini{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.mini div{border:1px solid var(--linea-osc);border-radius:var(--rad);padding:14px}
+.mini small{display:block;font-size:13px;color:var(--blanco-suave)}
+.mini strong{font-size:24px}
+.claro table{min-width:560px}
+.claro thead th{background:transparent;color:var(--suave);font-weight:500;padding:8px}
+.claro tbody tr{border-top:1px solid var(--linea)}
+.claro tbody td{color:var(--texto);padding:10px 8px}
+.copi{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.prop{background:#fff;border:1px solid var(--linea);border-radius:var(--rad);padding:16px;font-size:14px}
+.prop .acc{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.prop .acc button{border-radius:6px;font-weight:600;font-size:14px;padding:10px 14px;border:1px solid var(--azul)}
+.prop .acc .p{background:var(--azul);color:#fff}
+.prop .acc .s{background:#fff;color:var(--azul)}
+.piezas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.pieza{position:relative;aspect-ratio:4/5;border-radius:var(--rad);overflow:hidden}
+.pieza img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pieza b{position:absolute;top:0;left:0;right:0;padding:10px;background:rgba(17,24,39,.55);color:#fff;font-size:13px;line-height:1.3;font-weight:600}
+.pieza span{position:absolute;left:8px;bottom:8px;background:#fff;color:var(--texto);font-size:11.5px;font-weight:600;padding:5px 8px;border-radius:6px}
+.nota-gris{font-size:13px;color:var(--suave);margin:12px 0 0}
+
+/* ===== Vista 3: web del huésped ===== */
+.web{background:var(--crema);color:var(--tinta)}
+.web a{color:var(--verde)}
+.web-top{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;padding:18px 0}
+.web-top .nombre{font-size:22px;font-weight:600;color:var(--verde)}
+.web-top nav{display:flex;flex-wrap:wrap;gap:16px;align-items:center;font-size:14px}
+.web-top nav a{text-decoration:none}
+.idioma{display:flex;gap:2px;border:1px solid rgba(31,36,33,.2);border-radius:6px;padding:2px}
+.idioma button{border:0;background:transparent;color:var(--tinta);font-size:12px;font-weight:500;padding:4px 8px;border-radius:4px}
+.idioma button[aria-pressed=true]{background:var(--tinta);color:#fff;font-weight:600}
+.rnt{font-size:12px;color:var(--gris-web);border:1px solid rgba(31,36,33,.2);border-radius:6px;padding:4px 8px}
+.web-hero{position:relative;border-radius:var(--rad-lg);overflow:hidden;min-height:440px;display:flex;align-items:flex-end;color:#fff}
+.web-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.web-hero .txt{position:relative;width:100%;padding:40px 40px 76px;background:linear-gradient(180deg,rgba(17,24,39,0),rgba(17,24,39,.62) 60%)}
+.web-hero .lugar{font-size:13px;letter-spacing:.12em}
+.web-hero h1{margin:8px 0;font-size:clamp(32px,4.4vw,50px);line-height:1.06;font-weight:700;max-width:760px}
+.web-hero p{margin:0;font-size:18px;font-weight:300;max-width:640px}
+@media (max-width:600px){.web-hero .txt{padding:24px 20px 60px}}
+.reserva{position:relative;margin-top:-40px;background:#fff;border:1px solid rgba(31,36,33,.12);border-radius:12px;padding:24px;box-shadow:0 12px 32px rgba(0,0,0,.08);display:grid;gap:22px}
+@media (min-width:900px){.reserva{grid-template-columns:1.6fr 1fr;margin-left:24px;margin-right:24px}}
+.reserva h2{margin:0 0 12px;font-size:20px;font-weight:600}
+.fechas{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+.fechas label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--gris-web)}
+.fechas input,.fechas select{font:inherit;font-size:15px;color:var(--tinta);padding:10px;border:1px solid rgba(31,36,33,.3);border-radius:6px;background:#fff}
+.disp{font-size:14px;color:var(--verde);font-weight:600;margin:12px 0}
+.extras{border:1px solid rgba(31,36,33,.12);border-radius:var(--rad);padding:12px 14px;display:flex;flex-direction:column;gap:10px;margin:0}
+.extras legend{font-size:13px;color:var(--gris-web);padding:0 4px}
+.extras label{display:flex;gap:10px;align-items:center;font-size:14px}
+.extras input{width:18px;height:18px;accent-color:var(--verde)}
+.extras img{width:44px;height:44px;object-fit:cover;border-radius:6px}
+.resumen{background:#f3f0e8;border-radius:var(--rad);padding:18px;display:flex;flex-direction:column;gap:8px;font-size:14px}
+.resumen div{display:flex;justify-content:space-between;gap:12px}
+.resumen hr{border:0;height:1px;background:rgba(31,36,33,.15);margin:4px 0;width:100%}
+.resumen .ant{font-size:18px;font-weight:700}
+.resumen button{margin-top:6px;background:var(--verde);color:#fff;border:0;font-weight:600;font-size:15px;padding:12px;border-radius:var(--rad)}
+.resumen small{font-size:12px;color:var(--gris-web)}
+.unidades{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+.unidad{background:#fff;border:1px solid rgba(31,36,33,.12);border-radius:10px;overflow:hidden;transition:transform .3s var(--curva)}
+.unidad:hover{transform:translateY(-3px)}
+.unidad img{width:100%;height:200px;object-fit:cover}
+.unidad div{padding:14px 16px}
+.unidad h3{margin:0;font-size:17px;font-weight:600}
+.unidad p{margin:2px 0 6px;font-size:13px;color:var(--gris-web)}
+.unidad strong{font-size:15px}
+.unidad strong span{font-weight:400;font-size:13px;color:var(--gris-web)}
+.web-pol{font-size:14px;color:var(--gris-web);padding:20px 0 140px}
+.web-pol strong{color:var(--tinta)}
+.wa{position:fixed;right:24px;bottom:24px;z-index:15;display:none;gap:10px;align-items:center;background:#1f7a4d;color:#fff!important;text-decoration:none;font-weight:600;font-size:15px;padding:14px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+body.en-web .wa{display:inline-flex}
+.recep{position:fixed;right:24px;bottom:96px;z-index:15;width:min(370px,calc(100% - 48px));background:#fff;color:var(--tinta);border:1px solid rgba(31,36,33,.15);border-radius:var(--rad-lg);box-shadow:0 16px 40px rgba(0,0,0,.2);overflow:hidden;display:none;flex-direction:column}
+body.en-web.con-recep.recep-abierta .recep{display:flex}
+.lanzador{position:fixed;right:24px;bottom:96px;z-index:15;display:none;align-items:center;gap:10px;background:var(--verde);color:#fff;border:0;border-radius:999px;padding:12px 18px;font-weight:600;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.lanzador i{width:9px;height:9px;border-radius:50%;background:#7ee2a8;box-shadow:0 0 0 0 rgba(126,226,168,.7);animation:pulso 1.8s infinite}
+@keyframes pulso{70%{box-shadow:0 0 0 10px rgba(126,226,168,0)}100%{box-shadow:0 0 0 0 rgba(126,226,168,0)}}
+@media (prefers-reduced-motion:reduce){.lanzador i{animation:none}}
+body.en-web.con-recep:not(.recep-abierta) .lanzador{display:inline-flex}
+.recep .cerrar{background:transparent;border:0;color:#fff;font-size:22px;line-height:1;padding:0 4px}
+.recep .enc{background:var(--verde);color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.recep .enc small{display:block;font-size:12px;opacity:.85}
+.recep .voz{display:none;background:#fff;color:var(--verde);border:0;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:600;align-items:center;gap:6px}
+body.con-voz .recep .voz{display:inline-flex}
+.recep .cuerpo{padding:14px;display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.45;background:var(--crema);max-height:300px;overflow-y:auto}
+.burb{max-width:86%;border-radius:10px;padding:10px 12px}
+.burb.a{align-self:flex-start;background:#fff;border:1px solid rgba(31,36,33,.1)}
+.burb.h{align-self:flex-end;background:#e6efe9}
+.llenado{align-self:center;font-size:12px;color:var(--verde);font-weight:600;display:flex;gap:6px;align-items:center}
+.onda{display:none;align-self:flex-end;background:#e6efe9;border-radius:10px;padding:10px 12px;gap:3px;align-items:center}
+body.con-voz .onda{display:flex}
+.onda i{width:3px;background:var(--verde);border-radius:2px;animation:onda 1.1s ease-in-out infinite}
+.onda i:nth-child(2){animation-delay:.1s}.onda i:nth-child(3){animation-delay:.2s}.onda i:nth-child(4){animation-delay:.3s}.onda i:nth-child(5){animation-delay:.4s}
+@keyframes onda{0%,100%{height:8px}50%{height:22px}}
+@media (prefers-reduced-motion:reduce){.onda i{animation:none;height:14px}}
+.recep .pie-r{padding:10px 14px;border-top:1px solid rgba(31,36,33,.1);font-size:12px;color:var(--gris-web)}
+.recep .entrada{display:flex;gap:8px;padding:10px 14px;border-top:1px solid rgba(31,36,33,.1)}
+.recep .entrada input{flex:1;min-width:0;font:inherit;font-size:14px;padding:9px 10px;border:1px solid rgba(31,36,33,.25);border-radius:6px}
+.recep .entrada button{border:0;background:var(--verde);color:#fff;border-radius:6px;padding:0 12px;font-weight:600;font-size:13px}
+.plan-web{margin:18px 0 0;font-size:13px;color:var(--gris-web);background:#fff;border:1px dashed rgba(31,36,33,.25);border-radius:var(--rad);padding:12px 16px}
+
+/* ===== Vista 4: conversaciones ===== */
+#chats{background:var(--escenario);background-image:radial-gradient(50rem 30rem at 10% 10%,rgba(90,83,150,.24),transparent 60%),radial-gradient(50rem 30rem at 90% 90%,rgba(43,89,158,.2),transparent 60%)}
+.telefonos{display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));justify-items:center;padding-bottom:56px}
+.tel-caja{display:flex;flex-direction:column;gap:12px;align-items:center;max-width:390px;width:100%}
+.tel-caja h3{margin:0;font-size:18px;font-weight:600;text-align:center}
+.tel-caja p{margin:0;font-size:14px;color:var(--blanco-suave);text-align:center}
+.tel{width:100%;max-width:370px;height:740px;border-radius:36px;border:10px solid #000;background:#000;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 60px rgba(0,0,0,.45)}
+.tel .enc{padding:16px 16px 12px;color:#fff}
+.tel .enc b{display:block;font-size:16px}
+.tel .enc small{font-size:12px;opacity:.85}
+.tel .hilo{flex:1;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:13px;line-height:1.45;overflow-y:auto}
+.tel .sep{align-self:center;font-size:11px;background:rgba(255,255,255,.75);color:#333;padding:4px 10px;border-radius:6px;text-align:center}
+.tel .m{max-width:84%;border-radius:10px;padding:8px 10px;color:#1f2421}
+.tel .m.yo{align-self:flex-end}
+.tel .m.ella{align-self:flex-start;background:#fff}
+.tel .enl{display:block;margin-top:6px;color:var(--azul);font-weight:600}
+.tel .foto{border-radius:8px;overflow:hidden;margin:-2px -4px 6px;max-width:220px}
+.tel .foto img{width:100%;height:120px;object-fit:cover}
+.tel .resp{display:flex;flex-direction:column;gap:6px;max-width:88%}
+.tel .resp button{background:#fff;border:1px solid rgba(17,24,39,.12);border-radius:8px;padding:9px;font-size:13px;font-weight:600;color:var(--azul)}
+.tel-h{background:#ece7dd}.tel-h .enc{background:var(--verde)}.tel-h .m.yo{background:#dcefe3}
+.tel-d{background:#e9ecf1}.tel-d .enc{background:var(--escenario)}.tel-d .m.yo{background:#dbe7f6}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="marca" href="#" data-vista="planes"><img src="../assets/isotipo-desarrollando.png" alt="">DesarrollAndo <span>Hoteles</span></a>
+    <div class="vistas" role="group" aria-label="Vista">
+      <button type="button" data-vista="planes" aria-pressed="true">Planes</button>
+      <button type="button" data-vista="panel" aria-pressed="false">Panel del dueño</button>
+      <button type="button" data-vista="web" aria-pressed="false">Web del huésped</button>
+      <button type="button" data-vista="chats" aria-pressed="false">Conversaciones</button>
+    </div>
+    <div class="planes-sel" role="group" aria-label="Ver con el plan" id="selPlan" hidden>
+      <span class="etq">Ver con el plan:</span>
+      <button type="button" data-plan="cabana">Cabaña</button>
+      <button type="button" data-plan="casa">Casa</button>
+      <button type="button" data-plan="posada">Posada</button>
+      <button type="button" data-plan="hotel">Hotel</button>
+    </div>
+  </div>
+</header>
+<div class="aviso-maqueta"><div class="wrap">Maqueta con datos de ejemplo y un alojamiento ficticio. Precios de referencia sujetos a aprobación.</div></div>
+
+<main>
+<!-- ================= 1. PLANES ================= -->
+<section class="vista activa" id="planes" aria-label="Planes">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <div class="kicker">PLATAFORMA PARA ALOJAMIENTOS · IA CONVERSACIONAL</div>
+        <h1>Atienda, cotice y cobre el anticipo <span class="hl">a cualquier hora.</span></h1>
+        <p>Asistente con IA en WhatsApp, Instagram y Facebook, su propia página con reservas y cobro de anticipo, y sus anuncios en Facebook e Instagram, en un solo lugar.</p>
+        <div class="ctas">
+          <a class="btn btn-pri" href="#tarifas">Ver los planes <span aria-hidden="true">→</span></a>
+          <a class="btn btn-sec" href="#" data-ir="web">Ver un alojamiento de ejemplo <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div>
+        <div class="collage">
+          <figure><img src="../assets/plataforma-hoteles/portada-valle.jpg" alt="Valle con palmas de cera y una cabaña entre la niebla"><figcaption>Su página propia<span>Con sus fotos, sus tarifas y cobro de anticipo.</span></figcaption></figure>
+          <figure><img src="../assets/plataforma-hoteles/terraza.jpg" alt="Terraza con hamaca y vista al valle"><figcaption>Anuncios con sus fotos<span>Mejoradas sin falsearlas.</span></figcaption></figure>
+          <figure><img src="../assets/plataforma-hoteles/desayuno.jpg" alt="Desayuno campesino con café, arepa y frutas"><figcaption>Extras en el chat<span>Desayunos y traslados en el mismo pago.</span></figcaption></figure>
+        </div>
+        <p class="nota-ilus">Ilustraciones de referencia. En la plataforma van las fotos reales de cada alojamiento.</p>
+      </div>
+    </div>
+
+    <section class="bloque" aria-labelledby="t-calc">
+      <div class="eyebrow">01 — SU COMISIÓN DE PORTAL</div>
+      <h2 id="t-calc">¿Cuánto le pagó a los portales <span class="hl">este mes?</span></h2>
+      <p class="sub">Mueva los controles con sus propios datos.</p>
+      <div class="modulo calc">
+        <div>
+          <div class="campo"><label for="cR"><span>Reservas al mes por portales</span><output id="oR" for="cR"></output></label><input id="cR" type="range" min="1" max="40" step="1" value="8"></div>
+          <div class="campo"><label for="cV"><span>Valor promedio de cada reserva</span><output id="oV" for="cV"></output></label><input id="cV" type="range" min="100000" max="2000000" step="20000" value="500000"></div>
+          <div class="campo"><label for="cC"><span>Comisión de su portal</span><output id="oC" for="cC"></output></label><input id="cC" type="range" min="8" max="25" step="0.5" value="15.5"><small>En Colombia, Airbnb cobra al anfitrión 15,5 %. Ponga el porcentaje que usted paga.</small></div>
+        </div>
+        <div class="res" aria-live="polite">
+          <span style="color:var(--blanco-suave)">Comisión de portal estimada</span>
+          <div class="grande" id="rMes"></div>
+          <div>Al año: <strong id="rAno"></strong></div>
+          <div class="equiv" id="rEq"></div>
+          <div class="letra">Ejemplo ilustrativo con sus datos; no es una promesa de reservas. Las reservas que llegan por su página van sin comisión de portal; la pasarela de pagos cobra su propia comisión por cada anticipo.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bloque" aria-labelledby="t-como">
+      <div class="eyebrow">02 — CÓMO FUNCIONA</div>
+      <h2 id="t-como">Del anuncio a la reserva, <span class="hl">sin perder a nadie.</span></h2>
+      <div class="pasos">
+        <article class="modulo paso"><span class="idx">01</span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg><h3>Anuncio</h3><p>El copiloto arma la campaña con sus fotos y la lanza en su cuenta de Meta. El presupuesto lo define usted.</p></article>
+        <article class="modulo paso"><span class="idx">02</span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg><h3>Conversación</h3><p>El asistente responde en WhatsApp, Instagram o Facebook, en el idioma del huésped, y cotiza con su tarifa.</p></article>
+        <article class="modulo paso"><span class="idx">03</span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg><h3>Anticipo</h3><p>Envía el enlace de pago de su país, aparta las fechas y recuerda a quien no ha pagado. El dinero llega a su cuenta.</p></article>
+        <article class="modulo paso"><span class="idx">04</span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg><h3>Seguimiento</h3><p>Usted ve todo en su panel y cada lunes recibe un resumen por WhatsApp con 3 sugerencias.</p></article>
+      </div>
+    </section>
+
+    <section class="bloque" id="tarifas" aria-labelledby="t-planes">
+      <div class="eyebrow">03 — PLANES</div>
+      <h2 id="t-planes">Un plan para cada <span class="hl">tamaño de alojamiento.</span></h2>
+      <p class="sub">Las unidades son una guía de para cuántas habitaciones rinde cada plan. Puede tomar el que quiera y cambiar de plan cada mes.</p>
+      <div class="ctrl">
+        <div class="seg" role="group" aria-label="País y moneda"><button type="button" data-mon="cop" aria-pressed="true">Colombia · COP</button><button type="button" data-mon="usd" aria-pressed="false">Panamá, Ecuador, México · USD</button></div>
+        <div class="seg" role="group" aria-label="Forma de pago"><button type="button" data-per="mes" aria-pressed="true">Mensual</button><button type="button" data-per="ano" aria-pressed="false">Anual · 15 % menos</button></div>
+      </div>
+      <div class="tarjetas" id="tarjetas"></div>
+      <div class="modulo letra-planes">
+        <div><strong>Primer mes con acompañamiento:</strong> una persona de nuestro equipo le ayuda a dejar listo su asistente, su página y su primer anuncio, y revisa con usted su panel al cumplir 30 días.</div>
+        <div id="paquetes"></div>
+        <div>Aparte: la inversión en anuncios y los cobros de Meta por mensajes de WhatsApp se pagan directo a Meta con su tarjeta; la pasarela cobra su comisión por cada anticipo.</div>
+      </div>
+    </section>
+
+    <section class="bloque" aria-labelledby="t-tabla">
+      <div class="eyebrow">04 — QUÉ INCLUYE</div>
+      <h2 id="t-tabla">Todo lo que hace la plataforma, <span class="hl">plan por plan.</span></h2>
+      <div class="tabla-caja">
+        <table>
+          <thead><tr><th scope="col">Función</th><th scope="col">Cabaña</th><th scope="col" class="col-reco">Casa</th><th scope="col">Posada</th><th scope="col">Hotel</th></tr></thead>
+          <tbody id="tabla"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="bloque" aria-labelledby="t-faq">
+      <div class="eyebrow">05 — PREGUNTAS</div>
+      <h2 id="t-faq">Lo que más nos <span class="hl">preguntan.</span></h2>
+      <div class="faq">
+        <details class="modulo"><summary>¿Qué cuenta como una conversación?</summary><p>Cada persona que le escribe y recibe respuesta dentro de un mismo día cuenta como una. Si vuelve a escribir al día siguiente, cuenta otra. Si llega por un anuncio, cuenta una sola durante 3 días. Si le escribe por WhatsApp y por Instagram, cuenta una en cada canal. Con Cabaña son unas 8 por día.</p></details>
+        <details class="modulo"><summary>¿Qué pasa si se me acaban las conversaciones?</summary><p>Le avisamos al llegar al 80 % y al 100 %. Usted decide si suma un paquete. Si no lo suma, el asistente le dice al huésped que una persona le escribe pronto y le pasa el caso.</p></details>
+        <details class="modulo"><summary>¿Tengo que salirme de Airbnb o Booking?</summary><p>No. La plataforma le suma una forma propia de recibir reservas. Para que su calendario se mantenga al día con los portales se conecta un gestor de canales (Beds24), que se paga aparte.</p></details>
+        <details class="modulo"><summary>¿Qué pago aparte?</summary><p>Los anuncios, que usted paga directo a Meta con su tarjeta y con el presupuesto que elija; lo que Meta cobra por algunos mensajes de WhatsApp; y la comisión de su pasarela por cada anticipo.</p></details>
+        <details class="modulo"><summary>¿La recepcionista contesta mi teléfono?</summary><p>No. Atiende en su página web, por escrito en Posada y también por voz en Hotel, desde el celular o el computador del visitante. Para una línea telefónica, pregunte por el plan Cadena.</p></details>
+        <details class="modulo"><summary>¿Puedo cambiar de plan?</summary><p>Sí, cada mes. Por ejemplo, subir en temporada alta y bajar en temporada baja.</p></details>
+      </div>
+    </section>
+
+    <footer class="pie"><span>DesarrollAndo Hoteles · Meta Business Partner</span><span>Soporte en días hábiles de 8 a. m. a 6 p. m.</span></footer>
+  </div>
+</section>
+
+<!-- ================= 2. PANEL DEL DUEÑO ================= -->
+<section class="vista claro" id="panel" aria-label="Panel del dueño">
+  <div class="panel">
+    <nav class="lateral" aria-label="Secciones del panel">
+      <img src="../assets/plataforma-hoteles/logo-negro.png" alt="DesarrollAndo Hoteles">
+      <a href="#p-resumen" class="on">Resumen</a>
+      <a href="#p-conv">Conversaciones</a>
+      <a href="#p-ant">Reservas y anticipos</a>
+      <a href="#p-ads">Anuncios</a>
+      <a href="#p-copi">Copiloto e imágenes</a>
+      <a href="#" data-ir="web">Mi página web</a>
+      <div class="mi-plan" id="miPlan"></div>
+    </nav>
+    <div class="contenido">
+      <div class="cab" id="p-resumen">
+        <div><small>Casa Bruma · alojamiento de ejemplo · noviembre</small><h1>Hola, Andrea. Así va su mes.</h1></div>
+        <a class="btn btn-pri" href="#p-copi">Crear un anuncio <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="alerta" id="alerta" role="status" hidden></div>
+      <div class="kpis" id="kpis"></div>
+      <section class="caja" aria-labelledby="t-cupos"><h2 id="t-cupos">Lo incluido en su plan este mes</h2><div class="cupos" id="cupos"></div></section>
+      <div class="fila2">
+        <section class="caja" id="p-conv" aria-labelledby="t-can"><h2 id="t-can">Conversaciones por canal</h2><div class="lista-barras" id="canales"></div><p class="nota-gris">Responde en el idioma del huésped y entiende notas de voz.</p></section>
+        <section class="caja" id="p-ant" aria-labelledby="t-ant"><h2 id="t-ant">Anticipos por cobrar</h2><p class="nota-gris" id="rescate" style="margin:0 0 12px"></p><div class="pend" id="pend"></div></section>
+      </div>
+      <div class="fila2" id="completo">
+        <section class="caja" aria-labelledby="t-ori"><h2 id="t-ori">De dónde llegan sus reservas directas</h2><div class="lista-barras" id="origen"></div></section>
+        <section class="caja" aria-labelledby="t-ocu"><h2 id="t-ocu">Ocupación por unidad</h2><div class="lista-barras" id="ocupa"></div><p class="nota-gris">Sugerencia: el próximo puente festivo tiene 2 unidades libres. ¿Ajustamos la tarifa o lanzamos un anuncio?</p></section>
+      </div>
+      <div class="mejora" id="mejora">Con el plan Casa ve de dónde llega cada reserva, la ocupación por unidad y las preguntas más frecuentes. <a href="#tarifas" data-ir="planes">Ver planes</a></div>
+      <section class="recep-osc" id="recepPanel" aria-labelledby="t-rec"><div class="eyebrow">RECEPCIONISTA EN SU PÁGINA</div><h2 id="t-rec"></h2><div class="mini" id="recepMini"></div></section>
+      <section class="caja" id="p-ads" aria-labelledby="t-ads"><h2 id="t-ads">Anuncios en Facebook e Instagram <small style="font-weight:400;color:var(--suave);font-size:13px">· se pagan a Meta con su tarjeta</small></h2><div class="tabla-caja" style="border:0"><table><thead><tr><th scope="col">Campaña</th><th scope="col">Gasto</th><th scope="col">Conversaciones</th><th scope="col">Costo por conversación</th><th scope="col">Estado</th></tr></thead><tbody id="ads"></tbody></table></div></section>
+      <section class="caja" id="p-copi" aria-labelledby="t-copi"><h2 id="t-copi">Copiloto: su próximo anuncio</h2>
+        <div class="copi">
+          <div class="prop"><strong>Propuesta del copiloto</strong><p style="margin:6px 0 0">Puente festivo con 2 unidades libres. Público: personas de Bogotá, Medellín y Cali interesadas en viajar al Eje Cafetero. Presupuesto: lo define usted. Botón: enviar mensaje por WhatsApp.</p><div class="acc"><button type="button" class="p">Revisar y publicar</button><button type="button" class="s">Cambiar piezas</button></div></div>
+          <div class="piezas">
+            <div class="pieza"><img src="../assets/plataforma-hoteles/terraza.jpg" alt="Pieza: terraza con hamaca"><b>Puente festivo en el Eje Cafetero</b><span>Escríbanos por WhatsApp</span></div>
+            <div class="pieza"><img src="../assets/plataforma-hoteles/cabana-bosque.jpg" alt="Pieza: cabaña en el bosque"><b>2 noches en la Cabaña del Bosque</b><span>Foto real mejorada</span></div>
+            <div class="pieza"><img src="../assets/plataforma-hoteles/desayuno.jpg" alt="Pieza: desayuno campesino"><b>Desayuno campesino incluido</b><span>Formato historia 9:16</span></div>
+          </div>
+        </div>
+        <p class="nota-gris">Mejoras fieles: luz, color y nitidez. No agrega ni quita muebles, vistas o servicios. Usted ve el antes y el después y aprueba cada pieza.</p>
+      </section>
+      <section class="caja" id="equipo" aria-labelledby="t-eq"><h2 id="t-eq">Equipo</h2><p style="margin:0;font-size:14px">Andrea · dueña · ve todo<br>Recepción turno mañana · conversaciones y reservas<br>Recepción turno noche · conversaciones y reservas</p></section>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3. WEB DEL HUÉSPED ================= -->
+<section class="vista web" id="web" aria-label="Web del alojamiento">
+  <div class="wrap">
+    <div class="web-top">
+      <div class="nombre">Casa Bruma</div>
+      <nav aria-label="Secciones de la web">
+        <a href="#w-unidades" data-t="unidades"></a><a href="#w-reserva" data-t="reservar"></a><a href="#w-pol" data-t="politicas"></a>
+        <div class="idioma" role="group" aria-label="Idioma"><button type="button" data-lang="es" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+        <span class="rnt">RNT [número]</span>
+      </nav>
+    </div>
+    <div class="web-hero">
+      <img src="../assets/plataforma-hoteles/portada-valle.jpg" alt="Valle con palmas de cera y cabañas entre la niebla">
+      <div class="txt"><div class="lugar" data-t="lugar"></div><h1 data-t="titulo"></h1><p data-t="sub"></p></div>
+    </div>
+    <div class="reserva" id="w-reserva">
+      <div>
+        <h2 data-t="reserve"></h2>
+        <div class="fechas">
+          <label><span data-t="llegada"></span><input type="date" value="2026-11-14" id="fIn"></label>
+          <label><span data-t="salida"></span><input type="date" value="2026-11-16" id="fOut"></label>
+          <label><span data-t="huespedes"></span><select id="fHue"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select></label>
+        </div>
+        <div class="disp" id="disp"></div>
+        <fieldset class="extras"><legend data-t="extras"></legend>
+          <label><input type="checkbox" id="xDes" checked><img src="../assets/plataforma-hoteles/desayuno.jpg" alt=""><span data-t="desayuno"></span></label>
+          <label><input type="checkbox" id="xTra"><span data-t="traslado"></span></label>
+        </fieldset>
+      </div>
+      <div class="resumen" aria-live="polite" id="resumen"></div>
+    </div>
+    <p class="plan-web" id="planWeb"></p>
+    <section id="w-unidades" style="padding-top:44px">
+      <h2 style="margin:0 0 16px;font-size:28px;font-weight:600" data-t="unidades"></h2>
+      <div class="unidades" id="unidades"></div>
+    </section>
+    <p class="web-pol" id="w-pol"><strong data-t="politicas"></strong>: <span data-t="polTxt"></span></p>
+  </div>
+</section>
+
+<!-- ================= 4. CONVERSACIONES ================= -->
+<section class="vista" id="chats" aria-label="Conversaciones">
+  <div class="wrap">
+    <section class="bloque" style="padding-bottom:28px">
+      <div class="eyebrow">CONVERSACIONES</div>
+      <h2>Así se ve <span class="hl">del otro lado.</span></h2>
+      <p class="sub">A la izquierda, un huésped que llega por un anuncio. A la derecha, el informe del lunes que recibe el dueño.</p>
+    </section>
+    <div class="telefonos">
+      <div class="tel-caja">
+        <h3>El huésped</h3><p>Cotiza, suma extras, aparta fechas, recuerda el anticipo y pide la opinión.</p>
+        <div class="tel tel-h" role="img" aria-label="Chat de WhatsApp entre un huésped y el asistente del alojamiento">
+          <div class="enc"><b>Casa Bruma</b><small>WhatsApp · asistente virtual</small></div>
+          <div class="hilo">
+            <div class="sep">Llegó desde un anuncio de Instagram</div>
+            <div class="m yo">Hola, vi su anuncio. ¿Tienen del 14 al 16 de noviembre para 2?</div>
+            <div class="m ella"><div class="foto"><img src="../assets/plataforma-hoteles/cabana-bosque.jpg" alt=""></div>¡Hola, Laura! Sí, la Cabaña del Bosque está libre. 2 noches para 2 personas: $440.000. ¿Le sumo desayuno campesino ($25.000 por persona por noche) o traslado desde el terminal de Armenia ($80.000)?</div>
+            <div class="m yo">Desayuno sí, gracias</div>
+            <div class="m ella">Listo. Total $540.000; anticipo del 50 %: $270.000. Le aparto las fechas hasta hoy a las 6:00 p. m.<span class="enl">Pagar anticipo · Mercado Pago</span></div>
+            <div class="sep">3 horas después · recordatorio</div>
+            <div class="m ella">Hola, Laura. Sus fechas del 14 al 16 de noviembre siguen apartadas hasta las 6:00 p. m. ¿Le ayudo con el pago?</div>
+            <div class="m yo"><small style="color:#4b5563">Nota de voz · 0:09</small><br><em>«Ya pagué, ¿a qué hora es la entrada?»</em></div>
+            <div class="m ella">Recibimos su anticipo. Su reserva quedó confirmada. La entrada es desde las 3:00 p. m.; dos días antes le envío la guía para llegar.</div>
+            <div class="sep">17 de noviembre · después de la salida</div>
+            <div class="m ella">Gracias por quedarse con nosotros, Laura. Si quiere, nos deja su opinión en Google: nos ayuda mucho.<span class="enl">Dejar opinión en Google</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tel-caja">
+        <h3>El dueño</h3><p>Su semana en un minuto, con acciones que él aprueba.</p>
+        <div class="tel tel-d" role="img" aria-label="Informe semanal por WhatsApp para el dueño">
+          <div class="enc"><b>DesarrollAndo <span style="color:var(--celeste)">Hoteles</span></b><small>WhatsApp · su copiloto</small></div>
+          <div class="hilo">
+            <div class="sep">Lunes, 7:30 a. m.</div>
+            <div class="m ella"><b>Buenos días, Andrea. Su semana en un minuto:</b><br>· 64 conversaciones: WhatsApp 38, Instagram 19, su página 7<br>· 22 cotizaciones enviadas<br>· 7 anticipos pagados: $2.140.000 en su cuenta<br>· Comisión de portal que no pagó: unos $1.160.000 (estimado)<br>· Lleva el 73 % de sus conversaciones del mes<br><br><b>3 sugerencias:</b><br>1. El próximo puente festivo tiene 2 unidades libres. ¿Lanzo el anuncio que dejé listo?<br>2. 3 cotizaciones no se pagaron. Ya les envié recordatorio.<br>3. Tiene una opinión nueva en Google. Le dejé una respuesta para revisar.</div>
+            <div class="resp"><button type="button">Lanzar el anuncio</button><button type="button">Ver la respuesta a la opinión</button><button type="button">Abrir mi panel</button></div>
+            <div class="m yo">¿Cuánto me entró en octubre por reservas directas?</div>
+            <div class="m ella">En octubre recibió 26 anticipos por $7.380.000. La Cabaña del Bosque fue la que más se reservó.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- Elementos flotantes de la web del huésped -->
+<a class="wa" href="#" data-ir="chats" aria-label="Escribir por WhatsApp"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>WhatsApp</a>
+<button type="button" class="lanzador" id="recepAbrir"><i aria-hidden="true"></i><span data-t="lanzar"></span></button>
+<aside class="recep" aria-label="Recepcionista virtual">
+  <div class="enc"><div><b data-t="recep"></b><small data-t="recepSub"></small></div><span style="display:flex;gap:6px;align-items:center"><button type="button" class="voz" aria-label="Hablar por voz"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span data-t="hablar"></span></button><button type="button" class="cerrar" id="recepCerrar" aria-label="Cerrar">×</button></span></div>
+  <div class="cuerpo" id="recepCuerpo">
+    <div class="burb a" data-t="m1"></div>
+    <div class="burb h" data-t="m2"></div>
+    <div class="burb a" data-t="m3"></div>
+    <div class="llenado"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-t="llenado"></span></div>
+    <div class="onda" aria-label="Nota de voz del huésped"><i></i><i></i><i></i><i></i><i></i><span style="font-size:12px;margin-left:8px" data-t="escuchando"></span></div>
+  </div>
+  <form class="entrada" id="recepForm"><label class="sr" for="recepIn">Mensaje</label><input id="recepIn" autocomplete="off" data-ph="escriba"><button type="submit" data-t="enviar"></button></form>
+  <div class="pie-r" data-t="aviso"></div>
+</aside>
+
+<script>
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var cop = function (n) { return '$' + Math.round(n).toLocaleString('es-CO'); };
+  var num = function (n) { return Math.round(n).toLocaleString('es-CO'); };
+  var usd = function (n) { return 'USD ' + Math.round(n).toLocaleString('en-US'); };
+  var check = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+  var estado = { vista: 'planes', plan: 'casa', mon: 'cop', per: 'mes', lang: 'es' };
+
+  /* ---------- Datos de planes ---------- */
+  var PLANES = [
+    { id: 'cabana', nombre: 'Cabaña', uni: '1 o 2 unidades', para: 'Para empezar a atender y cobrar por su cuenta.', p: [149000, 49, 1520000, 499], cta: 'Elegir Cabaña',
+      items: ['Asistente con IA en WhatsApp, Instagram y Facebook', '250 conversaciones al mes', 'Su página con reservas y cobro de anticipo', '30 imágenes al mes para sus anuncios', 'Hasta 2 campañas de anuncios a la vez', 'Panel e informe del lunes por WhatsApp'] },
+    { id: 'casa', nombre: 'Casa', uni: '3 a 5 unidades', para: 'Para el alojamiento que ya recibe mensajes y quiere más reservas directas.', p: [299000, 99, 3050000, 1009], reco: true, cta: 'Elegir Casa',
+      items: ['500 conversaciones al mes', '60 imágenes al mes', 'Hasta 4 campañas a la vez', 'Extras en el chat: desayunos, traslados, tours', 'Panel completo: origen de cada reserva y ocupación', 'Todo lo de Cabaña'] },
+    { id: 'posada', nombre: 'Posada', uni: '6 a 12 unidades', para: 'Para quien recibe visitas en su página y quiere atenderlas sin demora.', p: [599000, 199, 6110000, 2029], cta: 'Elegir Posada',
+      items: ['Recepcionista virtual en su página, por escrito', '1.100 conversaciones al mes', '100 imágenes al mes', 'Hasta 6 campañas a la vez', 'Registro de huéspedes listo para su reporte', 'Todo lo de Casa'] },
+    { id: 'hotel', nombre: 'Hotel', uni: '13 a 20 unidades', para: 'Para el alojamiento con equipo que quiere atender también por voz.', p: [899000, 299, 9170000, 3049], cta: 'Elegir Hotel',
+      items: ['Recepcionista por escrito y por voz, 200 minutos', '1.300 conversaciones al mes', '150 imágenes al mes', 'Hasta 8 campañas a la vez', 'Acceso para su equipo', 'Todo lo de Posada'] },
+    { id: 'cadena', nombre: 'Cadena', uni: 'Más de 20 unidades o varias sedes', para: 'Para operaciones con varias sedes o necesidades propias.', cta: 'Pedir cotización',
+      items: ['Página con reservas para todas sus sedes', 'Recepcionista con los minutos que necesite', 'Conversaciones e imágenes según su volumen', 'Conexión con el sistema de su hotel', 'Panel para todo su equipo'] }
+  ];
+  var FILAS = [
+    ['Conversaciones al mes', '250', '500', '1.100', '1.300'],
+    ['Imágenes con IA al mes', '30', '60', '100', '150'],
+    ['Campañas de anuncios a la vez', '2', '4', '6', '8'],
+    ['Página con reservas y anticipo', 'Sí', 'Sí', 'Sí', 'Sí'],
+    ['Idioma del huésped y notas de voz', 'Sí', 'Sí', 'Sí', 'Sí'],
+    ['Recordatorio de anticipos sin pagar', '1 recordatorio', 'Secuencia y fechas apartadas', 'Secuencia y fechas apartadas', 'Secuencia y fechas apartadas'],
+    ['Informe del lunes por WhatsApp', 'Sí', 'Sí', 'Sí, y preguntas al copiloto', 'Sí, y preguntas al copiloto'],
+    ['Pedido de opinión en Google', 'Sí', 'Sí, con respuestas sugeridas', 'Sí, con respuestas sugeridas', 'Sí, con respuestas sugeridas'],
+    ['Extras en el chat', '—', 'Catálogo', 'Ofrecidos según la conversación', 'Ofrecidos según la conversación'],
+    ['Guía del huésped por WhatsApp', '—', 'Sí', 'Sí', 'Sí'],
+    ['Tarifas sugeridas por temporada', '—', 'Festivos', 'Festivos y eventos', 'Festivos y eventos'],
+    ['Panel', 'Básico', 'Completo', 'Completo', 'Completo y equipo'],
+    ['Recepcionista en la página', '—', '—', 'Por escrito', 'Por escrito y por voz (200 min)'],
+    ['Registro de huéspedes (Colombia)', '—', '—', 'Sí', 'Sí'],
+    ['Huéspedes que vuelven', '—', '—', 'Sí', 'Sí']
+  ];
+
+  function precio(p) {
+    if (!p.p) return { v: 'A la medida', per: 'según su operación' };
+    var u = estado.mon === 'usd', a = estado.per === 'ano';
+    var v = u ? usd(a ? p.p[3] : p.p[1]) : cop(a ? p.p[2] : p.p[0]);
+    return { v: v, per: a ? 'al año, en un solo pago' : 'al mes' };
+  }
+  function pintarPlanes() {
+    $('#tarjetas').innerHTML = PLANES.map(function (p) {
+      var pr = precio(p);
+      return '<article class="modulo plan' + (p.reco ? ' reco' : '') + '">' + (p.reco ? '<span class="tag">RECOMENDADO</span>' : '') +
+        '<div><h3>' + p.nombre + '</h3><div class="uni">' + p.uni + '</div></div><p class="para">' + p.para + '</p>' +
+        '<div><div class="precio' + (p.p ? '' : ' medida') + '">' + pr.v + '</div><div class="per">' + pr.per + '</div></div>' +
+        '<ul>' + p.items.map(function (i) { return '<li>' + check + '<span>' + i + '</span></li>'; }).join('') + '</ul>' +
+        '<a class="btn ' + (p.reco ? 'btn-pri' : 'btn-sec') + '" href="#" data-ver-plan="' + p.id + '">' + p.cta + ' <span aria-hidden="true">→</span></a></article>';
+    }).join('');
+    var u = estado.mon === 'usd';
+    $('#paquetes').innerHTML = 'Lo incluido se renueva cada mes y no se acumula. Si necesita más: 100 conversaciones ' + (u ? 'USD 15' : '$48.000') + ', 20 imágenes ' + (u ? 'USD 3' : '$10.000') + ', 60 minutos de voz ' + (u ? 'USD 14' : '$45.000') + '. Le avisamos al llegar al 80 % y al 100 %.';
+    $$('[data-mon]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.mon === estado.mon); });
+    $$('[data-per]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.per === estado.per); });
+  }
+  $('#tabla').innerHTML = FILAS.map(function (f) { return '<tr><th scope="row">' + f[0] + '</th><td>' + f[1] + '</td><td>' + f[2] + '</td><td>' + f[3] + '</td><td>' + f[4] + '</td></tr>'; }).join('');
+
+  /* ---------- Calculadora ---------- */
+  function calc() {
+    var r = +$('#cR').value, v = +$('#cV').value, c = +$('#cC').value;
+    var porRes = v * c / 100, mes = r * porRes;
+    $('#oR').textContent = r; $('#oV').textContent = cop(v); $('#oC').textContent = String(c).replace('.', ',') + ' %';
+    $('#rMes').innerHTML = cop(mes) + ' <small>al mes</small>';
+    $('#rAno').textContent = cop(mes * 12);
+    $('#rEq').innerHTML = PLANES.slice(0, 4).map(function (p) { return '<div>' + p.nombre + ' equivale a la comisión de<strong>' + Math.max(1, Math.ceil(p.p[0] / porRes)) + ' reservas</strong></div>'; }).join('');
+  }
+  ['#cR', '#cV', '#cC'].forEach(function (s) { $(s).addEventListener('input', calc); });
+
+  /* ---------- Panel del dueño ---------- */
+  var D = {
+    cabana: { nombre: 'Cabaña', precio: '$149.000 al mes', conv: [183, 250], img: [12, 30], camp: [1, 2], cot: 41, pag: 9, val: 420000, recep: false, equipo: false, completo: false, canales: [104, 61, 18, 0], rescate: 'Le enviamos 1 recordatorio a quien no ha pagado.' },
+    casa: { nombre: 'Casa', precio: '$299.000 al mes', conv: [362, 500], img: [41, 60], camp: [3, 4], cot: 88, pag: 19, val: 480000, recep: false, equipo: false, completo: true, canales: [201, 117, 44, 0], rescate: 'Secuencia de recordatorios; las fechas quedan apartadas hasta la hora indicada.' },
+    posada: { nombre: 'Posada', precio: '$599.000 al mes', conv: [812, 1100], img: [64, 100], camp: [5, 6], cot: 176, pag: 38, val: 520000, recep: true, equipo: false, completo: true, canales: [402, 199, 65, 146], rescate: 'Secuencia de recordatorios; las fechas quedan apartadas hasta la hora indicada.', recTit: 'Atendió 146 conversaciones por escrito en su página este mes.', recMini: [['Conversaciones en su página', '146'], ['Formularios llenados', '63'], ['Reservas que logró', '11']] },
+    hotel: { nombre: 'Hotel', precio: '$899.000 al mes', conv: [1066, 1300], img: [97, 150], camp: [6, 8], voz: [128, 200], cot: 231, pag: 52, val: 560000, recep: true, equipo: true, completo: true, canales: [498, 251, 92, 225], rescate: 'Secuencia de recordatorios; las fechas quedan apartadas hasta la hora indicada.', recTit: 'Atendió 225 conversaciones en su página, 41 de ellas por voz.', recMini: [['Conversaciones en su página', '225'], ['Por voz', '41 · 128 min'], ['Reservas que logró', '17']] }
+  };
+  var CAMP = [['Puente festivo · Eje Cafetero', '$210.000', '74', '$2.838', 'Activa'], ['Fin de semana en pareja', '$180.000', '52', '$3.462', 'Activa'], ['Temporada de diciembre', '$320.000', '101', '$3.168', 'Activa'], ['Turistas de Estados Unidos', 'USD 60', '23', 'USD 2,61', 'En revisión de Meta'], ['Grupos y familias', '$150.000', '38', '$3.947', 'Activa'], ['Desayuno incluido', '$90.000', '27', '$3.333', 'Activa']];
+  function barra(a, b, clase) { var p = Math.min(100, Math.round(a / b * 100)); return '<div class="barra"><i class="' + (clase || (p >= 80 ? 'alto' : '')) + '" style="width:' + p + '%"></i></div>'; }
+  function lista(items, clase) {
+    var max = Math.max.apply(null, items.map(function (i) { return i[1]; }));
+    return items.map(function (i) { return '<div class="lb"><span>' + i[0] + '</span>' + barra(i[1], max, clase || ' ') + '<strong>' + (i[2] || num(i[1])) + '</strong></div>'; }).join('');
+  }
+  function pintarPanel() {
+    var p = D[estado.plan], pct = Math.round(p.conv[0] / p.conv[1] * 100);
+    $('#miPlan').innerHTML = '<strong>Plan ' + p.nombre + '</strong><br><span style="color:var(--suave)">' + p.precio + ' · renueva el 1 de diciembre</span><br><a href="#tarifas" data-ir="planes">Cambiar de plan</a>';
+    var al = $('#alerta');
+    if (pct >= 80) { al.hidden = false; al.innerHTML = '<span><strong>Lleva el ' + pct + ' % de sus conversaciones del mes.</strong> Le quedan ' + num(p.conv[1] - p.conv[0]) + '. Si se acaban, el asistente avisa que una persona escribe pronto y le pasa el caso.</span><button type="button">Sumar 100 conversaciones · $48.000</button>'; } else al.hidden = true;
+    var com = p.pag * p.val * 0.155;
+    $('#kpis').innerHTML = [['Cotizaciones enviadas', num(p.cot), 'con la tarifa de su plataforma'], ['Anticipos pagados', num(p.pag), cop(p.pag * p.val * .5) + ' recibidos en su cuenta'], ['Reservas directas', num(p.pag), 'sin comisión de portal'], ['Comisión de portal que no pagó', cop(com), 'estimado con 15,5 %; usted ajusta el %', true]].map(function (k) {
+      return '<div class="caja kpi' + (k[3] ? ' destacado' : '') + '"><small>' + k[0] + '</small><strong>' + k[1] + '</strong><span>' + k[2] + '</span></div>';
+    }).join('');
+    var cupos = [['Conversaciones', p.conv], ['Imágenes con IA', p.img], ['Campañas activas', p.camp]];
+    if (p.voz) cupos.push(['Minutos de voz', p.voz]);
+    $('#cupos').innerHTML = cupos.map(function (c) { return '<div class="cupo"><div><span>' + c[0] + '</span><strong>' + num(c[1][0]) + ' de ' + num(c[1][1]) + '</strong></div>' + barra(c[1][0], c[1][1]) + '</div>'; }).join('');
+    var nombres = ['WhatsApp', 'Instagram', 'Facebook', 'Su página (recepcionista)'];
+    $('#canales').innerHTML = lista(p.canales.map(function (v, i) { return [nombres[i], v]; }).filter(function (c, i) { return i < 3 || p.recep; }));
+    $('#rescate').textContent = p.rescate;
+    var pend = [['Laura M. · 2 personas', '14 al 16 de noviembre · anticipo $270.000', 'Apartado hasta 6:00 p. m.', ''], ['Familia R. · 4 personas', '20 al 23 de noviembre · anticipo $540.000', 'Recordatorio enviado', ''], ['Diego T. · 2 personas', '28 al 30 de noviembre · anticipo $310.000', 'Pagado', 'ok'], ['John P. · 2 personas · inglés', '5 al 8 de diciembre · anticipo USD 95', 'Fechas liberadas', 'libre']];
+    if (estado.plan === 'cabana') pend = [['Laura M. · 2 personas', '14 al 16 de noviembre · anticipo $270.000', 'Recordatorio enviado', ''], pend[2]];
+    $('#pend').innerHTML = pend.map(function (a) { return '<div><span>' + a[0] + '<small>' + a[1] + '</small></span><span class="chip ' + a[3] + '">' + a[2] + '</span></div>'; }).join('');
+    $('#completo').hidden = !p.completo; $('#mejora').hidden = p.completo;
+    $('#origen').innerHTML = lista([['Anuncios', 42, '42 %'], ['Instagram', 24, '24 %'], ['WhatsApp directo', 20, '20 %'], ['Su página', 14, '14 %']], 'vi');
+    $('#ocupa').innerHTML = lista(estado.plan === 'casa' ? [['Cabaña del Bosque', 71, '71 %'], ['Suite Cafetal', 58, '58 %'], ['Cabaña Familiar', 46, '46 %']] : [['Cabañas (4)', 68, '68 %'], ['Suites (5)', 61, '61 %'], ['Habitaciones (6)', 52, '52 %']]);
+    $('#recepPanel').hidden = !p.recep;
+    if (p.recep) { $('#t-rec').textContent = p.recTit; $('#recepMini').innerHTML = p.recMini.map(function (m) { return '<div><small>' + m[0] + '</small><strong>' + m[1] + '</strong></div>'; }).join(''); }
+    $('#ads').innerHTML = CAMP.slice(0, p.camp[0]).map(function (c) { return '<tr><td><strong style="font-weight:500">' + c[0] + '</strong></td><td>' + c[1] + '</td><td>' + c[2] + '</td><td>' + c[3] + '</td><td>' + c[4] + '</td></tr>'; }).join('');
+    $('#equipo').hidden = !p.equipo;
+  }
+
+  /* ---------- Web del huésped ---------- */
+  var T = {
+    es: { unidades: 'Unidades', reservar: 'Reservar', politicas: 'Políticas', lugar: 'SALENTO, QUINDÍO · EJEMPLO', titulo: 'Despierte entre montañas y café.', sub: 'Tres cabañas y dos suites a 10 minutos del pueblo. Reserve directo con nosotros.', reserve: 'Reserve directo', llegada: 'Llegada', salida: 'Salida', huespedes: 'Huéspedes', extras: 'Agregue a su estadía', desayuno: 'Desayuno campesino · $25.000 por persona por noche', traslado: 'Traslado desde el terminal de Armenia · $80.000', noches: 'noches', anticipo: 'Anticipo 50 %', pagar: 'Pagar anticipo con Mercado Pago', nota: 'La reserva queda confirmada al recibir el anticipo. El saldo se paga al llegar.', porNoche: 'por noche', disp: 'Disponible: Cabaña del Bosque', desC: 'Desayuno', traC: 'Traslado', polTxt: 'Entrada desde las 3:00 p. m. y salida hasta las 11:00 a. m. Cancelación según la política del alojamiento. Mascotas con aviso previo.', recep: 'Recepción de Casa Bruma', recepSub: 'Asistente virtual · responde al instante', hablar: 'Hablar', m1: '¡Hola! Soy la recepcionista virtual de Casa Bruma. ¿Para qué fechas y cuántas personas busca?', m2: 'Del 14 al 16 de noviembre, somos 2.', m3: 'Tenemos la Cabaña del Bosque: 2 noches por $440.000. Ya llené sus fechas en el formulario. ¿Le sumo desayuno?', llenado: 'Fechas y huéspedes llenados en el formulario', escuchando: 'Escuchando…', aviso: 'Asistente con IA. Si lo prefiere, una persona le escribe por WhatsApp.', escriba: 'Escriba su mensaje', enviar: 'Enviar', lanzar: 'Recepción · escriba o hable', resp: 'Con gusto. Ya lo tengo en cuenta para su cotización; si quiere, le envío el enlace del anticipo.', total: 'Total', personas: 'personas',
+      u: [['Cabaña del Bosque', '2 personas · balcón · cocineta', 220000, 'cabana-bosque'], ['Suite Cafetal', '2 personas · tina · vista', 260000, 'suite-cafetal'], ['Cabaña Familiar', '5 personas · 2 cuartos · chimenea', 420000, 'cabana-familiar']],
+      planWeb: { cabana: 'Plan Cabaña: página con reservas y anticipo, y botón de WhatsApp con el asistente.', casa: 'Plan Casa: igual que Cabaña, con extras en el chat y guía del huésped por WhatsApp.', posada: 'Plan Posada: suma la recepcionista virtual por escrito en la página. Ábrala con el botón Recepción, abajo a la derecha.', hotel: 'Plan Hotel: la recepcionista atiende por escrito y por voz. Ábrala con el botón Recepción y pruebe el botón Hablar.' } },
+    en: { unidades: 'Rooms', reservar: 'Book', politicas: 'Policies', lugar: 'SALENTO, QUINDÍO · SAMPLE', titulo: 'Wake up among mountains and coffee.', sub: 'Three cabins and two suites 10 minutes from town. Book directly with us.', reserve: 'Book direct', llegada: 'Check-in', salida: 'Check-out', huespedes: 'Guests', extras: 'Add to your stay', desayuno: 'Country breakfast · COP 25,000 per person per night', traslado: 'Transfer from Armenia bus terminal · COP 80,000', noches: 'nights', anticipo: '50% deposit', pagar: 'Pay deposit', nota: 'Your booking is confirmed once the deposit is received. The balance is paid on arrival.', porNoche: 'per night', disp: 'Available: Forest Cabin', desC: 'Breakfast', traC: 'Transfer', polTxt: 'Check-in from 3:00 p.m., check-out until 11:00 a.m. Cancellation per house policy. Pets on request.', recep: 'Casa Bruma front desk', recepSub: 'Virtual assistant · replies instantly', hablar: 'Talk', m1: 'Hi! I am the virtual receptionist at Casa Bruma. Which dates and how many guests?', m2: 'November 14 to 16, two of us.', m3: 'The Forest Cabin is free: 2 nights for COP 440,000. I filled in your dates. Add breakfast?', llenado: 'Dates and guests filled in the form', escuchando: 'Listening…', aviso: 'AI assistant. A person can also reach you on WhatsApp.', escriba: 'Type your message', enviar: 'Send', lanzar: 'Front desk · chat or talk', resp: 'Sure. I have added it to your quote; I can send you the deposit link whenever you are ready.', total: 'Total', personas: 'guests',
+      u: [['Forest Cabin', '2 guests · balcony · kitchenette', 220000, 'cabana-bosque'], ['Coffee Suite', '2 guests · tub · view', 260000, 'suite-cafetal'], ['Family Cabin', '5 guests · 2 rooms · fireplace', 420000, 'cabana-familiar']],
+      planWeb: { cabana: 'Cabaña plan: booking page with deposit, plus WhatsApp button with the assistant.', casa: 'Casa plan: like Cabaña, plus extras in chat and a WhatsApp guest guide.', posada: 'Posada plan: adds the virtual receptionist on the page, in writing. Open it with the Front desk button, bottom right.', hotel: 'Hotel plan: the receptionist answers in writing and by voice. Open it with the Front desk button.' } }
+  };
+  function noches() { var a = new Date($('#fIn').value), b = new Date($('#fOut').value); var n = Math.round((b - a) / 864e5); return isNaN(n) || n < 1 ? 1 : n; }
+  function pintarWeb() {
+    var t = T[estado.lang];
+    document.documentElement.lang = estado.vista === 'web' ? estado.lang : 'es';
+    $$('[data-t]').forEach(function (e) { if (t[e.dataset.t] !== undefined) e.textContent = t[e.dataset.t]; });
+    $$('[data-ph]').forEach(function (e) { e.placeholder = t[e.dataset.ph]; });
+    $$('[data-lang]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.lang === estado.lang); });
+    var n = noches(), h = +$('#fHue').value, base = 220000 * n + Math.max(0, h - 2) * 60000 * n;
+    var des = $('#xDes').checked ? 25000 * h * n : 0, tra = $('#xTra').checked ? 80000 : 0, tot = base + des + tra;
+    $('#disp').textContent = t.disp + ' · ' + h + ' ' + t.personas;
+    $('#resumen').innerHTML = '<div><span>' + t.u[0][0] + ' · ' + n + ' ' + t.noches + '</span><span>' + cop(base) + '</span></div>' +
+      (des ? '<div><span>' + t.desC + ' (' + h + ' × ' + n + ')</span><span>' + cop(des) + '</span></div>' : '') +
+      (tra ? '<div><span>' + t.traC + '</span><span>' + cop(tra) + '</span></div>' : '') +
+      '<hr><div><strong>' + t.total + '</strong><strong>' + cop(tot) + '</strong></div><div class="ant"><span>' + t.anticipo + '</span><span>' + cop(tot / 2) + '</span></div>' +
+      '<button type="button">' + t.pagar + '</button><small>' + t.nota + '</small>';
+    $('#unidades').innerHTML = t.u.map(function (u) { return '<article class="unidad"><img src="../assets/plataforma-hoteles/' + u[3] + '.jpg" alt="' + u[0] + '"><div><h3>' + u[0] + '</h3><p>' + u[1] + '</p><strong>' + cop(u[2]) + ' <span>' + t.porNoche + '</span></strong></div></article>'; }).join('');
+    $('#planWeb').textContent = t.planWeb[estado.plan];
+  }
+  ['#fIn', '#fOut', '#fHue', '#xDes', '#xTra'].forEach(function (s) { $(s).addEventListener('change', pintarWeb); });
+  $('#recepAbrir').addEventListener('click', function () { document.body.classList.add('recep-abierta'); $('#recepIn').focus(); });
+  $('#recepCerrar').addEventListener('click', function () { document.body.classList.remove('recep-abierta'); $('#recepAbrir').focus(); });
+  $('#recepForm').addEventListener('submit', function (e) {
+    e.preventDefault(); var v = $('#recepIn').value.trim(); if (!v) return;
+    var c = $('#recepCuerpo'), h = document.createElement('div'); h.className = 'burb h'; h.textContent = v; c.appendChild(h);
+    $('#recepIn').value = '';
+    setTimeout(function () { var a = document.createElement('div'); a.className = 'burb a'; a.textContent = T[estado.lang].resp; c.appendChild(a); c.scrollTop = c.scrollHeight; }, 600);
+    c.scrollTop = c.scrollHeight;
+  });
+
+  /* ---------- Navegación ---------- */
+  function ir(vista, plan) {
+    if (plan && D[plan]) estado.plan = plan;
+    estado.vista = vista;
+    $$('.vista').forEach(function (s) { s.classList.toggle('activa', s.id === vista); });
+    $$('button[data-vista]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.vista === vista); });
+    $$('[data-plan]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.plan === estado.plan); });
+    $('#selPlan').hidden = !(vista === 'panel' || vista === 'web');
+    document.body.classList.toggle('en-web', vista === 'web');
+    document.body.classList.toggle('con-recep', estado.plan === 'posada' || estado.plan === 'hotel');
+    document.body.classList.toggle('con-voz', estado.plan === 'hotel');
+    pintarPanel(); pintarWeb();
+    try { history.replaceState(null, '', '#' + vista + (vista === 'panel' || vista === 'web' ? '-' + estado.plan : '')); } catch (e) {}
+    window.scrollTo(0, 0);
+  }
+  document.addEventListener('click', function (e) {
+    var v = e.target.closest('[data-vista]'); if (v) { e.preventDefault(); ir(v.dataset.vista); return; }
+    var p = e.target.closest('[data-plan]'); if (p) { ir(estado.vista, p.dataset.plan); return; }
+    var vp = e.target.closest('[data-ver-plan]'); if (vp) { e.preventDefault(); var id = vp.dataset.verPlan; if (D[id]) ir('panel', id); else { ir('planes'); } return; }
+    var a = e.target.closest('[data-ir]'); if (a) { e.preventDefault(); var dest = a.dataset.ir; ir(dest); if (dest === 'planes' && a.getAttribute('href') === '#tarifas') setTimeout(function () { $('#tarifas').scrollIntoView(); }, 50); return; }
+    var m = e.target.closest('[data-mon]'); if (m) { estado.mon = m.dataset.mon; pintarPlanes(); return; }
+    var r = e.target.closest('[data-per]'); if (r) { estado.per = r.dataset.per; pintarPlanes(); return; }
+    var l = e.target.closest('[data-lang]'); if (l) { estado.lang = l.dataset.lang; pintarWeb(); return; }
+  });
+
+  pintarPlanes(); calc();
+  var h = location.hash.slice(1).split('-');
+  ir(['planes', 'panel', 'web', 'chats'].indexOf(h[0]) >= 0 ? h[0] : 'planes', h[1]);
+})();
+</script>
+</body>
+</html>
