@@ -488,11 +488,28 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
 .ing-fondo{position:absolute;inset:0}
 .ing-fondo svg{width:100%;height:100%;display:block}
 .ing-fondo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,20,36,.6),rgba(10,20,36,.1) 65%)}
-.ing-pie{position:absolute;right:28px;bottom:22px;text-align:right;color:rgba(255,255,255,.85);font-size:13px;z-index:1}
-.ing-pie b{display:block;font-size:18px;color:#fff}
 .login{position:relative;z-index:1;border-radius:22px;padding:30px;box-shadow:0 50px 100px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.4)}
-@media (min-width:900px){.ingreso{justify-content:flex-start;padding-left:9vw}}
-@media (max-width:899px){.ing-pie{display:none}}
+/* Firma de marca: HospedAndo by DesarrollAndo (manual de DesarrollAndo: logotipo original, zona libre = altura de la «D», mínimo 90 px; Open Sans Bold en lugar de Coolvetica) */
+@font-face{font-family:"Open Sans";font-style:normal;font-weight:400;font-display:swap;src:url(../assets/fonts/open-sans-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Open Sans";font-style:normal;font-weight:700;font-display:swap;src:url(../assets/fonts/open-sans-latin-700-normal.woff2) format("woff2")}
+.ing-marca{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:16px;color:#fff;font-family:"Open Sans",Arial,sans-serif}
+.hm-nombre{font-weight:700;font-size:clamp(44px,4.4vw,68px);letter-spacing:-.02em;line-height:1}
+.hm-linea{display:block;height:3px;width:100%;border-radius:2px;background:linear-gradient(90deg,#FF0000,#FF8200,#FFD900,#00FF00,#03FFFF,#8700FF,#FF00FF)}
+.hm-by{display:flex;align-items:flex-end;gap:14px;padding-top:2px}
+.hm-by>span{font-weight:400;font-size:18px;line-height:1;opacity:.85;padding-bottom:2px}
+.hm-by img{width:130px;height:auto}
+@media (min-width:1080px){
+  .ingreso{justify-content:flex-start;padding-left:9vw}
+  .ing-marca{position:absolute;right:8vw;top:50%;transform:translateY(-60%);padding:40px 44px}
+  .ing-marca::before{content:"";position:absolute;inset:-30px;z-index:-1;background:radial-gradient(closest-side,rgba(8,14,26,.62),rgba(8,14,26,0))}
+}
+@media (max-width:1079px){
+  .ingreso{flex-direction:column;gap:26px}
+  .ing-marca{align-items:center}
+  .hm-nombre{font-size:36px}
+  .hm-by img{width:96px}
+  .hm-by>span{font-size:15px}
+}
 
 /* ---------- Panel: superficies y profundidad ---------- */
 .crm{padding-bottom:96px;background:radial-gradient(1100px 380px at 8% -8%,rgba(133,202,238,.32),transparent 62%),radial-gradient(900px 360px at 100% 0,rgba(90,83,150,.12),transparent 60%),var(--bruma)}
@@ -683,7 +700,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
 <section class="vista" id="ingreso">
   <div class="ingreso claro">
     <div class="ing-fondo" aria-hidden="true"><svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice"><use href="#esc-mirador"/></svg></div>
-    <div class="ing-pie" aria-hidden="true"><b>Casa Bruma</b>Salento, Quindío</div>
+    <div class="ing-marca" role="img" aria-label="HospedAndo by DesarrollAndo"><span class="hm-nombre">HospedAndo</span><span class="hm-linea"></span><span class="hm-by"><span>by</span><img src="../assets/desarrollando-logo-blanco.png" alt="" width="130" height="72"></span></div>
     <form class="login" id="formLogin" novalidate>
       <div class="logo"><img src="../assets/isotipo-desarrollando.png" alt="">HospedAndo</div>
       <div class="paso-login" id="login1">
