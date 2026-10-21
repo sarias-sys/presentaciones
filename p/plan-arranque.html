@@ -184,6 +184,7 @@ h1,h2,h3{line-height:1.15;margin:0}
 .money{display:flex;align-items:center;border:1px solid rgba(17,24,39,.25);border-radius:6px;background:#fff;overflow:hidden}
 .money i{font-style:normal;color:var(--suave);padding:0 8px;font-size:14px}
 .money input{border:0!important;padding-left:2px!important}
+.money input:first-child{padding-left:12px!important}
 .ay{display:block;font-size:12px;color:var(--suave);margin-top:2px}
 .unidad-c{border:1px solid var(--linea);border-radius:var(--rad);padding:14px;margin-bottom:12px;background:#fafbfc}
 .uc-cab{display:flex;gap:10px;align-items:flex-end}.uc-cab>b{padding-bottom:12px}.uc-cab .campo{flex:1;margin-bottom:0}
@@ -1129,6 +1130,7 @@ h1,h2,h3{line-height:1.15;margin:0}
   (function () {
     var CONF = {
       nombre: 'Casa Bruma', tipo: 'Cabañas y suites', lugar: 'Salento, Quindío', wa: '300 555 0100', checkin: '15:00', checkout: '11:00',
+      pais: 'CO', moneda: 'COP', zona: 'America/Bogota', idiomas: 'es-en', pasarela: 'Mercado Pago', impuestos: 'incluidos', impPct: 19, registro: '',
       anticipo: 50, mascotas: 'aviso', cancel: 'moderada',
       unidades: [
         { nom: 'Cabaña del Bosque', tipo: 'Cabaña', base: 2, max: 3, camas: '1 cama doble', baja: 220000, alta: 260000, adic: 60000 },
@@ -1137,7 +1139,7 @@ h1,h2,h3{line-height:1.15;margin:0}
       ],
       ninos: { edadSin: 4, edadHasta: 11, valor: 35000 },
       finde: true,
-      temporadas: [['Semana Santa', true], ['Mitad de año · 15 jun a 15 jul', true], ['Fin de año · 15 dic a 15 ene', true], ['Puentes festivos', true], ['Octubre · semana de receso', false]],
+      temporadas: [['Semana Santa', true], ['Vacaciones de mitad de año', true], ['Fin de año · 15 dic a 15 ene', true], ['Festivos y fines de semana largos', true], ['Semana de receso de octubre', false]],
       extras: [
         { n: 'Desayuno', on: true, v: 25000, u: 'por persona por noche' },
         { n: 'Traslado desde el terminal', on: true, v: 80000, u: 'por trayecto' },
@@ -1151,6 +1153,43 @@ h1,h2,h3{line-height:1.15;margin:0}
     var paso = 0, prev = { u: 0, ad: 2, ni: 1, edad: 6, no: 2, alta: true, ex: {} };
     var UNIDADES_U = ['por persona por noche', 'por noche', 'por persona', 'por reserva', 'por trayecto'];
 
+    /* País: moneda, prefijo, región, zonas horarias y pasarelas sugeridas */
+    var MP = 'Mercado Pago', OTRA = 'Otra pasarela (pega su enlace)', TRANS = 'Transferencia bancaria';
+    var PAISES = {
+      AR: ['Argentina', 'ARS', '+54', 'Provincia', ['America/Argentina/Buenos_Aires'], [MP]],
+      BO: ['Bolivia', 'BOB', '+591', 'Departamento', ['America/La_Paz'], []],
+      BR: ['Brasil', 'BRL', '+55', 'Estado', ['America/Sao_Paulo', 'America/Manaus', 'America/Fortaleza'], [MP]],
+      CL: ['Chile', 'CLP', '+56', 'Región', ['America/Santiago'], [MP]],
+      CO: ['Colombia', 'COP', '+57', 'Departamento', ['America/Bogota'], [MP, 'Wompi']],
+      CR: ['Costa Rica', 'CRC', '+506', 'Provincia', ['America/Costa_Rica'], []],
+      EC: ['Ecuador', 'USD', '+593', 'Provincia', ['America/Guayaquil', 'Pacific/Galapagos'], ['Payphone']],
+      SV: ['El Salvador', 'USD', '+503', 'Departamento', ['America/El_Salvador'], []],
+      GT: ['Guatemala', 'GTQ', '+502', 'Departamento', ['America/Guatemala'], []],
+      HN: ['Honduras', 'HNL', '+504', 'Departamento', ['America/Tegucigalpa'], []],
+      MX: ['México', 'MXN', '+52', 'Estado', ['America/Mexico_City', 'America/Cancun', 'America/Tijuana', 'America/Hermosillo', 'America/Mazatlan'], [MP]],
+      NI: ['Nicaragua', 'NIO', '+505', 'Departamento', ['America/Managua'], []],
+      PA: ['Panamá', 'USD', '+507', 'Provincia', ['America/Panama'], ['Yappy']],
+      PY: ['Paraguay', 'PYG', '+595', 'Departamento', ['America/Asuncion'], []],
+      PE: ['Perú', 'PEN', '+51', 'Región', ['America/Lima'], [MP]],
+      DO: ['República Dominicana', 'DOP', '+1', 'Provincia', ['America/Santo_Domingo'], []],
+      UY: ['Uruguay', 'UYU', '+598', 'Departamento', ['America/Montevideo'], [MP]]
+    };
+    var SUR = { AR: 1, CL: 1, UY: 1, PY: 1 };
+    var ZL = { 'America/Mexico_City': 'Centro (Ciudad de México)', 'America/Cancun': 'Quintana Roo (Cancún)', 'America/Tijuana': 'Baja California (Tijuana)', 'America/Hermosillo': 'Sonora (Hermosillo)', 'America/Mazatlan': 'Pacífico (Mazatlán)', 'America/Sao_Paulo': 'Brasilia', 'America/Manaus': 'Amazonas (Manaus)', 'America/Fortaleza': 'Nordeste (Fortaleza)', 'America/Guayaquil': 'Continental', 'Pacific/Galapagos': 'Galápagos' };
+    var SIN_DEC = { COP: 1, CLP: 1, PYG: 1, ARS: 1, CRC: 1 };
+    function fmt(v) {
+      v = Number(v) || 0; var dec = SIN_DEC[CONF.moneda] ? 0 : (v % 1 ? 2 : 0);
+      try { return CONF.moneda + ' ' + v.toLocaleString('es-' + CONF.pais, { minimumFractionDigits: dec, maximumFractionDigits: dec }); } catch (e) { return CONF.moneda + ' ' + v; }
+    }
+    function pasarelas() { return PAISES[CONF.pais][5].concat([OTRA, TRANS]); }
+    function cambiarPais(cod) {
+      var P = PAISES[cod], antes = CONF.moneda; CONF.pais = cod; CONF.moneda = P[1]; CONF.zona = P[4][0];
+      if (pasarelas().indexOf(CONF.pasarela) < 0) CONF.pasarela = pasarelas()[0];
+      CONF.temporadas = SUR[cod] ? [['Verano · enero y febrero', true], ['Semana Santa', true], ['Vacaciones de invierno · julio', true], ['Fines de semana largos', true]]
+        : [['Semana Santa', true], ['Vacaciones de mitad de año', true], ['Fin de año · 15 dic a 15 ene', true], ['Festivos y fines de semana largos', true]].concat(cod === 'CO' ? [['Semana de receso de octubre', false]] : []);
+      pintar();
+      aviso(P[0] + ': precios en ' + P[1] + (antes !== P[1] ? '. Revise sus tarifas en el paso 2' : ''));
+    }
     function esc(v) { return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
     function get(path) { return path.split('.').reduce(function (o, k) { return o == null ? o : o[k]; }, CONF); }
     function set(path, v) { var ks = path.split('.'), o = CONF; for (var i = 0; i < ks.length - 1; i++) o = o[ks[i]]; o[ks[ks.length - 1]] = v; }
@@ -1159,7 +1198,7 @@ h1,h2,h3{line-height:1.15;margin:0}
       return '<label class="campo">' + lbl + '<input data-k="' + path + '" type="' + (tipo || 'text') + '" value="' + esc(v) + '"' + (extra || '') + '></label>';
     }
     function dinero(lbl, path, ayuda) {
-      return '<label class="campo">' + lbl + '<span class="money"><i>$</i><input data-k="' + path + '" data-num="1" inputmode="numeric" value="' + esc(Number(get(path)).toLocaleString('es-CO')) + '"></span>' + (ayuda ? '<small class="ay">' + ayuda + '</small>' : '') + '</label>';
+      return '<label class="campo">' + lbl + '<span class="money"><i>' + CONF.moneda + '</i><input data-k="' + path + '" data-num="1" inputmode="numeric" value="' + esc(Number(get(path)).toLocaleString('es-CO')) + '"></span>' + (ayuda ? '<small class="ay">' + ayuda + '</small>' : '') + '</label>';
     }
     function contador(lbl, path, min, max) {
       return '<div class="contador"><span>' + lbl + '</span><div><button type="button" data-paso="' + path + '" data-d="-1" data-min="' + min + '" data-max="' + max + '" aria-label="Menos ' + lbl.toLowerCase() + '">−</button><b data-ver="' + path + '">' + get(path) + '</b><button type="button" data-paso="' + path + '" data-d="1" data-min="' + min + '" data-max="' + max + '" aria-label="Más ' + lbl.toLowerCase() + '">+</button></div></div>';
@@ -1173,8 +1212,15 @@ h1,h2,h3{line-height:1.15;margin:0}
       if (paso === 0) return '<h2>Cuéntenos de su alojamiento</h2><p class="lead-c">Con esto el asistente se presenta y responde las preguntas básicas.</p>' +
         '<div class="fila2">' + campo('Nombre del alojamiento', 'nombre') + campo('Tipo', 'tipo', 'text', ' list="tiposAloj"') + '</div>' +
         '<datalist id="tiposAloj"><option>Cabañas</option><option>Glamping</option><option>Hostal</option><option>Posada</option><option>Apartamentos turísticos</option><option>Hotel pequeño</option><option>Cabañas y suites</option></datalist>' +
-        '<div class="fila2">' + campo('Municipio y departamento', 'lugar') + campo('WhatsApp del alojamiento', 'wa', 'tel') + '</div>' +
+        '<div class="fila2"><label class="campo">País<select data-pais="1">' + Object.keys(PAISES).map(function (k) { return '<option value="' + k + '"' + (k === CONF.pais ? ' selected' : '') + '>' + PAISES[k][0] + '</option>'; }).join('') + '</select></label>' +
+        '<label class="campo">Moneda de sus tarifas<input value="' + CONF.moneda + '" disabled><small class="ay">Se pone sola según el país. Los huéspedes de otros países ven el valor aproximado en su moneda.</small></label></div>' +
+        '<div class="fila2">' + campo('Municipio y ' + PAISES[CONF.pais][3].toLowerCase(), 'lugar') + '<label class="campo">WhatsApp del alojamiento<span class="money"><i>' + PAISES[CONF.pais][2] + '</i><input data-k="wa" type="tel" value="' + esc(CONF.wa) + '"></span></label></div>' +
+        (PAISES[CONF.pais][4].length > 1 ? '<label class="campo">Zona horaria<select data-k="zona">' + PAISES[CONF.pais][4].map(function (z) { return '<option value="' + z + '"' + (z === CONF.zona ? ' selected' : '') + '>' + (ZL[z] || z) + '</option>'; }).join('') + '</select></label>' : '') +
         '<div class="fila2">' + campo('Hora de entrada', 'checkin', 'time') + campo('Hora de salida', 'checkout', 'time') + '</div>' +
+        '<div class="grupo"><span class="glbl">Cómo le pagan el anticipo</span>' + opciones('pasarela', pasarelas().map(function (x) { return [x, x]; })) + '<small class="ay">Con ' + MP + ', Wompi, Payphone o Yappy el CRM crea el enlace con su cuenta. Con otra pasarela o transferencia, usted pega su enlace o sus datos y confirma el pago.</small></div>' +
+        '<div class="grupo"><span class="glbl">Impuestos de sus tarifas</span>' + opciones('impuestos', [['incluidos', 'Ya están incluidos'], ['suman', 'Se suman al total'], ['no', 'No cobro impuestos']]) +
+        (CONF.impuestos === 'suman' ? '<div class="fila3" style="margin-top:8px"><label class="campo">Porcentaje<span class="money"><input data-k="impPct" data-num="1" inputmode="numeric" value="' + CONF.impPct + '"><i>%</i></span><small class="ay">Confírmelo con su contador: cambia según el país y el régimen.</small></label></div>' : '') + '</div>' +
+        '<div class="fila2">' + campo('Registro o licencia turística (si aplica en su país)', 'registro') + '<div class="grupo" style="margin:0"><span class="glbl">Idiomas del asistente</span>' + opciones('idiomas', [['es', 'Español'], ['es-en', 'Español e inglés'], ['es-en-pt', 'Español, inglés y portugués']]) + '</div></div>' +
         '<div class="grupo"><span class="glbl">Anticipo para separar</span>' + opciones('anticipo', [[30, '30 %'], [50, '50 %'], [100, 'Pago completo']]) + '</div>' +
         '<div class="grupo"><span class="glbl">Mascotas</span>' + opciones('mascotas', [['si', 'Sí'], ['aviso', 'Con aviso previo'], ['no', 'No']]) + '</div>' +
         '<div class="grupo"><span class="glbl">Cancelación</span>' + opciones('cancel', [['flexible', 'Flexible · hasta 48 h antes'], ['moderada', 'Moderada · hasta 7 días antes'], ['estricta', 'Sin devolución del anticipo']]) + '</div>';
@@ -1205,11 +1251,12 @@ h1,h2,h3{line-height:1.15;margin:0}
       var activos = CONF.extras.filter(function (e) { return e.on; });
       return '<h2>Revise y active</h2><p class="lead-c">Así queda su alojamiento. Puede cambiar cualquier dato después, desde esta misma pestaña.</p>' +
         '<ul class="resumen-c"><li><b>' + esc(CONF.nombre) + '</b> · ' + esc(CONF.tipo) + ' · ' + esc(CONF.lugar) + '</li>' +
+        '<li>' + PAISES[CONF.pais][0] + ' · tarifas en ' + CONF.moneda + ' · WhatsApp ' + PAISES[CONF.pais][2] + ' ' + esc(CONF.wa) + ' · anticipo por ' + esc(CONF.pasarela) + ' · impuestos ' + (CONF.impuestos === 'incluidos' ? 'incluidos' : CONF.impuestos === 'suman' ? 'se suman (' + CONF.impPct + ' %)' : 'no aplican') + '</li>' +
         '<li>Entrada ' + CONF.checkin + ' · salida ' + CONF.checkout + ' · anticipo ' + (CONF.anticipo === 100 ? 'del total' : CONF.anticipo + ' %') + '</li>' +
-        '<li>' + CONF.unidades.length + ' unidades: ' + CONF.unidades.map(function (u) { return esc(u.nom) + ' (' + u.base + ' a ' + u.max + ' pers., ' + cop(u.baja) + ' / ' + cop(u.alta) + ')'; }).join('; ') + '</li>' +
+        '<li>' + CONF.unidades.length + ' unidades: ' + CONF.unidades.map(function (u) { return esc(u.nom) + ' (' + u.base + ' a ' + u.max + ' pers., ' + fmt(u.baja) + ' / ' + fmt(u.alta) + ')'; }).join('; ') + '</li>' +
         '<li>Temporada alta: ' + CONF.temporadas.filter(function (t) { return t[1]; }).map(function (t) { return esc(t[0]); }).concat(CONF.finde ? ['viernes y sábados'] : []).join(', ') + '</li>' +
-        '<li>Niños: no pagan hasta los ' + CONF.ninos.edadSin + ' años; de ' + (CONF.ninos.edadSin + 1) + ' a ' + CONF.ninos.edadHasta + ' años, ' + cop(CONF.ninos.valor) + ' por noche</li>' +
-        '<li>Servicios: ' + (activos.length ? activos.map(function (e) { return esc(e.n) + ' ' + cop(e.v) + ' ' + e.u; }).join('; ') : 'ninguno') + '</li></ul>' +
+        '<li>Niños: no pagan hasta los ' + CONF.ninos.edadSin + ' años; de ' + (CONF.ninos.edadSin + 1) + ' a ' + CONF.ninos.edadHasta + ' años, ' + fmt(CONF.ninos.valor) + ' por noche</li>' +
+        '<li>Servicios: ' + (activos.length ? activos.map(function (e) { return esc(e.n) + ' ' + fmt(e.v) + ' ' + e.u; }).join('; ') : 'ninguno') + '</li></ul>' +
         '<button type="button" class="btn btn-v" data-activar="1">Activar mi asistente</button>';
     }
 
@@ -1227,6 +1274,7 @@ h1,h2,h3{line-height:1.15;margin:0}
         lineas.push([e.n, e.v * m]);
       });
       lineas.forEach(function (l) { total += l[1]; });
+      if (CONF.impuestos === 'suman' && CONF.impPct) { var imp = total * CONF.impPct / 100; lineas.push(['Impuestos (' + CONF.impPct + ' %)', imp]); total += imp; }
       return { u: u, lineas: lineas, total: total, excede: personas > u.max, personas: personas };
     }
     function pintarPrev() {
@@ -1239,8 +1287,8 @@ h1,h2,h3{line-height:1.15;margin:0}
         '<div class="fila2 compacta"><label class="campo">Noches<input type="number" min="1" max="30" data-pv="no" value="' + prev.no + '"></label><div class="campo">Temporada<div class="opciones"><button type="button" role="radio" aria-checked="' + prev.alta + '" data-pvt="1">Alta</button><button type="button" role="radio" aria-checked="' + !prev.alta + '" data-pvt="0">Baja</button></div></div></div>' +
         (exs ? '<div class="checks">' + exs + '</div>' : '') +
         '<div class="burbuja-c">' + (q.excede ? 'La ' + esc(q.u.nom) + ' recibe hasta ' + q.u.max + ' personas. ¿Le muestro otra opción?' :
-          q.lineas.map(function (l) { return '<div class="ln"><span>' + esc(l[0]) + '</span><b>' + cop(l[1]) + '</b></div>'; }).join('') +
-          '<div class="ln tot"><span>Total</span><b>' + cop(q.total) + '</b></div><div class="ln"><span>' + (CONF.anticipo === 100 ? 'Pago para confirmar' : 'Anticipo ' + CONF.anticipo + ' % para separar') + '</span><b>' + cop(ant) + '</b></div>') + '</div>';
+          q.lineas.map(function (l) { return '<div class="ln"><span>' + esc(l[0]) + '</span><b>' + fmt(l[1]) + '</b></div>'; }).join('') +
+          '<div class="ln tot"><span>Total</span><b>' + fmt(q.total) + '</b></div><div class="ln"><span>' + (CONF.anticipo === 100 ? 'Pago para confirmar' : 'Anticipo ' + CONF.anticipo + ' % para separar') + '</span><b>' + fmt(ant) + '</b></div>') + '</div>';
     }
 
     function pintar() {
@@ -1270,12 +1318,13 @@ h1,h2,h3{line-height:1.15;margin:0}
       if (t.dataset.ex) { CONF.extras[+t.dataset.ex].on = t.checked; t.closest('.extra-c').classList.toggle('on', t.checked); pintarPrev(); }
       if (t.dataset.pex) { prev.ex[+t.dataset.pex] = t.checked; pintarPrev(); }
       if (t.dataset.pv === 'u') { prev.u = +t.value; pintarPrev(); }
+      if (t.dataset.pais) cambiarPais(t.value);
     });
     raiz.addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
       var d = b.dataset;
       if (d.paso) { var v = Math.max(+d.min, Math.min(+d.max, get(d.paso) + +d.d)); set(d.paso, v); if (/base$/.test(d.paso)) { var i = +d.paso.split('.')[1]; if (CONF.unidades[i].max < v) CONF.unidades[i].max = v; } if (/max$/.test(d.paso)) { var j = +d.paso.split('.')[1]; if (CONF.unidades[j].base > v) CONF.unidades[j].base = v; } pintar(); return; }
-      if (d.op) { var vv = isNaN(+d.v) ? d.v : +d.v; set(d.op, vv); $$('[data-op="' + d.op + '"]').forEach(function (x) { x.setAttribute('aria-checked', String(x === b)); }); pintarPrev(); return; }
+      if (d.op) { var vv = isNaN(+d.v) ? d.v : +d.v; set(d.op, vv); if (d.op === 'impuestos') { pintar(); return; } $$('[data-op="' + d.op + '"]').forEach(function (x) { x.setAttribute('aria-checked', String(x === b)); }); pintarPrev(); return; }
       if (d.dup) { var c = JSON.parse(JSON.stringify(CONF.unidades[+d.dup])); c.nom += ' (copia)'; CONF.unidades.splice(+d.dup + 1, 0, c); pintar(); aviso('Unidad duplicada. Cámbiele el nombre'); return; }
       if (d.quitar) { CONF.unidades.splice(+d.quitar, 1); prev.u = 0; pintar(); return; }
       if (d.agregar) { CONF.unidades.push({ nom: 'Nueva unidad', tipo: 'Habitación', base: 2, max: 2, camas: '', baja: 0, alta: 0, adic: 0 }); pintar(); var ins = $$('.unidad-c input[data-k$=".nom"]'); ins[ins.length - 1].focus(); ins[ins.length - 1].select(); return; }
