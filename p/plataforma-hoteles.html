@@ -108,6 +108,8 @@ button{font:inherit;cursor:pointer}
 .ctrl{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
 .seg{display:flex;gap:4px;padding:4px;border-radius:var(--rad);background:rgba(255,255,255,.06)}
 .seg button[aria-pressed=true]{background:var(--azul);color:#fff;font-weight:600}
+.pais-sel{display:flex;align-items:center;gap:8px;padding:4px 4px 4px 12px;border-radius:var(--rad);background:rgba(255,255,255,.06);font-size:13px;color:var(--blanco-suave)}
+.pais-sel select{font:inherit;font-size:13px;font-weight:600;color:#fff;background:var(--azul);border:0;border-radius:6px;padding:8px 10px}
 .tarjetas{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,214px),1fr));align-items:stretch}
 .plan{padding:24px;display:flex;flex-direction:column;gap:14px;position:relative;transition:transform .3s var(--curva),border-color .3s}
 .plan:hover{transform:translateY(-3px);border-color:var(--celeste)}
@@ -366,12 +368,12 @@ body.con-voz .lim-voz{display:block}
     <section class="bloque" aria-labelledby="t-calc">
       <div class="eyebrow">01 — SU COMISIÓN DE PORTAL</div>
       <h2 id="t-calc">¿Cuánto le pagó a los portales <span class="hl">este mes?</span></h2>
-      <p class="sub">Mueva los controles con sus propios datos.</p>
+      <p class="sub">Mueva los controles con sus propios datos. Los valores van en la moneda del país que elija en los planes.</p>
       <div class="modulo calc">
         <div>
           <div class="campo"><label for="cR"><span>Reservas al mes por portales</span><output id="oR" for="cR"></output></label><input id="cR" type="range" min="1" max="40" step="1" value="8"></div>
           <div class="campo"><label for="cV"><span>Valor promedio de cada reserva</span><output id="oV" for="cV"></output></label><input id="cV" type="range" min="100000" max="2000000" step="20000" value="500000"></div>
-          <div class="campo"><label for="cC"><span>Comisión de su portal</span><output id="oC" for="cC"></output></label><input id="cC" type="range" min="8" max="25" step="0.5" value="15.5"><small>En Colombia, Airbnb cobra al anfitrión 15,5 %. Ponga el porcentaje que usted paga.</small></div>
+          <div class="campo"><label for="cC"><span>Comisión de su portal</span><output id="oC" for="cC"></output></label><input id="cC" type="range" min="8" max="25" step="0.5" value="15.5"><small id="notaCom">En Colombia, Airbnb cobra al anfitrión 15,5 %. Ponga el porcentaje que usted paga.</small></div>
         </div>
         <div class="res" aria-live="polite">
           <span style="color:var(--blanco-suave)">Comisión de portal estimada</span>
@@ -399,7 +401,7 @@ body.con-voz .lim-voz{display:block}
       <h2 id="t-planes">Un plan para cada <span class="hl">tamaño de alojamiento.</span></h2>
       <p class="sub">Las unidades son una guía de para cuántas habitaciones rinde cada plan. Puede tomar el que quiera y cambiar de plan cada mes.</p>
       <div class="ctrl">
-        <div class="seg" role="group" aria-label="País y moneda"><button type="button" data-mon="cop" aria-pressed="true">Colombia · COP</button><button type="button" data-mon="usd" aria-pressed="false">Panamá, Ecuador, México · USD</button></div>
+        <label class="pais-sel"><span>País</span><select id="pais"><option value="CO">Colombia · pesos colombianos</option><option value="MX">México · pesos mexicanos</option><option value="PA">Panamá · dólares</option><option value="EC">Ecuador · dólares</option><option value="OT">Otro país · dólares</option></select></label>
         <div class="seg" role="group" aria-label="Forma de pago"><button type="button" data-per="mes" aria-pressed="true">Mensual</button><button type="button" data-per="ano" aria-pressed="false">Anual · 15 % menos</button></div>
       </div>
       <div class="tarjetas" id="tarjetas"></div>
@@ -599,7 +601,23 @@ body.con-voz .lim-voz{display:block}
   var num = function (n) { return Math.round(n).toLocaleString('es-CO'); };
   var usd = function (n) { return 'USD ' + Math.round(n).toLocaleString('en-US'); };
   var check = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
-  var estado = { vista: 'planes', plan: 'casa', mon: 'cop', per: 'mes', lang: 'es' };
+  var estado = { vista: 'planes', plan: 'casa', pais: 'CO', per: 'mes', lang: 'es' };
+  /* Precio local: se parte del precio en pesos colombianos, se convierte con la tasa del mes,
+     se suma un colchón de 8 % (pasarela internacional y cambio) y se redondea hacia arriba a una cifra terminada en 9. */
+  var FX = { fecha: '20-oct-2026', copPorUsd: 3156.32, mxnPorUsd: 18.43, colchon: 0.08 };
+  var PAISES = { CO: 'COP', MX: 'MXN', PA: 'USD', EC: 'USD', OT: 'USD' };
+  var CALC = { COP: { min: 100000, max: 2000000, step: 20000, def: 500000 }, MXN: { min: 500, max: 12000, step: 100, def: 2500 }, USD: { min: 30, max: 600, step: 10, def: 150 } };
+  function moneda() { return PAISES[estado.pais]; }
+  function redondear9(x) { if (x < 10) return Math.ceil(x); if (x < 1000) return Math.ceil((x + 1) / 10) * 10 - 1; return Math.ceil((x + 1) / 100) * 100 - 1; }
+  function local(cop) { var m = moneda(); if (m === 'COP') return cop; var u = cop / FX.copPorUsd * (1 + FX.colchon); return redondear9(m === 'MXN' ? u * FX.mxnPorUsd : u); }
+  function fmt(v) { var m = moneda(); if (m === 'COP') return '$' + Math.round(v).toLocaleString('es-CO'); if (m === 'MXN') return '$' + Math.round(v).toLocaleString('es-MX') + ' MXN'; return 'USD ' + Math.round(v).toLocaleString('en-US'); }
+  (function () {
+    var q = (location.search.match(/[?&]pais=([A-Za-z]{2})/) || [])[1];
+    if (q && PAISES[q.toUpperCase()]) { estado.pais = q.toUpperCase(); return; }
+    var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+    var mapa = { 'America/Bogota': 'CO', 'America/Panama': 'PA', 'America/Guayaquil': 'EC', 'Pacific/Galapagos': 'EC' };
+    estado.pais = mapa[tz] || (/^America\/(Mexico_City|Cancun|Merida|Monterrey|Matamoros|Chihuahua|Ciudad_Juarez|Ojinaga|Mazatlan|Bahia_Banderas|Hermosillo|Tijuana)$/.test(tz) ? 'MX' : (tz ? 'OT' : 'CO'));
+  })();
 
   /* ---------- Datos de planes ---------- */
   var PLANES = [
@@ -634,22 +652,21 @@ body.con-voz .lim-voz{display:block}
 
   function precio(p) {
     if (!p.p) return { v: 'A la medida', per: 'según su operación' };
-    var u = estado.mon === 'usd', a = estado.per === 'ano';
-    var v = u ? usd(a ? p.p[3] : p.p[1]) : cop(a ? p.p[2] : p.p[0]);
-    return { v: v, per: a ? 'al año, en un solo pago' : 'al mes' };
+    var a = estado.per === 'ano', m = moneda();
+    var nombreM = m === 'COP' ? 'pesos colombianos' : m === 'MXN' ? 'pesos mexicanos' : 'dólares estadounidenses';
+    return { v: fmt(local(a ? p.p[2] : p.p[0])), per: (a ? 'al año, en un solo pago' : 'al mes') + ' · ' + nombreM };
   }
   function pintarPlanes() {
     $('#tarjetas').innerHTML = PLANES.map(function (p) {
       var pr = precio(p);
       return '<article class="modulo plan' + (p.reco ? ' reco' : '') + '">' + (p.reco ? '<span class="tag">RECOMENDADO</span>' : '') +
         '<div><h3>' + p.nombre + '</h3><div class="uni">' + p.uni + '</div></div><p class="para">' + p.para + '</p>' +
-        '<div><div class="precio' + (p.p ? '' : ' medida') + '">' + pr.v + '</div><div class="per">' + pr.per + '</div></div>' +
+        '<div><div class="precio' + (p.p ? '' : ' medida') + '">' + pr.v.replace(' MXN', '<small style="font-size:15px;font-weight:600"> MXN</small>').replace('USD ', '<small style="font-size:15px;font-weight:600">USD </small>') + '</div><div class="per">' + pr.per + '</div></div>' +
         '<ul>' + p.items.map(function (i) { return '<li>' + check + '<span>' + i + '</span></li>'; }).join('') + '</ul>' +
         '<a class="btn ' + (p.reco ? 'btn-pri' : 'btn-sec') + '" href="#" data-ver-plan="' + p.id + '">' + p.cta + ' <span aria-hidden="true">→</span></a></article>';
     }).join('');
-    var u = estado.mon === 'usd';
-    $('#paquetes').innerHTML = 'Lo incluido se renueva cada mes y no se acumula. Si necesita más: 100 conversaciones ' + (u ? 'USD 15' : '$48.000') + ', 20 imágenes ' + (u ? 'USD 3' : '$10.000') + ', 60 minutos de voz ' + (u ? 'USD 14' : '$45.000') + '. Le avisamos al llegar al 80 % y al 100 %.';
-    $$('[data-mon]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.mon === estado.mon); });
+    $('#paquetes').innerHTML = 'Lo incluido se renueva cada mes y no se acumula. Si necesita más: 100 conversaciones ' + fmt(local(48000)) + ', 20 imágenes ' + fmt(local(10000)) + ', 60 minutos de voz ' + fmt(local(45000)) + '. Le avisamos al llegar al 80 % y al 100 %.';
+    $('#pais').value = estado.pais;
     $$('[data-per]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.per === estado.per); });
   }
   $('#tabla').innerHTML = FILAS.map(function (f) { return '<tr><th scope="row">' + f[0] + '</th><td>' + f[1] + '</td><td>' + f[2] + '</td><td>' + f[3] + '</td><td>' + f[4] + '</td></tr>'; }).join('');
@@ -658,10 +675,16 @@ body.con-voz .lim-voz{display:block}
   function calc() {
     var r = +$('#cR').value, v = +$('#cV').value, c = +$('#cC').value;
     var porRes = v * c / 100, mes = r * porRes;
-    $('#oR').textContent = r; $('#oV').textContent = cop(v); $('#oC').textContent = String(c).replace('.', ',') + ' %';
-    $('#rMes').innerHTML = cop(mes) + ' <small>al mes</small>';
-    $('#rAno').textContent = cop(mes * 12);
-    $('#rEq').innerHTML = PLANES.slice(0, 4).map(function (p) { return '<div>' + p.nombre + ' equivale a la comisión de<strong>' + Math.max(1, Math.ceil(p.p[0] / porRes)) + ' reservas</strong></div>'; }).join('');
+    $('#oR').textContent = r; $('#oV').textContent = fmt(v); $('#oC').textContent = String(c).replace('.', ',') + ' %';
+    $('#rMes').innerHTML = fmt(mes) + ' <small>al mes</small>';
+    $('#rAno').textContent = fmt(mes * 12);
+    $('#rEq').innerHTML = PLANES.slice(0, 4).map(function (p) { return '<div>' + p.nombre + ' equivale a la comisión de<strong>' + Math.max(1, Math.ceil(local(p.p[0]) / porRes)) + ' reservas</strong></div>'; }).join('');
+  }
+  function ajustarCalc() {
+    var cfg = CALC[moneda()], el = $('#cV');
+    el.min = cfg.min; el.max = cfg.max; el.step = cfg.step; el.value = cfg.def;
+    $('#notaCom').textContent = estado.pais === 'CO' ? 'En Colombia, Airbnb cobra al anfitrión 15,5 %. Ponga el porcentaje que usted paga.' : 'Ponga el porcentaje que le cobra su portal.';
+    calc();
   }
   ['#cR', '#cV', '#cC'].forEach(function (s) { $(s).addEventListener('input', calc); });
 
@@ -764,12 +787,12 @@ body.con-voz .lim-voz{display:block}
     var p = e.target.closest('[data-plan]'); if (p) { ir(estado.vista, p.dataset.plan); return; }
     var vp = e.target.closest('[data-ver-plan]'); if (vp) { e.preventDefault(); var id = vp.dataset.verPlan; if (D[id]) ir('panel', id); else { ir('planes'); } return; }
     var a = e.target.closest('[data-ir]'); if (a) { e.preventDefault(); var dest = a.dataset.ir; ir(dest); if (dest === 'planes' && a.getAttribute('href') === '#tarifas') setTimeout(function () { $('#tarifas').scrollIntoView(); }, 50); return; }
-    var m = e.target.closest('[data-mon]'); if (m) { estado.mon = m.dataset.mon; pintarPlanes(); return; }
     var r = e.target.closest('[data-per]'); if (r) { estado.per = r.dataset.per; pintarPlanes(); return; }
     var l = e.target.closest('[data-lang]'); if (l) { estado.lang = l.dataset.lang; pintarWeb(); return; }
   });
 
-  pintarPlanes(); calc();
+  $('#pais').addEventListener('change', function (e) { estado.pais = e.target.value; pintarPlanes(); ajustarCalc(); });
+  pintarPlanes(); ajustarCalc();
   var h = location.hash.slice(1).split('-');
   ir(['planes', 'panel', 'web', 'chats'].indexOf(h[0]) >= 0 ? h[0] : 'planes', h[1]);
 })();
