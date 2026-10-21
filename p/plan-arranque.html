@@ -383,6 +383,17 @@ h1,h2,h3{line-height:1.15;margin:0}
 body.velo-abierto .toast{bottom:auto;top:16px}
 .chat-tel{width:min(360px,100%)}
 .crm .wrap>[data-panel]{padding-top:20px}
+.grilla .barra.resalta{outline:3px solid var(--naranja);outline-offset:1px;animation:latido 1.2s ease-in-out 2}
+@keyframes latido{50%{transform:scale(1.03)}}
+@media (prefers-reduced-motion:reduce){.grilla .barra.resalta{animation:none}}
+.filtros-movil{display:none}
+@media (max-width:640px){
+  #kpisTop{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}#kpisTop .kpi{padding:10px 12px}#kpisTop .kpi b{font-size:18px}#kpisTop .kpi small{font-size:12px}
+  .filtros-movil{display:block;margin-bottom:10px}
+  .filtros-movil button{width:100%;text-align:left;background:#fff;border:1px solid var(--linea);border-radius:var(--rad);padding:10px 14px;font-weight:600;color:var(--texto)}
+  #p-tablero .filtros.plegado{display:none}
+  .ayuda-tab{display:none}
+}
 .crm .wrap>[data-panel=tablero]>.kpis{margin-top:0}
 .burbuja-c .msg{font-size:13px;color:var(--rojo);font-weight:600}
 .tabs button:focus-visible{outline-offset:1px}
@@ -511,7 +522,8 @@ body.velo-abierto .toast{bottom:auto;top:16px}
           <div class="kpi"><small>Anticipos pagados</small><b id="kPag">0</b></div>
           <div class="kpi"><small>Conversaciones del plan</small><b>142 de 300</b><div class="barra"><i style="width:47%"></i></div></div>
         </div>
-        <div class="filtros" role="search" aria-label="Filtrar reservas">
+        <div class="filtros-movil"><button type="button" id="verFiltros" aria-expanded="false" aria-controls="filtrosRes">Filtrar y buscar ▾</button></div>
+        <div class="filtros plegado" id="filtrosRes" role="search" aria-label="Filtrar reservas">
           <label class="campo">Fecha de llegada<select id="fPer"><option value="todas">Todas</option><option value="9">Octubre</option><option value="10">Noviembre</option><option value="11">Diciembre</option><option value="rango">Entre dos fechas</option></select></label>
           <label class="campo" data-rango hidden>Desde<input type="date" id="fDesde" value="2026-11-01"></label>
           <label class="campo" data-rango hidden>Hasta<input type="date" id="fHasta" value="2026-11-30"></label>
@@ -1060,7 +1072,7 @@ body.velo-abierto .toast{bottom:auto;top:16px}
       '<div><small>Origen</small>' + canalTxt(r) + '</div><div style="grid-column:1/-1"><small>Calendario</small><span class="estado-cal ' + est[0] + '">' + est[1] + '</span></div></div>' +
       (r.lineas ? '<details class="ver-tabla"><summary>Ver detalle del valor</summary><table>' + r.lineas.map(function (l) { return '<tr><td>' + esc(l[0]) + '</td><td>' + fmt(l[1]) + '</td></tr>'; }).join('') + '</table></details>' : '') +
       '<div class="resumen"><b>Resumen del asistente</b><br>' + esc(r.res) + '</div>' +
-      '<div class="acciones"><button type="button" class="btn btn-s btn-sm" data-acc="conv">Ver conversación</button><button type="button" class="btn btn-s btn-sm" data-acc="pausar">' + (r.pausado ? 'Devolverle la conversación al asistente' : 'Atender yo (pausar el asistente)') + '</button></div>' +
+      '<div class="acciones"><button type="button" class="btn btn-s btn-sm" data-acc="conv">Ver conversación</button>' + (ocupa(r) ? '<button type="button" class="btn btn-s btn-sm" data-acc="vercal">Ver en el calendario</button>' : '') + '<button type="button" class="btn btn-s btn-sm" data-acc="pausar">' + (r.pausado ? 'Devolverle la conversación al asistente' : 'Atender yo (pausar el asistente)') + '</button></div>' +
       (r.pausado ? '<div class="pausado">El asistente está en pausa en esta conversación. Usted responde desde la bandeja de Flow.</div>' : '') + acc +
       '<div class="mover-fila"><label class="campo">Mover a<select id="moverSel">' + ETAPAS.map(function (x) { return '<option value="' + x[0] + '"' + (x[0] === r.e ? ' selected' : '') + '>' + x[1] + '</option>'; }).join('') + '</select></label><button type="button" class="btn btn-s" data-acc="mover">Mover</button></div>' +
       '<div class="mover-fila"><label class="campo">Nota interna<input id="notaIn" placeholder="Escriba una nota para su equipo" autocomplete="off"></label><button type="button" class="btn btn-s" data-acc="nota">Guardar nota</button></div>' +
@@ -1095,7 +1107,7 @@ body.velo-abierto .toast{bottom:auto;top:16px}
       r.enviado = true; r.enlace = r.enlaceNuevo; r.vence = 'mañana a las 9:41 a. m.';
       mover(r, 'enlace', 'Confirmada por Andrea y enlace de pago enviado'); cerrarPanel();
       if (r.id === 1) agregarAlChat(msgConfirma(r, r.enlace), true);
-      log('Envió el enlace de pago a ' + r.nom); aviso('Enlace de pago enviado a ' + r.nom + '. Las fechas quedaron apartadas');
+      log('Envió el enlace de pago a ' + r.nom); aviso('Enlace de pago enviado a ' + r.nom + '. Las fechas quedaron apartadas en el calendario (' + rangoCorto(r.ini, r.n) + ')');
       return;
     }
     if (a === 'enviarNo') { r.motivo = 'Sin disponibilidad'; mover(r, 'perdida', 'Mensaje de sin disponibilidad enviado'); cerrarPanel(); if (r.id === 1) agregarAlChat(msgSinDisp(r), false); log('Respondió sin disponibilidad a ' + r.nom); aviso('Mensaje enviado. ' + r.nom + ' pasó a «No se concretó»'); return; }
@@ -1109,6 +1121,7 @@ body.velo-abierto .toast{bottom:auto;top:16px}
         texto: 'Su política de cancelación es ' + rg[1] + '. Faltan ' + plural(dias, 'día', 'días') + ' para la llegada, así que ' + (devuelve ? 'corresponde devolver el anticipo de ' + fmt(anticipoDe(r.total)) + '.' : 'no corresponde devolver el anticipo.') + ' La devolución la hace usted desde su pasarela o su banco.',
         ok: function () { r.motivo = 'Canceló el huésped'; mover(r, 'perdida', 'Reserva cancelada; fechas liberadas' + (devuelve ? '; corresponde devolver el anticipo' : '')); log('Canceló la reserva de ' + r.nom); aviso('Reserva cancelada. Fechas liberadas'); } });
     }
+    if (a === 'vercal') { cerrarPanel(); seleccionarTab('calendario'); if (window.verEnCal) window.verEnCal(r.id); return; }
     if (a === 'fechas') { cerrarPanel(); seleccionarTab('calendario'); if (window.editarCal) window.editarCal(r.id); return; }
     if (a === 'mover') { var dest = $('#moverSel').value; if (dest === r.e) return; cerrarPanel(); return moverA(r, dest); }
     if (a === 'nota') { var t = $('#notaIn').value.trim(); if (!t) return; r.hist.push(['Ahora', 'Nota: ' + t]); abrir(r.id); aviso('Nota guardada'); return; }
@@ -1127,6 +1140,7 @@ body.velo-abierto .toast{bottom:auto;top:16px}
   /* Filtros y exportar */
   ['#fPer', '#fOri', '#fDesde', '#fHasta'].forEach(function (id) { $(id).addEventListener('change', function () { $$('[data-rango]').forEach(function (x) { x.hidden = $('#fPer').value !== 'rango'; }); pintarTablero(); }); });
   $('#fQ').addEventListener('input', pintarTablero);
+  $('#verFiltros').addEventListener('click', function () { var f = $('#filtrosRes'), ab = f.classList.toggle('plegado'); this.setAttribute('aria-expanded', String(!ab)); this.textContent = ab ? 'Filtrar y buscar ▾' : 'Ocultar filtros ▴'; });
   $('#exportarRes').addEventListener('click', function () { log('Exportó las reservas a Excel'); aviso('En la plataforma real se descarga un archivo de Excel con las reservas que está viendo'); });
 
   /* ---------- Disponibilidad ---------- */
@@ -1289,6 +1303,10 @@ body.velo-abierto .toast{bottom:auto;top:16px}
         extra: bloqueMsg('Confirmación con enlace de pago', msgConfirma(r, enlace), r),
         ok: function () { r.enviado = true; r.enlace = enlace; r.vence = 'mañana a las 9:41 a. m.'; pasarAlTablero(r, 'enlace'); r.hist.push(['Ahora', 'Enlace de pago enviado']); log('Envió el enlace de pago a ' + r.nom); aviso('Enlace de pago enviado a ' + r.nom); } });
     }
+    window.verEnCal = function (id) {
+      var r = porId(id); desde = Math.max(0, Math.min(TOTAL - VENTANA, r.ini - 2)); pintar();
+      var b = $('.barra[data-res="' + id + '"]'); if (b) { b.scrollIntoView({ block: 'center', inline: 'center' }); b.focus(); b.classList.add('resalta'); setTimeout(function () { b.classList.remove('resalta'); }, 2400); }
+    };
     window.editarCal = function (id) { var r = porId(id); desde = Math.max(0, Math.min(TOTAL - VENTANA, r.ini - 2)); pintar(); formulario(null, null, id); };
 
     $('#cal').addEventListener('click', function (e) {
