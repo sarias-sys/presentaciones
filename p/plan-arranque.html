@@ -117,6 +117,10 @@ h1,h2,h3{line-height:1.15;margin:0}
 .col .vacia{font-size:13px;color:var(--suave);padding:6px 4px}
 .ficha{background:#fff;border:1px solid var(--linea);border-left:4px solid var(--c,#9ca3af);border-radius:6px;padding:10px 12px;text-align:left;width:100%;color:var(--texto);display:flex;flex-direction:column;gap:3px}
 .ficha:hover{box-shadow:0 4px 14px rgba(17,24,39,.08)}
+.ficha[draggable="true"]{cursor:grab}
+.ficha.arrastrando{opacity:.45}
+.col.sobre{background:#d6e2f3;outline:2px dashed var(--azul);outline-offset:-2px}
+.ayuda-tab{font-size:13px;color:var(--suave);margin:-6px 0 12px}
 .ficha b{font-size:14px}
 .ficha small{font-size:12px;color:var(--suave)}
 .ficha .pill{align-self:flex-start;font-size:11px;font-weight:600;border-radius:999px;padding:1px 8px;margin-top:4px;background:#eef2ff;color:var(--azul)}
@@ -132,6 +136,48 @@ h1,h2,h3{line-height:1.15;margin:0}
 
 /* Calendario */
 .cal{overflow-x:auto;padding-bottom:6px}
+.cal-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.cal-bar .nav{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.cal-bar .rango{font-weight:600;font-size:15px;margin:0 6px}
+.btn-sm{padding:7px 12px;font-size:13px;border-radius:6px}
+.btn:disabled{opacity:.45;cursor:default}
+.cal table.grilla{border-collapse:separate;border-spacing:3px;font-size:12px;min-width:780px;width:100%;table-layout:fixed}
+.grilla th.u{width:150px}
+.grilla th.dia button{border:0;background:transparent;font-size:12px;color:var(--suave);padding:4px 2px;border-radius:4px;width:100%;line-height:1.2}
+.grilla th.dia button:hover{background:#e7edf6;color:var(--azul)}
+.grilla th.dia.hoy button{background:var(--azul);color:#fff;font-weight:600}
+.grilla th.dia.finde button{color:var(--texto)}
+.grilla td{padding:0;height:36px}
+.grilla td .libre{width:100%;height:36px;border:0;border-radius:4px;background:#eef6f1;color:transparent;font-size:16px}
+.grilla td.finde .libre{background:#e4f0e8}
+.grilla td .libre:hover,.grilla td .libre:focus-visible{background:#d6eadc;color:var(--verde)}
+.grilla .barra{width:100%;height:36px;border:0;border-left:4px solid var(--oc);background:var(--ob);color:var(--tinta);border-radius:4px;text-align:left;padding:0 8px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.grilla .barra b{font-weight:600}
+.grilla .barra.pend{background-image:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.6) 6px 10px)}
+.grilla .barra:hover{filter:brightness(.96)}
+.ley-o{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12px;color:var(--suave);margin-top:10px}
+.ley-o i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px;border-left:3px solid}
+.origen-filas{display:flex;flex-direction:column;gap:8px}
+.origen-fila{display:grid;grid-template-columns:150px 1fr 120px;gap:10px;align-items:center;font-size:13px}
+.origen-fila .b{height:10px;border-radius:5px;background:#eef0f2;overflow:hidden}.origen-fila .b i{display:block;height:100%}
+.origen-fila span:last-child{text-align:right;color:var(--suave)}
+@media (max-width:520px){.origen-fila{grid-template-columns:1fr auto;gap:4px 10px}.origen-fila .b{grid-column:1/-1;grid-row:2}}
+.dia-lista{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.dia-lista li{border:1px solid var(--linea);border-radius:var(--rad);padding:10px 12px;display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:14px}
+.dia-lista li small{display:block;color:var(--suave);font-size:12px}
+.chip-o{display:inline-block;font-size:11px;font-weight:600;border-radius:999px;padding:2px 9px;border:1px solid var(--oc);color:var(--tinta);background:var(--ob);white-space:nowrap}
+.cuentas{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cuentas div{background:#f3f4f6;border-radius:6px;padding:8px 10px;font-size:12px;color:var(--suave)}.cuentas b{display:block;font-size:20px;color:var(--texto)}
+.fila2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fila2>*{min-width:0}.campo input,.campo select{width:100%;min-width:0}
+.campo select,.campo textarea{font-size:16px;padding:10px 12px;border:1px solid rgba(17,24,39,.25);border-radius:6px;color:var(--texto);background:#fff;font-family:inherit}
+.campo input:disabled,.campo select:disabled{background:#f3f4f6}
+.tipo{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tipo label{display:flex;gap:6px;align-items:center;border:1px solid var(--linea);border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer}
+.tipo input{accent-color:var(--azul)}
+.error{color:var(--rojo);font-size:13px;font-weight:600;margin:0}
+.error:empty{display:none}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:14px;margin-bottom:12px}
 .cal table{border-collapse:separate;border-spacing:3px;font-size:12px;min-width:640px}
 .cal th{font-weight:500;color:var(--suave);padding:2px 4px;white-space:nowrap}
 .cal th.u{text-align:left;font-weight:600;color:var(--texto);padding-right:10px}
@@ -271,15 +317,29 @@ h1,h2,h3{line-height:1.15;margin:0}
       </div>
 
       <div data-panel="tablero">
+        <p class="ayuda-tab">Arrastre una tarjeta a otra etapa para moverla. En el celular, ábrala y use «Mover a».</p>
         <div class="tablero" id="tablero"></div>
       </div>
 
       <div data-panel="calendario" hidden>
         <div class="panel">
-          <h2>Disponibilidad · próximos 14 días</h2>
-          <p>El asistente consulta este calendario antes de tomar una solicitud. Se alimenta de sus reservas en el CRM y de los calendarios de Airbnb y Booking que usted conecte. Esos calendarios pueden tardar unas horas en actualizarse; por eso la confirmación final es suya.</p>
-          <div class="cal"><table id="cal"></table></div>
-          <div class="leyenda"><span><i style="background:#e8f5ec"></i>Libre</span><span><i style="background:#d7e3f5"></i>Reserva en el CRM</span><span><i style="background:#f6d7d2"></i>Airbnb o Booking</span><span><i style="background:#e5e7eb"></i>Bloqueo del dueño</span></div>
+          <div class="cal-bar">
+            <div class="nav">
+              <button type="button" class="btn btn-s btn-sm" id="calAnt" aria-label="Semana anterior">‹</button>
+              <span class="rango" id="calRango" aria-live="polite"></span>
+              <button type="button" class="btn btn-s btn-sm" id="calSig" aria-label="Semana siguiente">›</button>
+              <button type="button" class="btn btn-s btn-sm" id="calHoy">Hoy</button>
+            </div>
+            <button type="button" class="btn btn-p btn-sm" id="calNueva">+ Apartar fechas</button>
+          </div>
+          <div class="cal"><table class="grilla" id="cal"></table></div>
+          <div class="ley-o" id="calLey"></div>
+          <p class="nota" style="color:var(--suave);margin-top:10px">Toque un espacio libre para apartarlo, una reserva para ver quién la tiene y una fecha para ver el día completo. Las rayas indican que falta el pago. El asistente consulta este calendario antes de tomar una solicitud. Lo que usted aparta aquí se envía a Airbnb y Booking por su enlace de calendario, para que no le reserven esas fechas allá; esa sincronización puede tardar unas horas.</p>
+        </div>
+        <div class="panel">
+          <h2>¿De dónde vienen sus reservas?</h2>
+          <p>Noches reservadas entre el 21 de octubre y el 1 de diciembre, según el origen que quedó en cada reserva.</p>
+          <div class="origen-filas" id="calOrigen"></div>
         </div>
       </div>
 
@@ -289,17 +349,23 @@ h1,h2,h3{line-height:1.15;margin:0}
             <div class="panel">
               <h2>Su anuncio activo</h2>
               <p><b style="color:var(--texto)">«Fin de semana entre montañas y café»</b> · Facebook e Instagram · lleva a su WhatsApp</p>
-              <p>Inversión que usted definió: $300.000 al mes, pagados a Meta con su tarjeta.</p>
-              <div class="kpis" style="margin:12px 0 0;grid-template-columns:repeat(3,1fr)">
-                <div class="kpi"><small>Conversaciones iniciadas</small><b>96</b></div>
-                <div class="kpi"><small>Costo por conversación</small><b>$3.125</b></div>
-                <div class="kpi"><small>Solicitudes que generó</small><b>14</b></div>
+              <p>Inversión que usted definió: $300.000 al mes, pagados a Meta con su tarjeta. Los resultados del día los ve en la app de Meta Business Suite.</p>
+              <div class="kpis" style="margin:12px 0 0;grid-template-columns:repeat(2,1fr)">
+                <div class="kpi"><small>Solicitudes que llegaron por anuncios este mes</small><b>14</b></div>
+                <div class="kpi"><small>De ellas, con anticipo pagado</small><b>5</b></div>
               </div>
+              <p class="nota" style="color:var(--suave);margin-top:10px">Estas cifras las cuenta el CRM: WhatsApp marca los mensajes que llegan desde un anuncio.</p>
             </div>
             <div class="panel">
-              <h2>Revisión mensual de la pauta</h2>
-              <p>Próxima revisión: 4 de noviembre. Revisamos resultados, público y texto del anuncio, y le dejamos por escrito qué ajustamos y qué recomendamos.</p>
-              <p>Última revisión (4 de octubre): se ajustó el público a parejas de Bogotá, Medellín y Cali, y se cambió la foto principal.</p>
+              <h2>Informe de la revisión mensual · 4 de octubre</h2>
+              <div class="kpis" style="margin:4px 0 12px;grid-template-columns:repeat(3,1fr)">
+                <div class="kpi"><small>Invertido en septiembre</small><b>$300.000</b></div>
+                <div class="kpi"><small>Conversaciones iniciadas</small><b>96</b></div>
+                <div class="kpi"><small>Costo por conversación</small><b>$3.125</b></div>
+              </div>
+              <p><b style="color:var(--texto)">Qué ajustamos:</b> el público quedó en parejas de Bogotá, Medellín y Cali, y se cambió la foto principal.</p>
+              <p><b style="color:var(--texto)">Qué le recomendamos:</b> mantener la inversión y preparar un anuncio para el puente de noviembre.</p>
+              <p>Próxima revisión: 4 de noviembre.</p>
             </div>
           </div>
           <div class="panel">
@@ -386,14 +452,14 @@ h1,h2,h3{line-height:1.15;margin:0}
     ['perdida', 'Sin cerrar', '#9ca3af']
   ];
   var R = [
-    { id: 1, n: 'Laura Gómez', u: 'Cabaña del Bosque', f: '14 al 16 nov', p: 2, total: 540000, canal: 'WhatsApp · anuncio', e: 'nueva', hace: 'hace 8 min', res: 'Pareja de Bogotá. Pidió desayuno. Preguntó si aceptan mascotas pequeñas: el asistente le dijo que con aviso previo.', extras: 'Desayuno (2 × 2)' },
-    { id: 2, n: 'Carlos Rivera', u: 'Suite Cafetal', f: '21 al 23 nov', p: 2, total: 520000, canal: 'Instagram', e: 'nueva', hace: 'hace 40 min', res: 'Aniversario. Preguntó por decoración: el asistente le dijo que usted le confirma.', extras: '—' },
-    { id: 3, n: 'Familia Ortiz', u: 'Cabaña Familiar', f: '28 al 30 nov', p: 5, total: 840000, canal: 'WhatsApp', e: 'nueva', hace: 'hace 2 h', res: 'Dos adultos y tres niños. Llegan en carro.', extras: '—' },
-    { id: 4, n: 'Diana Herrera', u: 'Cabaña del Bosque', f: '7 al 9 nov', p: 2, total: 440000, canal: 'Facebook', e: 'enlace', hace: 'ayer', res: 'Enlace enviado ayer a las 4:10 p. m. Vence hoy a las 4:10 p. m.', extras: '—' },
-    { id: 5, n: 'Jorge Peña', u: 'Suite Cafetal', f: '1 al 3 nov', p: 2, total: 520000, canal: 'WhatsApp · anuncio', e: 'pagado', hace: 'hace 3 días', res: 'Anticipo de $260.000 recibido por Mercado Pago.', extras: '—' },
-    { id: 6, n: 'Valentina Ruiz', u: 'Cabaña Familiar', f: '31 oct al 2 nov', p: 4, total: 840000, canal: 'Instagram', e: 'pagado', hace: 'hace 5 días', res: 'Anticipo recibido. Pidió traslado desde Armenia.', extras: 'Traslado' },
-    { id: 7, n: 'Andrés Mora', u: 'Cabaña del Bosque', f: '17 al 19 oct', p: 2, total: 440000, canal: 'WhatsApp', e: 'hospedado', hace: 'hace 2 días', res: 'Salió el 19. Dejó comentario positivo.', extras: '—' },
-    { id: 8, n: 'Paula Díaz', u: 'Suite Cafetal', f: '10 al 12 oct', p: 2, total: 520000, canal: 'WhatsApp', e: 'perdida', hace: 'hace 1 semana', res: 'No pagó el anticipo a tiempo; las fechas se liberaron.', extras: '—' }
+    { id: 1, ui: 0, ini: 24, noches: 2, n: 'Laura Gómez', u: 'Cabaña del Bosque', f: '14 al 16 nov', p: 2, total: 540000, canal: 'WhatsApp · anuncio', e: 'nueva', hace: 'hace 8 min', res: 'Pareja de Bogotá. Pidió desayuno. Preguntó si aceptan mascotas pequeñas: el asistente le dijo que con aviso previo.', extras: 'Desayuno (2 × 2)' },
+    { id: 2, ui: 1, ini: 31, noches: 2, n: 'Carlos Rivera', u: 'Suite Cafetal', f: '21 al 23 nov', p: 2, total: 520000, canal: 'Instagram', e: 'nueva', hace: 'hace 40 min', res: 'Aniversario. Preguntó por decoración: el asistente le dijo que usted le confirma.', extras: '—' },
+    { id: 3, ui: 2, ini: 38, noches: 2, n: 'Familia Ortiz', u: 'Cabaña Familiar', f: '28 al 30 nov', p: 5, total: 840000, canal: 'WhatsApp', e: 'nueva', hace: 'hace 2 h', res: 'Dos adultos y tres niños. Llegan en carro.', extras: '—' },
+    { id: 4, ui: 0, ini: 17, noches: 2, n: 'Diana Herrera', u: 'Cabaña del Bosque', f: '7 al 9 nov', p: 2, total: 440000, canal: 'Facebook', e: 'enlace', hace: 'ayer', res: 'Enlace enviado ayer a las 4:10 p. m. Vence hoy a las 4:10 p. m.', extras: '—' },
+    { id: 5, ui: 1, ini: 11, noches: 2, n: 'Jorge Peña', u: 'Suite Cafetal', f: '1 al 3 nov', p: 2, total: 520000, canal: 'WhatsApp · anuncio', e: 'pagado', hace: 'hace 3 días', res: 'Anticipo de $260.000 recibido por Mercado Pago.', extras: '—' },
+    { id: 6, ui: 2, ini: 10, noches: 2, n: 'Valentina Ruiz', u: 'Cabaña Familiar', f: '31 oct al 2 nov', p: 4, total: 840000, canal: 'Instagram', e: 'pagado', hace: 'hace 5 días', res: 'Anticipo recibido. Pidió traslado desde Armenia.', extras: 'Traslado' },
+    { id: 7, ui: 0, ini: -4, noches: 2, n: 'Andrés Mora', u: 'Cabaña del Bosque', f: '17 al 19 oct', p: 2, total: 440000, canal: 'WhatsApp', e: 'hospedado', hace: 'hace 2 días', res: 'Salió el 19. Dejó comentario positivo.', extras: '—' },
+    { id: 8, ui: 1, ini: -11, noches: 2, n: 'Paula Díaz', u: 'Suite Cafetal', f: '10 al 12 oct', p: 2, total: 520000, canal: 'WhatsApp', e: 'perdida', hace: 'hace 1 semana', res: 'No pagó el anticipo a tiempo; las fechas se liberaron.', extras: '—' }
   ];
   var COLOR = {}; ETAPAS.forEach(function (x) { COLOR[x[0]] = x[2]; });
   var recienMovida = null;
@@ -401,9 +467,9 @@ h1,h2,h3{line-height:1.15;margin:0}
   function pintarTablero() {
     $('#tablero').innerHTML = ETAPAS.map(function (et) {
       var fs = R.filter(function (r) { return r.e === et[0]; });
-      return '<section class="col" aria-label="' + et[1] + '"><h3>' + et[1] + '<span>' + fs.length + '</span></h3>' +
+      return '<section class="col" data-etapa="' + et[0] + '" aria-label="' + et[1] + '"><h3>' + et[1] + '<span>' + fs.length + '</span></h3>' +
         (fs.length ? fs.map(function (r) {
-          return '<button type="button" class="ficha' + (r.id === recienMovida ? ' nueva' : '') + '" style="--c:' + et[2] + '" data-id="' + r.id + '"><b>' + r.n + '</b><small>' + r.u + ' · ' + r.f + ' · ' + r.p + ' pers.</small><small>' + cop(r.total) + ' · ' + r.canal + '</small><span class="pill">' + r.hace + '</span></button>';
+          return '<button type="button" draggable="true" class="ficha' + (r.id === recienMovida ? ' nueva' : '') + '" style="--c:' + et[2] + '" data-id="' + r.id + '"><b>' + r.n + '</b><small>' + r.u + ' · ' + r.f + ' · ' + r.p + ' pers.</small><small>' + cop(r.total) + ' · ' + r.canal + '</small><span class="pill">' + r.hace + '</span></button>';
         }).join('') : '<div class="vacia">Sin reservas aquí.</div>') + '</section>';
     }).join('');
     $('#kEnl').textContent = 15 + R.filter(function (r) { return r.mov === 'enlace'; }).length;
@@ -412,6 +478,30 @@ h1,h2,h3{line-height:1.15;margin:0}
   $('#tablero').addEventListener('click', function (e) {
     var b = e.target.closest('.ficha'); if (b) abrir(+b.dataset.id);
   });
+  var arrastrada = null;
+  $('#tablero').addEventListener('dragstart', function (e) {
+    var b = e.target.closest('.ficha'); if (!b) return;
+    arrastrada = +b.dataset.id; b.classList.add('arrastrando');
+    e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', String(arrastrada)); } catch (x) {}
+  });
+  $('#tablero').addEventListener('dragend', function () { arrastrada = null; $$('.col.sobre, .ficha.arrastrando').forEach(function (x) { x.classList.remove('sobre', 'arrastrando'); }); });
+  $('#tablero').addEventListener('dragover', function (e) {
+    var col = e.target.closest('.col'); if (!col || arrastrada === null) return;
+    e.preventDefault(); e.dataTransfer.dropEffect = 'move';
+    $$('.col.sobre').forEach(function (x) { if (x !== col) x.classList.remove('sobre'); }); col.classList.add('sobre');
+  });
+  $('#tablero').addEventListener('dragleave', function (e) { var col = e.target.closest('.col'); if (col && !col.contains(e.relatedTarget)) col.classList.remove('sobre'); });
+  $('#tablero').addEventListener('drop', function (e) {
+    var col = e.target.closest('.col'); if (!col || arrastrada === null) return;
+    e.preventDefault(); var id = arrastrada; arrastrada = null;
+    moverA(R.filter(function (x) { return x.id === id; })[0], col.dataset.etapa);
+  });
+  function nombreEtapa(k) { return ETAPAS.filter(function (x) { return x[0] === k; })[0][1]; }
+  function moverA(r, etapa) {
+    if (!r || r.e === etapa) { pintarTablero(); return; }
+    if (r.e === 'nueva' && etapa === 'enlace') { abrir(r.id, 'confirmar'); aviso('Revise el mensaje y envíelo para pasarla a «Enlace de pago enviado»'); return; }
+    mover(r, etapa); aviso(r.n + ' pasó a «' + nombreEtapa(etapa) + '»');
+  }
 
   var abiertoDesde = null;
   function linkMP(r) { return 'https://mpago.la/casabruma-' + (1000 + r.id); }
@@ -449,6 +539,7 @@ h1,h2,h3{line-height:1.15;margin:0}
       '<div class="cab"><div><div class="eyebrow" style="color:' + COLOR[r.e] + '">' + ETAPAS.filter(function (x) { return x[0] === r.e; })[0][1] + '</div><h2 id="detNom">' + r.n + '</h2></div><button type="button" class="cerrar" data-acc="cerrar" aria-label="Cerrar">×</button></div>' +
       '<div class="datos"><div><small>Unidad</small>' + r.u + '</div><div><small>Fechas</small>' + r.f + '</div><div><small>Personas</small>' + r.p + '</div><div><small>Extras</small>' + r.extras + '</div><div><small>Total</small>' + cop(r.total) + '</div><div><small>Anticipo 50 %</small>' + cop(r.total / 2) + '</div><div><small>Canal</small>' + r.canal + '</div><div><small>Disponibilidad</small><span style="color:var(--verde);font-weight:600">Libre en el calendario</span></div></div>' +
       '<div class="resumen"><b>Resumen del asistente</b><br>' + r.res + '</div>' + acc +
+      '<label class="campo">Mover a<select data-mover="' + r.id + '">' + ETAPAS.map(function (x) { return '<option value="' + x[0] + '"' + (x[0] === r.e ? ' selected' : '') + '>' + x[1] + '</option>'; }).join('') + '</select></label>' +
       '<label class="campo">Nota interna<input placeholder="Escriba una nota para su equipo"></label>' +
       '<div class="historial"><b style="color:var(--texto)">Historial</b>' + hist + '</div>';
     $('#velo').hidden = false;
@@ -457,7 +548,7 @@ h1,h2,h3{line-height:1.15;margin:0}
   }
   function cerrar() { $('#velo').hidden = true; if (abiertoDesde && document.body.contains(abiertoDesde)) abiertoDesde.focus(); }
   function aviso(t) { var el = $('#toast'); el.textContent = t; el.hidden = false; clearTimeout(aviso.t); aviso.t = setTimeout(function () { el.hidden = true; }, 3200); }
-  function mover(r, e) { r.e = e; r.mov = e; r.hace = 'ahora'; recienMovida = r.id; pintarTablero(); }
+  function mover(r, e) { r.e = e; r.mov = e; r.hace = 'ahora'; recienMovida = r.id; pintarTablero(); if (window.syncCal) window.syncCal(r); }
 
   $('#detalle').addEventListener('click', function (e) {
     var b = e.target.closest('[data-acc]'); if (!b) return;
@@ -476,6 +567,12 @@ h1,h2,h3{line-height:1.15;margin:0}
     if (a === 'recordar') { cerrar(); aviso('Recordatorio de pago enviado a ' + r.n); }
   });
   $('#velo').addEventListener('click', function (e) { if (e.target === this) cerrar(); });
+  $('#detalle').addEventListener('change', function (e) {
+    var sel = e.target.closest('[data-mover]'); if (!sel) return;
+    var r = R.filter(function (x) { return x.id === +sel.dataset.mover; })[0];
+    if (r.e === 'nueva' && sel.value === 'enlace') { abrir(r.id, 'confirmar'); return; }
+    cerrar(); moverA(r, sel.value);
+  });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('#velo').hidden) cerrar(); });
 
   function agregarAlChat(r) {
@@ -497,18 +594,232 @@ h1,h2,h3{line-height:1.15;margin:0}
 
   /* Calendario */
   (function () {
-    var dias = ['mié', 'jue', 'vie', 'sáb', 'dom', 'lun', 'mar'];
-    var U = [['Cabaña del Bosque', 'llllloorrlllbb'], ['Suite Cafetal', 'lllorrrllllll l'], ['Cabaña Familiar', 'llllrrrlloolll'], ['Suite Jardín', 'bbllllllooolll'], ['Cabaña Mirador', 'lllllllllrrlll']];
-    var h = '<thead><tr><th class="u">Unidad</th>';
-    for (var i = 0; i < 14; i++) h += '<th>' + dias[i % 7] + ' ' + (21 + i > 31 ? 21 + i - 31 : 21 + i) + '</th>';
-    h += '</tr></thead><tbody>';
-    U.forEach(function (u) {
-      h += '<tr><th class="u" scope="row">' + u[0] + '</th>';
-      var s = u[1].replace(/ /g, 'l');
-      for (var i = 0; i < 14; i++) { var c = s[i]; h += '<td class="' + (c === 'o' ? 'o' : c === 'r' ? 'r' : c === 'b' ? 'b' : '') + '"></td>'; }
-      h += '</tr>';
+    var DSEM = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+    var DSEML = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+    var MES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    var MESL = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    var BASE = Date.UTC(2026, 9, 21), DIA = 864e5, TOTAL = 42, VENTANA = 14, desde = 0;
+    var UNI = [['Cabaña del Bosque', 2], ['Suite Cafetal', 2], ['Cabaña Familiar', 5], ['Suite Jardín', 2], ['Cabaña Mirador', 4]];
+    var ORI = {
+      airbnb: ['Airbnb', '#fde4e4', '#d1434b', 'portal'], booking: ['Booking.com', '#dde8f7', '#1f4e9c', 'portal'], expedia: ['Expedia', '#fff2cc', '#9a7200', 'portal'], despegar: ['Despegar', '#ece6f8', '#5b3fa8', 'portal'],
+      web: ['Su página web', '#e3f0e8', '#2f5d4e', 'directo'], whatsapp: ['WhatsApp', '#d8f1e1', '#1f7a4d', 'directo'], instagram: ['Instagram', '#f7e1ef', '#9b2c74', 'directo'], facebook: ['Facebook', '#e2e7f6', '#3b5998', 'directo'],
+      directo: ['Teléfono o en persona', '#efeae2', '#7a4b2a', 'directo'], agencia: ['Agencia', '#f3e6d8', '#a0521d', 'directo'], bloqueo: ['Bloqueo del dueño', '#e5e7eb', '#6b7280', 'bloqueo']
+    };
+    var EST = { pendiente: 'Apartada, falta el pago', anticipo: 'Anticipo pagado', pagada: 'Pagada completa', portal: 'Cobrada por el portal', bloqueo: 'Bloqueo' };
+    var sec = 1;
+    var C = [
+      { u: 0, ini: 4, n: 2, nom: 'Reserva de Airbnb', o: 'airbnb', e: 'portal', p: 2, imp: true },
+      { u: 0, ini: 9, n: 2, nom: 'Sofía Castaño', o: 'booking', e: 'portal', p: 2, total: 470000, tel: '300 555 0182', nota: 'Llega tarde, después de las 8 p. m.' },
+      { u: 0, ini: 13, n: 2, nom: 'Mantenimiento', o: 'bloqueo', e: 'bloqueo', nota: 'Cambio del calentador' },
+      { u: 0, ini: 17, n: 2, nom: 'Diana Herrera', o: 'facebook', e: 'pendiente', p: 2, total: 440000, rid: 4 },
+      { u: 1, ini: 1, n: 3, nom: 'Martín Salazar', o: 'web', e: 'anticipo', p: 2, total: 780000, tel: '310 555 0147' },
+      { u: 1, ini: 6, n: 2, nom: 'Reserva de Booking.com', o: 'booking', e: 'portal', p: 2, imp: true },
+      { u: 1, ini: 11, n: 2, nom: 'Jorge Peña', o: 'whatsapp', e: 'anticipo', p: 2, total: 520000, rid: 5 },
+      { u: 2, ini: 3, n: 2, nom: 'Familia Londoño', o: 'expedia', e: 'portal', p: 5, total: 900000 },
+      { u: 2, ini: 10, n: 2, nom: 'Valentina Ruiz', o: 'instagram', e: 'anticipo', p: 4, total: 840000, rid: 6 },
+      { u: 2, ini: 18, n: 3, nom: 'Reserva de Airbnb', o: 'airbnb', e: 'portal', p: 4, imp: true },
+      { u: 3, ini: 0, n: 2, nom: 'Uso personal', o: 'bloqueo', e: 'bloqueo' },
+      { u: 3, ini: 7, n: 3, nom: 'Camila Ortega', o: 'instagram', e: 'pendiente', p: 2, total: 720000, tel: '315 555 0166' },
+      { u: 3, ini: 14, n: 2, nom: 'Viajes del Quindío', o: 'agencia', e: 'anticipo', p: 2, total: 480000, nota: 'Agencia: comisión del 10 % ya descontada' },
+      { u: 3, ini: 20, n: 2, nom: 'Reserva de Booking.com', o: 'booking', e: 'portal', p: 2, imp: true },
+      { u: 4, ini: 2, n: 2, nom: 'Pedro Arango', o: 'despegar', e: 'portal', p: 3, total: 720000 },
+      { u: 4, ini: 9, n: 2, nom: 'Hernán Gil', o: 'directo', e: 'pagada', p: 4, total: 720000, tel: '320 555 0119' },
+      { u: 4, ini: 22, n: 3, nom: 'Reserva de Airbnb', o: 'airbnb', e: 'portal', p: 3, imp: true }
+    ];
+    C.forEach(function (c) { c.id = 'c' + (sec++); });
+
+    function f(d) { return new Date(BASE + d * DIA); }
+    function corto(d) { var x = f(d); return DSEM[x.getUTCDay()] + ' ' + x.getUTCDate(); }
+    function fecha(d) { var x = f(d); return x.getUTCDate() + ' ' + MES[x.getUTCMonth()]; }
+    function largo(d) { var x = f(d); return DSEML[x.getUTCDay()] + ' ' + x.getUTCDate() + ' de ' + MESL[x.getUTCMonth()]; }
+    function iso(d) { return f(d).toISOString().slice(0, 10); }
+    function deIso(v) { var t = Date.parse(v + 'T00:00:00Z'); return isNaN(t) ? null : Math.round((t - BASE) / DIA); }
+    function finde(d) { var w = f(d).getUTCDay(); return w === 5 || w === 6; }
+    function ocup(u, d, salvo) { return C.filter(function (c) { return c.id !== salvo && c.u === u && d >= c.ini && d < c.ini + c.n; })[0]; }
+    function estilo(o) { return '--ob:' + ORI[o][1] + ';--oc:' + ORI[o][2]; }
+    function porId(id) { return C.filter(function (c) { return c.id === id; })[0]; }
+
+    function pintar() {
+      var h = '<thead><tr><th class="u" scope="col">Unidad</th>';
+      for (var d = desde; d < desde + VENTANA; d++) {
+        h += '<th scope="col" class="dia' + (d === 0 ? ' hoy' : '') + (finde(d) ? ' finde' : '') + '"><button type="button" data-dia="' + d + '" aria-label="Ver el ' + largo(d) + '">' + corto(d).replace(' ', '<br>') + (f(d).getUTCDate() === 1 || d === desde ? '<br>' + MES[f(d).getUTCMonth()] : '') + '</button></th>';
+      }
+      h += '</tr></thead><tbody>';
+      UNI.forEach(function (un, u) {
+        h += '<tr><th class="u" scope="row">' + un[0] + '</th>';
+        for (var d = desde; d < desde + VENTANA;) {
+          var c = ocup(u, d);
+          if (c) {
+            var fin = Math.min(c.ini + c.n, desde + VENTANA), span = fin - d;
+            var txt = c.o === 'bloqueo' ? 'Bloqueo · ' + c.nom : c.nom + ' · ' + ORI[c.o][0];
+            h += '<td colspan="' + span + '"><button type="button" class="barra' + (c.e === 'pendiente' ? ' pend' : '') + '" style="' + estilo(c.o) + '" data-res="' + c.id + '" aria-label="' + txt + ', ' + un[0] + ', del ' + fecha(c.ini) + ' al ' + fecha(c.ini + c.n) + '. ' + EST[c.e] + '">' + (span > 1 ? '<b>' + c.nom + '</b> · ' + ORI[c.o][0] : '<b>' + c.nom.split(' ')[0] + '</b>') + '</button></td>';
+            d = fin;
+          } else {
+            h += '<td' + (finde(d) ? ' class="finde"' : '') + '><button type="button" class="libre" data-u="' + u + '" data-d="' + d + '" aria-label="Apartar ' + un[0] + ' el ' + largo(d) + '">+</button></td>';
+            d++;
+          }
+        }
+        h += '</tr>';
+      });
+      $('#cal').innerHTML = h + '</tbody>';
+      $('#calRango').textContent = fecha(desde) + ' – ' + fecha(desde + VENTANA - 1);
+      $('#calAnt').disabled = desde <= 0; $('#calSig').disabled = desde + VENTANA >= TOTAL;
+      pintarOrigen();
+    }
+
+    function pintarOrigen() {
+      var noches = {}, tot = 0;
+      C.forEach(function (c) { if (c.o === 'bloqueo') return; noches[c.o] = (noches[c.o] || 0) + c.n; tot += c.n; });
+      var orden = Object.keys(noches).sort(function (a, b) { return noches[b] - noches[a]; });
+      var dir = 0; orden.forEach(function (o) { if (ORI[o][3] === 'directo') dir += noches[o]; });
+      $('#calOrigen').innerHTML = orden.map(function (o) {
+        var pc = Math.round(noches[o] / tot * 100);
+        return '<div class="origen-fila"><span>' + ORI[o][0] + '</span><div class="b" aria-hidden="true"><i style="width:' + pc + '%;background:' + ORI[o][2] + '"></i></div><span>' + noches[o] + ' noches · ' + pc + ' %</span></div>';
+      }).join('') + '<p style="margin:6px 0 0;color:var(--texto)"><b>' + Math.round(dir / tot * 100) + ' %</b> de sus noches llegaron por canales directos, sin comisión de portal.</p>';
+      $('#calLey').innerHTML = Object.keys(ORI).map(function (o) { return '<span><i style="background:' + ORI[o][1] + ';border-color:' + ORI[o][2] + '"></i>' + ORI[o][0] + '</span>'; }).join('');
+    }
+
+    function abrirCal(html, foco) {
+      window.__desde = document.activeElement;
+      $('#detalle').innerHTML = html; $('#detalle').dataset.id = '';
+      $('#velo').hidden = false;
+      var el = foco ? $(foco, $('#detalle')) : null; (el || $('#detalle .cerrar')).focus();
+    }
+    function cab(eyebrow, titulo, color) {
+      return '<div class="cab"><div><div class="eyebrow" style="color:' + (color || 'var(--azul)') + '">' + eyebrow + '</div><h2 id="detNom">' + titulo + '</h2></div><button type="button" class="cerrar" data-acc="cerrar" aria-label="Cerrar">×</button></div>';
+    }
+
+    function verReserva(id) {
+      var c = porId(id), un = UNI[c.u][0];
+      var datos = '<div class="datos"><div><small>Unidad</small>' + un + '</div><div><small>Origen</small><span class="chip-o" style="' + estilo(c.o) + '">' + ORI[c.o][0] + '</span></div>' +
+        '<div><small>Llegada</small>' + largo(c.ini) + '</div><div><small>Salida</small>' + largo(c.ini + c.n) + '</div>' +
+        (c.o === 'bloqueo' ? '<div><small>Noches</small>' + c.n + '</div>' :
+          '<div><small>Noches</small>' + c.n + '</div><div><small>Personas</small>' + (c.p || '—') + '</div><div><small>Estado</small>' + EST[c.e] + '</div><div><small>Valor</small>' + (c.total ? cop(c.total) : '—') + '</div>' + (c.tel ? '<div><small>Teléfono</small>' + c.tel + '</div>' : '')) + '</div>';
+      var extra = '';
+      if (c.imp) extra += '<div class="resumen">Llegó por el calendario de ' + ORI[c.o][0] + ', que solo comparte las fechas. Puede completar el nombre y los datos del huésped aquí; los cambios de fechas se hacen en ' + ORI[c.o][0] + '.</div>';
+      if (c.nota) extra += '<div class="resumen"><b>Nota</b><br>' + c.nota + '</div>';
+      var acc = '<div class="acciones">';
+      if (c.rid) acc += '<button type="button" class="btn btn-p" data-cal="tarjeta" data-id="' + c.rid + '">Ver en Reservas</button>';
+      if (c.e === 'pendiente' && !c.rid) acc += '<button type="button" class="btn btn-v" data-cal="enlace" data-id="' + c.id + '">Enviar enlace de pago</button>';
+      acc += '<button type="button" class="btn btn-s" data-cal="editar" data-id="' + c.id + '">' + (c.imp ? 'Completar datos' : 'Editar') + '</button>';
+      if (!c.imp && !c.rid) acc += '<button type="button" class="btn btn-r" data-cal="liberar" data-id="' + c.id + '">Liberar fechas</button>';
+      acc += '</div>';
+      abrirCal(cab(c.o === 'bloqueo' ? 'Bloqueo' : 'Reserva', c.nom, ORI[c.o][2]) + datos + extra + acc, '[data-cal]');
+    }
+
+    function verDia(d) {
+      var lleg = 0, sal = 0, ocu = 0;
+      var items = UNI.map(function (un, u) {
+        var c = ocup(u, d), s = C.filter(function (x) { return x.u === u && x.ini + x.n === d && x.o !== 'bloqueo'; })[0];
+        if (s) sal++;
+        if (!c) return '<li><div><b>' + un[0] + '</b><small>Libre' + (s ? ' · sale ' + s.nom + ' en la mañana' : '') + '</small></div><button type="button" class="btn btn-s btn-sm" data-cal="apartar" data-u="' + u + '" data-d="' + d + '">Apartar</button></li>';
+        if (c.o !== 'bloqueo') { ocu++; if (c.ini === d) lleg++; }
+        var mov = c.o === 'bloqueo' ? 'Bloqueada' : c.ini === d ? 'Llega hoy' : c.ini + c.n - 1 === d ? 'Sale mañana' : 'Se queda';
+        return '<li><div><b>' + un[0] + '</b><small>' + c.nom + ' · ' + mov + (c.p ? ' · ' + c.p + ' pers.' : '') + '</small></div><button type="button" class="chip-o" style="' + estilo(c.o) + ';cursor:pointer" data-cal="ver" data-id="' + c.id + '">' + ORI[c.o][0] + '</button></li>';
+      }).join('');
+      abrirCal(cab('Ocupación del día', largo(d).replace(/^./, function (x) { return x.toUpperCase(); })) +
+        '<div class="cuentas"><div><b>' + lleg + '</b>llegan</div><div><b>' + sal + '</b>salen</div><div><b>' + ocu + ' de ' + UNI.length + '</b>ocupadas</div></div><ul class="dia-lista">' + items + '</ul>' +
+        '<div class="acciones"><button type="button" class="btn btn-s btn-sm" data-cal="dia" data-d="' + (d - 1) + '"' + (d <= 0 ? ' disabled' : '') + '>‹ Día anterior</button><button type="button" class="btn btn-s btn-sm" data-cal="dia" data-d="' + (d + 1) + '"' + (d >= TOTAL - 1 ? ' disabled' : '') + '>Día siguiente ›</button></div>', '.cerrar');
+    }
+
+    function opciones(sel) {
+      var g = function (t, k) { return '<optgroup label="' + t + '">' + Object.keys(ORI).filter(function (o) { return ORI[o][3] === k; }).map(function (o) { return '<option value="' + o + '"' + (o === sel ? ' selected' : '') + '>' + ORI[o][0] + '</option>'; }).join('') + '</optgroup>'; };
+      return g('Portales (OTA)', 'portal') + g('Directo', 'directo');
+    }
+    function formulario(u, d, id) {
+      var c = id ? porId(id) : { u: u || 0, ini: d || 0, n: 2, o: 'whatsapp', e: 'pendiente', p: 2 };
+      var bloq = c.o === 'bloqueo';
+      var h = cab(id ? 'Editar' : 'Apartar fechas', id ? c.nom : UNI[c.u][0]) +
+        '<form id="formCal" novalidate>' +
+        (c.imp ? '' : '<div class="tipo" role="radiogroup" aria-label="Tipo"><label><input type="radio" name="tipo" value="reserva"' + (bloq ? '' : ' checked') + '>Reserva</label><label><input type="radio" name="tipo" value="bloqueo"' + (bloq ? ' checked' : '') + '>Bloqueo (mantenimiento o uso personal)</label></div>') +
+        '<label class="campo">Unidad<select name="u"' + (c.imp ? ' disabled' : '') + '>' + UNI.map(function (x, i) { return '<option value="' + i + '"' + (i === c.u ? ' selected' : '') + '>' + x[0] + ' · hasta ' + x[1] + ' pers.</option>'; }).join('') + '</select></label>' +
+        '<div class="fila2"><label class="campo">Llegada<input type="date" name="lleg" min="' + iso(0) + '" max="' + iso(TOTAL - 1) + '" value="' + iso(c.ini) + '"' + (c.imp ? ' disabled' : '') + '></label><label class="campo">Salida<input type="date" name="sal" min="' + iso(1) + '" max="' + iso(TOTAL) + '" value="' + iso(c.ini + c.n) + '"' + (c.imp ? ' disabled' : '') + '></label></div>' +
+        '<div data-solo="reserva"' + (bloq ? ' hidden' : '') + '>' +
+        '<label class="campo">¿De dónde viene la reserva?<select name="o"' + (c.imp ? ' disabled' : '') + '>' + opciones(bloq ? 'whatsapp' : c.o) + '</select></label>' +
+        '<div class="fila2"><label class="campo">Nombre del huésped<input name="nom" value="' + (id && !bloq && !c.imp ? c.nom : '') + '" autocomplete="off"></label><label class="campo">Teléfono<input name="tel" inputmode="tel" value="' + (c.tel || '') + '" autocomplete="off"></label></div>' +
+        '<div class="fila2"><label class="campo">Personas<input name="p" type="number" min="1" max="12" value="' + (c.p || 2) + '"></label><label class="campo">Valor total (COP)<input name="total" inputmode="numeric" value="' + (c.total || '') + '"></label></div>' +
+        '<label class="campo">Estado del pago<select name="e">' + ['pendiente', 'anticipo', 'pagada', 'portal'].map(function (k) { return '<option value="' + k + '"' + (k === c.e ? ' selected' : '') + '>' + EST[k] + '</option>'; }).join('') + '</select></label>' +
+        (id ? '' : '<label class="chk"><input type="checkbox" name="enviar"> Enviar el enlace de pago de Mercado Pago por WhatsApp al guardar</label>') +
+        '</div>' +
+        '<label class="campo">Nota<input name="nota" value="' + (c.nota || '') + '" autocomplete="off"></label>' +
+        '<p class="error" id="calErr" role="alert"></p>' +
+        '<div class="acciones"><button type="submit" class="btn btn-p">Guardar</button><button type="button" class="btn btn-s" data-acc="cerrar">Cancelar</button></div></form>';
+      abrirCal(h, id ? 'input[name=nom]' : 'select[name=u]');
+      $('#formCal').dataset.id = id || '';
+    }
+
+    function guardar(fm) {
+      var id = fm.dataset.id, c = id ? porId(id) : null, v = function (n) { var el = fm.elements[n]; return el ? el.value.trim() : ''; };
+      var err = $('#calErr'); err.textContent = '';
+      var tipo = fm.elements.tipo ? fm.querySelector('input[name=tipo]:checked').value : 'reserva';
+      if (c && c.imp) { c.nom = v('nom') || c.nom; c.tel = v('tel'); c.p = +v('p') || c.p; c.total = +v('total').replace(/\D/g, '') || c.total; c.nota = v('nota'); c.e = v('e'); cerrarCal(); pintar(); aviso('Datos guardados'); return; }
+      var u = +v('u'), ini = deIso(v('lleg')), fin = deIso(v('sal'));
+      if (ini === null || fin === null) { err.textContent = 'Escoja la fecha de llegada y la de salida.'; return; }
+      if (fin <= ini) { err.textContent = 'La salida debe ser después de la llegada.'; return; }
+      if (ini < 0 || fin > TOTAL) { err.textContent = 'En la maqueta solo hay fechas entre el ' + fecha(0) + ' y el ' + fecha(TOTAL) + '.'; return; }
+      for (var d = ini; d < fin; d++) { var x = ocup(u, d, id); if (x) { err.textContent = UNI[u][0] + ' ya está ocupada el ' + largo(d) + ' (' + x.nom + ', ' + ORI[x.o][0] + ').'; return; } }
+      if (tipo === 'reserva' && !v('nom')) { err.textContent = 'Escriba el nombre del huésped.'; return; }
+      if (tipo === 'reserva' && +v('p') > UNI[u][1]) { err.textContent = UNI[u][0] + ' recibe hasta ' + UNI[u][1] + ' personas.'; return; }
+      var o = tipo === 'bloqueo' ? 'bloqueo' : v('o');
+      if (tipo === 'reserva' && fm.elements.enviar && fm.elements.enviar.checked && !v('tel')) { err.textContent = 'Para enviar el enlace de pago hace falta el teléfono.'; return; }
+      var nuevo = c || { id: 'c' + (sec++) };
+      nuevo.u = u; nuevo.ini = ini; nuevo.n = fin - ini; nuevo.o = o; nuevo.nota = v('nota');
+      if (tipo === 'bloqueo') { nuevo.nom = v('nota') || 'Bloqueo'; nuevo.e = 'bloqueo'; }
+      else { nuevo.nom = v('nom'); nuevo.tel = v('tel'); nuevo.p = +v('p') || 2; nuevo.total = +v('total').replace(/\D/g, '') || 0; nuevo.e = v('e'); }
+      if (!c) C.push(nuevo);
+      var envia = tipo === 'reserva' && fm.elements.enviar && fm.elements.enviar.checked;
+      cerrarCal(); if (desde > ini || ini >= desde + VENTANA) desde = Math.max(0, Math.min(TOTAL - VENTANA, ini - 2));
+      pintar();
+      if (envia) { aTablero(nuevo, 'enlace'); aviso('Fechas apartadas y enlace de pago enviado a ' + nuevo.nom); }
+      else if (!c && tipo === 'reserva' && ORI[o][3] === 'directo' && (nuevo.e === 'anticipo' || nuevo.e === 'pagada')) { aTablero(nuevo, 'pagado'); aviso('Reserva guardada en el calendario y en Reservas'); }
+      else aviso(tipo === 'bloqueo' ? 'Fechas bloqueadas. El asistente ya no las ofrece' : (c ? 'Cambios guardados' : 'Fechas apartadas. El asistente ya no las ofrece'));
+    }
+
+    function aTablero(c, etapa) {
+      var rid = 100 + R.length;
+      R.push({ id: rid, ui: c.u, ini: c.ini, noches: c.n, n: c.nom, u: UNI[c.u][0], f: fecha(c.ini) + ' al ' + fecha(c.ini + c.n), p: c.p, total: c.total || 0, canal: ORI[c.o][0] + ' · apartada por Andrea', e: etapa, hace: 'ahora', res: 'Apartada desde el calendario.' + (c.nota ? ' ' + c.nota : ''), extras: '—' });
+      c.rid = rid; if (etapa === 'enlace') c.e = 'pendiente';
+      recienMovida = rid; pintarTablero();
+    }
+    function cerrarCal() { $('#velo').hidden = true; var a = window.__desde; if (a && document.body.contains(a)) a.focus(); }
+
+    /* Desde el tablero: lo confirmado o pagado aparece en el calendario */
+    window.syncCal = function (r) {
+      if (r.ini == null || r.ini < 0) return;
+      var c = C.filter(function (x) { return x.rid === r.id; })[0];
+      var canal = /instagram/i.test(r.canal) ? 'instagram' : /facebook/i.test(r.canal) ? 'facebook' : 'whatsapp';
+      if (r.e === 'perdida') { if (c) C.splice(C.indexOf(c), 1); pintar(); return; }
+      if (!c && (r.e === 'enlace' || r.e === 'pagado')) { c = { id: 'c' + (sec++), u: r.ui, ini: r.ini, n: r.noches, nom: r.n, o: canal, p: r.p, total: r.total, rid: r.id }; C.push(c); }
+      if (c) c.e = r.e === 'enlace' ? 'pendiente' : 'anticipo';
+      pintar();
+    };
+
+    $('#cal').addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.res) verReserva(b.dataset.res);
+      else if (b.dataset.dia) verDia(+b.dataset.dia);
+      else if (b.dataset.u) formulario(+b.dataset.u, +b.dataset.d);
     });
-    $('#cal').innerHTML = h + '</tbody>';
+    $('#calAnt').addEventListener('click', function () { desde = Math.max(0, desde - 7); pintar(); });
+    $('#calSig').addEventListener('click', function () { desde = Math.min(TOTAL - VENTANA, desde + 7); pintar(); });
+    $('#calHoy').addEventListener('click', function () { desde = 0; pintar(); });
+    $('#calNueva').addEventListener('click', function () { formulario(0, 0); });
+    $('#detalle').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-cal]'); if (!b) return;
+      var a = b.dataset.cal;
+      if (a === 'ver') verReserva(b.dataset.id);
+      if (a === 'dia') verDia(+b.dataset.d);
+      if (a === 'apartar') formulario(+b.dataset.u, +b.dataset.d);
+      if (a === 'editar') formulario(null, null, b.dataset.id);
+      if (a === 'tarjeta') { cerrarCal(); $('[data-t="tablero"]').click(); abrir(+b.dataset.id); }
+      if (a === 'liberar') { var c = porId(b.dataset.id); C.splice(C.indexOf(c), 1); cerrarCal(); pintar(); aviso('Fechas liberadas. El asistente vuelve a ofrecerlas'); }
+      if (a === 'enlace') { var c2 = porId(b.dataset.id); cerrarCal(); aTablero(c2, 'enlace'); pintar(); aviso('Enlace de pago enviado a ' + c2.nom); }
+    });
+    $('#detalle').addEventListener('change', function (e) {
+      if (e.target.name === 'tipo') { var r = e.target.value === 'reserva'; $('[data-solo="reserva"]').hidden = !r; }
+    });
+    $('#detalle').addEventListener('submit', function (e) { if (e.target.id === 'formCal') { e.preventDefault(); guardar(e.target); } });
+    pintar();
   })();
 
   /* Vistas */
