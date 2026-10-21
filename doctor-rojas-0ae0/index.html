@@ -134,6 +134,34 @@ h2 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1
 .vbox video { width: 100%; display: block; border-radius: 8px; background: #000; max-height: 75vh; }
 .vbox p { font-size: 12px; color: #B9B6DA; margin: 8px 2px 0; }
 
+.gain { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-top: 22px; }
+.gain div { grid-column: span 2; border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; background: linear-gradient(180deg,#fff, #FBF9FF); }
+.gain div:nth-child(4), .gain div:nth-child(5) { grid-column: span 3; }
+.gain i { font-style: normal; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: var(--vt); color: var(--vio2); font-size: 18px; font-weight: 700; }
+.gain h4 { font-size: 17px; margin: 12px 0 6px; line-height: 1.2; }
+.gain p { font-size: 13.5px; line-height: 1.5; color: var(--ink2); margin: 0; }
+.sav { display: grid; grid-template-columns: 1fr 1.25fr; gap: 24px; margin-top: 20px; }
+.savin { background: var(--soft); border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 12px; }
+.savin label { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; font-weight: 600; color: var(--ink2); }
+.savin input { font: 600 16px Poppins, sans-serif; padding: 7px 10px; border: 1px solid #D4D5E2; border-radius: 9px; color: var(--ink); background: #fff; }
+.savin input:focus-visible { outline: 2px solid var(--vio); outline-offset: 1px; }
+.savin p { font-size: 11.5px; color: var(--mut); margin: 0; line-height: 1.45; }
+.savout { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-content: start; }
+.sc { border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.sc small { font-size: 11px; font-weight: 700; letter-spacing: .08em; color: var(--mut); }
+.sc b { display: block; font: 700 28px Poppins, sans-serif; margin: 6px 0 4px; }
+.sc span { font-size: 12.5px; color: var(--ink2); line-height: 1.45; display: block; }
+.sc.big { grid-column: 1 / -1; background: #EAF7EF; border-color: #BFE6CD; }
+.sc.big small { color: #15803D; } .sc.big b { color: #15803D; font-size: 40px; }
+.sc.big.neg { background: #fff; border-color: var(--line); } .sc.big.neg b { color: var(--ink); }
+.ic .eq { margin-top: 2px; }
+.fut6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+.fut6 > div { border: 1px dashed #CBB8F7; border-radius: 14px; padding: 15px 18px; background: #FCFAFF; display: flex; flex-direction: column; }
+.fut6 small { font-size: 10.5px; font-weight: 700; letter-spacing: .08em; color: var(--vio); }
+.fut6 h4 { font-size: 16px; margin: 6px 0 5px; line-height: 1.2; }
+.fut6 p { font-size: 12.5px; line-height: 1.45; color: var(--ink2); margin: 0 0 8px; }
+.fut6 b { margin-top: auto; font-size: 12px; color: var(--ink); line-height: 1.4; }
+
 .who { display: flex; gap: 34px; margin-top: 28px; font-size: 13px; color: #C9C5EA; }
 .who b { display: block; color: #fff; font: 600 15px Poppins, sans-serif; }
 .valid { position: absolute; left: 64px; bottom: 30px; font-size: 12px; color: #8C88B8; margin: 0; }
@@ -190,18 +218,42 @@ h2 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1
   <img class="cimg" src="../assets/cti/omni-agente.jpg" alt="Pantalla del asesor en Flow Omnicanal">
 </section><section class="s">
   <h2>Lo que nos contaste y cómo lo resolvemos</h2>
-  <p class="kick">Tu central lleva años con ustedes y ya no da lo que la operación necesita. Esto cambia con Flow Omnicanal.</p>
+  <p class="kick">Tu central lleva años en la operación y ya no da lo que necesitas. Esto cambia con Flow Omnicanal.</p>
   <div class="vs"><div class="vh"><span>Hoy</span><span>Con Flow Omnicanal</span></div>
   <div class="vr"><p>Solo entran llamadas; para llamar, el equipo usa su celular.</p><i>→</i><p><b>Entrantes y salientes desde el navegador, con diadema. Sin celulares.</b></p></div><div class="vr"><p>Las llamadas salientes no se graban ni se cuentan.</p><i>→</i><p><b>Todas las llamadas quedan grabadas y transcritas, entrantes y salientes.</b></p></div><div class="vr"><p>No sabes cuántas llamadas se están haciendo.</p><i>→</i><p><b>Reportes por asesor, campaña y franja; el supervisor lo ve en vivo.</b></p></div><div class="vr"><p>Fallas en la tipificación y en la descarga de bases.</p><i>→</i><p><b>Árbol de tipificación que tú ajustas y descarga de llamadas, grabaciones y transcripciones.</b></p></div><div class="vr"><p>Paquetes de minutos que se pagan aunque no se usen.</p><i>→</i><p><b>Telefonía por consumo: pagas cada mes solo los minutos que usaste.</b></p></div></div>
+  <div class="ft"><span class="fl"><img src="../assets/isotipo-desarrollando.png" alt="">DesarrollAndo</span><span>Propuesta para Grupo Empresarial Doctor Rojas · 21 de octubre de 2026</span><span class="pg"></span></div>
+</section><section class="s">
+  <h2>Lo que gana Doctor Rojas</h2>
+  <p class="kick">Lo que cambia en tu operación de voz desde la salida en vivo.</p>
+  <div class="gain"><div><i>▤</i><h4>Cada llamada saliente cuenta</h4><p>Hoy no sabes cuántas llamadas hace tu equipo. Con Flow Omnicanal cada intento queda registrado por asesor, campaña y resultado.</p></div><div><i>◉</i><h4>El 100 % de las llamadas, grabado</h4><p>Entrantes y salientes, con transcripción en la que buscas una palabra. Sirve para calidad, capacitación y para responder un reclamo o una PQR con evidencia.</p></div><div><i>☎</i><h4>Los datos de tus clientes, fuera de los celulares</h4><p>Las llamadas salen de la plataforma, no del teléfono personal de cada asesor. Mejor ergonomía con diadema y menos riesgo con los datos.</p></div><div><i>⤴</i><h4>Más contactos con el mismo equipo</h4><p>Campañas salientes por base, región y horario, con cada intento registrado, y asesores que pasan de salientes a entrantes según la carga del día.</p></div><div><i>⚙</i><h4>Autonomía y soporte cercano</h4><p>Tu equipo administra usuarios, colas y tipificaciones, y crea sus campañas: lo dejamos configurado y con tu equipo capacitado. Y si nos necesitas, ya nos conoces.</p></div></div>
+  <div class="ft"><span class="fl"><img src="../assets/isotipo-desarrollando.png" alt="">DesarrollAndo</span><span>Propuesta para Grupo Empresarial Doctor Rojas · 21 de octubre de 2026</span><span class="pg"></span></div>
+</section><section class="s">
+  <div class="tagrow"><h2 style="margin:0">Cuánto te ahorras en telefonía</h2><span class="tag" style="background:#FFF4D6;color:#7A5300">Simulación · cambia los valores con los de tu factura</span></div>
+  <p class="kick">Con un paquete pagas los minutos aunque no los uses. Con Flow Omnicanal pagas solo los que consumes, a 46 COP.</p>
+  <div class="sav" data-sav>
+    <div class="savin">
+      <label>Minutos del paquete que pagas hoy al mes<input type="number" inputmode="numeric" min="0" step="500" value="10000" data-s="pk"></label>
+      <label>Valor por minuto de ese paquete (COP)<input type="number" inputmode="decimal" min="0" step="1" value="76" data-s="pr"></label>
+      <label>Minutos que realmente usan al mes<input type="number" inputmode="numeric" min="0" step="500" value="6500" data-s="us"></label>
+      <label>Cargo fijo de tu troncal actual al mes (COP, si lo hay)<input type="number" inputmode="numeric" min="0" step="10000" value="0" data-s="tr"></label>
+      <p>Valores de ejemplo, con la referencia que dimos en la reunión: paquetes del mercado entre 70 y 76 COP por minuto, en los que se pierden los minutos no usados. Pon los tuyos.</p>
+    </div>
+    <div class="savout">
+      <div class="sc"><small>HOY, AL MES</small><b data-so="hoy"></b><span data-so="hoyd"></span></div>
+      <div class="sc"><small>CON FLOW OMNICANAL, AL MES</small><b data-so="flow"></b><span data-so="flowd"></span></div>
+      <div class="sc big"><small>AHORRO EN TELEFONÍA, CON ESTOS VALORES</small><b data-so="ah"></b><span data-so="ahd"></span></div>
+    </div>
+  </div>
+  <p class="fine">Solo compara la telefonía: no incluye licencias ni puesta en marcha. Las licencias de la plataforma (100.000 COP por usuario al mes) están en la lámina de inversión.</p>
   <div class="ft"><span class="fl"><img src="../assets/isotipo-desarrollando.png" alt="">DesarrollAndo</span><span>Propuesta para Grupo Empresarial Doctor Rojas · 21 de octubre de 2026</span><span class="pg"></span></div>
 </section><section class="s">
   <div class="tagrow"><span class="pill">Etapa 1 · voz con asesores</span></div>
   <h2>Lo que dejamos listo en la puesta en marcha</h2>
   <p class="kick">Empezamos por el canal de voz atendido por tu equipo. Lo demás se suma cuando lo necesites.</p>
   <div class="scope">
-    <div><i>☎</i><b>Troncal y números</b><p>Tu tráfico pasa a nuestra troncal, a 46 COP por minuto según consumo. Puedes dar de baja la troncal que pagas hoy.</p></div>
+    <div><i>☎</i><b>Troncal y números</b><p>Tu tráfico pasa a nuestra troncal, a 46 COP por minuto según consumo. Cuando esté en vivo, puedes dar de baja la troncal que pagas hoy (revisa la permanencia de tu contrato).</p></div>
     <div><i>⤵</i><b>Llamadas entrantes</b><p>Colas con horario y festivos, reparto entre asesores y a dónde pasa la llamada si la cola se llena.</p></div>
-    <div><i>#</i><b>IVR con tus grabaciones</b><p>Menú de bienvenida: «marque 1 servicios, 2 productos, 3 PQR». Lo armamos con los audios que nos entregues.</p></div>
+    <div><i>#</i><b>Menú de voz (IVR) con tus grabaciones</b><p>Menú de bienvenida: «marque 1 servicios, 2 productos, 3 PQR». Lo armamos con los audios que nos entregues y lo validamos contigo antes de salir en vivo.</p></div>
     <div><i>⤴</i><b>Campañas salientes</b><p>Cargas una base, defines el horario de cada campaña y los reintentos, y asignas los asesores que la atienden.</p></div>
     <div><i>⇄</i><b>Asesores y transferencias</b><p>Cada asesor atiende entrantes, salientes o ambas. Transfiere una llamada a otro asesor por su extensión.</p></div>
     <div><i>▤</i><b>Tipificación, supervisión y reportes</b><p>Tu árbol de tipificación, monitor en vivo, grabaciones, transcripciones y reportes exportables.</p></div>
@@ -210,7 +262,7 @@ h2 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1
   <div class="ft"><span class="fl"><img src="../assets/isotipo-desarrollando.png" alt="">DesarrollAndo</span><span>Propuesta para Grupo Empresarial Doctor Rojas · 21 de octubre de 2026</span><span class="pg"></span></div>
 </section><section class="s">
   <h2>Así se vería en tu operación</h2>
-  <p class="kick">Ejemplos con los datos de ejemplo de la reunión; las reglas las defines tú.</p>
+  <p class="kick">Ejemplos con lo que nos contaste en la reunión; las reglas las defines tú.</p>
   <div class="ex">
     <div class="exc"><small>LLAMADA ENTRANTE</small><h4>Del IVR al asesor correcto</h4>
       <div class="flow"><span>Llama el cliente</span><i>→</i><span>«Marque 1 servicios, 2 productos, 3 PQR»</span><i>→</i><span>Cola de esa opción</span><i>→</i><span>Asesor libre, con la ficha del cliente</span></div>
@@ -236,9 +288,9 @@ h2 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1
 </section><section class="s inv">
   <h2>Inversión</h2>
   <div class="ig">
-    <div class="ic dark"><small>PUESTA EN MARCHA · PAGO ÚNICO</small><span class="list">Precio de lista: 4.900.000 COP</span><b class="big">1.900.000 <span>COP</span></b><p>Precio para Doctor Rojas como cliente. Troncal, entrantes, IVR, campañas salientes, tipificación, reportes y capacitación.</p></div>
+    <div class="ic dark"><small>PUESTA EN MARCHA · PAGO ÚNICO</small><span class="list">Valor de la puesta en marcha: 4.900.000 COP</span><b class="big">2.900.000 <span>COP de contado</span></b><p class="eq"><b style="color:#fff">O 3.400.000 COP en 2 cuotas</b> de 1.700.000: al firmar y en la salida en vivo. Precio especial por ser clientes, válido hasta el 20 de noviembre de 2026.</p></div>
     <div class="ic"><small>LICENCIA · AL MES</small><b class="big">100.000 <span>COP por usuario</span></b><p>Cada usuario cuenta como una licencia, sea asesor, supervisor o administrador.</p></div>
-    <div class="ic"><small>TELEFONÍA · SEGÚN CONSUMO</small><b class="big">46 <span>COP por minuto</span></b><p>Sin paquetes ni minutos que se pierden: pagas cada mes los minutos que usaste.</p></div>
+    <div class="ic"><small>TELEFONÍA · SEGÚN CONSUMO</small><b class="big">46 <span>COP por minuto</span></b><p>Según los minutos que uses cada mes.</p></div>
   </div>
   <div class="calc" data-calc>
     <small>CALCULA TU MENSUALIDAD</small>
@@ -246,29 +298,25 @@ h2 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1
     <div class="cout"><b data-co="t"></b><span data-co="d"></span></div>
   </div>
   <div class="opts">
-    <div><b>Primer mes, con este ejemplo:</b> 1.900.000 de la puesta en marcha, una vez, más la mensualidad que marque la calculadora.</div>
+    <div><b>Forma de pago de la puesta en marcha:</b> 2.900.000 COP de contado, o 3.400.000 COP en dos cuotas de 1.700.000 (al firmar y en la salida en vivo).</div>
     <div><b>No incluye:</b> computadores y diademas del equipo, asistentes de voz con IA, canales escritos ni conexiones con tus sistemas. Todo eso se puede sumar después.</div>
-    <div><b>El IVR grabado</b> se cobra como telefonía (46 COP por minuto mientras el cliente escucha), no como asistente de IA.</div>
+    <div><b>El menú de voz</b> se cobra como telefonía: 46 COP por minuto mientras el cliente lo escucha.</div>
   </div>
   <p class="fine">Valores en pesos colombianos. La puesta en marcha se paga una vez; licencias y telefonía, cada mes.</p>
   <div class="ft"><span class="fl"><img src="../assets/isotipo-desarrollando.png" alt="">DesarrollAndo</span><span>Propuesta para Grupo Empresarial Doctor Rojas · 21 de octubre de 2026</span><span class="pg"></span></div>
 </section><section class="s">
-  <div class="tagrow"><span class="pill">Lo que puedes sumar después</span></div>
-  <h2>La misma plataforma crece contigo</h2>
-  <p class="kick">Nada de esto está en la primera etapa ni en su precio. Lo activas cuando lo necesites, sobre lo que ya tienes funcionando.</p>
-  <div class="fut">
-    <div><small>ASISTENTE DE VOZ CON IA</small><h4>Atiende cuando tu equipo no está</h4><p>De noche, domingos y festivos responde lo frecuente, filtra y deja el caso; si hay un asesor libre, le transfiere la llamada. También puede llamar a una base con reintentos.</p><b>650 COP por minuto mientras habla, sin licencia. Su configuración se cotiza aparte.</b></div>
-    <div><small>CANALES ESCRITOS</small><h4>WhatsApp y más, en la misma bandeja</h4><p>Cuando lo requieran, conectamos los canales escritos para que el asesor atienda chats y llamadas con el mismo historial del cliente.</p><b>Se cotiza en una etapa posterior.</b></div>
-    <div><small>CONEXIÓN CON TUS SISTEMAS</small><h4>Datos del cliente al contestar</h4><p>Por API, la plataforma puede consultar tus sistemas para mostrar la información del cliente o actualizar el resultado de cada llamada.</p><b>Se cotiza según el alcance.</b></div>
-  </div>
+  <div class="tagrow"><span class="pill">Disponible cuando lo necesites</span></div>
+  <h2>Lo que puedes sumar después</h2>
+  <p class="kick">Nada de esto está en la primera etapa ni en su precio. Se activa sobre la misma plataforma, sin cambiar de proveedor ni volver a empezar.</p>
+  <div class="fut6"><div><small>ASISTENTE DE VOZ CON IA · ENTRANTE</small><h4>Atiende cuando tu equipo no está</h4><p>De noche, domingos y festivos responde lo frecuente, filtra y deja el caso. Si hay un asesor libre, le transfiere la llamada con el contexto.</p><b>650 COP por minuto mientras habla, sin licencia. Configuración: 1 SMLV por asistente.</b></div><div><small>ASISTENTE DE VOZ CON IA · SALIENTE</small><h4>Llama a tus bases por ti</h4><p>Recordatorios, confirmaciones o campañas: marca la base en el horario legal y, si nadie contesta, envía una plantilla de WhatsApp a quien lo autorizó.</p><b>Mismo valor por minuto. Las plantillas de WhatsApp las cobra Meta.</b></div><div><small>CANALES ESCRITOS</small><h4>WhatsApp en la misma bandeja</h4><p>El asesor atiende chats y llamadas en la misma pantalla, con un solo historial del cliente.</p><b>Se cotiza en la etapa en que lo requieran.</b></div><div><small>ASISTENTES DE TEXTO 24/7</small><h4>Respuestas por WhatsApp a cualquier hora</h4><p>Con Flow, un asistente responde, agenda y pasa a tu equipo lo que necesita una persona.</p><b>Planes de Flow según conversaciones al mes.</b></div><div><small>ANÁLISIS CON IA</small><h4>Qué pasa en cada conversación</h4><p>Resumen, motivo y sentimiento de cada llamada, y los temas que más repiten tus clientes, para corregir la causa.</p><b>Se cotiza según el volumen.</b></div><div><small>CONEXIÓN CON TUS SISTEMAS</small><h4>La ficha del cliente al contestar</h4><p>Por API, la plataforma consulta tus sistemas para mostrar la información del cliente o registrar el resultado de cada llamada.</p><b>Se cotiza según el alcance.</b></div></div>
   <div class="ft"><span class="fl"><img src="../assets/isotipo-desarrollando.png" alt="">DesarrollAndo</span><span>Propuesta para Grupo Empresarial Doctor Rojas · 21 de octubre de 2026</span><span class="pg"></span></div>
 </section><section class="s">
   <h2>Tiempos y lo que necesitamos de ustedes</h2>
-  <p class="kick">La puesta en marcha toma alrededor de una semana desde que recibimos todo lo de esta lista. Si llega rápido, nos movemos rápido.</p>
+  <p class="kick">La puesta en marcha toma alrededor de una semana (estimado) desde que recibimos todo lo de esta lista. Si llega rápido, nos movemos rápido.</p>
   <div class="two">
     <div class="lst"><h4>Lo que nos entregan</h4><ol>
       <li>Las grabaciones del IVR: bienvenida y opciones.</li>
-      <li>Las líneas que hoy reciben tráfico, para pasarlas a la nueva troncal.</li>
+      <li>Tus números actuales, si quieres llevarlos a la nueva troncal (portabilidad, con los tiempos de los operadores), o la decisión de usar números nuevos.</li>
       <li>Usuarios y roles: asesores, supervisores y administradores.</li>
       <li>Colas, horarios y festivos de atención.</li>
       <li>Tu árbol de tipificación.</li>
@@ -284,7 +332,7 @@ h2 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1
   <div class="ft"><span class="fl"><img src="../assets/isotipo-desarrollando.png" alt="">DesarrollAndo</span><span>Propuesta para Grupo Empresarial Doctor Rojas · 21 de octubre de 2026</span><span class="pg"></span></div>
 </section><section class="s">
   <h2>Preguntas frecuentes</h2>
-  <div class="faq"><div class="fq"><h4>¿Puedo dar de baja mi troncal actual?</h4><p>Sí. Con nuestra troncal pagas 46 COP por minuto consumido, sin paquetes.</p></div><div class="fq"><h4>¿El asistente de IA necesita licencia?</h4><p>No. Cuesta 650 COP por minuto mientras habla; no se le suman los 46 de telefonía. Es opcional y para más adelante.</p></div><div class="fq"><h4>¿El IVR cuenta como asistente de IA?</h4><p>No. Es una grabación con opciones; se cobra como telefonía mientras el cliente escucha.</p></div><div class="fq"><h4>¿Un asesor puede hacer solo salientes?</h4><p>Sí. Cada asesor puede tener entrantes, salientes o ambas, y la cambias cuando quieras.</p></div><div class="fq"><h4>¿Puedo transferir dentro del equipo?</h4><p>Sí. Cada asesor tiene su extensión y la llamada pasa con un clic.</p></div><div class="fq"><h4>¿Puedo descargar grabaciones y transcripciones?</h4><p>Sí, desde reportes, junto con el detalle de cada llamada.</p></div><div class="fq"><h4>¿Puedo cambiar la tipificación?</h4><p>Sí. Agregas o ajustas opciones del árbol cuando lo necesites.</p></div><div class="fq"><h4>¿Cuánto tarda?</h4><p>Alrededor de una semana desde que recibimos los insumos.</p></div></div>
+  <div class="faq"><div class="fq"><h4>¿Puedo dar de baja mi troncal actual?</h4><p>Sí. Con nuestra troncal pagas 46 COP por minuto consumido, sin paquetes.</p></div><div class="fq"><h4>¿El asistente de IA necesita licencia?</h4><p>No. Cuesta 650 COP por minuto mientras está en la llamada; no se le suman los 46 de telefonía. Si transfiere a un asesor, desde ahí corre la telefonía. Es opcional y para más adelante.</p></div><div class="fq"><h4>¿El IVR cuenta como asistente de IA?</h4><p>No. Es una grabación con opciones; se cobra como telefonía mientras el cliente escucha.</p></div><div class="fq"><h4>¿Un asesor puede hacer solo salientes?</h4><p>Sí. Cada asesor puede tener entrantes, salientes o ambas, y la cambias cuando quieras.</p></div><div class="fq"><h4>¿Puedo transferir dentro del equipo?</h4><p>Sí. Cada asesor tiene su extensión, que dejamos configurada, y la llamada pasa con un clic.</p></div><div class="fq"><h4>¿Puedo descargar grabaciones y transcripciones?</h4><p>Sí, desde reportes, junto con el detalle de cada llamada.</p></div><div class="fq"><h4>¿Puedo cambiar la tipificación?</h4><p>Sí. Agregas o ajustas opciones del árbol cuando lo necesites.</p></div><div class="fq"><h4>¿Cuánto tarda?</h4><p>Alrededor de una semana desde que recibimos los insumos. Si llevas tus números actuales, la portabilidad depende de los operadores.</p></div><div class="fq"><h4>¿Puedo conservar mi operador?</h4><p>Sí. Conectamos la plataforma a tu troncal por 490.000 COP, una sola vez, y los minutos se los sigues pagando a tu operador.</p></div><div class="fq"><h4>¿Y los datos de nuestros clientes?</h4><p>Cada llamada puede iniciar con el aviso de grabación. Doctor Rojas es responsable de los datos y DesarrollAndo, encargado, con la cláusula de transmisión en el contrato.</p></div></div>
   <div class="ft"><span class="fl"><img src="../assets/isotipo-desarrollando.png" alt="">DesarrollAndo</span><span>Propuesta para Grupo Empresarial Doctor Rojas · 21 de octubre de 2026</span><span class="pg"></span></div>
 </section><section class="s dark close">
   <div class="brand"><img src="../assets/isotipo-desarrollando.png" alt=""><span>DesarrollAndo</span></div>
@@ -302,7 +350,7 @@ h2 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1
   <span class="vsp"></span><span class="hint">Avanza con las flechas del teclado o deslizando</span>
   <button type="button" class="idx" data-idx>Índice</button>
 </nav>
-<div class="menu" role="dialog" aria-label="Índice"><h3>Índice</h3><ol><li><button type="button" data-k="0"><span>1</span>Portada</button></li><li><button type="button" data-k="1"><span>2</span>Lo que nos contaste y cómo lo resolvemos</button></li><li><button type="button" data-k="2"><span>3</span>Lo que dejamos listo en la puesta en marcha</button></li><li><button type="button" data-k="3"><span>4</span>Así se vería en tu operación</button></li><li><button type="button" data-k="4"><span>5</span>La plataforma, módulo por módulo</button></li><li><button type="button" data-k="5"><span>6</span>Míralo funcionando</button></li><li><button type="button" data-k="6"><span>7</span>Inversión</button></li><li><button type="button" data-k="7"><span>8</span>La misma plataforma crece contigo</button></li><li><button type="button" data-k="8"><span>9</span>Tiempos y lo que necesitamos de ustedes</button></li><li><button type="button" data-k="9"><span>10</span>Preguntas frecuentes</button></li><li><button type="button" data-k="10"><span>11</span>¿Arrancamos?</button></li></ol></div>
+<div class="menu" role="dialog" aria-label="Índice"><h3>Índice</h3><ol><li><button type="button" data-k="0"><span>1</span>Portada</button></li><li><button type="button" data-k="1"><span>2</span>Lo que nos contaste y cómo lo resolvemos</button></li><li><button type="button" data-k="2"><span>3</span>Lo que gana Doctor Rojas</button></li><li><button type="button" data-k="3"><span>4</span>Cuánto te ahorras en telefonía</button></li><li><button type="button" data-k="4"><span>5</span>Lo que dejamos listo en la puesta en marcha</button></li><li><button type="button" data-k="5"><span>6</span>Así se vería en tu operación</button></li><li><button type="button" data-k="6"><span>7</span>La plataforma, módulo por módulo</button></li><li><button type="button" data-k="7"><span>8</span>Míralo funcionando</button></li><li><button type="button" data-k="8"><span>9</span>Inversión</button></li><li><button type="button" data-k="9"><span>10</span>Lo que puedes sumar después</button></li><li><button type="button" data-k="10"><span>11</span>Tiempos y lo que necesitamos de ustedes</button></li><li><button type="button" data-k="11"><span>12</span>Preguntas frecuentes</button></li><li><button type="button" data-k="12"><span>13</span>¿Arrancamos?</button></li></ol></div>
 <div class="vmod" data-vmod hidden role="dialog" aria-modal="true" aria-label="Video de la plataforma">
   <div class="vbox"><div class="vhead"><b data-vtitle></b><button type="button" class="vclose" data-vclose aria-label="Cerrar">✕</button></div>
   <video controls playsinline preload="none"></video><p>Grabación de Flow Omnicanal con datos de prueba.</p></div>
@@ -346,6 +394,25 @@ function close(){ V.pause(); V.removeAttribute('src'); V.load(); M.hidden=true; 
 document.addEventListener('click',e=>{ const b=e.target.closest('[data-video]'); if(b){ e.preventDefault(); open(b.dataset.video); return; } if(e.target.closest('[data-vclose]')||e.target===M) close(); });
 document.addEventListener('keydown',e=>{ if(!M.hidden){ if(e.key==='Escape') close(); e.stopPropagation(); } });
 ['touchstart','touchend'].forEach(t=>M.addEventListener(t,e=>e.stopPropagation(),{passive:true}));
+})();
+</script>
+<script>
+(function(){
+const cop=v=>Math.round(v).toLocaleString('es-CO');
+document.querySelectorAll('[data-sav]').forEach(r=>{
+  const g=k=>Math.max(0,parseFloat(r.querySelector('[data-s="'+k+'"]').value)||0), o=k=>r.querySelector('[data-so="'+k+'"]');
+  function render(){ const pk=g('pk'), pr=g('pr'), us=g('us'), tr=g('tr');
+    const hoy=Math.max(pk,us)*pr+tr, fl=us*46, ah=hoy-fl;
+    o('hoy').textContent=cop(hoy)+' COP';
+    o('hoyd').textContent=cop(Math.max(pk,us))+' minutos × '+cop(pr)+(tr?' + troncal '+cop(tr):'')+(pk>us?'. Pagas '+cop(pk-us)+' minutos que no usas.':'.');
+    o('flow').textContent=cop(fl)+' COP';
+    o('flowd').textContent=cop(us)+' minutos usados × 46. Sin paquete ni cargo fijo de troncal.';
+    o('ah').textContent=(ah>=0?cop(ah):'−'+cop(-ah))+' COP al mes';
+    o('ahd').textContent= ah>=0 ? 'Son '+cop(ah*12)+' COP al año en telefonía.' : 'Con estos valores no hay ahorro en telefonía.';
+    o('ah').closest('.sc').classList.toggle('neg', ah<0);
+  }
+  r.addEventListener('input',render); render();
+});
 })();
 </script>
 </body></html>
