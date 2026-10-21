@@ -132,6 +132,17 @@ h2 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1
 .vclose { border: 0; background: rgba(255,255,255,.12); color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 14px; }
 .vbox video { width: 100%; display: block; border-radius: 8px; background: #000; max-height: 75vh; }
 .vbox p { font-size: 12px; color: #B9B6DA; margin: 8px 2px 0; }
+.mod img, .scr img { cursor: zoom-in; }
+.zw { position: relative; display: block; }
+.zhint { position: absolute; right: 8px; top: 8px; background: rgba(21,18,58,.82); color: #fff; font: 600 11px Inter, sans-serif; padding: 4px 9px; border-radius: 999px; pointer-events: none; }
+.zbox { position: fixed; inset: 0; z-index: 1001; background: rgba(10,8,30,.92); display: none; flex-direction: column; align-items: center; justify-content: center; padding: 16px; gap: 10px; }
+.zbox.open { display: flex; }
+.zbox img { max-width: 100%; max-height: calc(100vh - 90px); border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.5); background: #fff; }
+.zbox .zt { color: #fff; font: 600 15px Poppins, sans-serif; }
+.zbox .zc { position: absolute; top: 14px; right: 16px; border: 0; background: rgba(255,255,255,.14); color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 16px; }
+.zbox .zn { position: absolute; top: 50%; transform: translateY(-50%); border: 0; background: rgba(255,255,255,.14); color: #fff; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 22px; }
+.zbox .zp { left: 16px; } .zbox .zx { right: 16px; }
+.zbox p { color: #B9B6DA; font-size: 12px; margin: 0; }
 </style></head><body>
 <div class="prog"></div><p class="rot">Gira el teléfono para ver la presentación más grande</p>
 <main class="vstage"><div class="deck"><section class="s dark cover">
@@ -272,6 +283,19 @@ function close(){ V.pause(); V.removeAttribute('src'); V.load(); M.hidden=true; 
 document.addEventListener('click',e=>{ const b=e.target.closest('[data-video]'); if(b){ e.preventDefault(); open(b.dataset.video); return; } if(e.target.closest('[data-vclose]')||e.target===M) close(); });
 document.addEventListener('keydown',e=>{ if(!M.hidden){ if(e.key==='Escape') close(); e.stopPropagation(); } });
 ['touchstart','touchend'].forEach(t=>M.addEventListener(t,e=>e.stopPropagation(),{passive:true}));
+// ampliar pantallas
+const Z=document.createElement('div'); Z.className='zbox'; Z.setAttribute('role','dialog'); Z.setAttribute('aria-label','Pantalla ampliada');
+Z.innerHTML='<b class="zt"></b><img alt=""><p>Pantalla de Flow Omnicanal · datos de ejemplo. Toca fuera de la imagen o Esc para cerrar.</p><button type="button" class="zc" aria-label="Cerrar">✕</button><button type="button" class="zn zp" aria-label="Anterior">‹</button><button type="button" class="zn zx" aria-label="Siguiente">›</button>';
+document.body.appendChild(Z);
+let zl=[], zi=0;
+function zshow(){ const im=zl[zi]; Z.querySelector('img').src=im.src; Z.querySelector('.zt').textContent=im.dataset.zt||im.alt||''; Z.querySelectorAll('.zn').forEach(b=>b.hidden=zl.length<2); }
+document.querySelectorAll('.deck section').forEach(sec=>{ const ims=[...sec.querySelectorAll('.mod img, .scr img')];
+  ims.forEach((im,k)=>{ const h=im.closest('.mod')?im.closest('.mod').querySelector('h4'):null; im.dataset.zt=h?h.textContent:(sec.querySelector('h2')||{}).textContent||'';
+    const w=document.createElement('span'); w.className='zw'; im.parentElement.insertBefore(w, im); w.appendChild(im); const t=document.createElement('span'); t.className='zhint'; t.textContent='🔍 Ampliar'; w.appendChild(t);
+    im.addEventListener('click',e=>{ e.stopPropagation(); zl=ims; zi=k; zshow(); Z.classList.add('open'); }); }); });
+Z.addEventListener('click',e=>{ if(e.target.closest('.zp')){ zi=(zi-1+zl.length)%zl.length; zshow(); return;} if(e.target.closest('.zx')){ zi=(zi+1)%zl.length; zshow(); return;} if(e.target.tagName!=='IMG') Z.classList.remove('open'); });
+document.addEventListener('keydown',e=>{ if(!Z.classList.contains('open')) return; e.stopPropagation(); if(e.key==='Escape') Z.classList.remove('open'); else if(e.key==='ArrowRight'){zi=(zi+1)%zl.length; zshow();} else if(e.key==='ArrowLeft'){zi=(zi-1+zl.length)%zl.length; zshow();} });
+['touchstart','touchend'].forEach(t=>Z.addEventListener(t,e=>e.stopPropagation(),{passive:true}));
 })();
 </script>
 </body></html>
