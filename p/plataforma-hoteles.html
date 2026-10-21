@@ -603,7 +603,7 @@ body.con-voz .lim-voz{display:block}
 
   /* ---------- Datos de planes ---------- */
   var PLANES = [
-    { id: 'cabana', nombre: 'Cabaña', uni: '1 o 2 unidades', para: 'Para empezar a atender y cobrar por su cuenta.', p: [149000, 49, 1520000, 499], cta: 'Elegir Cabaña',
+    { id: 'cabana', nombre: 'Cabaña', uni: '1 o 2 unidades', para: 'Para empezar a atender y cobrar por su cuenta.', p: [199000, 49, 2030000, 499], cta: 'Elegir Cabaña',
       items: ['Asistente con IA en WhatsApp, Instagram y Facebook', '250 conversaciones al mes', 'Su página con reservas y cobro de anticipo', '30 imágenes al mes para su página, redes y anuncios', 'Hasta 2 campañas de anuncios a la vez', 'Panel e informe del lunes por WhatsApp'] },
     { id: 'casa', nombre: 'Casa', uni: '3 a 5 unidades', para: 'Para el alojamiento que ya recibe mensajes y quiere más reservas directas.', p: [299000, 99, 3050000, 1009], reco: true, cta: 'Elegir Casa',
       items: ['500 conversaciones al mes', '60 imágenes al mes', 'Hasta 4 campañas a la vez', 'Extras en el chat: desayunos, traslados, tours', 'Panel completo: origen de cada reserva y ocupación', 'Todo lo de Cabaña'] },
@@ -667,7 +667,7 @@ body.con-voz .lim-voz{display:block}
 
   /* ---------- Panel del dueño ---------- */
   var D = {
-    cabana: { nombre: 'Cabaña', precio: '$149.000 al mes', conv: [183, 250], img: [12, 30], camp: [1, 2], cot: 41, pag: 9, val: 420000, recep: false, equipo: false, completo: false, canales: [104, 61, 18, 0], rescate: 'Le enviamos 1 recordatorio a quien no ha pagado.' },
+    cabana: { nombre: 'Cabaña', precio: '$199.000 al mes', conv: [183, 250], img: [12, 30], camp: [1, 2], cot: 41, pag: 9, val: 420000, recep: false, equipo: false, completo: false, canales: [104, 61, 18, 0], rescate: 'Le enviamos 1 recordatorio a quien no ha pagado.' },
     casa: { nombre: 'Casa', precio: '$299.000 al mes', conv: [362, 500], img: [41, 60], camp: [3, 4], cot: 88, pag: 19, val: 480000, recep: false, equipo: false, completo: true, canales: [201, 117, 44, 0], rescate: 'Secuencia de recordatorios; las fechas quedan apartadas hasta la hora indicada.' },
     posada: { nombre: 'Posada', precio: '$599.000 al mes', conv: [812, 1100], img: [64, 100], camp: [5, 6], cot: 176, pag: 38, val: 520000, recep: true, equipo: false, completo: true, canales: [402, 199, 65, 146], rescate: 'Secuencia de recordatorios; las fechas quedan apartadas hasta la hora indicada.', recTit: 'Atendió 146 conversaciones por escrito en su página este mes.', recMini: [['Conversaciones en su página', '146'], ['Formularios llenados', '63'], ['Reservas que logró', '11']] },
     hotel: { nombre: 'Hotel', precio: '$899.000 al mes', conv: [1066, 1300], img: [97, 150], camp: [6, 8], voz: [112, 200], cot: 231, pag: 52, val: 560000, recep: true, equipo: true, completo: true, canales: [498, 251, 92, 225], rescate: 'Secuencia de recordatorios; las fechas quedan apartadas hasta la hora indicada.', recTit: 'Atendió 225 conversaciones en su página, 41 de ellas por voz.', recMini: [['Conversaciones en su página', '225'], ['Por voz', '41 · 112 min'], ['Promedio por visitante', '2,7 min'], ['Reservas que logró', '17']], recCfg: 'Minutos por visitante: 3 (ajustable de 2 a 5) · Tope diario: 15 minutos · Al llegar al límite, la conversación sigue por escrito y el visitante puede pasar a WhatsApp.' }
