@@ -255,17 +255,18 @@ h1,h2,h3{line-height:1.15;margin:0}
       <div class="caja precio">
         <h2>Inversión mensual</h2>
         <div class="cifra" id="total">$434.000 <small>COP al mes</small></div>
-        <div class="nota">Plan Arranque más el plan de Flow que elija según sus conversaciones.</div>
+        <div class="nota">Plan Arranque más el plan de Flow que elija según sus conversaciones. Para empezar se paga el primer mes por adelantado: <b id="primerPago">$434.000</b>.</div>
         <div class="sel-flow" role="group" aria-label="Plan de Flow">
           <button type="button" data-f="0" aria-pressed="true">Básico · hasta 300</button>
           <button type="button" data-f="1" aria-pressed="false">Profesional · hasta 550</button>
           <button type="button" data-f="2" aria-pressed="false">Empresarial · hasta 1.100</button>
         </div>
-        <div class="linea-p"><span>Plan Arranque: pauta, revisión mensual y CRM</span><b>$200.000</b></div>
+        <div class="linea-p"><span>Plan Arranque: gestión de su pauta activa, revisión mensual y CRM</span><b>$200.000</b></div>
         <div class="linea-p"><span id="flowNom">Plan de Flow Básico (hasta 300 conversaciones)</span><b id="flowVal">$234.000</b></div>
         <div class="linea-p"><span>Anuncio adicional, cuando lo pida</span><b>$150.000 c/u</b></div>
-        <div class="linea-p"><span>Configuración inicial del asistente (una vez)</span><b>1 SMLV</b></div>
-        <p class="nota" style="margin-top:12px">Aparte, directo a cada proveedor: lo que usted invierta en anuncios y lo que Meta cobra por algunos mensajes, con su tarjeta en Meta; la comisión de Mercado Pago por cada anticipo. Planes mensuales, no acumulables. Flow no genera IVA.</p>
+        <div class="linea-p"><span>Configuración del asistente y montaje del primer anuncio</span><b>Incluida</b></div>
+        <p class="nota" style="margin-top:12px"><b>Qué cubren los 200.000:</b> mantener su pauta activa y bien gestionada, con una revisión al mes. No incluyen la inversión en anuncios ni cambios del anuncio cada vez que lo pida: los cambios se hacen en la revisión mensual y un anuncio nuevo cuesta $150.000.</p>
+        <p class="nota">Aparte, directo a cada proveedor: lo que usted invierta en anuncios y lo que Meta cobra por algunos mensajes, con su tarjeta en Meta; la comisión de Mercado Pago por cada anticipo. Planes mensuales, no acumulables. Flow no genera IVA.</p>
       </div>
     </div>
 
@@ -423,8 +424,9 @@ h1,h2,h3{line-height:1.15;margin:0}
 
   /* ---------- Plan ---------- */
   var INCLUYE = [
-    'Montaje de la pauta en Facebook e Instagram con 1 anuncio que lleva a su WhatsApp',
-    'Revisión mensual de la pauta, con ajustes y recomendaciones por escrito',
+    'Montaje de su pauta en Facebook e Instagram con 1 anuncio que lleva a su WhatsApp, y la gestión para que siga activa',
+    'Revisión mensual de la pauta: ahí se hacen los ajustes, con recomendaciones por escrito',
+    'Configuración del asistente incluida, sin pago de entrada',
     'Asistente con IA en WhatsApp, Instagram y Facebook que consulta disponibilidad, da tarifas y toma la solicitud',
     'CRM con su propia cuenta: reservas por etapas, notas e historial de cada huésped',
     'Confirmación con un clic y envío del enlace de pago de Mercado Pago con plantilla de WhatsApp',
@@ -439,7 +441,7 @@ h1,h2,h3{line-height:1.15;margin:0}
       $$('.sel-flow button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
       $('#flowNom').textContent = 'Plan de Flow ' + f[0] + ' (hasta ' + f[1] + ' conversaciones)';
       $('#flowVal').textContent = cop(f[2]);
-      $('#total').innerHTML = cop(200000 + f[2]) + ' <small>COP al mes</small>';
+      $('#total').innerHTML = cop(200000 + f[2]) + ' <small>COP al mes</small>'; $('#primerPago').textContent = cop(200000 + f[2]);
     });
   });
 
