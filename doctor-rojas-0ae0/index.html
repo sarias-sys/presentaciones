@@ -145,6 +145,11 @@ h2 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1
 .zbox .zp { left: 16px; } .zbox .zx { right: 16px; }
 .zbox p { color: #B9B6DA; font-size: 12px; margin: 0; }
 
+.inv .ig { grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 14px; }
+.inv .ic { padding: 18px 18px; }
+.inv .ic .big { font-size: 32px; }
+.inv .ic .big span { display: block; font-size: 14px; margin-top: 2px; }
+
 .gain { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-top: 22px; }
 .gain div { grid-column: span 2; border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; background: linear-gradient(180deg,#fff, #FBF9FF); }
 .gain div:nth-child(4), .gain div:nth-child(5) { grid-column: span 3; }
@@ -255,7 +260,7 @@ h2 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1
       <div class="sc big"><small>AHORRO EN TELEFONÍA, CON ESTOS VALORES</small><b data-so="ah"></b><span data-so="ahd"></span></div>
     </div>
   </div>
-  <p class="fine">Solo compara la telefonía: no incluye licencias ni puesta en marcha. Las licencias de la plataforma (100.000 COP por usuario al mes) están en la lámina de inversión.</p>
+  <p class="fine">Solo compara la telefonía: no incluye licencias, soporte ni puesta en marcha; están en la lámina de inversión.</p>
   <div class="ft"><span class="fl"><img src="../assets/isotipo-desarrollando.png" alt="">DesarrollAndo</span><span>Propuesta para Grupo Empresarial Doctor Rojas · 21 de octubre de 2026</span><span class="pg"></span></div>
 </section><section class="s">
   <div class="tagrow"><span class="pill">Etapa 1 · voz con asesores</span></div>
@@ -302,6 +307,7 @@ h2 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1
     <div class="ic dark"><small>PUESTA EN MARCHA · PAGO ÚNICO</small><span class="list">Valor de la puesta en marcha: 4.900.000 COP</span><b class="big">2.900.000 <span>COP de contado</span></b><p class="eq"><b style="color:#fff">O 3.400.000 COP en 2 cuotas</b> de 1.700.000: al firmar y en la salida en vivo. Precio especial por ser clientes, válido hasta el 20 de noviembre de 2026.</p></div>
     <div class="ic"><small>LICENCIA · AL MES</small><b class="big">100.000 <span>COP por usuario</span></b><p>Cada usuario cuenta como una licencia, sea asesor, supervisor o administrador.</p></div>
     <div class="ic"><small>TELEFONÍA · SEGÚN CONSUMO</small><b class="big">46 <span>COP por minuto</span></b><p>Según los minutos que uses cada mes.</p></div>
+    <div class="ic"><small>SOPORTE · AL MES</small><b class="big">100.000 <span>COP fijos</span></b><p>Soporte preventivo y mantenimiento de la plataforma.</p></div>
   </div>
   <div class="calc" data-calc>
     <small>CALCULA TU MENSUALIDAD</small>
@@ -313,7 +319,7 @@ h2 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1
     <div><b>No incluye:</b> computadores y diademas del equipo, asistentes de voz con IA, canales escritos ni conexiones con tus sistemas. Todo eso se puede sumar después.</div>
     <div><b>El menú de voz</b> se cobra como telefonía: 46 COP por minuto mientras el cliente lo escucha.</div>
   </div>
-  <p class="fine">Valores en pesos colombianos. La puesta en marcha se paga una vez; licencias y telefonía, cada mes.</p>
+  <p class="fine">Valores en pesos colombianos. La puesta en marcha se paga una vez; licencias, soporte y telefonía, cada mes.</p>
   <div class="ft"><span class="fl"><img src="../assets/isotipo-desarrollando.png" alt="">DesarrollAndo</span><span>Propuesta para Grupo Empresarial Doctor Rojas · 21 de octubre de 2026</span><span class="pg"></span></div>
 </section><section class="s">
   <div class="tagrow"><span class="pill">Disponible cuando lo necesites</span></div>
@@ -393,8 +399,8 @@ const cop=v=>Math.round(v).toLocaleString('es-CO');
 document.querySelectorAll('[data-calc]').forEach(r=>{
   const g=k=>Math.max(0,parseFloat(r.querySelector('[data-c="'+k+'"]').value)||0);
   function render(){ const own=!!(r.querySelector('[data-c="own"]')||{}).checked, u=Math.max(1,Math.round(g('u'))), m=Math.round(g('m')), lic=u*100000, tel=own?0:m*46;
-    r.querySelector('[data-co="t"]').textContent=cop(lic+tel)+' COP al mes';
-    r.querySelector('[data-co="d"]').textContent=u+(u===1?' licencia':' licencias')+' × 100.000 = '+cop(lic)+(own?'. Los minutos los pagas a tu operador; conectarlo cuesta 490.000 COP una vez.':' + '+cop(m)+' minutos × 46 = '+cop(tel)+'.')+' No incluye la puesta en marcha (pago único).'; }
+    r.querySelector('[data-co="t"]').textContent=cop(lic+tel+100000)+' COP al mes';
+    r.querySelector('[data-co="d"]').textContent=u+(u===1?' licencia':' licencias')+' × 100.000 = '+cop(lic)+(own?'. Los minutos los pagas a tu operador; conectarlo cuesta 490.000 COP una vez.':' + '+cop(m)+' minutos × 46 = '+cop(tel)+'.')+' Más 100.000 de soporte. No incluye la puesta en marcha (pago único).'; }
   r.addEventListener('input',render); render();
 });
 // videos
