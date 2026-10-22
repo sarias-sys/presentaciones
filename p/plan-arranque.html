@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es">
 <head>
+<script>(function(){var t=null;try{t=localStorage.getItem("hospedando.tema")}catch(e){}var d=t||"auto";var o=d==="oscuro"||(d==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.setAttribute("data-tema",o?"oscuro":"claro");document.documentElement.setAttribute("data-tema-pref",d);})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
@@ -687,6 +688,125 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
 .enlace-det .url{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--azul);word-break:break-all}
 .enlace-det small{color:var(--suave);line-height:1.45}
 .enlace-det .btn{justify-self:start;margin-top:4px}
+
+/* ===================== Modo oscuro y resumen de hoy ===================== */
+html.cambia-tema *,html.cambia-tema *::before,html.cambia-tema *::after{transition:background-color .35s ease,border-color .35s ease,color .25s ease,box-shadow .35s ease!important}
+.tema-btn{margin-left:auto;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#fff;border-radius:999px;padding:7px 14px 7px 8px;font-size:13px;font-weight:500}
+.tema-btn:hover{background:rgba(255,255,255,.12)}
+.tema-btn .ico{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(160deg,#ffd27a,#f0a93b);color:#3a2400}
+.tema-btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tema-btn .luna{display:none}
+html[data-tema="oscuro"] .tema-btn .ico{background:linear-gradient(160deg,#3d4f7a,#1c2846);color:#dfe8ff}
+html[data-tema="oscuro"] .tema-btn .sol{display:none}
+html[data-tema="oscuro"] .tema-btn .luna{display:block}
+@media (max-width:700px){
+  .tema-btn span.tx{display:none}.tema-btn{padding:4px;margin-left:auto;order:1}
+  .top .marca{order:0}
+  .top .marca span{display:none}
+  .vistas{order:2;width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .vistas::-webkit-scrollbar{display:none}
+  .vistas button{flex:none;white-space:nowrap}
+  .aviso-top{font-size:12px;padding:6px 0}
+}
+html[data-tema="oscuro"] .grilla th.dia.hoy button{color:#fff}
+
+/* Resumen de hoy */
+.resumen-hoy{position:relative;overflow:hidden;border-radius:24px;margin:16px 0 6px;padding:24px;display:grid;grid-template-columns:minmax(200px,.75fr) minmax(0,2.25fr);gap:18px;align-items:end;box-shadow:var(--e2);isolation:isolate;min-height:200px}
+.hoy-fondo{position:absolute;inset:0;z-index:-1}
+.hoy-fondo svg{position:absolute;inset:0;width:100%;height:100%}
+.hoy-fondo .oscuro-solo{display:none}
+.hoy-fondo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,22,40,.72),rgba(10,22,40,.25) 55%,rgba(10,22,40,.05))}
+.hoy-txt{color:#fff;align-self:center}
+.hoy-txt h2{font-size:clamp(24px,2.6vw,32px);letter-spacing:-.02em;margin:0;line-height:1.1}
+.hoy-txt p{margin:8px 0 0;font-size:14px;color:rgba(255,255,255,.85)}
+.hoy-tarjetas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.hoy-t{position:relative;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:12px;row-gap:8px;align-items:center;text-align:left;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.86);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);border-radius:18px;padding:14px;color:var(--texto);box-shadow:0 20px 40px -24px rgba(0,0,0,.6);transition:transform .18s ease,box-shadow .18s ease}
+.hoy-t:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 28px 50px -24px rgba(0,0,0,.7)}
+.hoy-t:disabled{cursor:default;opacity:.82}
+.ht-n{grid-row:1/span 2;width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:24px;font-weight:700;color:#fff;background:linear-gradient(160deg,color-mix(in srgb,var(--c) 75%,#fff),var(--c));box-shadow:0 10px 20px -10px var(--c);font-variant-numeric:tabular-nums}
+.ht-l b{display:block;font-size:14px;line-height:1.25}
+.ht-l small{display:block;font-size:12px;color:var(--suave);margin-top:2px;line-height:1.35}
+.ht-ir{grid-column:2;justify-self:start;font-size:12.5px;font-weight:600;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);border-radius:999px;padding:4px 10px}
+.hoy-t:disabled .ht-ir{display:none}
+#kpisTop{margin-top:14px}
+@media (max-width:1000px){.resumen-hoy{grid-template-columns:1fr}.hoy-fondo::after{background:linear-gradient(180deg,rgba(10,22,40,.75),rgba(10,22,40,.35))}}
+@media (max-width:700px){.resumen-hoy{padding:18px;border-radius:20px}.hoy-tarjetas{grid-template-columns:1fr;gap:8px}.hoy-t{padding:11px 12px}.ht-n{width:44px;height:44px;font-size:20px;border-radius:13px}}
+.pill.alerta{background:#fff1d6!important;color:#8a5a00!important}
+.ap-ops{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.ap-ops button{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--linea);background:var(--tarjeta);color:var(--texto);border-radius:12px;padding:10px 14px;font-size:14px;font-weight:500}
+.ap-ops button[aria-pressed="true"]{border-color:var(--azul);box-shadow:inset 0 0 0 1px var(--azul);color:var(--azul);font-weight:600}
+.ap-ops .mu{width:30px;height:20px;border-radius:6px;border:1px solid rgba(0,0,0,.15)}
+.ap-ops .mu.c{background:linear-gradient(90deg,#fff 50%,#E8EEF3 50%)}
+.ap-ops .mu.o{background:linear-gradient(90deg,#131D30 50%,#0B1322 50%)}
+.ap-ops .mu.a{background:linear-gradient(135deg,#fff 50%,#131D30 50%)}
+
+/* ---------- Modo oscuro ---------- */
+html[data-tema="oscuro"]{color-scheme:dark;--fondo:#0B1322;--bruma:#0B1322;--tarjeta:#131D30;--texto:#E6ECF4;--suave:#9AA9BD;--linea:rgba(255,255,255,.08);--sup:#131D30;--hundido:#0E1727;--azul:#86AEEA;--verde:#4FAE84;--rojo:#F08A7E;--tinta:#E6ECF4;
+  --e1:inset 0 1px 0 rgba(255,255,255,.04),0 10px 24px -14px rgba(0,0,0,.85);--e2:inset 0 1px 0 rgba(255,255,255,.05),0 24px 44px -20px rgba(0,0,0,.9);--e3:0 40px 80px -24px rgba(0,0,0,.92),0 0 0 1px rgba(255,255,255,.07)}
+html[data-tema="oscuro"] .crm{background:radial-gradient(1100px 420px at 8% -10%,rgba(61,112,192,.22),transparent 62%),radial-gradient(900px 380px at 100% 0,rgba(90,83,150,.18),transparent 60%),#0B1322}
+html[data-tema="oscuro"] .crm-bar{background:rgba(15,24,40,.82);border-bottom-color:rgba(255,255,255,.06)}
+html[data-tema="oscuro"] .login,html[data-tema="oscuro"] .btn-s,html[data-tema="oscuro"] .btn-r,html[data-tema="oscuro"] .kpi,html[data-tema="oscuro"] .ficha,html[data-tema="oscuro"] .filtros,html[data-tema="oscuro"] .cfg-pasos button,html[data-tema="oscuro"] .cfg-cuerpo,html[data-tema="oscuro"] .opciones button,html[data-tema="oscuro"] .money,html[data-tema="oscuro"] .unidad-c,html[data-tema="oscuro"] .contador,html[data-tema="oscuro"] .contador button,html[data-tema="oscuro"] .foto-add,html[data-tema="oscuro"] .check-c,html[data-tema="oscuro"] .extra-c.on,html[data-tema="oscuro"] .cfg-prev,html[data-tema="oscuro"] .panel,html[data-tema="oscuro"] .detalle,html[data-tema="oscuro"] .grilla th.u,html[data-tema="oscuro"] .check-lista li,html[data-tema="oscuro"] .errores-act button,html[data-tema="oscuro"] .filtros-movil button,html[data-tema="oscuro"] .tabs button[aria-selected="true"],html[data-tema="oscuro"] .cfg-pasos button[aria-current="step"],html[data-tema="oscuro"] .guia-btn,html[data-tema="oscuro"] .copi,html[data-tema="oscuro"] .guia-panel,html[data-tema="oscuro"] .ap-ops button{background:var(--sup);color:var(--texto)}
+html[data-tema="oscuro"] .barra,html[data-tema="oscuro"] .hfila .hb,html[data-tema="oscuro"] .cfg-pasos button span,html[data-tema="oscuro"] .extra-c,html[data-tema="oscuro"] .origen-fila .b,html[data-tema="oscuro"] .cuentas div,html[data-tema="oscuro"] .campo input:disabled,html[data-tema="oscuro"] .campo select:disabled,html[data-tema="oscuro"] .cerrar,html[data-tema="oscuro"] .plantilla,html[data-tema="oscuro"] .copi-x,html[data-tema="oscuro"] .copi .prog,html[data-tema="oscuro"] .f-pie .canal,html[data-tema="oscuro"] .enlace-det,html[data-tema="oscuro"] .cal td.b{background:var(--hundido)}
+html[data-tema="oscuro"] .campo input,html[data-tema="oscuro"] .campo select,html[data-tema="oscuro"] .campo textarea,html[data-tema="oscuro"] .money input,html[data-tema="oscuro"] .nueva-t input,html[data-tema="oscuro"] input[type="date"]{background:var(--hundido);color:var(--texto);border-color:rgba(255,255,255,.13)}
+html[data-tema="oscuro"] .money{border-color:rgba(255,255,255,.13)}
+html[data-tema="oscuro"] .btn-s,html[data-tema="oscuro"] .opciones button,html[data-tema="oscuro"] .cfg-pasos button,html[data-tema="oscuro"] .contador,html[data-tema="oscuro"] .foto-add,html[data-tema="oscuro"] .check-c,html[data-tema="oscuro"] .extra-c{border-color:rgba(255,255,255,.12)}
+html[data-tema="oscuro"] .btn-s:hover:not(:disabled){background:#1A2740;border-color:rgba(134,174,234,.45)}
+html[data-tema="oscuro"] .btn-r{border-color:rgba(240,138,126,.4)}
+html[data-tema="oscuro"] .opciones button[aria-checked="true"]{background:rgba(61,112,192,.22);color:#BBD3F5;border-color:rgba(134,174,234,.6)}
+html[data-tema="oscuro"] .tabs button{color:var(--suave)}
+html[data-tema="oscuro"] .tabs button:hover{background:rgba(255,255,255,.06);color:var(--texto)}
+html[data-tema="oscuro"] .tabs button[aria-selected="true"]{color:#A9C6F2;box-shadow:var(--e1),inset 0 0 0 1px rgba(134,174,234,.28)}
+html[data-tema="oscuro"] .crm .tabs{background:rgba(15,24,40,.94)}
+html[data-tema="oscuro"] .col{background:rgba(255,255,255,.025);border-color:rgba(255,255,255,.06);box-shadow:none}
+html[data-tema="oscuro"] .col h3 span{background:color-mix(in srgb,var(--c) 24%,var(--sup));color:color-mix(in srgb,var(--c) 40%,#fff)}
+html[data-tema="oscuro"] .col.sobre{background:color-mix(in srgb,var(--c) 16%,var(--hundido))}
+html[data-tema="oscuro"] .ficha:hover{box-shadow:var(--e2),inset 0 0 0 1px rgba(255,255,255,.06)}
+html[data-tema="oscuro"] #kpisTop .k-ico{background:color-mix(in srgb,var(--kc) 26%,var(--sup));color:color-mix(in srgb,var(--kc) 45%,#fff)}
+html[data-tema="oscuro"] .ficha .pill{background:rgba(61,112,192,.2);color:#A9C6F2}
+html[data-tema="oscuro"] .pill.alerta{background:rgba(227,154,45,.18)!important;color:#F2C06B!important}
+html[data-tema="oscuro"] .est.ok{background:rgba(79,174,132,.18);color:#86D9B1}
+html[data-tema="oscuro"] .est.pend{background:rgba(227,154,45,.18);color:#F2C06B}
+html[data-tema="oscuro"] .est.rev{background:rgba(61,112,192,.22);color:#A9C6F2}
+html[data-tema="oscuro"] .aviso-caja,html[data-tema="oscuro"] .revisar input{background:rgba(227,154,45,.12);border-color:rgba(227,154,45,.35);color:#F2D29A}
+html[data-tema="oscuro"] .error-caja,html[data-tema="oscuro"] .errores-act li{background:rgba(240,138,126,.12);color:#F5B3AA}
+html[data-tema="oscuro"] .pausado{background:rgba(120,110,220,.16);color:#D3CCFF}
+html[data-tema="oscuro"] .login .ok-msg{background:rgba(79,174,132,.14);color:#BFE8D2}
+html[data-tema="oscuro"] .plantilla .burbuja,html[data-tema="oscuro"] .burbuja-c,html[data-tema="oscuro"] .burbuja{background:#005C4B;color:#E9EDEF}
+html[data-tema="oscuro"] .burbuja a,html[data-tema="oscuro"] .burbuja .boton-w{color:#53BDEB}
+html[data-tema="oscuro"] .burbuja .boton-w{border-top-color:rgba(255,255,255,.12)}
+html[data-tema="oscuro"] .grilla td .libre{background:rgba(79,174,132,.08)}
+html[data-tema="oscuro"] .grilla td.finde .libre{background:rgba(79,174,132,.14)}
+html[data-tema="oscuro"] .grilla td .libre:hover,html[data-tema="oscuro"] .grilla td .libre:focus-visible{background:rgba(79,174,132,.26);color:#86D9B1}
+html[data-tema="oscuro"] .grilla .barra{background:color-mix(in srgb,var(--oc) 26%,#152036);color:#E6ECF4}
+html[data-tema="oscuro"] .grilla .barra.pend{background-image:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.08) 6px 10px)}
+html[data-tema="oscuro"] .grilla th.dia button{color:var(--suave)}
+html[data-tema="oscuro"] .grilla th.dia.finde button{color:var(--texto)}
+html[data-tema="oscuro"] .grilla th.dia button:hover{background:rgba(255,255,255,.06);color:#A9C6F2}
+html[data-tema="oscuro"] .grilla th.u{background:rgba(19,29,48,.97)}
+html[data-tema="oscuro"] .cal td{background:rgba(79,174,132,.08)}
+html[data-tema="oscuro"] .sw span{background:#2A3850}
+html[data-tema="oscuro"] .hfila:hover,html[data-tema="oscuro"] .hfila:focus{background:rgba(255,255,255,.04)}
+html[data-tema="oscuro"] .ahorro{background:radial-gradient(600px 220px at 0 0,rgba(79,174,132,.18),transparent 70%),var(--sup)}
+html[data-tema="oscuro"] .velo{background:rgba(3,7,14,.62)}
+html[data-tema="oscuro"] .detalle{box-shadow:-30px 0 60px -30px rgba(0,0,0,.9),inset 1px 0 0 rgba(255,255,255,.06)}
+html[data-tema="oscuro"] .toast{background:#E6ECF4;color:#0B1322}
+html[data-tema="oscuro"] .login{background:rgba(19,29,48,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 50px 100px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.08)}
+html[data-tema="oscuro"] .copi .pista{background:rgba(227,154,45,.14);color:#F2D29A}
+html[data-tema="oscuro"] .preg .chips button{background:rgba(61,112,192,.14);border-color:rgba(134,174,234,.25);color:#A9C6F2}
+html[data-tema="oscuro"] .preg .chips button:hover{background:rgba(61,112,192,.24)}
+html[data-tema="oscuro"] .tarea .chk{border-color:#3A4A63}
+html[data-tema="oscuro"] .guia-btn b{color:var(--suave)}
+html[data-tema="oscuro"] .enlace-det{border-color:rgba(134,174,234,.3)}
+html[data-tema="oscuro"] .enlace-det .url{color:#A9C6F2}
+html[data-tema="oscuro"] .unidad-c,html[data-tema="oscuro"] .cfg-cuerpo,html[data-tema="oscuro"] .panel,html[data-tema="oscuro"] .kpi,html[data-tema="oscuro"] .filtros{box-shadow:var(--e1),inset 0 0 0 1px rgba(255,255,255,.05)}
+html[data-tema="oscuro"] .hoy-t{background:rgba(19,29,48,.78);border-color:rgba(255,255,255,.1);color:var(--texto)}
+html[data-tema="oscuro"] .hoy-fondo .claro-solo{display:none}
+html[data-tema="oscuro"] .hoy-fondo .oscuro-solo{display:block}
+html[data-tema="oscuro"] .ht-ir{color:color-mix(in srgb,var(--c) 45%,#fff);background:color-mix(in srgb,var(--c) 22%,transparent)}
+html[data-tema="oscuro"] .ap-ops .mu{border-color:rgba(255,255,255,.2)}
+html[data-tema="oscuro"] .bienv{box-shadow:var(--e2),inset 0 0 0 1px rgba(255,255,255,.06)}
+html[data-tema="oscuro"] .uc-foto::after{background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.5))}
+@media (prefers-reduced-motion:reduce){.hoy-t{transition:none}.hoy-t:hover:not(:disabled){transform:none}}
 </style>
 </head>
 <body>
@@ -700,6 +820,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
       <button type="button" data-v="crm">Panel del dueño</button>
       <button type="button" data-v="chat">Chat del huésped</button>
     </nav>
+    <button type="button" class="tema-btn" id="temaBtn" aria-pressed="false"><span class="ico"><svg class="sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="luna" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></span><span class="tx" id="temaTx">Modo oscuro</span></button>
   </div>
 </header>
 <div class="aviso-top"><div class="wrap">Demo de HospedAndo con datos de ejemplo, alojamiento y huéspedes ficticios. Precios sujetos a aprobación de la dirección.</div></div>
@@ -822,6 +943,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
 
       <!-- RESERVAS -->
       <div data-panel="tablero" id="p-tablero" role="tabpanel" aria-labelledby="tab-tablero">
+        <section class="resumen-hoy" id="hoy" aria-labelledby="hoyT"><div class="hoy-fondo" aria-hidden="true"><svg class="claro-solo" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice"><use href="#esc-bosque"/></svg><svg class="oscuro-solo" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice"><use href="#esc-mirador"/></svg></div><div class="hoy-txt"><h2 id="hoyT">Hola, Andrea</h2><p>Esto es lo que necesita su atención hoy.</p></div><div class="hoy-tarjetas" id="hoyTarjetas"></div></section>
         <div class="kpis" id="kpisTop">
           <div class="kpi" style="--kc:var(--ambar)"><span class="k-ico"><svg class="k" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5h16v11H9l-5 4z"/></svg></span><small>Solicitudes de octubre</small><b id="kSol">0</b></div>
           <div class="kpi" style="--kc:var(--azul)"><span class="k-ico"><svg class="k" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></span><small>Enlaces de pago enviados</small><b id="kEnl">0</b></div>
@@ -1281,11 +1403,12 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
         (fs.length ? fs.map(function (r) {
           var cruz = r.e === 'nueva' && (choque(r.u, r.ini, r.n, r.id) || solicitudesCruzadas(r).length);
           return '<button type="button" draggable="true" class="ficha' + (r.id === recien ? ' nueva' : '') + '" style="--c:' + et[2] + '" data-id="' + r.id + '"><span class="f-foto">' + escena(unidad(r.u)) + '</span><span class="f-txt"><b>' + esc(r.nom) + '</b><small>' + esc(unidad(r.u).nom) + ' · ' + rangoCorto(r.ini, r.n) + ' · ' + plural(r.p, 'pers.', 'pers.') + '</small><span class="f-pie"><em class="monto">' + fmt(r.total) + '</em><span class="canal">' + canalTxt(r) + '</span></span>' +
-            (cruz ? '<span class="pill" style="background:#fff1d6;color:#8a5a00">Revise: fechas cruzadas</span>' : r.e === 'enlace' && r.vence ? '<span class="pill">Vence ' + r.vence + '</span>' : '<span class="pill">' + esc(r.ultimo || r.creada) + '</span>') + '</span></button>';
+            (cruz ? '<span class="pill alerta">Revise: fechas cruzadas</span>' : r.e === 'enlace' && r.vence ? '<span class="pill">Vence ' + r.vence + '</span>' : '<span class="pill">' + esc(r.ultimo || r.creada) + '</span>') + '</span></button>';
         }).join('') : '<div class="vacia">Sin reservas aquí.</div>') + '</section>';
     }).join('');
     var vis = lista.filter(pasaFiltro).length;
     $('#fCuenta').textContent = vis === lista.length ? 'Mostrando las ' + lista.length + ' reservas del tablero.' : 'Mostrando ' + vis + ' de ' + lista.length + ' reservas del tablero.';
+    if (window.pintarHoy) window.pintarHoy();
     if (window.kpisOct) { var k = window.kpisOct(); $('#kSol').textContent = k[0]; $('#kEnl').textContent = k[1]; $('#kPag').textContent = k[2]; }
   }
   $('#tablero').addEventListener('click', function (e) { var b = e.target.closest('.ficha'); if (b) abrir(+b.dataset.id); });
@@ -1711,15 +1834,15 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
       var W = Math.max(datos.length * 56, 300), Hh = 190, base = 160, max = Math.max.apply(null, datos.map(function (d) { return d.v; })) || 1;
       var paso = W / datos.length, ancho = Math.min(30, paso * 0.55);
       var s = '<svg viewBox="0 0 ' + W + ' ' + Hh + '" role="img" aria-label="' + titulo + '" class="graf">';
-      [0.5, 1].forEach(function (k) { var y = base - (base - 24) * k; s += '<line x1="0" x2="' + W + '" y1="' + y + '" y2="' + y + '" stroke="#e5e7eb" stroke-width="1"/>'; });
+      [0.5, 1].forEach(function (k) { var y = base - (base - 24) * k; s += '<line x1="0" x2="' + W + '" y1="' + y + '" y2="' + y + '" style="stroke:var(--linea)" stroke-width="1"/>'; });
       datos.forEach(function (d, i) {
         var h = Math.max(2, (base - 24) * d.v / max), x = paso * i + (paso - ancho) / 2, y = base - h, r = Math.min(4, h / 2);
         s += '<g class="punto" data-tip="' + d.tip + '"><rect x="' + (paso * i) + '" y="0" width="' + paso + '" height="' + base + '" fill="transparent"/>' +
           '<path d="M' + x + ' ' + base + 'V' + (y + r) + 'Q' + x + ' ' + y + ' ' + (x + r) + ' ' + y + 'H' + (x + ancho - r) + 'Q' + (x + ancho) + ' ' + y + ' ' + (x + ancho) + ' ' + (y + r) + 'V' + base + 'Z" fill="' + (d.activo ? '#2b599e' : '#b9c9e3') + '"/>' +
-          (d.activo ? '<text x="' + (x + ancho / 2) + '" y="' + (y - 6) + '" text-anchor="middle" font-size="12" font-weight="600" fill="#111827">' + d.etq + '</text>' : '') + '</g>';
-        s += '<text x="' + (x + ancho / 2) + '" y="' + (base + 18) + '" text-anchor="middle" font-size="12" fill="#4b5563">' + d.l + '</text>';
+          (d.activo ? '<text x="' + (x + ancho / 2) + '" y="' + (y - 6) + '" text-anchor="middle" font-size="12" font-weight="600" style="fill:var(--texto)">' + d.etq + '</text>' : '') + '</g>';
+        s += '<text x="' + (x + ancho / 2) + '" y="' + (base + 18) + '" text-anchor="middle" font-size="12" style="fill:var(--suave)">' + d.l + '</text>';
       });
-      return s + '<line x1="0" x2="' + W + '" y1="' + base + '" y2="' + base + '" stroke="#9ca3af" stroke-width="1"/></svg>';
+      return s + '<line x1="0" x2="' + W + '" y1="' + base + '" y2="' + base + '" style="stroke:var(--suave)" stroke-width="1"/></svg>';
     }
     function barrasH(filas) {
       var max = Math.max.apply(null, filas.map(function (f) { return f.v; })) || 1;
@@ -2056,6 +2179,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
       $('#cuentaRaiz').innerHTML =
         '<div class="panel"><h2>Usuarios y permisos</h2><table class="tabla-s"><thead><tr><th>Usuario</th><th>Rol</th></tr></thead><tbody>' + USU.map(function (u) { return '<tr><td><b>' + esc(u[0]) + '</b><br><small>' + esc(u[1]) + '</small></td><td>' + u[2] + '<div class="permisos">' + esc(u[3]) + '</div></td></tr>'; }).join('') + '</tbody></table>' +
         '<p class="nota-p" style="margin:10px 0">El plan incluye hasta 3 usuarios. Desde el cuarto, USD 13 al mes por usuario.</p><button type="button" class="btn btn-s btn-sm" data-cu="usuario">+ Agregar usuario</button></div>' +
+        '<div class="panel"><h2>Apariencia</h2><p>Elija cómo quiere ver su panel. «Automático» sigue la configuración de su celular o computador.</p><div class="ap-ops">' + [['claro', 'Claro', 'c'], ['oscuro', 'Oscuro', 'o'], ['auto', 'Automático', 'a']].map(function (o) { return '<button type="button" data-tema-op="' + o[0] + '" aria-pressed="' + ((document.documentElement.getAttribute('data-tema-pref') || 'auto') === o[0]) + '"><span class="mu ' + o[2] + '" aria-hidden="true"></span>' + o[1] + '</button>'; }).join('') + '</div></div>' +
         '<div class="panel"><h2>Seguridad</h2><p><b style="color:var(--texto)">Verificación en dos pasos:</b> activa, con código por WhatsApp.</p><table class="tabla-s"><thead><tr><th>Sesiones abiertas</th><th></th></tr></thead><tbody><tr><td>Chrome en Windows · Salento<br><small>Esta sesión</small></td><td></td></tr><tr><td>App en iPhone · Armenia<br><small>Hace 2 días</small></td><td></td></tr></tbody></table>' +
         '<div class="acciones" style="margin-top:10px"><button type="button" class="btn btn-s btn-sm" data-cu="sesiones">Cerrar sesión en todos los equipos</button><button type="button" class="btn btn-s btn-sm" data-cu="clave">Cambiar contraseña</button></div></div>' +
         '<div class="panel"><h2>Avisos para usted</h2><p>Le avisamos por WhatsApp y por correo.</p><div class="interruptores">' + NOTI.map(function (n) { return '<label class="sw"><input type="checkbox" data-noti="' + n[0] + '"' + (n[2] ? ' checked' : '') + '><span></span>' + n[1] + '</label>'; }).join('') + '</div></div>' +
@@ -2066,6 +2190,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
     }
     window.pintarCuenta = pintar;
     $('#cuentaRaiz').addEventListener('click', function (e) {
+      var tb = e.target.closest('[data-tema-op]'); if (tb) { window.ponerTema(tb.dataset.temaOp); return; }
       var b = e.target.closest('[data-cu]'); if (!b) return; var a = b.dataset.cu;
       if (a === 'usuario') return confirmar({ titulo: 'Agregar usuario', boton: 'Enviar invitación', texto: 'Le llega un correo para crear su contraseña y activar la verificación en dos pasos.', extra: '<label class="campo">Nombre<input id="uNom" autocomplete="off"></label><label class="campo">Correo<input id="uCor" type="email" autocomplete="off"></label><label class="campo">Rol<select id="uRol"><option>Recepción</option><option>Contador (solo lectura)</option></select></label>',
         ok: function (p) { var n = $('#uNom', p).value.trim(), c = $('#uCor', p).value.trim(); if (!n || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(c)) return 'Escriba el nombre y un correo válido.'; if (USU.length >= 3) return 'El plan incluye hasta 3 usuarios. Desde el cuarto se cobran USD 13 al mes; hable con su asesor.'; USU.push([n, c, $('#uRol', p).value, $('#uRol', p).value === 'Recepción' ? USU[1][3] : 'Solo puede ver reservas y reportes.']); log('Invitó a ' + n + ' como ' + $('#uRol', p).value); pintar(); aviso('Invitación enviada a ' + c); } });
@@ -2122,6 +2247,49 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
   window.addEventListener('hashchange', function () { ir((location.hash || '#plan').slice(1)); });
 
 
+
+  /* ---------- Tema claro / oscuro ---------- */
+  (function () {
+    var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    function pref() { return document.documentElement.getAttribute('data-tema-pref') || 'auto'; }
+    function aplicar(d, animar) {
+      var o = d === 'oscuro' || (d === 'auto' && mq && mq.matches), h = document.documentElement;
+      if (animar && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) { h.classList.add('cambia-tema'); setTimeout(function () { h.classList.remove('cambia-tema'); }, 450); }
+      h.setAttribute('data-tema', o ? 'oscuro' : 'claro'); h.setAttribute('data-tema-pref', d);
+      var b = $('#temaBtn'); b.setAttribute('aria-pressed', o ? 'true' : 'false'); $('#temaTx').textContent = o ? 'Modo claro' : 'Modo oscuro';
+      b.setAttribute('aria-label', o ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+      $$('[data-tema-op]').forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.temaOp === d ? 'true' : 'false'); });
+    }
+    window.ponerTema = function (d) { try { localStorage.setItem('hospedando.tema', d); } catch (x) {} aplicar(d, true); };
+    $('#temaBtn').addEventListener('click', function () { window.ponerTema(document.documentElement.getAttribute('data-tema') === 'oscuro' ? 'claro' : 'oscuro'); });
+    if (mq && mq.addEventListener) mq.addEventListener('change', function () { if (pref() === 'auto') aplicar('auto', true); });
+    aplicar(pref(), false);
+  })();
+
+  /* ---------- Resumen de hoy ---------- */
+  window.pintarHoy = function () {
+    var cont = $('#hoyTarjetas'); if (!cont) return;
+    var h = new Date().getHours();
+    $('#hoyT').textContent = (h < 12 ? 'Buenos días' : h < 19 ? 'Buenas tardes' : 'Buenas noches') + ', Andrea';
+    var crm = RES.filter(function (r) { return r.crm; });
+    var nuevas = crm.filter(function (r) { return r.e === 'nueva'; });
+    var vencen = crm.filter(function (r) { return r.e === 'enlace' && /^hoy/i.test(r.vence || ''); });
+    var llegan = RES.filter(function (r) { return (r.e === 'pagado' || (!r.crm && r.o !== 'bloqueo')) && r.ini >= 0 && r.ini <= 7; }).sort(function (a, b) { return a.ini - b.ini; });
+    function tarjeta(c, n, titulo, detalle, accion, dato) {
+      return '<button type="button" class="hoy-t" style="--c:' + c + '" data-hoy="' + dato + '"' + (n ? '' : ' disabled') + '><span class="ht-n">' + n + '</span><span class="ht-l"><b>' + titulo + '</b><small>' + detalle + '</small></span><span class="ht-ir">' + accion + '</span></button>';
+    }
+    cont.innerHTML =
+      tarjeta('#d4790f', nuevas.length, nuevas.length === 1 ? 'Solicitud por responder' : 'Solicitudes por responder', nuevas.length ? 'Empiece por ' + esc(nuevas[0].nom) + ', ' + esc(unidad(nuevas[0].u).nom) : 'Está al día', 'Responder', 'nueva') +
+      tarjeta('#2b599e', vencen.length, vencen.length === 1 ? 'Enlace de pago vence hoy' : 'Enlaces de pago vencen hoy', vencen.length ? esc(vencen[0].nom) + ', ' + esc(vencen[0].vence) : 'Ningún enlace vence hoy', 'Recordar', 'vence') +
+      tarjeta('#2f7a5b', llegan.length, llegan.length === 1 ? 'Llegada esta semana' : 'Llegadas esta semana', llegan.length ? 'Próxima: ' + esc(llegan[0].nom) + ', ' + rangoCorto(llegan[0].ini, llegan[0].n) : 'Sin llegadas en 7 días', 'Ver calendario', 'llega');
+  };
+  $('#hoyTarjetas').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-hoy]'); if (!b || b.disabled) return;
+    var crm = RES.filter(function (r) { return r.crm; }), k = b.dataset.hoy;
+    if (k === 'nueva') { var r = crm.filter(function (x) { return x.e === 'nueva'; })[0]; if (r) abrir(r.id); }
+    if (k === 'vence') { var v = crm.filter(function (x) { return x.e === 'enlace' && /^hoy/i.test(x.vence || ''); })[0]; if (v) abrir(v.id, 'recordar'); }
+    if (k === 'llega') seleccionarTab('calendario');
+  });
   /* ---------- Copiloto: recorrido guiado y primeros pasos ---------- */
   (function () {
     var CLAVE = 'hospedando.guia', est = { visto: false, hecho: {} };
@@ -2133,6 +2301,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
       { tab: 'config', sel: '.crm .tabs', t: 'Su negocio en cinco secciones', x: 'Mi alojamiento, Reservas, Disponibilidad, Reportes y Mi cuenta. En el celular las encuentra en la barra de abajo.' },
       { tab: 'config', sel: '#cfgPasos', t: 'Primero, su alojamiento', x: 'Seis pasos: datos, habitaciones, temporadas, servicios, conexiones y activar. El asistente cotiza y responde con lo que ponga aquí.' },
       { tab: 'config', sel: '#cfgPrev', t: 'Pruebe cómo cotiza el asistente', x: 'Cambie la unidad, las personas, las noches o los servicios y vea el total que le daría al huésped, antes de activarlo.' },
+      { tab: 'tablero', sel: '#hoy', t: 'Empiece cada día por aquí', x: 'Le muestra lo urgente: solicitudes por responder, enlaces de pago que vencen hoy y las próximas llegadas. Toque una tarjeta y lo lleva directo.' },
       { tab: 'tablero', sel: '.col[data-etapa="nueva"]', t: 'Aquí llegan las solicitudes', x: 'Cada solicitud que toma el asistente por WhatsApp, Instagram o Facebook aparece en esta columna.', pista: 'Pruébelo: toque la tarjeta de Laura Gómez.', espera: true },
       { sel: '#detalle [data-acc="confirmar"]', detalle: true, t: 'Usted confirma y sale el enlace', x: 'Revise fechas y valor. Al confirmar, el huésped recibe por WhatsApp el enlace de pago de su pasarela y las fechas quedan apartadas.' },
       { tab: 'tablero', sel: '#tablero', cerrar: true, t: 'Mueva las reservas por etapas', x: 'Arrastre una tarjeta de una columna a otra: esperando pago, anticipo pagado, hospedados. En el celular, ábrala y use «Mover a».' },
@@ -2145,13 +2314,13 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
     var CONEX = { tab: 'config', sel: '#cfgCuerpo', antes: function () { var b = $('#cfgPasos button:nth-child(5)'); if (b) b.click(); }, t: 'Conecte su calendario de Booking.com', x: 'En «Conexiones» pegue el enlace de calendario que le da Booking.com. Así el asistente no ofrece noches que ya vendió por allá.' };
     var TAREAS = [
       { id: 'config', t: 'Configure su alojamiento', d: 'Habitaciones, tarifas y temporadas. El asistente cotiza con esto.', log: 'Guardó la configuración del alojamiento', paso: 2 },
-      { id: 'abrir', t: 'Revise una solicitud nueva', d: 'Toque una tarjeta en «Nuevas solicitudes».', paso: 4 },
-      { id: 'enlace', t: 'Confirme y envíe un enlace de pago', d: 'Sale por WhatsApp y las fechas quedan apartadas.', log: 'Envió el enlace de pago a ', paso: 5 },
-      { id: 'apartar', t: 'Aparte fechas en el calendario', d: 'Registre una reserva de otro canal o un bloqueo.', log: 'Apartó ', paso: 8 },
+      { id: 'abrir', t: 'Revise una solicitud nueva', d: 'Toque una tarjeta en «Nuevas solicitudes».', paso: 5 },
+      { id: 'enlace', t: 'Confirme y envíe un enlace de pago', d: 'Sale por WhatsApp y las fechas quedan apartadas.', log: 'Envió el enlace de pago a ', paso: 6 },
+      { id: 'apartar', t: 'Aparte fechas en el calendario', d: 'Registre una reserva de otro canal o un bloqueo.', log: 'Apartó ', paso: 9 },
       { id: 'booking', t: 'Conecte su calendario de Booking.com', d: 'Así el asistente no ofrece noches ya vendidas.', log: 'Conectó el calendario de Booking.com', paso: 'conex' },
-      { id: 'equipo', t: 'Invite a alguien de su equipo', d: 'Recepción o contador, cada uno con sus permisos.', log: 'Invitó a ', paso: 10 }
+      { id: 'equipo', t: 'Invite a alguien de su equipo', d: 'Recepción o contador, cada uno con sus permisos.', log: 'Invitó a ', paso: 11 }
     ];
-    var PREG = [['¿Cómo envío un enlace de pago?', 5], ['¿Cómo bloqueo fechas por mantenimiento?', 8], ['¿Dónde cambio mis tarifas de temporada?', 2], ['¿Dónde veo la comisión que no pagué?', 9]];
+    var PREG = [['¿Cómo envío un enlace de pago?', 6], ['¿Cómo bloqueo fechas por mantenimiento?', 9], ['¿Dónde cambio mis tarifas de temporada?', 2], ['¿Dónde veo la comisión que no pagué?', 10], ['¿Cómo pongo el modo oscuro?', 'tema']];
     var foco = document.createElement('div'), fondo = document.createElement('div'), copi = document.createElement('div');
     foco.className = 'foco'; foco.hidden = true; fondo.className = 'copi-fondo'; fondo.hidden = true;
     copi.className = 'copi'; copi.hidden = true; copi.setAttribute('role', 'dialog'); copi.setAttribute('aria-labelledby', 'copiT');
@@ -2186,7 +2355,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
       if (g === 'cerrar') { abrirPanelGuia(false); $('#guiaBtn').focus(); return; }
       abrirPanelGuia(false);
       if (g === 'todo') return iniciar(1);
-      if (g === 'preg') return iniciar(PREG[+b.dataset.k][1], true);
+      if (g === 'preg') { var q = PREG[+b.dataset.k][1]; if (q === 'tema') return iniciar({ sel: '#temaBtn', t: 'Modo claro u oscuro', x: 'Toque este botón para cambiar. En «Mi cuenta», en Apariencia, también puede dejarlo automático, según su celular o computador.' }, true); return iniciar(q, true); }
       if (g === 'mostrar') { var t = TAREAS.filter(function (x) { return x.id === b.dataset.t; })[0]; if (t.paso === 'conex') return iniciar(CONEX, true); return iniciar(t.paso, true); }
     });
 
