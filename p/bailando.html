@@ -224,6 +224,17 @@ h2 em, h1 em { font-style: normal; color: var(--lime); }
 .side button.sub { padding-left: 26px; font-weight: 500; font-size: 13px; }
 .kpis.k3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
 .calc .fields.f3 { grid-template-columns: 1.3fr 1fr 0.8fr; }
+.tour { display: grid; grid-template-columns: 250px 1fr; gap: 22px; margin-top: 20px; }
+.side2 { display: flex; flex-direction: column; gap: 4px; }
+.side2 button { all: unset; cursor: pointer; padding: 9px 14px; border-radius: 10px; font-size: 15px; font-weight: 600; color: #CFCFD3; border: 1px solid transparent; }
+.side2 button:hover { background: #18181b; }
+.side2 button[aria-pressed="true"] { background: var(--lime); color: var(--bg); }
+.side2 button:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
+.stage { position: relative; }
+.shot { display: none; margin: 0; }
+.shot.on { display: block; animation: fadein .25s ease; }
+.shot img { display: block; width: auto; max-width: 100%; height: 452px; object-fit: contain; object-position: top left; border-radius: 14px; border: 1px solid var(--line); box-shadow: 0 24px 60px rgba(0,0,0,.55); background: #0b0b0c; }
+.shot figcaption { margin-top: 12px; font-size: 15px; line-height: 1.45; color: #DADADE; border-left: 3px solid var(--lime); padding-left: 12px; }
 /* Precio */
 .price { display: grid; grid-template-columns: 1fr 470px; gap: 32px; margin-top: 22px; align-items: stretch; }
 .scale { display: grid; grid-template-columns: repeat(10, minmax(0,1fr)); gap: 8px; align-items: end; background: var(--s1); border: 1px solid var(--line); border-radius: 20px; padding: 20px 18px 16px; height: 390px; }
@@ -312,183 +323,35 @@ h2 em, h1 em { font-style: normal; color: var(--lime); }
 <section>
   <div class="top"><span class="logo">Bailando</span><span class="demo-tag">Recórrela</span></div>
   <h2 style="margin-top:16px">La plataforma <em>por dentro</em></h2>
-  <div class="app" data-app>
-    <div class="app-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="mono app-url">bailando.desarrollandoando.com/cuenta</span><span class="app-venue">Tu discoteca · Saldo $ 420.000</span></div>
-    <div class="app-body">
-      <nav class="side" aria-label="Módulos de la plataforma">
-        <span class="grp">Operación</span>
+  <div class="tour" data-app>
+    <nav class="side2" aria-label="Módulos de la plataforma">
         <button type="button" data-m="tablero" aria-pressed="true">Tablero</button>
         <button type="button" data-m="eventos" aria-pressed="false">Eventos</button>
-        <button type="button" data-m="ficha" aria-pressed="false" class="sub">Evento por pasos</button>
-        <button type="button" data-m="resumen" aria-pressed="false" class="sub">Resumen y ventas</button>
-        <button type="button" data-m="cortesias" aria-pressed="false" class="sub">Cortesías</button>
-        <button type="button" data-m="puerta" aria-pressed="false" class="sub">Puerta</button>
+        <button type="button" data-m="resumen" aria-pressed="false">Resumen del evento</button>
+        <button type="button" data-m="boletas" aria-pressed="false">Boletas y etapas</button>
+        <button type="button" data-m="cortesias" aria-pressed="false">Cortesías</button>
+        <button type="button" data-m="puerta" aria-pressed="false">Puerta</button>
         <button type="button" data-m="taquilla" aria-pressed="false">Taquilla</button>
-        <span class="grp">Dinero</span>
-        <button type="button" data-m="saldo" aria-pressed="false">Saldo</button>
-        <span class="grp">Información</span>
-        <button type="button" data-m="pagina" aria-pressed="false">Mi página</button>
         <button type="button" data-m="carta" aria-pressed="false">Carta</button>
-        <span class="grp">Cuenta</span>
-        <button type="button" data-m="config" aria-pressed="false">Configuración</button>
-        <button type="button" data-m="api" aria-pressed="false" class="sub">Integraciones</button>
-      </nav>
-      <div class="main">
-
-        <div class="mod on" data-v="tablero">
-          <div class="mh"><b>Tablero</b><span>Lo que está pasando en tu discoteca ahora mismo</span></div>
-          <div class="kpis k3">
-            <div><span>Boletas emitidas hoy</span><b>286</b></div>
-            <div><span>Valor transaccionado aprobado</span><b>$ 7,9 M</b></div>
-            <div><span>Órdenes pendientes de pago</span><b>3</b></div>
-          </div>
-          <div class="door">
-            <div class="tbl" style="flex:1">
-              <div class="tr th"><span>Próximos eventos</span><span>Fecha</span><span>Aforo</span></div>
-              <div class="tr"><span>Noche crossover</span><span>15 nov</span><span class="ok">95 %</span></div>
-              <div class="tr"><span>Fiesta de los 2000</span><span>22 nov</span><span>38 %</span></div>
-            </div>
-            <div class="okbox" style="flex:0 0 250px"><b style="font-size:18px">Tu comisión</b><span>Tu primer evento paga 0 %. Desde el segundo sube 1 % por evento, hasta un tope de 9 %.</span></div>
-          </div>
-          <p class="cap">El tablero muestra la venta del día, lo que falta por pagar y cómo van tus próximos eventos.</p>
-        </div>
-
-        <div class="mod" data-v="eventos">
-          <div class="mh"><b>Eventos</b><span class="pill-l">+ Nuevo evento</span></div>
-          <div class="steps-mini"><span class="c">Próximos</span><span>Pasados</span><span>Todos</span><span>Borrador · Publicado · Agotado · Cancelado</span></div>
-          <div class="tbl">
-            <div class="tr th"><span>Título</span><span>Fecha</span><span>Boletas</span><span>QR usados</span></div>
-            <div class="tr"><span>Noche crossover</span><span>15 nov</span><span>286 / 300</span><span class="ok">212</span></div>
-            <div class="tr"><span>Fiesta de los 2000</span><span>22 nov</span><span>94 / 250</span><span>0</span></div>
-            <div class="tr"><span>Concierto en vivo</span><span>29 nov</span><span class="soft">Borrador</span><span>—</span></div>
-          </div>
-          <p class="cap">Tus noches, sus boletas y quién entró. Filtras por estado y por sede.</p>
-        </div>
-
-        <div class="mod" data-v="ficha">
-          <div class="mh"><b>Evento por pasos</b><span>Noche crossover</span></div>
-          <div class="steps-mini"><span class="d">1 La noche</span><span class="d">2 Artista y música</span><span class="d">3 Imágenes</span><span class="c">4 Boletas</span><span>5 Palcos</span><span>6 Cobro y publicación</span></div>
-          <div class="tbl">
-            <div class="tr th"><span>Tipo y etapa</span><span>Precio</span><span>Cupo</span><span>Estado</span></div>
-            <div class="tr"><span>General · preventa 1</span><span>20.000</span><span>100 / 100</span><span class="soft">Agotada</span></div>
-            <div class="tr cur"><span>General · preventa 2</span><span>30.000</span><span>98 / 100</span><span class="ok">Vigente</span></div>
-            <div class="tr"><span>Palco · grupal de 4</span><span>350.000</span><span>4 / 12</span><span>Numerados</span></div>
-          </div>
-          <p class="cap">Tipos de boleta con etapas de precio y palcos numerados uno por uno. Antes de publicar, cada requisito se pone en verde.</p>
-        </div>
-
-        <div class="mod" data-v="resumen">
-          <div class="mh"><b>Resumen y ventas</b><span class="pill-l">Exportar a CSV</span></div>
-          <div class="kpis">
-            <div><span>Recaudado</span><b>$ 7,9 M</b></div>
-            <div><span>Ocupación</span><b>95 %</b></div>
-            <div><span>Ingresados</span><b>212</b></div>
-            <div><span>Carritos abandonados</span><b>9</b></div>
-          </div>
-          <div class="bars">
-            <div><span>En línea</span><i style="width:100%"></i><b>198</b></div>
-            <div><span>Taquilla</span><i style="width:37%"></i><b>74</b></div>
-            <div><span>Cortesías</span><i style="width:7%"></i><b>14</b></div>
-          </div>
-          <p class="cap">Boletas por canal, por tipo y etapa, ritmo de ventas, ticket promedio y los carritos que quedaron sin pagar.</p>
-        </div>
-
-        <div class="mod" data-v="cortesias">
-          <div class="mh"><b>Cortesías</b><span class="pill-l">Emitir cortesías</span></div>
-          <div class="tbl">
-            <div class="tr th"><span>Motivo</span><span>Cantidad</span><span>Usadas</span></div>
-            <div class="tr"><span>Invitados del DJ</span><span>6</span><span class="ok">4 de 6</span></div>
-            <div class="tr"><span>Patrocinadores</span><span>4</span><span class="soft">0 de 4</span></div>
-            <div class="tr"><span>Cumpleaños mesa 3</span><span>4</span><span class="ok">4 de 4</span></div>
-          </div>
-          <p class="cap">Cada cortesía lleva motivo, nombres y su código, y queda registrado quién la emitió y si la persona llegó.</p>
-        </div>
-
-        <div class="mod" data-v="puerta">
-          <div class="mh"><b>Puerta</b><span class="pill-r">Escáner en el celular</span></div>
-          <div class="kpis">
-            <div><span>Ingreso</span><b>212 / 286</b></div>
-            <div><span>Hora pico</span><b>11:15</b></div>
-            <div><span>Repetidos</span><b>2</b></div>
-            <div><span>Rechazados</span><b>1</b></div>
-          </div>
-          <div class="chart" aria-hidden="true"><i style="height:12%"></i><i style="height:22%"></i><i style="height:40%"></i><i style="height:64%"></i><i style="height:100%"></i><i style="height:84%"></i><i style="height:58%"></i><i style="height:36%"></i><i style="height:20%"></i><i style="height:10%"></i></div>
-          <p class="cap">El escáner se abre en el celular de la puerta. Desde el panel supervisas el ritmo de ingreso por franjas de 15 minutos, quién entró y las incidencias.</p>
-        </div>
-
-        <div class="mod" data-v="taquilla">
-          <div class="mh"><b>Taquilla</b><span>Venta presencial contra el mismo inventario de la web</span></div>
-          <div class="door">
-            <div class="tbl" style="flex:1">
-              <div class="tr th"><span>Campo</span><span>Valor</span></div>
-              <div class="tr"><span>Evento</span><span>Noche crossover</span></div>
-              <div class="tr"><span>Tipo de boleta</span><span>General · preventa 2</span></div>
-              <div class="tr"><span>Cantidad · nombre</span><span>2 · Laura G.</span></div>
-            </div>
-            <div class="pay"><span>Cobra al cliente</span><b>60.000</b><div><i class="sel">Efectivo</i><i>Datáfono</i></div></div>
-          </div>
-          <p class="cap">Vendes en la puerta en efectivo o datáfono y la boleta sale con su QR, del mismo cupo de la web.</p>
-        </div>
-
-        <div class="mod" data-v="saldo">
-          <div class="mh"><b>Saldo</b><span class="pill-l">Recargar saldo</span></div>
-          <div class="tbl">
-            <div class="tr th"><span>Movimiento</span><span>Fecha</span><span>Monto</span></div>
-            <div class="tr"><span>Recarga</span><span>10 nov</span><span class="ok">+ 500.000</span></div>
-            <div class="tr"><span>Comisión de venta · 2 boletas</span><span>14 nov</span><span>− 1.200</span></div>
-            <div class="tr"><span>Cargo por taquilla · 2 boletas</span><span>15 nov</span><span>− 1.200</span></div>
-          </div>
-          <p class="cap">Con el saldo se pagan las comisiones de venta, la taquilla y las cortesías. Es un libro: cada movimiento queda registrado y no se borra.</p>
-        </div>
-
-        <div class="mod" data-v="pagina">
-          <div class="mh"><b>Mi página</b><span class="mono" style="font-size:12px">bailando.desarrollandoando.com/tu-discoteca</span></div>
-          <div class="pub">
-            <div class="ph1"><b>Tu discoteca</b><span>Portada · publicaciones · fotos · historial</span></div>
-            <div class="ev"><b>Noche crossover</b><span>Sáb 15 nov · 10:00 p. m.</span><i>Comprar</i></div>
-            <div class="ev"><b>Fiesta de los 2000</b><span>Sáb 22 nov · 10:00 p. m.</span><i>Comprar</i></div>
-          </div>
-          <p class="cap">Lo que ve la gente cuando entra a tu lugar: portada, publicaciones, fotos y las fiestas que ya pasaron.</p>
-        </div>
-
-        <div class="mod" data-v="carta">
-          <div class="mh"><b>Carta</b><span class="pill-l">Ver carta pública</span></div>
-          <div class="tbl">
-            <div class="tr th"><span>Categoría</span><span>Productos</span><span>Estado</span></div>
-            <div class="tr"><span>Botellas</span><span>44</span><span class="ok">Activa</span></div>
-            <div class="tr"><span>Drinks</span><span>8</span><span class="ok">Activa</span></div>
-            <div class="tr cur"><span>Destacados ★</span><span>3</span><span class="ok">Activa</span></div>
-          </div>
-          <p class="cap">Categorías, grupos, productos y destacados para cada sede, con una carta pública en QR.</p>
-        </div>
-
-        <div class="mod" data-v="config">
-          <div class="mh"><b>Configuración</b><span>Organización · Marca · Sedes · Usuarios · Facturación</span></div>
-          <div class="tbl">
-            <div class="tr th"><span>Ajuste</span><span>Estado</span></div>
-            <div class="tr"><span>Sedes</span><span class="ok">2 sedes</span></div>
-            <div class="tr"><span>Usuarios</span><span>Dueño · Administrador · Gerente · Puerta · Solo lectura</span></div>
-            <div class="tr"><span>Cobro de boletas</span><span class="ok">Wompi o Mercado Pago</span></div>
-            <div class="tr"><span>Modo prueba</span><span>Recorre todo sin cobros reales</span></div>
-          </div>
-          <p class="cap">Cada persona del equipo con su rol. Cada evento escoge con qué cuenta cobra.</p>
-        </div>
-
-        <div class="mod" data-v="api">
-          <div class="mh"><b>Integraciones</b><span>API y avisos de compras</span></div>
-          <div class="tbl">
-            <div class="tr th"><span>Herramienta</span><span>Para qué sirve</span></div>
-            <div class="tr"><span>Llaves de la API</span><span>Otro sistema consulta tus compras y emite cortesías</span></div>
-            <div class="tr"><span>Links personales</span><span>Solo compra quien recibió un link de un solo uso</span></div>
-            <div class="tr"><span>Avisos (webhook)</span><span>Tu sistema se entera cuando una orden se paga o se anula</span></div>
-          </div>
-          <p class="cap">Para organizadores con su propio registro o app: conectas Bailando a tu sistema.</p>
-        </div>
-
-      </div>
+        <button type="button" data-m="mipagina" aria-pressed="false">Mi página</button>
+        <button type="button" data-m="usuarios" aria-pressed="false">Usuarios y roles</button>
+        <button type="button" data-m="integraciones" aria-pressed="false">Integraciones</button>
+    </nav>
+    <div class="stage">
+      <figure class="shot on" data-v="tablero"><img src="../assets/bailando/panel/tablero.jpg" alt="Pantalla real del panel de Bailando: Tablero" loading="lazy"><figcaption>Lo que pasa hoy: boletas emitidas, valor aprobado, órdenes pendientes, próximos eventos con su aforo y tu escala de comisión.</figcaption></figure>
+      <figure class="shot" data-v="eventos"><img src="../assets/bailando/panel/eventos.jpg" alt="Pantalla real del panel de Bailando: Eventos" loading="lazy"><figcaption>Tus noches, sus boletas y quién entró. Filtras por estado, sede y fecha, y creas un evento nuevo.</figcaption></figure>
+      <figure class="shot" data-v="resumen"><img src="../assets/bailando/panel/resumen.jpg" alt="Pantalla real del panel de Bailando: Resumen del evento" loading="lazy"><figcaption>Recaudado, boletas sobre el aforo, órdenes e ingresados, con accesos rápidos para emitir cortesías o hacer una venta manual.</figcaption></figure>
+      <figure class="shot" data-v="boletas"><img src="../assets/bailando/panel/boletas.jpg" alt="Pantalla real del panel de Bailando: Boletas y etapas" loading="lazy"><figcaption>El evento se arma en 6 pasos. Cada tipo de boleta tiene precio base, cupo y etapas; los palcos van numerados y se compran en grupo.</figcaption></figure>
+      <figure class="shot" data-v="cortesias"><img src="../assets/bailando/panel/cortesias.jpg" alt="Pantalla real del panel de Bailando: Cortesías" loading="lazy"><figcaption>Cada cortesía lleva motivo y nombres de los asistentes, y ves el cargo antes de emitirla.</figcaption></figure>
+      <figure class="shot" data-v="puerta"><img src="../assets/bailando/panel/puerta.jpg" alt="Pantalla real del panel de Bailando: Puerta" loading="lazy"><figcaption>Abres el escáner en el celular de la puerta. Desde el panel supervisas el ingreso, el ritmo y las incidencias.</figcaption></figure>
+      <figure class="shot" data-v="taquilla"><img src="../assets/bailando/panel/taquilla.jpg" alt="Pantalla real del panel de Bailando: Taquilla" loading="lazy"><figcaption>Venta presencial contra el mismo inventario de la web, en efectivo o datáfono, con la boleta emitida al instante.</figcaption></figure>
+      <figure class="shot" data-v="carta"><img src="../assets/bailando/panel/carta.jpg" alt="Pantalla real del panel de Bailando: Carta" loading="lazy"><figcaption>Categorías, destacados y productos para cada sede, con una carta pública para tus clientes.</figcaption></figure>
+      <figure class="shot" data-v="mipagina"><img src="../assets/bailando/panel/mipagina.jpg" alt="Pantalla real del panel de Bailando: Mi página" loading="lazy"><figcaption>Tu dirección propia con portada, publicaciones, fotos y el historial de las fiestas que ya pasaron.</figcaption></figure>
+      <figure class="shot" data-v="usuarios"><img src="../assets/bailando/panel/usuarios.jpg" alt="Pantalla real del panel de Bailando: Usuarios y roles" loading="lazy"><figcaption>Invitas a tu equipo con su rol: dueño, administrador, gerente, puerta o solo lectura.</figcaption></figure>
+      <figure class="shot" data-v="integraciones"><img src="../assets/bailando/panel/integraciones.jpg" alt="Pantalla real del panel de Bailando: Integraciones" loading="lazy"><figcaption>API, links de compra personales y avisos de compras para conectar el sistema o la app de tu evento.</figcaption></figure>
     </div>
   </div>
-  <div class="ft"><span>Módulos reales del panel, con datos de ejemplo</span><span>bailando.desarrollandoando.com</span></div>
+  <div class="ft"><span>Pantallas reales del panel de Bailando con un evento de prueba; nombres cambiados por privacidad</span><span>bailando.desarrollandoando.com</span></div>
 </section>
 
 <section>
@@ -506,15 +369,14 @@ h2 em, h1 em { font-style: normal; color: var(--lime); }
       <li><i>3</i><div><b>Publicas y vendes</b>Tu evento queda en su página pública. El comprador paga y le llega la boleta con QR al correo.</div></li>
     </ul>
     <div class="phone" aria-label="Pantalla de ejemplo: crear evento">
-      <div class="ph"><span>Panel</span><span>Nuevo evento</span></div>
-      <h4>Crear evento</h4>
+      <div class="ph"><span>Panel</span><span>Ficha del evento</span></div>
+      <h4>Evento en 6 pasos</h4>
       <div class="row"><span>1. La noche</span><span class="ok">✓</span></div>
       <div class="row"><span>2. Artista y música</span><span class="ok">✓</span></div>
       <div class="row"><span>3. Imágenes</span><span class="ok">✓</span></div>
-      <div class="row cur"><span>4. Boletas y etapas</span><span class="note">En curso</span></div>
+      <div class="row cur"><span>4. Boletas</span><span class="note">En curso</span></div>
       <div class="row"><span>5. Palcos</span><span class="note">—</span></div>
-      <div class="row"><span>6. Cobro</span><span class="note">—</span></div>
-      <div class="row"><span>7. Publicar</span><span class="note">—</span></div>
+      <div class="row"><span>6. Cobro y publicación</span><span class="note">—</span></div>
     </div>
   </div>
   <div class="pane" data-pane="1">
@@ -545,7 +407,7 @@ h2 em, h1 em { font-style: normal; color: var(--lime); }
       <div class="row"><span>Web</span><span class="ok">198</span></div>
       <div class="row"><span>Taquilla</span><span>74</span></div>
       <div class="row"><span>Cortesías</span><span>14</span></div>
-      <div class="row"><span>Asistentes para exportar</span><span class="ok">272</span></div>
+      <div class="row"><span>Ventas exportables a CSV</span><span class="ok">✓</span></div>
     </div>
   </div>
 </section>
@@ -810,8 +672,8 @@ tabs.forEach(t=>t.addEventListener('click',()=>{ tabs.forEach(x=>x.setAttribute(
   g.addEventListener('click',e=>{ const b=e.target.closest('.palco'); if(!b) return; const p=+b.dataset.p; sold.has(p)?sold.delete(p):sold.add(p); pr(); });
   pr(); })();
 // Plataforma: módulos
-(function(){ const A=document.querySelector('[data-app]'); if(!A) return; const bs=[...A.querySelectorAll('.side button')], vs=[...A.querySelectorAll('.mod')];
-  A.querySelector('.side').addEventListener('click',e=>{ const b=e.target.closest('button[data-m]'); if(!b) return; bs.forEach(x=>x.setAttribute('aria-pressed',String(x===b))); vs.forEach(v=>v.classList.toggle('on',v.dataset.v===b.dataset.m)); }); })();
+(function(){ const A=document.querySelector('[data-app]'); if(!A) return; const bs=[...A.querySelectorAll('.side2 button')], vs=[...A.querySelectorAll('.shot')];
+  A.querySelector('.side2').addEventListener('click',e=>{ const b=e.target.closest('button[data-m]'); if(!b) return; bs.forEach(x=>x.setAttribute('aria-pressed',String(x===b))); vs.forEach(v=>v.classList.toggle('on',v.dataset.v===b.dataset.m)); }); })();
 
 // Precio: escala y calculadora
 (function(){ const C=document.querySelector('[data-calc]'); if(!C) return; const sc=[...document.querySelectorAll('.scale button')];
