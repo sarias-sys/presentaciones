@@ -1,0 +1,531 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Bailando · Boletería, puerta y caja</title>
+<link rel="icon" href="../assets/isotipo-desarrollando.png">
+<style>
+@font-face { font-family: 'Jakarta'; font-weight: 400; font-display: swap; src: url('../assets/fonts/plus-jakarta-sans-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Jakarta'; font-weight: 500; font-display: swap; src: url('../assets/fonts/plus-jakarta-sans-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Jakarta'; font-weight: 600; font-display: swap; src: url('../assets/fonts/plus-jakarta-sans-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Jakarta'; font-weight: 700; font-display: swap; src: url('../assets/fonts/plus-jakarta-sans-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Jakarta'; font-weight: 800; font-display: swap; src: url('../assets/fonts/plus-jakarta-sans-latin-800-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Mono'; font-weight: 400; font-display: swap; src: url('../assets/fonts/space-mono-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Mono'; font-weight: 700; font-display: swap; src: url('../assets/fonts/space-mono-latin-700-normal.woff2') format('woff2'); }
+:root { --bg:#070707; --s1:#111112; --s2:#18181a; --line:#2a2a2d; --lime:#CAFF42; --lime2:#B6F01F; --tx:#F5F5F5; --mut:#B8B8BC; --mut2:#9C9CA2; --red:#FF6B6B; }
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { background: #000; overflow: hidden; font-family: Jakarta, system-ui, sans-serif; color: var(--tx); }
+button { font-family: inherit; }
+.vstage { position: fixed; inset: 0 0 60px 0; overflow: hidden; }
+.deck { position: absolute; left: 50%; top: 50%; width: 1280px; height: 720px; transform-origin: center center; }
+.deck > section { position: absolute; inset: 0; background: var(--bg); padding: 44px 64px 0; opacity: 0; visibility: hidden; transition: opacity .35s ease; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+.deck > section.on { opacity: 1; visibility: visible; }
+@media (prefers-reduced-motion: reduce) { .deck > section, .flip .in { transition: none !important; } }
+.beam { position: absolute; width: 140px; height: 1400px; top: -340px; background: var(--lime); opacity: .06; transform: rotate(24deg); pointer-events: none; }
+.top { position: relative; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-weight: 800; font-size: 24px; letter-spacing: -.04em; color: var(--lime); }
+.mono { font-family: Mono, ui-monospace, monospace; }
+.top .mono { font-size: 12px; letter-spacing: .1em; color: var(--mut); text-transform: uppercase; }
+h1, h2, h3 { margin: 0; letter-spacing: -.03em; }
+h2 { font-size: 46px; line-height: 1.02; font-weight: 800; margin-top: 22px; position: relative; }
+h2 em, h1 em { font-style: normal; color: var(--lime); }
+.lead { font-size: 17px; line-height: 1.5; color: var(--mut); margin: 12px 0 0; max-width: 820px; position: relative; }
+.kick { font-family: Mono, monospace; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--lime); }
+.demo-tag { display: inline-flex; align-items: center; gap: 6px; font-family: Mono, monospace; font-size: 12px; color: var(--bg); background: var(--lime); padding: 4px 10px; border-radius: 6px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.note { font-size: 12px; color: var(--mut2); }
+.ft { position: absolute; left: 64px; right: 64px; bottom: 20px; display: flex; justify-content: space-between; font-size: 12px; color: var(--mut2); }
+/* Portada */
+.cover h1 { font-size: 104px; line-height: .93; font-weight: 800; margin-top: 26px; }
+.chip { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--bg); background: var(--lime); padding: 7px 12px; border-radius: 6px; margin-top: 40px; }
+.cover .lead { max-width: 560px; font-size: 19px; color: #D2D2D6; }
+.cover .lead b { color: #fff; }
+.pills { display: flex; gap: 8px; margin-top: 24px; flex-wrap: wrap; }
+.pills span { border: 1px solid #3a3a3e; border-radius: 999px; padding: 8px 14px; font-size: 13px; font-weight: 600; }
+.cover .mock { position: absolute; right: -30px; top: 170px; width: 700px; }
+/* Dolores */
+.flips { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 14px; margin-top: 30px; }
+.flip { all: unset; cursor: pointer; height: 330px; perspective: 1200px; display: block; border-radius: 16px; }
+.flip:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+.flip .in { position: relative; width: 100%; height: 100%; transition: transform .5s ease; transform-style: preserve-3d; }
+.flip.on .in { transform: rotateY(180deg); }
+.flip .f, .flip .b { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 16px; padding: 22px 20px; display: flex; flex-direction: column; gap: 12px; }
+.flip .f { background: var(--s1); border: 1px solid var(--line); }
+.flip .b { background: var(--lime); color: var(--bg); transform: rotateY(180deg); }
+.flip .ic { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: #222; }
+.flip .b .ic { background: rgba(7,7,7,.12); }
+.flip .f p { margin: 0; font-size: 17px; line-height: 1.35; font-weight: 600; color: #E4E4E8; }
+.flip .f .tap { margin-top: auto; font-size: 12px; color: var(--mut2); font-family: Mono, monospace; }
+.flip .b h3 { font-size: 20px; line-height: 1.15; }
+.flip .b p { margin: 0; font-size: 14px; line-height: 1.45; font-weight: 500; }
+.btn { border: 0; border-radius: 999px; padding: 11px 18px; font-weight: 700; font-size: 14px; cursor: pointer; background: var(--lime); color: var(--bg); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+.btn.ghost { background: transparent; color: var(--tx); border: 1px solid #3a3a3e; }
+.btn:hover { filter: brightness(1.08); }
+.btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.btn[disabled] { opacity: .35; cursor: not-allowed; filter: none; }
+/* Noche */
+.tabs { display: flex; gap: 8px; margin-top: 24px; }
+.tabs button { border: 1px solid var(--line); background: var(--s1); color: var(--tx); border-radius: 999px; padding: 10px 22px; font-weight: 700; font-size: 15px; cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--lime); color: var(--bg); border-color: var(--lime); }
+.tabs button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.pane { display: none; grid-template-columns: 1fr 300px; gap: 48px; margin-top: 20px; align-items: start; }
+.pane.on { display: grid; }
+.pane ul { list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-direction: column; gap: 28px; }
+.pane li { display: grid; grid-template-columns: 30px 1fr; gap: 14px; font-size: 18px; line-height: 1.45; color: #D9D9DD; }
+.pane li b { color: #fff; display: block; font-size: 21px; margin-bottom: 2px; }
+.pane li i { font-style: normal; width: 28px; height: 28px; border-radius: 50%; background: var(--lime); color: var(--bg); display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+.phone { width: 300px; height: 452px; border-radius: 36px; background: #0d0d0e; border: 8px solid #26262a; padding: 18px 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 30px 70px rgba(0,0,0,.6), 0 0 0 1px #333 inset; position: relative; }
+.phone .ph { font-size: 12px; color: var(--mut2); display: flex; justify-content: space-between; font-family: Mono, monospace; }
+.phone h4 { margin: 4px 0 0; font-size: 18px; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: var(--s2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font-size: 13px; }
+.row .ok { color: var(--lime); font-weight: 800; }
+.row.cur { border-color: var(--lime); }
+.big { font-size: 34px; font-weight: 800; letter-spacing: -.03em; }
+/* Cupo */
+.split { display: grid; grid-template-columns: 1fr 560px; gap: 48px; margin-top: 40px; align-items: start; }
+.split ul { list-style: none; margin: 26px 0 0; padding: 0; display: flex; flex-direction: column; gap: 20px; }
+.split li { font-size: 18px; line-height: 1.45; color: #D9D9DD; padding-left: 26px; position: relative; }
+.split li::before { content: ''; position: absolute; left: 0; top: 7px; width: 12px; height: 12px; border-radius: 3px; background: var(--lime); }
+.panel { background: var(--s1); border: 1px solid var(--line); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 20px; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.stat { background: var(--s2); border: 1px solid var(--line); border-radius: 14px; padding: 18px 16px; }
+.stat span { display: block; font-size: 12px; color: var(--mut); font-weight: 600; }
+.stat b { font-size: 52px; font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.bar { height: 20px; border-radius: 999px; background: #232326; overflow: hidden; display: flex; }
+.bar i { display: block; height: 100%; transition: width .25s; }
+.bar .w { background: var(--lime); } .bar .t { background: #7DD3FC; }
+.legend { display: flex; gap: 16px; font-size: 12px; color: var(--mut); }
+.legend span::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+.acts { display: flex; gap: 10px; flex-wrap: wrap; }
+.msg { min-height: 44px; border-radius: 12px; padding: 12px 14px; font-size: 14px; font-weight: 600; background: var(--s2); border: 1px solid var(--line); color: var(--mut); }
+.msg.full { background: rgba(255,107,107,.12); border-color: rgba(255,107,107,.5); color: #FFB3B3; }
+/* Puerta */
+.scanwrap { display: grid; grid-template-columns: 300px 1fr; gap: 26px; align-items: start; }
+.sw { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; font-weight: 700; user-select: none; }
+.sw input { position: absolute; opacity: 0; }
+.sw .tr { width: 44px; height: 26px; border-radius: 999px; background: #34343a; position: relative; transition: background .2s; }
+.sw .tr::after { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .2s; }
+.sw input:checked + .tr { background: var(--red); }
+.sw input:checked + .tr::after { transform: translateX(18px); }
+.sw input:focus-visible + .tr { outline: 2px solid #fff; outline-offset: 2px; }
+.res { border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 6px; min-height: 200px; justify-content: center; background: var(--s2); border: 1px solid var(--line); }
+.res.okk { background: rgba(202,255,66,.12); border-color: var(--lime); }
+.res.dup { background: rgba(255,107,107,.12); border-color: var(--red); }
+.res .t { font-size: 26px; font-weight: 800; }
+.res .okk-t { color: var(--lime); } .res .dup-t { color: #FFB3B3; }
+.res small { color: var(--mut); font-size: 13px; }
+.qrs { display: flex; flex-direction: column; gap: 12px; }
+.qr { all: unset; cursor: pointer; display: flex; align-items: center; gap: 12px; background: var(--s2); border: 1px solid var(--line); border-radius: 12px; padding: 16px 14px; font-size: 15px; }
+.qr:hover { border-color: #55555b; } .qr:focus-visible { outline: 2px solid var(--lime); }
+.qr .q { width: 34px; height: 34px; border-radius: 6px; background: repeating-linear-gradient(90deg,#fff 0 4px,#111 4px 7px), #fff; flex: 0 0 34px; box-shadow: inset 0 0 0 3px #fff; }
+.qr .st { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--mut2); }
+.qr .st.in { color: var(--lime); }
+.sync { font-size: 13px; font-weight: 600; padding: 10px 12px; border-radius: 10px; background: var(--s2); border: 1px solid var(--line); }
+.sync.off { color: #FFB3B3; border-color: rgba(255,107,107,.5); }
+.sync.on { color: var(--lime); }
+/* Etapas */
+.eta { display: flex; flex-direction: column; gap: 8px; }
+.eta .row { padding: 16px; font-size: 15px; }
+.eta .row.cur { background: rgba(202,255,66,.1); }
+.eta .row .p { font-weight: 800; font-variant-numeric: tabular-nums; }
+.rng { width: 100%; accent-color: var(--lime); height: 28px; }
+.palcos { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; }
+.palco { all: unset; cursor: pointer; text-align: center; border-radius: 10px; padding: 19px 0; font-weight: 800; font-size: 14px; background: var(--s2); border: 1px solid var(--line); }
+.palco:focus-visible { outline: 2px solid var(--lime); }
+.palco.v { background: var(--lime); color: var(--bg); border-color: var(--lime); }
+.palco small { display: block; font-weight: 600; font-size: 11px; color: inherit; opacity: .75; }
+/* Pilares */
+.g3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; margin-top: 40px; }
+.pil { background: var(--s1); border: 1px solid var(--line); border-radius: 20px; padding: 32px 28px; display: flex; flex-direction: column; gap: 14px; min-height: 300px; }
+.pil .n { font-family: Mono, monospace; font-weight: 700; color: var(--lime); font-size: 13px; }
+.pil h3 { font-size: 34px; line-height: 1.05; }
+.pil p { margin: 0; font-size: 17px; line-height: 1.5; color: var(--mut); }
+.strip { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+.strip span { background: var(--s2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 14px; color: #D9D9DD; }
+.strip b { color: #fff; }
+/* Funciones */
+.g9 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 34px; }
+.fn { background: var(--s1); border: 1px solid var(--line); border-radius: 14px; padding: 24px 22px; display: grid; grid-template-columns: 28px 1fr; gap: 4px 14px; }
+.fn svg { grid-row: span 2; margin-top: 2px; }
+.fn b { font-size: 18px; }
+.fn span { font-size: 14px; line-height: 1.4; color: var(--mut); }
+.roles { margin-top: 24px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 13px; color: var(--mut); }
+.roles span { border: 1px solid #3a3a3e; border-radius: 999px; padding: 6px 12px; color: var(--tx); font-weight: 600; }
+/* Pasos */
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; margin-top: 44px; }
+.step { background: var(--s1); border: 1px solid var(--line); border-radius: 20px; padding: 34px 30px; min-height: 290px; }
+.step i { font-style: normal; width: 44px; height: 44px; border-radius: 50%; background: var(--lime); color: var(--bg); display: grid; place-items: center; font-weight: 800; font-size: 20px; }
+.step b { display: block; font-size: 28px; margin: 26px 0 10px; letter-spacing: -.02em; }
+.step p { margin: 0; font-size: 17px; line-height: 1.5; color: var(--mut); }
+.call { margin-top: 22px; border: 1px dashed #4a4a50; border-radius: 16px; padding: 18px 22px; font-size: 15px; line-height: 1.5; color: #D9D9DD; display: flex; gap: 16px; align-items: center; }
+.call b { color: var(--lime); }
+/* Cierre */
+.close-c { display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: center; margin-top: 110px; }
+.close-c h2 { font-size: 88px; line-height: .95; margin-top: 0; }
+.close-c .acts { margin-top: 30px; }
+.qrbox { background: var(--lime); border-radius: 24px; padding: 22px; display: flex; flex-direction: column; align-items: center; gap: 12px; color: var(--bg); }
+.qrbox img { width: 260px; height: 260px; border-radius: 8px; }
+.qrbox b { font-family: Mono, monospace; font-size: 13px; letter-spacing: .1em; }
+/* Barra */
+.vbar { position: fixed; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 10px; padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); color: #D9D9DD; font-size: 13px; background: #0b0b0c; border-top: 1px solid #222; z-index: 5; }
+.nb { border: 0; background: rgba(255,255,255,.12); color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 18px; }
+.nb:hover { background: rgba(255,255,255,.22); }
+.nb:focus-visible, .idx:focus-visible, .menu button:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
+.cnt { font-variant-numeric: tabular-nums; min-width: 64px; text-align: center; }
+.vsp { flex: 1; } .hint { opacity: .7; }
+.idx { border: 0; background: rgba(255,255,255,.12); color: #fff; height: 40px; padding: 0 16px; border-radius: 20px; cursor: pointer; font: 600 13px Jakarta, sans-serif; }
+.prog { position: fixed; left: 0; top: 0; height: 3px; background: var(--lime); z-index: 6; transition: width .3s; }
+.menu { position: fixed; inset: 0; background: rgba(7,7,7,.95); z-index: 10; display: none; overflow: auto; padding: 40px 16px; }
+.menu.open { display: block; }
+.menu h3 { color: #fff; font-size: 20px; margin: 0 auto 16px; max-width: 760px; }
+.menu ol { list-style: none; margin: 0 auto; padding: 0; max-width: 760px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 6px 20px; }
+.menu button { width: 100%; text-align: left; border: 0; background: transparent; color: #D9D9DD; font: 500 14px Jakarta, sans-serif; padding: 9px 10px; border-radius: 8px; cursor: pointer; display: flex; gap: 10px; }
+.menu button:hover, .menu button[aria-current="true"] { background: rgba(255,255,255,.1); color: #fff; }
+.menu button span { color: var(--mut2); min-width: 22px; }
+.rot { display: none; position: fixed; top: 14px; left: 0; right: 0; text-align: center; color: var(--mut); font: 500 13px Jakarta, sans-serif; padding: 0 16px; z-index: 4; }
+@media (orientation: portrait) and (max-width: 640px) { .rot { display: block; } .hint { display: none; } .menu ol { grid-template-columns: minmax(0,1fr); } }
+</style></head><body>
+<div class="prog"></div><p class="rot">Gira el teléfono para ver la presentación más grande</p>
+<main class="vstage"><div class="deck">
+
+<section class="cover">
+  <div class="beam" style="left:520px"></div><div class="beam" style="left:760px;width:60px;opacity:.04"></div>
+  <div class="top"><span class="logo">Bailando</span><span class="mono">Boletería · Colombia</span></div>
+  <span class="chip">Para discotecas, bares y organizadores de eventos</span>
+  <h1>Tu noche.<br>Tu marca.<br><em>Tu plata.</em></h1>
+  <p class="lead">Boletería, puerta y caja en un solo sistema. Vendes en línea y en taquilla, controlas el ingreso desde el celular y la plata de tus boletas entra a <b>la cuenta de tu negocio</b>.</p>
+  <div class="pills"><span>Sin tarjeta</span><span>Sin llamada previa</span><span>Modo prueba sin cobros reales</span></div>
+  <img class="mock" src="../assets/bailando/mockup-bailando.webp" alt="La página de Bailando abierta en un portátil">
+  <div class="ft"><span>Un producto de DesarrollAndo</span><span>bailando.desarrollandoando.com</span></div>
+</section>
+
+<section>
+  <div class="top"><span class="logo">Bailando</span><span class="mono">El problema</span></div>
+  <h2>¿Te ha pasado <em>un viernes</em> a las 11 p. m.?</h2>
+  <p class="lead">Toca cada tarjeta para ver cómo lo resuelve Bailando.</p>
+  <div class="flips">
+    <button type="button" class="flip" aria-pressed="false"><div class="in">
+      <div class="f"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF8A8A" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span><p>Se vendieron más boletas que cupos y la puerta se volvió un problema.</p><span class="tap">Toca para ver la solución →</span></div>
+      <div class="b"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#070707" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span><h3>Un solo cupo</h3><p>La web y la taquilla venden del mismo cupo. Cada boleta se descuenta en el momento en que se vende.</p></div>
+    </div></button>
+    <button type="button" class="flip" aria-pressed="false"><div class="in">
+      <div class="f"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF8A8A" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span><p>Se cayó la señal en la entrada y la fila dejó de avanzar.</p><span class="tap">Toca para ver la solución →</span></div>
+      <div class="b"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#070707" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span><h3>Puerta sin señal</h3><p>El escáner valida en el celular aunque no haya internet y sube todo cuando vuelve.</p></div>
+    </div></button>
+    <button type="button" class="flip" aria-pressed="false"><div class="in">
+      <div class="f"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF8A8A" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span><p>La plata de tus boletas pasa primero por la cuenta de otro.</p><span class="tap">Toca para ver la solución →</span></div>
+      <div class="b"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#070707" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span><h3>Tu plata, en tu cuenta</h3><p>Con Wompi, lo que pagan por las boletas entra a la cuenta de tu negocio.</p></div>
+    </div></button>
+    <button type="button" class="flip" aria-pressed="false"><div class="in">
+      <div class="f"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF8A8A" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span><p>En la boleta se ve más la ticketera que tu discoteca.</p><span class="tap">Toca para ver la solución →</span></div>
+      <div class="b"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#070707" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span><h3>Tu marca adelante</h3><p>Nosotros no aparecemos en la boleta: la noche es tuya.</p></div>
+    </div></button>
+    <button type="button" class="flip" aria-pressed="false"><div class="in">
+      <div class="f"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF8A8A" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span><p>Los datos de quienes van a tus eventos se quedan en otro lado.</p><span class="tap">Toca para ver la solución →</span></div>
+      <div class="b"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#070707" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span><h3>Tus clientes son tuyos</h3><p>La base de asistentes es de tu negocio y la exportas cuando quieras.</p></div>
+    </div></button>
+  </div>
+  <div style="margin-top:22px"><button type="button" class="btn ghost" data-flipall>Ver todas las soluciones</button></div>
+</section>
+
+<section>
+  <div class="top"><span class="logo">Bailando</span><span class="mono">Cómo se vive</span></div>
+  <h2>Una noche con <em>Bailando</em></h2>
+  <div class="tabs" role="tablist" aria-label="Momentos de la noche">
+    <button type="button" role="tab" aria-selected="true" data-tab="0">Antes</button>
+    <button type="button" role="tab" aria-selected="false" data-tab="1">Durante</button>
+    <button type="button" role="tab" aria-selected="false" data-tab="2">Después</button>
+  </div>
+  <div class="pane on" data-pane="0">
+    <ul>
+      <li><i>1</i><div><b>Armas el evento por pasos</b>La noche, artista y música, imágenes, boletas, palcos, cobro y publicación.</div></li>
+      <li><i>2</i><div><b>Defines etapas de precio</b>Preventa y general, cada una por fecha o por cantidad, y palcos numerados uno por uno.</div></li>
+      <li><i>3</i><div><b>Publicas y vendes</b>Tu evento queda en su página pública. El comprador paga y le llega la boleta con QR al correo.</div></li>
+    </ul>
+    <div class="phone" aria-label="Pantalla de ejemplo: crear evento">
+      <div class="ph"><span>Panel</span><span>Nuevo evento</span></div>
+      <h4>Crear evento</h4>
+      <div class="row"><span>1. La noche</span><span class="ok">✓</span></div>
+      <div class="row"><span>2. Artista y música</span><span class="ok">✓</span></div>
+      <div class="row"><span>3. Imágenes</span><span class="ok">✓</span></div>
+      <div class="row cur"><span>4. Boletas y etapas</span><span class="note">En curso</span></div>
+      <div class="row"><span>5. Palcos</span><span class="note">—</span></div>
+      <div class="row"><span>6. Cobro</span><span class="note">—</span></div>
+      <div class="row"><span>7. Publicar</span><span class="note">—</span></div>
+    </div>
+  </div>
+  <div class="pane" data-pane="1">
+    <ul>
+      <li><i>1</i><div><b>La puerta escanea desde el celular</b>Quien tiene el rol de puerta entra directo al escáner. Funciona aunque se caiga el internet.</div></li>
+      <li><i>2</i><div><b>La taquilla vende del mismo cupo</b>En efectivo o datáfono, contra el mismo cupo de la web.</div></li>
+      <li><i>3</i><div><b>Cortesías con control</b>Las emites desde el panel y entran por la misma puerta.</div></li>
+    </ul>
+    <div class="phone" aria-label="Pantalla de ejemplo: escáner de puerta">
+      <div class="ph"><span>Puerta</span><span>Sin señal</span></div>
+      <h4>Escáner</h4>
+      <div class="res okk" style="min-height:150px"><span class="t okk-t">Puede entrar</span><span style="font-weight:700">Laura G.</span><small>Documento ••• 4821 · General</small></div>
+      <div class="row"><span>Ingresos esta noche</span><span class="ok">212</span></div>
+      <div class="row"><span>Guardados en el celular</span><span>3</span></div>
+      <p class="note" style="margin:auto 0 0">El portero ve nombre y documento, nunca dinero.</p>
+    </div>
+  </div>
+  <div class="pane" data-pane="2">
+    <ul>
+      <li><i>1</i><div><b>Revisas el tablero de la noche</b>Lo vendido en la web, en taquilla y las cortesías, en un solo lugar.</div></li>
+      <li><i>2</i><div><b>Sacas tus informes</b>Ves cómo se movió cada etapa de precio.</div></li>
+      <li><i>3</i><div><b>Exportas tu base de asistentes</b>Es de tu negocio, para invitarlos al próximo evento.</div></li>
+    </ul>
+    <div class="phone" aria-label="Pantalla de ejemplo: tablero">
+      <div class="ph"><span>Tablero</span><span>Datos de ejemplo</span></div>
+      <h4>Sábado 15 de noviembre</h4>
+      <div class="row" style="flex-direction:column;align-items:flex-start;gap:2px"><span class="note">Boletas vendidas</span><span class="big">286</span></div>
+      <div class="row"><span>Web</span><span class="ok">198</span></div>
+      <div class="row"><span>Taquilla</span><span>74</span></div>
+      <div class="row"><span>Cortesías</span><span>14</span></div>
+      <div class="row"><span>Asistentes para exportar</span><span class="ok">272</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="top"><span class="logo">Bailando</span><span class="demo-tag">Pruébalo</span></div>
+  <h2>Un solo cupo para la <em>web</em> y la <em>taquilla</em></h2>
+  <div class="split">
+    <div>
+      <p class="lead" style="margin-top:0">Vende de los dos lados y mira cómo se descuenta del mismo cupo.</p>
+      <ul>
+        <li>Cada boleta se descuenta en el momento en que se vende, venga de la web o de la taquilla.</li>
+        <li>Mientras el comprador paga en línea, sus boletas quedan apartadas cinco minutos.</li>
+        <li>Cuando se acaba el cupo, se acaba para todos: no hay dos listas que cuadrar a medianoche.</li>
+      </ul>
+    </div>
+    <div class="panel" data-cupo>
+      <div class="stats">
+        <div class="stat"><span>Vendidas en la web</span><b data-o="w">0</b></div>
+        <div class="stat"><span>Vendidas en taquilla</span><b data-o="t">0</b></div>
+        <div class="stat"><span>Disponibles</span><b data-o="d">40</b></div>
+      </div>
+      <div class="bar" aria-hidden="true"><i class="w" data-o="bw" style="width:0"></i><i class="t" data-o="bt" style="width:0"></i></div>
+      <div class="legend"><span style="--c:var(--lime)">Web</span><span style="--c:#7DD3FC">Taquilla</span><span style="--c:#232326">Disponible</span></div>
+      <div class="acts">
+        <button type="button" class="btn" data-a="w">Vender 2 en la web</button>
+        <button type="button" class="btn" data-a="t" style="background:#7DD3FC">Vender 1 en taquilla</button>
+        <button type="button" class="btn ghost" data-a="r">Reiniciar</button>
+      </div>
+      <div class="msg" data-o="m" aria-live="polite">Cupo de ejemplo: 40 boletas.</div>
+    </div>
+  </div>
+  <div class="ft"><span>Demostración ilustrativa con un cupo de ejemplo</span><span>bailando.desarrollandoando.com</span></div>
+</section>
+
+<section>
+  <div class="top"><span class="logo">Bailando</span><span class="demo-tag">Pruébalo</span></div>
+  <h2>La puerta sigue andando <em>aunque no haya señal</em></h2>
+  <div class="split" style="grid-template-columns:1fr 640px">
+    <div>
+      <p class="lead" style="margin-top:0">Apaga la señal y escanea boletas. Después escanea una que ya entró.</p>
+      <ul>
+        <li>El escáner valida contra la lista guardada en el celular.</li>
+        <li>Los ingresos se suben solos cuando vuelve el internet.</li>
+        <li>Una boleta que ya entró no vuelve a entrar.</li>
+        <li>El portero ve nombre y documento, nunca dinero.</li>
+      </ul>
+    </div>
+    <div class="panel" data-puerta>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <b>Escáner de puerta</b>
+        <label class="sw"><input type="checkbox" data-off><span class="tr"></span><span data-o="lbl">Con internet</span></label>
+      </div>
+      <div class="scanwrap">
+        <div class="qrs" role="group" aria-label="Boletas de ejemplo para escanear">
+          <button type="button" class="qr" data-k="0"><span class="q"></span><span>Laura G. · General</span><span class="st" data-st>Sin usar</span></button>
+          <button type="button" class="qr" data-k="1"><span class="q"></span><span>Andrés M. · Preventa</span><span class="st" data-st>Sin usar</span></button>
+          <button type="button" class="qr" data-k="2"><span class="q"></span><span>Valentina R. · Palco 3</span><span class="st" data-st>Sin usar</span></button>
+          <button type="button" class="qr" data-k="3"><span class="q"></span><span>Camilo T. · Cortesía</span><span class="st" data-st>Sin usar</span></button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="res" data-o="res" aria-live="polite"><span class="t">Toca una boleta</span><small>para escanearla</small></div>
+          <div class="sync on" data-o="sync">Todo sincronizado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ft"><span>Demostración ilustrativa con nombres de ejemplo</span><span>bailando.desarrollandoando.com</span></div>
+</section>
+
+<section>
+  <div class="top"><span class="logo">Bailando</span><span class="demo-tag">Pruébalo</span></div>
+  <h2>Etapas de precio y <em>palcos numerados</em></h2>
+  <div class="split" style="grid-template-columns:1fr 1fr;gap:28px">
+    <div class="panel">
+      <b>Etapas por cantidad</b>
+      <label for="rng" class="note">Mueve la venta y mira qué precio está activo</label>
+      <input id="rng" class="rng" type="range" min="0" max="300" value="40" data-rng>
+      <div class="eta" data-eta>
+        <div class="row"><span>Preventa 1 · primeras 100</span><span class="p">20.000</span></div>
+        <div class="row"><span>Preventa 2 · de 101 a 200</span><span class="p">30.000</span></div>
+        <div class="row"><span>General · de 201 a 300</span><span class="p">40.000</span></div>
+      </div>
+      <div class="msg" data-o="eta" aria-live="polite"></div>
+    </div>
+    <div class="panel">
+      <b>Palcos numerados uno por uno</b>
+      <span class="note">Toca un palco para venderlo o liberarlo</span>
+      <div class="palcos" data-palcos></div>
+      <div class="msg" data-o="pal" aria-live="polite"></div>
+    </div>
+  </div>
+  <div class="ft"><span>Precios en COP de ejemplo · las etapas también pueden ir por fecha</span><span>bailando.desarrollandoando.com</span></div>
+</section>
+
+<section>
+  <div class="beam" style="left:980px"></div>
+  <div class="top"><span class="logo">Bailando</span><span class="mono">Lo que es tuyo</span></div>
+  <h2>Tu plata, tu marca y tus clientes <em>se quedan contigo</em></h2>
+  <div class="g3">
+    <div class="pil"><span class="n">01 · TU PLATA</span><h3>Entra a la cuenta de tu negocio</h3><p>Conectas tu comercio de Wompi y lo que pagan por las boletas entra a tu cuenta.</p></div>
+    <div class="pil"><span class="n">02 · TU MARCA</span><h3>La noche lleva tu nombre</h3><p>Tu página, tus eventos y tu boleta. Nosotros no aparecemos en la boleta.</p></div>
+    <div class="pil"><span class="n">03 · TUS CLIENTES</span><h3>La base de asistentes es tuya</h3><p>La exportas cuando quieras para invitarlos a tu próximo evento.</p></div>
+  </div>
+  <div class="strip"><span><b>Taquilla</b> en efectivo o datáfono</span><span><b>Cortesías</b> desde el panel</span><span><b>Varias sedes</b> en una cuenta</span><span><b>Usuarios por rol</b> para tu equipo</span></div>
+</section>
+
+<section>
+  <div class="top"><span class="logo">Bailando</span><span class="mono">Todo incluido</span></div>
+  <h2>Todo lo de tu noche, <em>en un solo lugar</em></h2>
+  <div class="g9">
+    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg><b>Eventos por pasos</b><span>Fecha, artista, imágenes, boletas y cobro, en orden.</span></div>
+    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg><b>Etapas de precio</b><span>Preventa y general, por fecha o por cantidad.</span></div>
+    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><b>Palcos numerados</b><span>Cada palco, uno por uno, con su precio.</span></div>
+    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM14 20h.01M17 20h4v-3M20 14h1"/></svg><b>Boleta con QR</b><span>Le llega al correo al comprador, con código corto.</span></div>
+    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 012-2h2M17 3h2a2 2 0 012 2v2M21 17v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2M7 12h10"/></svg><b>Puerta sin señal</b><span>Escáner en el celular que valida sin internet.</span></div>
+    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h4"/></svg><b>Taquilla</b><span>Efectivo o datáfono, contra el mismo cupo.</span></div>
+    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v9h14v-9M12 8v13"/><path d="M12 8C10 4 6 4 6 6.5S12 8 12 8zM12 8c2-4 6-4 6-1.5S12 8 12 8z"/></svg><b>Cortesías</b><span>Las emites desde el panel, con el mismo control.</span></div>
+    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M2 20h20"/></svg><b>Tablero e informes</b><span>Ves cómo va la venta de cada evento.</span></div>
+    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h11a3 3 0 013 3v15H8a3 3 0 01-3-3z"/><path d="M9 8h6M9 12h5"/></svg><b>Carta digital</b><span>Tu carta en la página de tu negocio.</span></div>
+  </div>
+  <div class="roles">Roles para tu equipo: <span>Dueño</span><span>Administrador</span><span>Gerente</span><span>Puerta</span><span>Solo lectura</span></div>
+</section>
+
+<section>
+  <div class="top"><span class="logo">Bailando</span><span class="mono">Cómo empiezas</span></div>
+  <h2>Arrancas hoy <em>en 3 pasos</em></h2>
+  <div class="steps">
+    <div class="step"><i>1</i><b>Crea tu cuenta</b><p>Sin tarjeta y sin llamada previa. Configuras tu negocio, tu logo y tus sedes.</p></div>
+    <div class="step"><i>2</i><b>Conecta tu cobro</b><p>Pegas las llaves de tu comercio en Wompi y pruebas la conexión desde el panel.</p></div>
+    <div class="step"><i>3</i><b>Publica y vende</b><p>Armas tu evento, lo publicas y vendes por tu página y en la taquilla.</p></div>
+  </div>
+  <div class="call"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:0 0 28px"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><span><b>¿Quieres conocerlo antes?</b> Recorre todo en modo prueba, con tarjeta de prueba y sin cobros reales. Y si prefieres, alguien del equipo te acompaña a montar tu primer evento.</span></div>
+</section>
+
+<section>
+  <div class="beam" style="left:420px"></div><div class="beam" style="left:700px;width:60px;opacity:.04"></div>
+  <div class="top"><span class="logo">Bailando</span><span class="mono">Hablemos</span></div>
+  <div class="close-c">
+    <div style="position:relative">
+      <h2>¿Ponemos a bailar <em>tu casa?</em></h2>
+      <p class="lead" style="font-size:19px">Crea tu cuenta y arma tu próximo evento, o escríbenos y te acompañamos a montarlo.</p>
+      <div class="acts">
+        <a class="btn" href="https://bailando.desarrollandoando.com/registro?utm_source=presentacion&amp;utm_medium=github&amp;utm_campaign=bailando_registro" target="_blank" rel="noopener">Crear mi cuenta</a>
+        <a class="btn ghost" href="https://wa.me/573116057980" target="_blank" rel="noopener">WhatsApp +57 311 605 7980</a>
+        <a class="btn ghost" href="https://bailando.desarrollandoando.com/hablemos?utm_source=presentacion&amp;utm_medium=github" target="_blank" rel="noopener">Déjanos tus datos</a>
+      </div>
+    </div>
+    <div class="qrbox"><img src="../assets/bailando/qr-registro.png" alt="Código QR para crear tu cuenta en Bailando"><b>ESCANEA Y ENTRA</b></div>
+  </div>
+  <div class="ft"><span>Bailando es un producto de DesarrollAndo · Meta Business Partner</span><span>bailando.desarrollandoando.com</span></div>
+</section>
+
+</div></main>
+<nav class="vbar" aria-label="Navegación">
+  <button type="button" class="nb" data-prev aria-label="Anterior">‹</button><span class="cnt"></span><button type="button" class="nb" data-next aria-label="Siguiente">›</button>
+  <span class="vsp"></span><span class="hint">Avanza con las flechas del teclado o deslizando</span>
+  <button type="button" class="idx" data-idx>Índice</button>
+</nav>
+<div class="menu" role="dialog" aria-label="Índice"><h3>Índice</h3><ol>
+<li><button type="button" data-k="0"><span>1</span>Portada</button></li>
+<li><button type="button" data-k="1"><span>2</span>¿Te ha pasado?</button></li>
+<li><button type="button" data-k="2"><span>3</span>Una noche con Bailando</button></li>
+<li><button type="button" data-k="3"><span>4</span>Demo: un solo cupo</button></li>
+<li><button type="button" data-k="4"><span>5</span>Demo: puerta sin señal</button></li>
+<li><button type="button" data-k="5"><span>6</span>Demo: etapas y palcos</button></li>
+<li><button type="button" data-k="6"><span>7</span>Tu plata, tu marca, tus clientes</button></li>
+<li><button type="button" data-k="7"><span>8</span>Todo incluido</button></li>
+<li><button type="button" data-k="8"><span>9</span>Arrancas en 3 pasos</button></li>
+<li><button type="button" data-k="9"><span>10</span>Hablemos</button></li>
+</ol></div>
+<script>
+(function(){
+const deck=document.querySelector('.deck'), S=[...deck.children], n=S.length;
+const cnt=document.querySelector('.cnt'), prog=document.querySelector('.prog'), menu=document.querySelector('.menu');
+let i=0;
+function fit(){ const s=Math.min(innerWidth/1280,(innerHeight-60)/720); deck.style.transform='translate(-50%,-50%) scale('+s+')'; }
+function go(k){ i=Math.max(0,Math.min(n-1,k)); S.forEach((s,j)=>{ s.classList.toggle('on',j===i); s.setAttribute('aria-hidden',String(j!==i)); if('inert' in s) s.inert=(j!==i); });
+  cnt.textContent=(i+1)+' / '+n; prog.style.width=((i+1)/n*100)+'%';
+  menu.querySelectorAll('button[data-k]').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.k===i)));
+  try{ history.replaceState(null,'','#s'+(i+1)); }catch(e){} }
+document.querySelector('[data-prev]').onclick=()=>go(i-1);
+document.querySelector('[data-next]').onclick=()=>go(i+1);
+document.querySelector('[data-idx]').onclick=()=>menu.classList.add('open');
+menu.addEventListener('click',e=>{ const b=e.target.closest('button[data-k]'); if(b) go(+b.dataset.k); menu.classList.remove('open'); });
+addEventListener('keydown',e=>{ const t=e.target;
+  if(t.matches('input,textarea,select')) return;
+  if(e.key===' ' && t.closest('button,a,label')) return;
+  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(i+1);} else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(i-1);}
+  else if(e.key==='Home') go(0); else if(e.key==='End') go(n-1); else if(e.key==='Escape') menu.classList.remove('open'); });
+let x0=null; addEventListener('touchstart',e=>{ if(!e.target.matches('input,textarea,select')) x0=e.touches[0].clientX; },{passive:true});
+addEventListener('touchend',e=>{ if(x0===null) return; const d=e.changedTouches[0].clientX-x0; if(Math.abs(d)>50) go(i+(d<0?1:-1)); x0=null; });
+addEventListener('resize',fit); fit();
+const h=/^#s(\d+)$/.exec(location.hash); go(h?(+h[1]-1):0);
+
+// Tarjetas que voltean
+const flips=[...document.querySelectorAll('.flip')];
+flips.forEach(f=>f.addEventListener('click',()=>{ const on=!f.classList.contains('on'); f.classList.toggle('on',on); f.setAttribute('aria-pressed',String(on)); }));
+document.querySelector('[data-flipall]').addEventListener('click',e=>{ const all=!flips.every(f=>f.classList.contains('on')); flips.forEach(f=>{ f.classList.toggle('on',all); f.setAttribute('aria-pressed',String(all)); }); e.currentTarget.textContent=all?'Ver los problemas otra vez':'Ver todas las soluciones'; });
+
+// Pestañas de la noche
+const tabs=[...document.querySelectorAll('[data-tab]')], panes=[...document.querySelectorAll('[data-pane]')];
+tabs.forEach(t=>t.addEventListener('click',()=>{ tabs.forEach(x=>x.setAttribute('aria-selected',String(x===t))); panes.forEach(p=>p.classList.toggle('on',p.dataset.pane===t.dataset.tab)); }));
+
+// Demo: un solo cupo
+(function(){ const R=document.querySelector('[data-cupo]'), T=40; let w=0,t=0;
+  const o=k=>R.querySelector('[data-o="'+k+'"]'), bw=R.querySelector('[data-a="w"]'), bt=R.querySelector('[data-a="t"]');
+  function render(m){ const d=T-w-t; o('w').textContent=w; o('t').textContent=t; o('d').textContent=d;
+    o('bw').style.width=(w/T*100)+'%'; o('bt').style.width=(t/T*100)+'%';
+    bw.disabled=d<2; bt.disabled=d<1; const msg=o('m');
+    if(d===0){ msg.className='msg full'; msg.textContent='Agotado: ni la web ni la taquilla pueden vender más.'; }
+    else { msg.className='msg'; msg.textContent=m||('Cupo de ejemplo: '+T+' boletas.'); } }
+  R.addEventListener('click',e=>{ const b=e.target.closest('[data-a]'); if(!b) return; const a=b.dataset.a;
+    if(a==='w' && T-w-t>=2){ w+=2; render('Se vendieron 2 en la web: quedan '+(T-w-t)+' para todos.'); }
+    else if(a==='t' && T-w-t>=1){ t+=1; render('Se vendió 1 en taquilla: quedan '+(T-w-t)+' para todos.'); }
+    else if(a==='r'){ w=0; t=0; render(); } });
+  render(); })();
+
+// Demo: puerta sin señal
+(function(){ const R=document.querySelector('[data-puerta]'), off=R.querySelector('[data-off]'), res=R.querySelector('[data-o="res"]'), sync=R.querySelector('[data-o="sync"]'), lbl=R.querySelector('[data-o="lbl"]');
+  const names=['Laura G.','Andrés M.','Valentina R.','Camilo T.'], docs=['4821','1907','3355','7240'];
+  const used=[null,null,null,null]; let pend=0;
+  const hora=()=>new Date().toLocaleTimeString('es-CO',{hour:'numeric',minute:'2-digit'});
+  function renderSync(){ if(off.checked){ sync.className='sync off'; sync.textContent=pend? (pend+(pend===1?' ingreso guardado':' ingresos guardados')+' en el celular · se suben cuando vuelva la señal') : 'Sin señal · el escáner sigue validando'; }
+    else { sync.className='sync on'; sync.textContent='Todo sincronizado'; } }
+  off.addEventListener('change',()=>{ lbl.textContent=off.checked?'Sin señal':'Con internet'; if(!off.checked && pend){ pend=0; sync.className='sync on'; sync.textContent='Señal de vuelta: ingresos subidos ✓'; setTimeout(renderSync,1800); } else renderSync(); });
+  R.querySelectorAll('.qr').forEach(b=>b.addEventListener('click',()=>{ const k=+b.dataset.k, st=b.querySelector('[data-st]');
+    if(used[k]){ res.className='res dup'; res.innerHTML='<span class="t dup-t">Ya entró</span><span style="font-weight:700"></span><small></small>'; res.children[1].textContent=names[k]; res.children[2].textContent='Esta boleta se usó a las '+used[k]+'. No vuelve a entrar.'; return; }
+    used[k]=hora(); st.textContent='Entró'; st.classList.add('in'); if(off.checked) pend++;
+    res.className='res okk'; res.innerHTML='<span class="t okk-t">Puede entrar</span><span style="font-weight:700"></span><small></small>'; res.children[1].textContent=names[k]; res.children[2].textContent='Documento ••• '+docs[k]+(off.checked?' · validada sin señal':''); renderSync(); }));
+  renderSync(); })();
+
+// Demo: etapas y palcos
+(function(){ const r=document.querySelector('[data-rng]'), rows=[...document.querySelectorAll('[data-eta] .row')], out=document.querySelector('[data-o="eta"]'), P=[20000,30000,40000], N=['Preventa 1','Preventa 2','General'];
+  const cop=v=>v.toLocaleString('es-CO');
+  function render(){ const v=+r.value, k=v>=300?-1:Math.min(2,Math.floor(v/100)); rows.forEach((x,j)=>x.classList.toggle('cur',j===k));
+    out.className='msg'+(k<0?' full':''); out.textContent= k<0 ? '300 vendidas: evento agotado.' : v+' vendidas · la próxima boleta sale en '+N[k]+' a '+cop(P[k])+' COP.'; }
+  r.addEventListener('input',render); render();
+  const g=document.querySelector('[data-palcos]'), po=document.querySelector('[data-o="pal"]'), sold=new Set([2,5,9]);
+  for(let j=1;j<=12;j++){ const b=document.createElement('button'); b.type='button'; b.className='palco'; b.dataset.p=j; b.innerHTML='P'+j+'<small></small>'; g.appendChild(b); }
+  function pr(){ g.querySelectorAll('.palco').forEach(b=>{ const s=sold.has(+b.dataset.p); b.classList.toggle('v',s); b.setAttribute('aria-pressed',String(s)); b.querySelector('small').textContent=s?'Vendido':'350.000'; });
+    po.textContent=sold.size+' de 12 palcos vendidos · '+cop(sold.size*350000)+' COP en palcos.'; }
+  g.addEventListener('click',e=>{ const b=e.target.closest('.palco'); if(!b) return; const p=+b.dataset.p; sold.has(p)?sold.delete(p):sold.add(p); pr(); });
+  pr(); })();
+})();
+</script>
+</body></html>
