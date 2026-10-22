@@ -165,6 +165,84 @@ h2 em, h1 em { font-style: normal; color: var(--lime); }
 .qrbox { background: var(--lime); border-radius: 24px; padding: 22px; display: flex; flex-direction: column; align-items: center; gap: 12px; color: var(--bg); }
 .qrbox img { width: 260px; height: 260px; border-radius: 8px; }
 .qrbox b { font-family: Mono, monospace; font-size: 13px; letter-spacing: .1em; }
+/* Plataforma */
+.app { margin-top: 18px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--s1); height: 500px; display: flex; flex-direction: column; }
+.app-bar { display: flex; align-items: center; gap: 14px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: #0c0c0d; font-size: 13px; }
+.dots { display: flex; gap: 6px; } .dots i { width: 10px; height: 10px; border-radius: 50%; background: #333; display: block; }
+.app-url { color: var(--mut2); font-size: 12px; } .app-venue { margin-left: auto; font-weight: 700; }
+.app-body { flex: 1; display: grid; grid-template-columns: 250px 1fr; min-height: 0; }
+.side { border-right: 1px solid var(--line); padding: 10px; display: flex; flex-direction: column; gap: 2px; overflow: auto; }
+.side button { all: unset; cursor: pointer; padding: 6px 12px; border-radius: 8px; font-size: 13.5px; font-weight: 600; color: #CFCFD3; display: flex; align-items: center; gap: 8px; }
+.side button:hover { background: #1c1c1f; }
+.side button[aria-pressed="true"] { background: var(--lime); color: var(--bg); }
+.side button:focus-visible { outline: 2px solid var(--lime); outline-offset: 1px; }
+.soon { font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; background: #2b2b30; color: #E2E2E6; padding: 2px 6px; border-radius: 4px; }
+.side button[aria-pressed="true"] .soon { background: rgba(7,7,7,.15); color: var(--bg); }
+.main { padding: 22px 26px; position: relative; overflow: hidden; }
+.mod { display: none; flex-direction: column; gap: 16px; height: 100%; }
+.mod.on { display: flex; animation: fadein .25s ease; }
+@keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.mh { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.mh b { font-size: 24px; letter-spacing: -.02em; } .mh > span { color: var(--mut); font-size: 13px; }
+.pill-l { background: var(--lime); color: var(--bg) !important; font-weight: 700; padding: 6px 12px; border-radius: 999px; }
+.pill-r { background: rgba(255,107,107,.14); color: #FFB3B3 !important; font-weight: 700; padding: 6px 12px; border-radius: 999px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; }
+.kpis div { background: var(--s2); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.kpis span { display: block; font-size: 12px; color: var(--mut); font-weight: 600; } .kpis b { font-size: 34px; letter-spacing: -.03em; }
+.chart { flex: 1; display: flex; align-items: flex-end; gap: 10px; padding: 14px; background: var(--s2); border: 1px solid var(--line); border-radius: 12px; min-height: 0; }
+.chart i { flex: 1; background: linear-gradient(var(--lime), #8fb82a); border-radius: 6px 6px 2px 2px; display: block; }
+.tbl { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.tr { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 10px; padding: 12px 16px; font-size: 14px; border-top: 1px solid var(--line); background: var(--s2); }
+.tr:first-child { border-top: 0; } .tr.th { background: #0f0f10; font-size: 12px; color: var(--mut); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+.tr.cur { background: rgba(202,255,66,.09); }
+.tbl .tr:has(> span:nth-child(3):last-child) { grid-template-columns: 2fr 1fr 1fr; }
+.tbl .tr:has(> span:nth-child(2):last-child) { grid-template-columns: 1fr 2fr; }
+.ok { color: var(--lime); font-weight: 700; } .soft { color: var(--mut2); }
+.steps-mini { display: flex; gap: 6px; flex-wrap: wrap; }
+.steps-mini span { font-size: 12px; font-weight: 700; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--mut2); }
+.steps-mini .d { color: var(--lime); border-color: rgba(202,255,66,.4); } .steps-mini .c { background: var(--lime); color: var(--bg); border-color: var(--lime); }
+.pgrid { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 10px; }
+.pgrid i { font-style: normal; text-align: center; padding: 26px 0; border-radius: 12px; background: var(--s2); border: 1px solid var(--line); font-weight: 800; }
+.pgrid i.v { background: var(--lime); color: var(--bg); border-color: var(--lime); }
+.door { display: flex; gap: 14px; align-items: stretch; }
+.okbox { flex: 0 0 260px; background: rgba(202,255,66,.1); border: 1px solid var(--lime); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 6px; justify-content: center; }
+.okbox b { color: var(--lime); font-size: 24px; } .okbox span { font-size: 14px; color: #DADADE; }
+.pay { flex: 0 0 220px; background: var(--s2); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+.pay span { font-size: 12px; color: var(--mut); font-weight: 700; } .pay b { font-size: 32px; letter-spacing: -.03em; }
+.pay div { display: flex; gap: 6px; margin-top: auto; } .pay i { font-style: normal; flex: 1; text-align: center; padding: 8px 0; border-radius: 8px; border: 1px solid var(--line); font-size: 13px; font-weight: 700; }
+.pay i.sel { background: var(--lime); color: var(--bg); border-color: var(--lime); }
+.bars { display: flex; flex-direction: column; gap: 12px; padding: 18px; background: var(--s2); border: 1px solid var(--line); border-radius: 12px; }
+.bars div { display: grid; grid-template-columns: 110px 1fr 50px; gap: 12px; align-items: center; font-size: 14px; }
+.bars i { display: block; height: 18px; border-radius: 6px; background: var(--lime); } .bars b { text-align: right; }
+.pub { background: #fff; color: #111; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.pub .ph1 { display: flex; justify-content: space-between; align-items: baseline; } .pub .ph1 b { font-size: 22px; } .pub .ph1 span { font-size: 13px; color: #555; }
+.pub .ev { display: grid; grid-template-columns: 1fr auto auto; gap: 14px; align-items: center; border: 1px solid #e3e3e6; border-radius: 10px; padding: 12px 14px; font-size: 14px; }
+.pub .ev span { color: #555; } .pub .ev i { font-style: normal; background: #111; color: var(--lime); font-weight: 700; padding: 7px 14px; border-radius: 999px; font-size: 13px; }
+.soonbox { border: 1px dashed #4a4a50; border-radius: 14px; padding: 22px; font-size: 16px; line-height: 1.5; color: #D9D9DD; }
+.cap { margin: auto 0 0; font-size: 15px; color: #DADADE; border-left: 3px solid var(--lime); padding-left: 12px; }
+/* Precio */
+.price { display: grid; grid-template-columns: 1fr 470px; gap: 32px; margin-top: 22px; align-items: stretch; }
+.scale { display: grid; grid-template-columns: repeat(10, minmax(0,1fr)); gap: 8px; align-items: end; background: var(--s1); border: 1px solid var(--line); border-radius: 20px; padding: 20px 18px 16px; height: 400px; }
+.scale button { all: unset; cursor: pointer; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 6px; }
+.scale button:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; border-radius: 8px; }
+.scale i { display: block; width: 100%; height: calc(var(--h) * 3px); background: #2c2c31; border-radius: 8px 8px 3px 3px; transition: background .2s; min-height: 10px; }
+.scale button:hover i { background: #4a4a50; }
+.scale button[aria-pressed="true"] i { background: var(--lime); }
+.scale b { font-size: 16px; font-variant-numeric: tabular-nums; } .scale span { font-size: 11px; color: var(--mut); text-align: center; line-height: 1.2; min-height: 26px; }
+.scale button[aria-pressed="true"] b { color: var(--lime); }
+.calc .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.calc label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 700; color: var(--mut); }
+.calc input { background: var(--s2); border: 1px solid var(--line); border-radius: 10px; color: var(--tx); font: 700 20px Jakarta, sans-serif; padding: 10px 12px; width: 100%; }
+.calc input:focus-visible { outline: 2px solid var(--lime); }
+.who { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--s2); border: 1px solid var(--line); border-radius: 12px; padding: 4px; }
+.who button { border: 0; background: transparent; color: var(--mut); border-radius: 9px; padding: 10px; font-weight: 700; font-size: 13px; cursor: pointer; }
+.who button[aria-pressed="true"] { background: var(--lime); color: var(--bg); }
+.who button:focus-visible { outline: 2px solid #fff; }
+.res2 { display: flex; flex-direction: column; gap: 6px; }
+.res2 div { background: var(--s2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.res2 span { font-size: 13px; color: var(--mut); font-weight: 700; } .res2 b { font-size: 22px; white-space: nowrap; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.res2 div:first-child b { color: var(--lime); }
+.calc .msg { margin: 0; font-size: 13px; line-height: 1.45; font-weight: 500; color: #D9D9DD; }
 /* Barra */
 .vbar { position: fixed; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 10px; padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); color: #D9D9DD; font-size: 13px; background: #0b0b0c; border-top: 1px solid #222; z-index: 5; }
 .nb { border: 0; background: rgba(255,255,255,.12); color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 18px; }
@@ -192,7 +270,7 @@ h2 em, h1 em { font-style: normal; color: var(--lime); }
   <div class="top"><span class="logo">Bailando</span><span class="mono">Boletería · Colombia</span></div>
   <span class="chip">Para discotecas, bares y organizadores de eventos</span>
   <h1>Tu noche.<br>Tu marca.<br><em>Tu plata.</em></h1>
-  <p class="lead">Boletería, puerta y caja en un solo sistema. Vendes en línea y en taquilla, controlas el ingreso desde el celular y la plata de tus boletas entra a <b>la cuenta de tu negocio</b>.</p>
+  <p class="lead">Boletería, puerta y caja en un solo sistema. Vendes en línea y en taquilla, controlas el ingreso desde el celular y la plata de tus boletas entra a <b>la cuenta de tu negocio</b> con Wompi.</p>
   <div class="pills"><span>Sin tarjeta</span><span>Sin llamada previa</span><span>Modo prueba sin cobros reales</span></div>
   <img class="mock" src="../assets/bailando/mockup-bailando.webp" alt="La página de Bailando abierta en un portátil">
   <div class="ft"><span>Un producto de DesarrollAndo</span><span>bailando.desarrollandoando.com</span></div>
@@ -212,7 +290,7 @@ h2 em, h1 em { font-style: normal; color: var(--lime); }
       <div class="b"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#070707" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span><h3>Puerta sin señal</h3><p>El escáner valida en el celular aunque no haya internet y sube todo cuando vuelve.</p></div>
     </div></button>
     <button type="button" class="flip" aria-pressed="false"><div class="in">
-      <div class="f"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF8A8A" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span><p>La plata de tus boletas pasa primero por la cuenta de otro.</p><span class="tap">Toca para ver la solución →</span></div>
+      <div class="f"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF8A8A" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span><p>Quieres que la plata de tus boletas llegue directo a tu negocio.</p><span class="tap">Toca para ver la solución →</span></div>
       <div class="b"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#070707" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span><h3>Tu plata, en tu cuenta</h3><p>Con Wompi, lo que pagan por las boletas entra a la cuenta de tu negocio.</p></div>
     </div></button>
     <button type="button" class="flip" aria-pressed="false"><div class="in">
@@ -225,6 +303,173 @@ h2 em, h1 em { font-style: normal; color: var(--lime); }
     </div></button>
   </div>
   <div style="margin-top:22px"><button type="button" class="btn ghost" data-flipall>Ver todas las soluciones</button></div>
+</section>
+
+<section>
+  <div class="top"><span class="logo">Bailando</span><span class="demo-tag">Recórrela</span></div>
+  <h2 style="margin-top:16px">La plataforma <em>por dentro</em></h2>
+  <div class="app" data-app>
+    <div class="app-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="mono app-url">bailando.desarrollandoando.com · Panel</span><span class="app-venue">Discoteca de ejemplo</span></div>
+    <div class="app-body">
+      <nav class="side" aria-label="Módulos de la plataforma">
+        <button type="button" data-m="tablero" aria-pressed="true">Tablero</button>
+        <button type="button" data-m="eventos" aria-pressed="false">Eventos</button>
+        <button type="button" data-m="boleteria" aria-pressed="false">Boletas y etapas</button>
+        <button type="button" data-m="palcos" aria-pressed="false">Palcos</button>
+        <button type="button" data-m="puerta" aria-pressed="false">Puerta</button>
+        <button type="button" data-m="taquilla" aria-pressed="false">Taquilla</button>
+        <button type="button" data-m="cortesias" aria-pressed="false">Cortesías</button>
+        <button type="button" data-m="clientes" aria-pressed="false">Clientes</button>
+        <button type="button" data-m="informes" aria-pressed="false">Informes</button>
+        <button type="button" data-m="carta" aria-pressed="false">Carta digital</button>
+        <button type="button" data-m="pagina" aria-pressed="false">Mi página</button>
+        <button type="button" data-m="config" aria-pressed="false">Configuración</button>
+        <button type="button" data-m="promotores" aria-pressed="false">Listas y promotores <span class="soon">Pronto</span></button>
+      </nav>
+      <div class="main">
+
+        <div class="mod on" data-v="tablero">
+          <div class="mh"><b>Tablero</b><span>Sábado 15 de noviembre · Noche crossover</span></div>
+          <div class="kpis">
+            <div><span>Boletas emitidas</span><b>286</b></div>
+            <div><span>Por la web</span><b>198</b></div>
+            <div><span>En taquilla</span><b>74</b></div>
+            <div><span>Ya entraron</span><b>212</b></div>
+          </div>
+          <div class="chart" aria-hidden="true"><i style="height:18%"></i><i style="height:26%"></i><i style="height:22%"></i><i style="height:38%"></i><i style="height:44%"></i><i style="height:58%"></i><i style="height:52%"></i><i style="height:70%"></i><i style="height:86%"></i><i style="height:100%"></i><i style="height:64%"></i><i style="height:40%"></i></div>
+          <p class="cap">Lo vendido en la web, en taquilla y lo que ya entró por la puerta, en tiempo real.</p>
+        </div>
+
+        <div class="mod" data-v="eventos">
+          <div class="mh"><b>Eventos</b><span class="pill-l">+ Crear evento</span></div>
+          <div class="tbl">
+            <div class="tr th"><span>Evento</span><span>Fecha</span><span>Vendidas</span><span>Estado</span></div>
+            <div class="tr"><span>Noche crossover</span><span>15 nov</span><span>286 / 300 emitidas</span><span class="ok">Publicado</span></div>
+            <div class="tr"><span>Fiesta de los 2000</span><span>22 nov</span><span>94 / 250</span><span class="ok">Publicado</span></div>
+            <div class="tr"><span>Concierto en vivo</span><span>29 nov</span><span>—</span><span class="soft">Borrador</span></div>
+          </div>
+          <div class="steps-mini"><span class="d">La noche</span><span class="d">Artista y música</span><span class="d">Imágenes</span><span class="c">Boletas</span><span>Palcos</span><span>Cobro</span><span>Publicar</span></div>
+          <p class="cap">Cada evento se arma por pasos y queda con su página pública para vender.</p>
+        </div>
+
+        <div class="mod" data-v="boleteria">
+          <div class="mh"><b>Boletas y etapas</b><span>Noche crossover</span></div>
+          <div class="tbl">
+            <div class="tr th"><span>Boleta</span><span>Precio</span><span>Cupo</span><span>Corte</span></div>
+            <div class="tr"><span>Preventa 1</span><span>20.000</span><span>100 · agotada</span><span class="soft">Por cantidad</span></div>
+            <div class="tr cur"><span>Preventa 2</span><span>30.000</span><span>98 / 100</span><span class="ok">Activa</span></div>
+            <div class="tr"><span>General</span><span>40.000</span><span>0 / 100</span><span class="soft">Desde el 14 nov</span></div>
+          </div>
+          <p class="cap">Etapas de precio por fecha o por cantidad. Cuando una se agota, empieza la siguiente.</p>
+        </div>
+
+        <div class="mod" data-v="palcos">
+          <div class="mh"><b>Palcos</b><span>4 de 12 vendidos</span></div>
+          <div class="pgrid" aria-hidden="true"><i class="v">P1</i><i class="v">P2</i><i>P3</i><i>P4</i><i class="v">P5</i><i>P6</i><i>P7</i><i>P8</i><i class="v">P9</i><i>P10</i><i>P11</i><i>P12</i></div>
+          <p class="cap">Cada palco numerado uno por uno, con su precio y su capacidad.</p>
+        </div>
+
+        <div class="mod" data-v="puerta">
+          <div class="mh"><b>Puerta</b><span class="pill-r">Sin señal · validando</span></div>
+          <div class="door">
+            <div class="okbox"><b>Puede entrar</b><span>Laura G. · Documento ••• 4821</span><span>General</span></div>
+            <div class="tbl" style="flex:1">
+              <div class="tr th"><span>Hora</span><span>Ingresos</span></div>
+              <div class="tr"><span>10:00 p. m.</span><span>48</span></div>
+              <div class="tr"><span>11:00 p. m.</span><span>96</span></div>
+              <div class="tr"><span>12:00 a. m.</span><span>68</span></div>
+            </div>
+          </div>
+          <p class="cap">El escáner valida en el celular sin internet y sube los ingresos cuando vuelve la señal.</p>
+        </div>
+
+        <div class="mod" data-v="taquilla">
+          <div class="mh"><b>Taquilla</b><span>Mismo cupo de la web</span></div>
+          <div class="door">
+            <div class="tbl" style="flex:1">
+              <div class="tr th"><span>Boleta</span><span>Cant.</span><span>Valor</span></div>
+              <div class="tr"><span>General</span><span>2</span><span>80.000</span></div>
+              <div class="tr"><span>Palco P2</span><span>1</span><span>350.000</span></div>
+            </div>
+            <div class="pay"><span>Total</span><b>430.000</b><div><i class="sel">Efectivo</i><i>Datáfono</i></div></div>
+          </div>
+          <p class="cap">Vende en la puerta en efectivo o datáfono, contra el mismo cupo de la venta en línea.</p>
+        </div>
+
+        <div class="mod" data-v="cortesias">
+          <div class="mh"><b>Cortesías</b><span class="pill-l">+ Emitir cortesía</span></div>
+          <div class="tbl">
+            <div class="tr th"><span>Para</span><span>Cantidad</span><span>Estado</span></div>
+            <div class="tr"><span>Invitados del DJ</span><span>6</span><span class="ok">4 entraron</span></div>
+            <div class="tr"><span>Prensa</span><span>4</span><span class="soft">Sin usar</span></div>
+            <div class="tr"><span>Cumpleaños mesa 3</span><span>4</span><span class="ok">4 entraron</span></div>
+          </div>
+          <p class="cap">Las cortesías salen con su QR y entran por la misma puerta, con control.</p>
+        </div>
+
+        <div class="mod" data-v="clientes">
+          <div class="mh"><b>Clientes</b><span class="pill-l">Exportar</span></div>
+          <div class="tbl">
+            <div class="tr th"><span>Asistente</span><span>Eventos</span><span>Último</span></div>
+            <div class="tr"><span>Laura G.</span><span>5</span><span>15 nov</span></div>
+            <div class="tr"><span>Andrés M.</span><span>3</span><span>15 nov</span></div>
+            <div class="tr"><span>Valentina R.</span><span>2</span><span>1 nov</span></div>
+          </div>
+          <p class="cap">Tu base de asistentes es tuya. La exportas cuando quieras para tu próximo evento.</p>
+        </div>
+
+        <div class="mod" data-v="informes">
+          <div class="mh"><b>Informes</b><span>Noche crossover</span></div>
+          <div class="bars">
+            <div><span>Preventa 1</span><i style="width:100%"></i><b>100</b></div>
+            <div><span>Preventa 2</span><i style="width:98%"></i><b>98</b></div>
+            <div><span>Taquilla</span><i style="width:74%"></i><b>74</b></div>
+            <div><span>Cortesías</span><i style="width:14%"></i><b>14</b></div>
+          </div>
+          <p class="cap">Cómo se movió cada etapa y cada canal de venta de tu evento.</p>
+        </div>
+
+        <div class="mod" data-v="carta">
+          <div class="mh"><b>Carta digital</b><span>En un QR</span></div>
+          <div class="tbl">
+            <div class="tr th"><span>Producto</span><span>Categoría</span><span>Precio</span></div>
+            <div class="tr"><span>Botella de aguardiente</span><span>Botellas</span><span>120.000</span></div>
+            <div class="tr cur"><span>Cubeta de cerveza ★</span><span>Cervezas</span><span>60.000</span></div>
+            <div class="tr"><span>Picada para 4</span><span>Cocina</span><span>48.000</span></div>
+          </div>
+          <p class="cap">Categorías, fotos, precios y productos destacados. Se actualiza al instante, sin reimprimir.</p>
+        </div>
+
+        <div class="mod" data-v="pagina">
+          <div class="mh"><b>Mi página</b><span class="mono" style="font-size:12px">…/tu-discoteca</span></div>
+          <div class="pub">
+            <div class="ph1"><b>Tu discoteca</b><span>Próximos eventos</span></div>
+            <div class="ev"><b>Noche crossover</b><span>Sáb 15 nov · 10:00 p. m.</span><i>Comprar</i></div>
+            <div class="ev"><b>Fiesta de los 2000</b><span>Sáb 22 nov · 10:00 p. m.</span><i>Comprar</i></div>
+          </div>
+          <p class="cap">La página pública de tu negocio y de cada evento, con tu marca.</p>
+        </div>
+
+        <div class="mod" data-v="config">
+          <div class="mh"><b>Configuración</b><span>Tu negocio</span></div>
+          <div class="tbl">
+            <div class="tr th"><span>Ajuste</span><span>Estado</span></div>
+            <div class="tr"><span>Datos, logo y sedes</span><span class="ok">2 sedes</span></div>
+            <div class="tr"><span>Cobro con Wompi</span><span class="ok">Conectado</span></div>
+            <div class="tr"><span>Usuarios y roles</span><span>Dueño, administrador, gerente, puerta, solo lectura</span></div>
+          </div>
+          <p class="cap">Varias sedes en una cuenta y cada persona del equipo con su rol.</p>
+        </div>
+
+        <div class="mod" data-v="promotores">
+          <div class="mh"><b>Listas y promotores</b><span class="soon">Pronto</span></div>
+          <div class="soonbox">Cada promotor con su enlace, su cupo y su comisión. Está en desarrollo: si trabajas con promotores, cuéntanos cómo y lo tenemos en cuenta.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="ft"><span>Pantallas de referencia con datos de ejemplo</span><span>bailando.desarrollandoando.com</span></div>
 </section>
 
 <section>
@@ -260,7 +505,7 @@ h2 em, h1 em { font-style: normal; color: var(--lime); }
       <li><i>3</i><div><b>Cortesías con control</b>Las emites desde el panel y entran por la misma puerta.</div></li>
     </ul>
     <div class="phone" aria-label="Pantalla de ejemplo: escáner de puerta">
-      <div class="ph"><span>Puerta</span><span>Sin señal</span></div>
+      <div class="ph"><span>Puerta</span><span>Sin señal · ejemplo</span></div>
       <h4>Escáner</h4>
       <div class="res okk" style="min-height:150px"><span class="t okk-t">Puede entrar</span><span style="font-weight:700">Laura G.</span><small>Documento ••• 4821 · General</small></div>
       <div class="row"><span>Ingresos esta noche</span><span class="ok">212</span></div>
@@ -277,7 +522,7 @@ h2 em, h1 em { font-style: normal; color: var(--lime); }
     <div class="phone" aria-label="Pantalla de ejemplo: tablero">
       <div class="ph"><span>Tablero</span><span>Datos de ejemplo</span></div>
       <h4>Sábado 15 de noviembre</h4>
-      <div class="row" style="flex-direction:column;align-items:flex-start;gap:2px"><span class="note">Boletas vendidas</span><span class="big">286</span></div>
+      <div class="row" style="flex-direction:column;align-items:flex-start;gap:2px"><span class="note">Boletas emitidas</span><span class="big">286</span></div>
       <div class="row"><span>Web</span><span class="ok">198</span></div>
       <div class="row"><span>Taquilla</span><span>74</span></div>
       <div class="row"><span>Cortesías</span><span>14</span></div>
@@ -326,7 +571,7 @@ h2 em, h1 em { font-style: normal; color: var(--lime); }
       <ul>
         <li>El escáner valida contra la lista guardada en el celular.</li>
         <li>Los ingresos se suben solos cuando vuelve el internet.</li>
-        <li>Una boleta que ya entró no vuelve a entrar.</li>
+        <li>Cada boleta se valida y queda marcada: si alguien intenta entrar otra vez con ella, el escáner avisa.</li>
         <li>El portero ve nombre y documento, nunca dinero.</li>
       </ul>
     </div>
@@ -390,28 +635,48 @@ h2 em, h1 em { font-style: normal; color: var(--lime); }
 </section>
 
 <section>
-  <div class="top"><span class="logo">Bailando</span><span class="mono">Todo incluido</span></div>
-  <h2>Todo lo de tu noche, <em>en un solo lugar</em></h2>
-  <div class="g9">
-    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg><b>Eventos por pasos</b><span>Fecha, artista, imágenes, boletas y cobro, en orden.</span></div>
-    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg><b>Etapas de precio</b><span>Preventa y general, por fecha o por cantidad.</span></div>
-    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><b>Palcos numerados</b><span>Cada palco, uno por uno, con su precio.</span></div>
-    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM14 20h.01M17 20h4v-3M20 14h1"/></svg><b>Boleta con QR</b><span>Le llega al correo al comprador, con código corto.</span></div>
-    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 012-2h2M17 3h2a2 2 0 012 2v2M21 17v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2M7 12h10"/></svg><b>Puerta sin señal</b><span>Escáner en el celular que valida sin internet.</span></div>
-    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h4"/></svg><b>Taquilla</b><span>Efectivo o datáfono, contra el mismo cupo.</span></div>
-    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v9h14v-9M12 8v13"/><path d="M12 8C10 4 6 4 6 6.5S12 8 12 8zM12 8c2-4 6-4 6-1.5S12 8 12 8z"/></svg><b>Cortesías</b><span>Las emites desde el panel, con el mismo control.</span></div>
-    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M2 20h20"/></svg><b>Tablero e informes</b><span>Ves cómo va la venta de cada evento.</span></div>
-    <div class="fn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h11a3 3 0 013 3v15H8a3 3 0 01-3-3z"/><path d="M9 8h6M9 12h5"/></svg><b>Carta digital</b><span>Tu carta en la página de tu negocio.</span></div>
+  <div class="top"><span class="logo">Bailando</span><span class="demo-tag">Calcúlalo</span></div>
+  <h2 style="margin-top:16px">Solo pagas <em>cuando vendes</em></h2>
+  <p class="lead" style="margin-top:8px">Sin mensualidad, sin instalación y sin permanencia. Tu primer evento va sin comisión y desde ahí sube 1&nbsp;% por evento, hasta un tope de 9&nbsp;%.</p>
+  <div class="price">
+    <div class="scale" role="group" aria-label="Comisión por número de evento">
+      <button type="button" data-ev="1" aria-pressed="true"><i style="--h:12"></i><b>0&nbsp;%</b><span>Evento 1</span></button>
+      <button type="button" data-ev="2" aria-pressed="false"><i style="--h:22"></i><b>1&nbsp;%</b><span>2</span></button>
+      <button type="button" data-ev="3" aria-pressed="false"><i style="--h:32"></i><b>2&nbsp;%</b><span>3</span></button>
+      <button type="button" data-ev="4" aria-pressed="false"><i style="--h:42"></i><b>3&nbsp;%</b><span>4</span></button>
+      <button type="button" data-ev="5" aria-pressed="false"><i style="--h:52"></i><b>4&nbsp;%</b><span>5</span></button>
+      <button type="button" data-ev="6" aria-pressed="false"><i style="--h:62"></i><b>5&nbsp;%</b><span>6</span></button>
+      <button type="button" data-ev="7" aria-pressed="false"><i style="--h:72"></i><b>6&nbsp;%</b><span>7</span></button>
+      <button type="button" data-ev="8" aria-pressed="false"><i style="--h:82"></i><b>7&nbsp;%</b><span>8</span></button>
+      <button type="button" data-ev="9" aria-pressed="false"><i style="--h:92"></i><b>8&nbsp;%</b><span>9</span></button>
+      <button type="button" data-ev="10" aria-pressed="false"><i style="--h:100"></i><b>9&nbsp;%</b><span>10 en adelante</span></button>
+    </div>
+    <div class="panel calc" data-calc>
+      <div class="fields">
+        <label>Precio de la boleta (COP)<input type="number" min="0" step="1000" value="30000" data-c="p" inputmode="numeric"></label>
+        <label>Boletas del evento<input type="number" min="0" step="10" value="300" data-c="n" inputmode="numeric"></label>
+      </div>
+      <div class="who" role="group" aria-label="Quién asume el cargo">
+        <button type="button" data-who="comprador" aria-pressed="true">Lo asume el comprador</button>
+        <button type="button" data-who="negocio" aria-pressed="false">Lo asumo yo</button>
+      </div>
+      <div class="res2">
+        <div><span data-o="lab1">Evento 1 · comisión</span><b data-o="pct">0&nbsp;%</b></div>
+        <div><span>Comisión del evento (antes de impuestos)</span><b data-o="tot">0</b></div>
+        <div><span data-o="lab3">Tus ventas</span><b data-o="rec">9.000.000 COP</b></div>
+      </div>
+      <p class="msg" data-o="txt" aria-live="polite"></p>
+    </div>
   </div>
-  <div class="roles">Roles para tu equipo: <span>Dueño</span><span>Administrador</span><span>Gerente</span><span>Puerta</span><span>Solo lectura</span></div>
+  <div class="ft"><span>Cálculo de referencia sobre el precio de la boleta. La tarifa de Wompi y los impuestos van aparte. ¿Necesitas más de 1.000 boletas al mes? Hablemos de tu volumen.</span></div>
 </section>
 
 <section>
   <div class="top"><span class="logo">Bailando</span><span class="mono">Cómo empiezas</span></div>
-  <h2>Arrancas hoy <em>en 3 pasos</em></h2>
+  <h2>Empiezas <em>en 3 pasos</em></h2>
   <div class="steps">
     <div class="step"><i>1</i><b>Crea tu cuenta</b><p>Sin tarjeta y sin llamada previa. Configuras tu negocio, tu logo y tus sedes.</p></div>
-    <div class="step"><i>2</i><b>Conecta tu cobro</b><p>Pegas las llaves de tu comercio en Wompi y pruebas la conexión desde el panel.</p></div>
+    <div class="step"><i>2</i><b>Conecta tu cobro</b><p>Pegas las llaves de tu comercio en Wompi y pruebas la conexión desde el panel. Si aún no tienes comercio en Wompi, arma tu evento en modo prueba mientras lo abres.</p></div>
     <div class="step"><i>3</i><b>Publica y vende</b><p>Armas tu evento, lo publicas y vendes por tu página y en la taquilla.</p></div>
   </div>
   <div class="call"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#CAFF42" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:0 0 28px"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><span><b>¿Quieres conocerlo antes?</b> Recorre todo en modo prueba, con tarjeta de prueba y sin cobros reales. Y si prefieres, alguien del equipo te acompaña a montar tu primer evento.</span></div>
@@ -444,14 +709,15 @@ h2 em, h1 em { font-style: normal; color: var(--lime); }
 <div class="menu" role="dialog" aria-label="Índice"><h3>Índice</h3><ol>
 <li><button type="button" data-k="0"><span>1</span>Portada</button></li>
 <li><button type="button" data-k="1"><span>2</span>¿Te ha pasado?</button></li>
-<li><button type="button" data-k="2"><span>3</span>Una noche con Bailando</button></li>
-<li><button type="button" data-k="3"><span>4</span>Demo: un solo cupo</button></li>
-<li><button type="button" data-k="4"><span>5</span>Demo: puerta sin señal</button></li>
-<li><button type="button" data-k="5"><span>6</span>Demo: etapas y palcos</button></li>
-<li><button type="button" data-k="6"><span>7</span>Tu plata, tu marca, tus clientes</button></li>
-<li><button type="button" data-k="7"><span>8</span>Todo incluido</button></li>
-<li><button type="button" data-k="8"><span>9</span>Arrancas en 3 pasos</button></li>
-<li><button type="button" data-k="9"><span>10</span>Hablemos</button></li>
+<li><button type="button" data-k="2"><span>3</span>La plataforma por dentro</button></li>
+<li><button type="button" data-k="3"><span>4</span>Una noche con Bailando</button></li>
+<li><button type="button" data-k="4"><span>5</span>Demo: un solo cupo</button></li>
+<li><button type="button" data-k="5"><span>6</span>Demo: puerta sin señal</button></li>
+<li><button type="button" data-k="6"><span>7</span>Demo: etapas y palcos</button></li>
+<li><button type="button" data-k="7"><span>8</span>Tu plata, tu marca, tus clientes</button></li>
+<li><button type="button" data-k="8"><span>9</span>Solo pagas cuando vendes</button></li>
+<li><button type="button" data-k="9"><span>10</span>Empiezas en 3 pasos</button></li>
+<li><button type="button" data-k="10"><span>11</span>Hablemos</button></li>
 </ol></div>
 <script>
 (function(){
@@ -526,6 +792,27 @@ tabs.forEach(t=>t.addEventListener('click',()=>{ tabs.forEach(x=>x.setAttribute(
     po.textContent=sold.size+' de 12 palcos vendidos · '+cop(sold.size*350000)+' COP en palcos.'; }
   g.addEventListener('click',e=>{ const b=e.target.closest('.palco'); if(!b) return; const p=+b.dataset.p; sold.has(p)?sold.delete(p):sold.add(p); pr(); });
   pr(); })();
+// Plataforma: módulos
+(function(){ const A=document.querySelector('[data-app]'); if(!A) return; const bs=[...A.querySelectorAll('.side button')], vs=[...A.querySelectorAll('.mod')];
+  A.querySelector('.side').addEventListener('click',e=>{ const b=e.target.closest('button[data-m]'); if(!b) return; bs.forEach(x=>x.setAttribute('aria-pressed',String(x===b))); vs.forEach(v=>v.classList.toggle('on',v.dataset.v===b.dataset.m)); }); })();
+
+// Precio: escala y calculadora
+(function(){ const C=document.querySelector('[data-calc]'); if(!C) return; const sc=[...document.querySelectorAll('.scale button')];
+  let ev=1, who='comprador'; const cop=v=>Math.round(v).toLocaleString('es-CO'), o=k=>C.querySelector('[data-o="'+k+'"]');
+  const pctOf=e=>Math.min(9,e-1);
+  function render(){ const p=Math.max(0,+C.querySelector('[data-c="p"]').value||0), n=Math.max(0,Math.round(+C.querySelector('[data-c="n"]').value||0)), pc=pctOf(ev);
+    const porB=p*pc/100, tot=porB*n, venta=p*n;
+    o('lab1').textContent=(ev>=10?'Evento 10 en adelante':'Evento '+ev)+' · comisión'; o('pct').textContent=pc+'\u00a0%'; o('tot').textContent=cop(tot)+' COP';
+    if(who==='comprador'){ o('lab3').textContent='Tus ventas, antes de la tarifa de Wompi'; o('rec').textContent=cop(venta)+' COP'; }
+    else { o('lab3').textContent='Tú recibes, antes de la tarifa de Wompi'; o('rec').textContent=cop(venta-tot)+' COP'; }
+    let s=0; for(let e=1;e<=10;e++) s+=pctOf(e);
+    o('txt').textContent= pc===0 ? 'Tu primer evento va sin comisión de Bailando: vendes '+cop(venta)+' COP y solo aplica la tarifa de Wompi.'
+      : (who==='comprador' ? 'El comprador paga '+cop(p+porB)+' COP por boleta y tu precio de '+cop(p)+' COP queda completo, antes de la tarifa de Wompi. ' : 'Pagas '+cop(porB)+' COP por boleta vendida. ')
+        + 'En tus primeros 10 eventos la comisión promedio es de '+(s/10).toLocaleString('es-CO')+'\u00a0%.';
+    sc.forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.ev===ev))); }
+  sc.forEach(b=>b.addEventListener('click',()=>{ ev=+b.dataset.ev; render(); }));
+  C.querySelectorAll('[data-who]').forEach(b=>b.addEventListener('click',()=>{ who=b.dataset.who; C.querySelectorAll('[data-who]').forEach(x=>x.setAttribute('aria-pressed',String(x===b))); render(); }));
+  C.addEventListener('input',render); render(); })();
 })();
 </script>
 </body></html>
