@@ -680,6 +680,13 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
   .copi.centro{left:50%!important}
 }
 @media (prefers-reduced-motion:reduce){.foco,.copi,.copi .prog i{transition:none}.guia-btn.celebra{animation:none}}
+
+/* Enlace de pago por reserva */
+.burbuja .boton-w{display:block;text-align:center;border-top:1px solid rgba(0,0,0,.08);margin-top:10px;padding-top:7px;color:#0b6bcb;font-weight:600}
+.enlace-det{display:grid;gap:4px;margin-top:10px;background:#F5F8FD;border:1px dashed rgba(43,89,158,.35);border-radius:12px;padding:10px 12px;font-size:13px}
+.enlace-det .url{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--azul);word-break:break-all}
+.enlace-det small{color:var(--suave);line-height:1.45}
+.enlace-det .btn{justify-self:start;margin-top:4px}
 </style>
 </head>
 <body>
@@ -1001,7 +1008,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
     HN: ['Honduras', 'HNL', '+504', 'Departamento', ['America/Tegucigalpa'], []],
     MX: ['México', 'MXN', '+52', 'Estado', ['America/Mexico_City', 'America/Cancun', 'America/Tijuana', 'America/Hermosillo', 'America/Mazatlan'], [MP]],
     NI: ['Nicaragua', 'NIO', '+505', 'Departamento', ['America/Managua'], []],
-    PA: ['Panamá', 'USD', '+507', 'Provincia', ['America/Panama'], ['Yappy']],
+    PA: ['Panamá', 'USD', '+507', 'Provincia', ['America/Panama'], ['Wompi', 'Yappy']],
     PY: ['Paraguay', 'PYG', '+595', 'Departamento', ['America/Asuncion'], []],
     PE: ['Perú', 'PEN', '+51', 'Región', ['America/Lima'], [MP]],
     DO: ['República Dominicana', 'DOP', '+1', 'Provincia', ['America/Santo_Domingo'], []],
@@ -1102,6 +1109,14 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
   var COLOR = {}; ETAPAS.forEach(function (x) { COLOR[x[0]] = x[2]; });
   function nombreEtapa(k) { return ETAPAS.filter(function (x) { return x[0] === k; })[0][1]; }
   var sec = 100;
+  function nuevoEnlace() { return 'https://hospedando.desarrollandoando.com/p/' + codigoEnlace(); }
+  function conBoton() { return CONF.pasarela !== TRANS; }
+  function etiquetaBoton() { return CONF.anticipo === 100 ? 'Pagar reserva' : 'Pagar anticipo'; }
+  function pieEnlace(r, enlace, copiar) {
+    if (!conBoton()) return '<div class="enlace-det"><b>Pago por transferencia</b><small>El huésped recibe sus datos bancarios. Usted revisa el pago en su banco y lo registra aquí.</small></div>';
+    var otra = CONF.pasarela === OTRA;
+    return '<div class="enlace-det"><b>Enlace de pago de esta reserva</b><span class="url">' + enlace + '</span><small>' + (otra ? 'Lleva al enlace fijo de su pasarela: el huésped escribe el monto (' + fmt(anticipoDe(r.total)) + ') y usted confirma el pago a mano.' : 'Lleva al pago de ' + fmt(anticipoDe(r.total)) + ' en ' + esc(CONF.pasarela) + ', a nombre de ' + esc(CONF.nombre) + ' · referencia R-' + r.id + ' · vence en 24 horas. Cuando entra el pago, la reserva pasa sola a «Anticipo pagado».') + '</small>' + (copiar ? '<button type="button" class="btn btn-s btn-sm" data-acc="copiar">Copiar enlace</button>' : '') + '</div>';
+  }
   function codigoEnlace() { var s = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = ''; for (var i = 0; i < 8; i++) r += s[Math.floor(Math.random() * s.length)]; return r; }
   function nueva(o) {
     var r = { id: o.id || ++sec, crm: o.crm !== false, hist: [], nota: '', enlace: '' };
@@ -1144,7 +1159,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
     if (r.pagoA) r.hist.push(['', 'Anticipo de ' + cop(anticipoDe(r.total)) + ' recibido por ' + MP]);
     if (r.saldoPagado) r.hist.push(['', 'Saldo de ' + cop(r.total - anticipoDe(r.total)) + ' pagado al llegar']);
     if (r.e === 'perdida') r.hist.push(['', r.motivo + '; fechas liberadas']);
-    if (r.enviado) r.enlace = 'https://mpago.la/' + codigoEnlace();
+    if (r.enviado) r.enlace = nuevoEnlace();
   });
   /* ¿Ocupa fechas en el calendario? Las solicitudes nuevas todavía no; las que esperan pago, sí (apartadas) */
   function ocupa(r) { return r.crm ? (r.e === 'enlace' || r.e === 'pagado' || r.e === 'hospedado') : true; }
@@ -1321,13 +1336,13 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
   function msgConfirma(r, enlace) {
     var ant = anticipoDe(r.total);
     return 'Hola, ' + esc(primerNombre(r)) + '. Tenemos disponible ' + esc(laUnidad(r)) + ' ' + rangoTxt(r.ini, r.n) + ' para ' + plural(r.p, 'persona', 'personas') + extrasTxt(r) + '. Total: ' + fmt(r.total) + '. Para confirmar su reserva, ' +
-      (CONF.anticipo === 100 ? 'pague el valor total' : 'pague el anticipo de ' + fmt(ant)) + ' en este enlace de ' + esc(CONF.pasarela === TRANS || CONF.pasarela === OTRA ? 'pago' : CONF.pasarela) + ': <a href="#" onclick="return false">' + enlace + '</a>. Le guardamos las fechas por 24 horas; si no se recibe el pago, quedan libres.';
+      (CONF.anticipo === 100 ? 'pague el valor total' : 'pague el anticipo de ' + fmt(ant)) + (conBoton() ? ' con el botón «' + etiquetaBoton() + '»' + (CONF.pasarela === OTRA ? '' : ' (pago seguro con ' + esc(CONF.pasarela) + ')') + '.' : ' por transferencia a: ' + esc(CONF.transfer || 'la cuenta que le indicamos') + '. Envíenos el comprobante por aquí.') + ' Le guardamos las fechas por 24 horas; si no se recibe el pago, quedan libres.';
   }
   function msgSinDisp(r) { return 'Hola, ' + esc(primerNombre(r)) + '. Lamentamos informarle que no tenemos disponibilidad en ' + esc(laUnidad(r)) + ' ' + rangoTxt(r.ini, r.n) + '. Si le sirven otras fechas, respóndanos por aquí y con gusto le ayudamos.'; }
-  function msgRecordatorio(r) { return 'Hola, ' + esc(primerNombre(r)) + '. Le recordamos que su reserva en ' + esc(CONF.nombre) + ', ' + esc(laUnidad(r)) + ' ' + rangoTxt(r.ini, r.n) + ', está pendiente del pago de ' + fmt(anticipoDe(r.total)) + '. Puede pagarlo en este enlace: <a href="#" onclick="return false">' + (r.enlace || '') + '</a>. ' + (r.vence ? 'El enlace vence ' + r.vence + '. ' : '') + 'Si tiene alguna pregunta, respóndanos por aquí.'; }
-  function bloqueMsg(titulo, cuerpo, r) {
+  function msgRecordatorio(r) { return 'Hola, ' + esc(primerNombre(r)) + '. Le recordamos que su reserva en ' + esc(CONF.nombre) + ', ' + esc(laUnidad(r)) + ' ' + rangoTxt(r.ini, r.n) + ', está pendiente del pago de ' + fmt(anticipoDe(r.total)) + '. ' + (conBoton() ? 'Puede pagarlo con el botón «' + etiquetaBoton() + '». ' : '') + (r.vence ? 'El enlace vence ' + r.vence + '. ' : '') + 'Si tiene alguna pregunta, respóndanos por aquí.'; }
+  function bloqueMsg(titulo, cuerpo, r, enlace, copiar) {
     var ig = r && (r.o === 'instagram' || r.o === 'facebook');
-    return '<div class="plantilla"><div class="nom"><span>Mensaje de WhatsApp aprobado · <b>' + titulo + '</b></span><span>Aprobado por Meta</span></div><div class="burbuja">' + cuerpo + '</div></div>' +
+    return '<div class="plantilla"><div class="nom"><span>Mensaje de WhatsApp aprobado · <b>' + titulo + '</b></span><span>Aprobado por Meta</span></div><div class="burbuja">' + cuerpo + (enlace && conBoton() ? '<span class="boton-w">↗ ' + etiquetaBoton() + '</span>' : '') + '</div></div>' + (enlace ? pieEnlace(r, enlace, copiar) : '') +
       '<p class="nota-p">' + (ig ? esc(primerNombre(r)) + ' escribió por ' + ORI[r.o][0] + '. Si le escribió en las últimas 24 horas, el mensaje sale por ahí; si no, sale por WhatsApp al número que dejó (' + esc(r.tel || 'sin número') + '). ' : '') + 'Meta cobra este mensaje si el huésped no le ha escrito en las últimas 24 horas.</p>';
   }
 
@@ -1348,8 +1363,8 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
     if (r.e === 'nueva') {
       var bloqueada = est[0] === 'mal';
       if (modo === 'confirmar' && !bloqueada) {
-        if (!r.enlaceNuevo) r.enlaceNuevo = (CONF.pasarela === MP ? 'https://mpago.la/' : 'https://pagos.example/') + codigoEnlace();
-        acc = bloqueMsg('Confirmación con enlace de pago', msgConfirma(r, r.enlaceNuevo), r) +
+        if (!r.enlaceNuevo) r.enlaceNuevo = nuevoEnlace();
+        acc = bloqueMsg('Confirmación con enlace de pago', msgConfirma(r, r.enlaceNuevo), r, r.enlaceNuevo, true) +
           '<div class="datos"><div><small>Se cobra ahora</small>' + fmt(ant) + (CONF.anticipo === 100 ? ' (pago completo)' : ' (' + CONF.anticipo + ' %)') + '</div><div><small>Enlace</small>Un solo uso, vence en 24 horas</div></div>' +
           '<div class="acciones"><button type="button" class="btn btn-v" data-acc="enviar">Enviar por WhatsApp</button><button type="button" class="btn btn-s" data-acc="volver">Volver</button></div>' +
           '<p class="nota-p">El enlace lo crea ' + esc(CONF.pasarela) + ' con la cuenta del alojamiento; el dinero llega directo a esa cuenta.</p>';
@@ -1361,7 +1376,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
           '<div class="acciones"><button type="button" class="btn btn-p" data-acc="confirmar"' + (bloqueada ? ' disabled' : '') + '>Confirmar y enviar enlace de pago</button><button type="button" class="btn btn-r" data-acc="nodisp">No hay disponibilidad</button></div>';
       }
     } else if (r.e === 'enlace') {
-      acc = (modo === 'recordar' ? bloqueMsg('Recordatorio de pago', msgRecordatorio(r), r) + '<div class="acciones"><button type="button" class="btn btn-v" data-acc="enviarRec">Enviar recordatorio</button><button type="button" class="btn btn-s" data-acc="volver">Volver</button></div>' :
+      acc = (modo === 'recordar' ? bloqueMsg('Recordatorio de pago', msgRecordatorio(r), r, r.enlace, true) + '<div class="acciones"><button type="button" class="btn btn-v" data-acc="enviarRec">Enviar recordatorio</button><button type="button" class="btn btn-s" data-acc="volver">Volver</button></div>' :
         '<div class="acciones"><button type="button" class="btn btn-p" data-acc="pagado">Registrar pago del anticipo</button><button type="button" class="btn btn-s" data-acc="recordar">Enviar recordatorio de pago</button></div>' +
         '<p class="nota-p">Con la pasarela conectada, la tarjeta pasa sola a «Anticipo pagado» cuando el pago se confirma. Si el enlace vence sin pago, las fechas se liberan solas y le avisamos.</p>');
     } else if (r.e === 'pagado' || r.e === 'hospedado') {
@@ -1410,7 +1425,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
       var x = choque(r.u, r.ini, r.n, r.id); if (x) { aviso('Esas fechas se ocuparon mientras tanto (' + x.nom + '). No se envió el enlace.'); return abrir(r.id); }
       r.enviado = true; r.enlace = r.enlaceNuevo; r.vence = 'mañana a las 9:41 a. m.';
       mover(r, 'enlace', 'Confirmada por Andrea y enlace de pago enviado'); cerrarPanel();
-      if (r.id === 1) agregarAlChat(msgConfirma(r, r.enlace), true);
+      if (r.id === 1) agregarAlChat(msgConfirma(r, r.enlace), conBoton());
       log('Envió el enlace de pago a ' + r.nom); aviso('Enlace de pago enviado a ' + r.nom + '. Las fechas quedaron apartadas en el calendario (' + rangoCorto(r.ini, r.n) + ')');
       return;
     }
@@ -1425,6 +1440,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
         texto: 'Su política de cancelación es ' + rg[1] + '. Faltan ' + plural(dias, 'día', 'días') + ' para la llegada, así que ' + (devuelve ? 'corresponde devolver el anticipo de ' + fmt(anticipoDe(r.total)) + '.' : 'no corresponde devolver el anticipo.') + ' La devolución la hace usted desde su pasarela o su banco.',
         ok: function () { r.motivo = 'Canceló el huésped'; mover(r, 'perdida', 'Reserva cancelada; fechas liberadas' + (devuelve ? '; corresponde devolver el anticipo' : '')); log('Canceló la reserva de ' + r.nom); aviso('Reserva cancelada. Fechas liberadas'); } });
     }
+    if (a === 'copiar') { var ue = r.enlaceNuevo || r.enlace; try { navigator.clipboard.writeText(ue); } catch (x) {} aviso('Enlace copiado. Úselo solo si el mensaje no le llega al huésped'); return; }
     if (a === 'vercal') { cerrarPanel(); seleccionarTab('calendario'); if (window.verEnCal) window.verEnCal(r.id); return; }
     if (a === 'fechas') { cerrarPanel(); seleccionarTab('calendario'); if (window.editarCal) window.editarCal(r.id); return; }
     if (a === 'mover') { var dest = $('#moverSel').value; if (dest === r.e) return; cerrarPanel(); return moverA(r, dest); }
@@ -1436,7 +1452,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
   function agregarAlChat(html, conBoton) {
     var es = $('#esperando'); if (es) es.remove();
     var d = document.createElement('div'); d.className = 'm el';
-    d.innerHTML = html + '<span class="h">9:41 a. m.</span>' + (conBoton ? '<span class="boton">Pagar</span>' : '');
+    d.innerHTML = html + '<span class="h">9:41 a. m.</span>' + (conBoton ? '<span class="boton">↗ ' + etiquetaBoton() + '</span>' : '');
     $('#chatCuerpo').appendChild(d);
     $('.chat-v .intro').textContent = conBoton ? 'Así le llega a Laura el mensaje que usted envió desde el panel.' : 'Así le llega a Laura el aviso de que no hay disponibilidad.';
   }
@@ -1602,9 +1618,9 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
     function enviarEnlace(r) {
       if (!r.tel) { aviso('Agregue el WhatsApp del huésped para enviarle el enlace.'); return formulario(null, null, r.id); }
       if (!(r.total > 0)) { aviso('Agregue el valor total para enviar el enlace.'); return formulario(null, null, r.id); }
-      var enlace = (CONF.pasarela === MP ? 'https://mpago.la/' : 'https://pagos.example/') + codigoEnlace();
+      var enlace = nuevoEnlace();
       confirmar({ eyebrow: 'Revise el mensaje', titulo: 'Enviar enlace de pago a ' + esc(r.nom), verde: true, boton: 'Enviar por WhatsApp', texto: '',
-        extra: bloqueMsg('Confirmación con enlace de pago', msgConfirma(r, enlace), r),
+        extra: bloqueMsg('Confirmación con enlace de pago', msgConfirma(r, enlace), r, enlace),
         ok: function () { r.enviado = true; r.enlace = enlace; r.vence = 'mañana a las 9:41 a. m.'; pasarAlTablero(r, 'enlace'); r.hist.push(['Ahora', 'Enlace de pago enviado']); log('Envió el enlace de pago a ' + r.nom); aviso('Enlace de pago enviado a ' + r.nom); } });
     }
     window.verEnCal = function (id) {
