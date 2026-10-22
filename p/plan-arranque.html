@@ -624,6 +624,62 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
   .ficha,.btn,.fab,.cta{transition:none}
   .ficha:hover,.fab:hover,.cta:hover,.btn-p:hover:not(:disabled){transform:none}
 }
+
+/* ---------- Copiloto de bienvenida ---------- */
+.usuario{display:flex;align-items:center;gap:12px}
+.guia-btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:5px 12px 5px 5px;background:#fff;color:var(--azul);font-size:13px;font-weight:600;box-shadow:var(--e1),inset 0 0 0 1px rgba(43,89,158,.18);transition:transform .15s}
+.guia-btn:hover{transform:translateY(-1px)}
+.guia-btn b{font-weight:600;color:var(--suave);font-variant-numeric:tabular-nums}
+.guia-btn .anillo{width:28px;height:28px;display:block}
+.guia-btn.celebra{animation:celebra 1.1s ease-out}
+@keyframes celebra{0%{box-shadow:0 0 0 0 rgba(47,122,91,.55),var(--e1)}100%{box-shadow:0 0 0 16px rgba(47,122,91,0),var(--e1)}}
+.copi-ava{width:38px;height:38px;flex:none;border-radius:12px;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#24365a,#0E1A2B);box-shadow:0 8px 16px -8px rgba(14,26,43,.8)}
+.copi-ava img{width:24px;height:24px}
+.foco{position:fixed;z-index:65;border-radius:14px;pointer-events:none;box-shadow:0 0 0 3px rgba(133,202,238,.95),0 0 0 200vmax rgba(8,14,26,.52);transition:top .3s cubic-bezier(.2,.7,.2,1),left .3s cubic-bezier(.2,.7,.2,1),width .3s cubic-bezier(.2,.7,.2,1),height .3s cubic-bezier(.2,.7,.2,1)}
+.copi-fondo{position:fixed;inset:0;z-index:64;background:rgba(8,14,26,.58);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.copi{position:fixed;z-index:70;width:min(360px,calc(100vw - 20px));background:#fff;color:var(--texto);border-radius:18px;padding:16px 16px 14px;box-shadow:var(--e3),0 0 0 1px rgba(14,26,43,.06);transition:top .3s cubic-bezier(.2,.7,.2,1),left .3s cubic-bezier(.2,.7,.2,1)}
+.copi.centro{left:50%!important;top:50%!important;transform:translate(-50%,-50%);width:min(440px,calc(100vw - 24px));padding:0 0 16px;overflow:hidden;transition:none}
+.copi.centro>*:not(.copi-portada){margin-left:20px;margin-right:20px}
+.copi-portada{position:relative;height:150px;margin-bottom:14px}
+.copi-portada .esc{width:100%;height:100%;display:block}
+.copi-portada::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.35))}
+.copi .cab-c{display:flex;gap:10px;align-items:center}
+.copi .cab-c b{display:block;font-size:14px}
+.copi .cab-c small{display:block;font-size:12px;color:var(--suave)}
+.copi-x{margin-left:auto;align-self:flex-start;border:0;background:#F1F4F8;color:var(--suave);width:30px;height:30px;border-radius:50%;font-size:18px;line-height:1}
+.copi h3{font-size:18px;letter-spacing:-.01em;margin:12px 0 6px}
+.copi p{margin:0;font-size:14px;color:var(--suave);line-height:1.5}
+.copi .pista{margin-top:10px;background:#FFF5E3;color:#7a4b00;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:500}
+.copi .prog{height:4px;border-radius:9px;background:#E2E8F0;margin:14px 0 12px;overflow:hidden}
+.copi .prog i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--celeste),var(--azul));transition:width .3s}
+.copi .acc{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:14px}
+.copi .prog+.acc{margin-top:0}
+.copi .saltar{margin-right:auto;background:none;border:0;padding:4px 0;color:var(--suave);font-size:13px;text-decoration:underline}
+.guia-panel{position:fixed;z-index:66;top:118px;right:max(20px,calc((100vw - 1240px)/2 + 40px));width:min(380px,calc(100vw - 20px));max-height:calc(100vh - 140px);overflow:auto;background:#fff;color:var(--texto);border-radius:20px;padding:18px;box-shadow:var(--e3),0 0 0 1px rgba(14,26,43,.06)}
+.guia-panel .gp-cab{display:flex;gap:12px;align-items:center}
+.guia-panel h2{font-size:17px;margin:0}
+.guia-panel .gp-cab small{color:var(--suave);font-size:13px}
+.guia-panel .barra{margin:14px 0 4px}
+.tarea{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:10px;align-items:center;padding:11px 0;border-top:1px solid var(--linea)}
+.tarea:first-of-type{border-top:0}
+.tarea .chk{width:24px;height:24px;border-radius:50%;border:2px solid #CBD5E1;display:grid;place-items:center;color:#fff;font-size:13px;font-weight:700}
+.tarea.hecha .chk{background:var(--palma);border-color:var(--palma)}
+.tarea b{display:block;font-size:14px;font-weight:600}
+.tarea.hecha b{color:var(--suave)}
+.tarea small{display:block;font-size:12px;color:var(--suave);line-height:1.4}
+.preg{margin-top:12px;padding-top:12px;border-top:1px solid var(--linea)}
+.preg h3{font-size:13px;font-weight:600;color:var(--suave);margin:0 0 8px}
+.preg .chips{display:flex;flex-wrap:wrap;gap:6px}
+.preg .chips button{border:1px solid rgba(43,89,158,.2);background:#F5F8FD;color:var(--azul);border-radius:999px;padding:6px 11px;font-size:12.5px;font-weight:500;text-align:left}
+.preg .chips button:hover{background:#EAF1FB}
+.gp-pie{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px}
+@media (max-width:700px){
+  .usuario .u-nom{display:none}
+  .guia-panel{top:auto;left:10px;right:10px;width:auto;bottom:calc(84px + env(safe-area-inset-bottom));max-height:70vh}
+  .copi{left:10px!important;width:calc(100vw - 20px)}
+  .copi.centro{left:50%!important}
+}
+@media (prefers-reduced-motion:reduce){.foco,.copi,.copi .prog i{transition:none}.guia-btn.celebra{animation:none}}
 </style>
 </head>
 <body>
@@ -727,6 +783,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
 <!-- PANEL -->
 <section class="vista" id="crm">
   <div class="crm claro">
+    <section class="guia-panel" id="guiaPanel" role="dialog" aria-labelledby="guiaPT" hidden></section>
     <button type="button" class="fab" id="fab"><i aria-hidden="true">+</i>Apartar fechas</button>
     <div class="crm-bar"><div class="wrap">
       <div class="neg"><i>CB</i><span id="nomAloj">Casa Bruma</span></div>
@@ -737,7 +794,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
         <button type="button" role="tab" id="tab-reportes" aria-controls="p-reportes" data-t="reportes" aria-selected="false" tabindex="-1"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 20h18"/><path d="M6 16v-5M11 16V6M16 16v-8M20 16v-3"/></svg><span class="tl">Reportes</span><span class="tc" aria-hidden="true">Reportes</span></button>
         <button type="button" role="tab" id="tab-cuenta" aria-controls="p-cuenta" data-t="cuenta" aria-selected="false" tabindex="-1"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span class="tl">Mi cuenta</span><span class="tc" aria-hidden="true">Cuenta</span></button>
       </div>
-      <div class="usuario">Andrea · dueña</div>
+      <div class="usuario"><button type="button" class="guia-btn" id="guiaBtn" aria-expanded="false" aria-controls="guiaPanel"><svg class="anillo" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" fill="none" stroke="#E2E8F0" stroke-width="4"/><circle id="guiaArco" cx="18" cy="18" r="15" fill="none" stroke="#2F7A5B" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 94.25" transform="rotate(-90 18 18)"/><path d="M18 11.5l1.6 4.2 4.4.3-3.4 2.8 1.1 4.3-3.7-2.4-3.7 2.4 1.1-4.3-3.4-2.8 4.4-.3z" fill="#2b599e"/></svg><span>Guía</span><b id="guiaN">0/6</b></button><span class="u-nom">Andrea · dueña</span></div>
     </div></div>
 
     <div class="wrap">
@@ -1103,7 +1160,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
 
   /* Registro de actividad (Mi cuenta) */
   var LOG = [['Hoy, 7:58 a. m.', 'Andrea', 'Ingresó al panel desde Chrome en Windows'], ['Ayer, 4:10 p. m.', 'Andrea', 'Envió el enlace de pago a Diana Herrera'], ['18 oct, 9:12 a. m.', 'Camilo (recepción)', 'Registró el pago del saldo de Andrés Mora'], ['15 oct, 6:40 p. m.', 'Sistema', 'Anticipo de Jorge Peña recibido por Mercado Pago']];
-  function log(t) { LOG.unshift(['Ahora', 'Andrea', t]); if (window.pintarCuenta) window.pintarCuenta(); }
+  function log(t) { LOG.unshift(['Ahora', 'Andrea', t]); if (window.pintarCuenta) window.pintarCuenta(); document.dispatchEvent(new CustomEvent('hosp:log', { detail: t })); }
 
   /* ---------- Avisos, panel lateral y confirmaciones ---------- */
   function aviso(t) { var el = $('#toast'); el.textContent = t; el.hidden = false; clearTimeout(aviso.t); aviso.t = setTimeout(function () { el.hidden = true; }, 3600); }
@@ -1183,7 +1240,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
     if (!$('#login1').hidden) { $('#login1').hidden = true; $('#login2').hidden = false; $('#codigo').focus(); $('#codigo').select(); return; }
     if (!/^\d{6}$/.test($('#codigo').value.trim())) { $('#codigoErr').textContent = 'Escriba los 6 dígitos del código.'; return; }
     $('#codigoErr').textContent = ''; $('#login1').hidden = false; $('#login2').hidden = true;
-    ir('crm'); seleccionarTab('config'); setTimeout(function () { var h = $('#cfgCuerpo h2'); if (h) h.focus(); }, 30);
+    ir('crm'); seleccionarTab('config'); setTimeout(function () { var h = $('#cfgCuerpo h2'); if (h) h.focus(); }, 30); if (window.guiaInicio) window.guiaInicio();
   });
 
   /* ---------- Reservas: tablero por etapas ---------- */
@@ -1286,6 +1343,7 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
   }
 
   function abrir(id, modo) {
+    setTimeout(function () { document.dispatchEvent(new CustomEvent('hosp:abrir', { detail: { id: id, modo: modo } })); }, 80);
     var r = porId(id), u = unidad(r.u), ant = anticipoDe(r.total), saldo = r.total - ant, acc = '', est = estadoCal(r);
     if (r.e === 'nueva') {
       var bloqueada = est[0] === 'mal';
@@ -2047,6 +2105,159 @@ body{background:var(--noche);-webkit-font-smoothing:antialiased}
   $$('[data-ir]').forEach(function (b) { b.addEventListener('click', function () { ir(b.dataset.ir); }); });
   window.addEventListener('hashchange', function () { ir((location.hash || '#plan').slice(1)); });
 
+
+  /* ---------- Copiloto: recorrido guiado y primeros pasos ---------- */
+  (function () {
+    var CLAVE = 'hospedando.guia', est = { visto: false, hecho: {} };
+    try { var g = JSON.parse(localStorage.getItem(CLAVE) || 'null'); if (g && g.hecho) est = g; } catch (x) {}
+    function guardarEst() { try { localStorage.setItem(CLAVE, JSON.stringify(est)); } catch (x) {} }
+    var reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var P = [
+      { centro: true, bienvenida: true, t: 'Bienvenida a HospedAndo, Andrea', x: 'Soy su copiloto. En unos dos minutos le muestro cómo recibir solicitudes, confirmar reservas y cobrar el anticipo desde este panel.' },
+      { tab: 'config', sel: '.crm .tabs', t: 'Su negocio en cinco secciones', x: 'Mi alojamiento, Reservas, Disponibilidad, Reportes y Mi cuenta. En el celular las encuentra en la barra de abajo.' },
+      { tab: 'config', sel: '#cfgPasos', t: 'Primero, su alojamiento', x: 'Seis pasos: datos, habitaciones, temporadas, servicios, conexiones y activar. El asistente cotiza y responde con lo que ponga aquí.' },
+      { tab: 'config', sel: '#cfgPrev', t: 'Pruebe cómo cotiza el asistente', x: 'Cambie la unidad, las personas, las noches o los servicios y vea el total que le daría al huésped, antes de activarlo.' },
+      { tab: 'tablero', sel: '.col[data-etapa="nueva"]', t: 'Aquí llegan las solicitudes', x: 'Cada solicitud que toma el asistente por WhatsApp, Instagram o Facebook aparece en esta columna.', pista: 'Pruébelo: toque la tarjeta de Laura Gómez.', espera: true },
+      { sel: '#detalle [data-acc="confirmar"]', detalle: true, t: 'Usted confirma y sale el enlace', x: 'Revise fechas y valor. Al confirmar, el huésped recibe por WhatsApp el enlace de pago de su pasarela y las fechas quedan apartadas.' },
+      { tab: 'tablero', sel: '#tablero', cerrar: true, t: 'Mueva las reservas por etapas', x: 'Arrastre una tarjeta de una columna a otra: esperando pago, anticipo pagado, hospedados. En el celular, ábrala y use «Mover a».' },
+      { tab: 'calendario', sel: '.cal', t: 'Su calendario, sin reservas cruzadas', x: 'Toque un espacio libre para apartar fechas y diga de dónde viene la reserva. El asistente consulta este calendario antes de ofrecer una noche.' },
+      { tab: 'calendario', sel: '#fab', t: 'Aparte fechas desde cualquier parte', x: 'Este botón abre el formulario para registrar una reserva de otro canal o bloquear fechas por mantenimiento.' },
+      { tab: 'reportes', sel: '.ahorro', t: 'Vea cómo va su negocio', x: 'Reservas por mes, de dónde llegan sus huéspedes y, como referencia, la comisión de portal que no pagó.' },
+      { tab: 'cuenta', sel: '#cuentaRaiz .panel', t: 'Su equipo y su cuenta', x: 'Invite a recepción o a su contador con permisos distintos, pague su plan y proteja los datos de sus huéspedes.' },
+      { centro: true, final: true, t: 'Listo, ya conoce su panel', x: 'Su lista de primeros pasos queda en el botón «Guía», arriba. Le aviso cada vez que complete uno.' }
+    ];
+    var CONEX = { tab: 'config', sel: '#cfgCuerpo', antes: function () { var b = $('#cfgPasos button:nth-child(5)'); if (b) b.click(); }, t: 'Conecte su calendario de Booking.com', x: 'En «Conexiones» pegue el enlace de calendario que le da Booking.com. Así el asistente no ofrece noches que ya vendió por allá.' };
+    var TAREAS = [
+      { id: 'config', t: 'Configure su alojamiento', d: 'Habitaciones, tarifas y temporadas. El asistente cotiza con esto.', log: 'Guardó la configuración del alojamiento', paso: 2 },
+      { id: 'abrir', t: 'Revise una solicitud nueva', d: 'Toque una tarjeta en «Nuevas solicitudes».', paso: 4 },
+      { id: 'enlace', t: 'Confirme y envíe un enlace de pago', d: 'Sale por WhatsApp y las fechas quedan apartadas.', log: 'Envió el enlace de pago a ', paso: 5 },
+      { id: 'apartar', t: 'Aparte fechas en el calendario', d: 'Registre una reserva de otro canal o un bloqueo.', log: 'Apartó ', paso: 8 },
+      { id: 'booking', t: 'Conecte su calendario de Booking.com', d: 'Así el asistente no ofrece noches ya vendidas.', log: 'Conectó el calendario de Booking.com', paso: 'conex' },
+      { id: 'equipo', t: 'Invite a alguien de su equipo', d: 'Recepción o contador, cada uno con sus permisos.', log: 'Invitó a ', paso: 10 }
+    ];
+    var PREG = [['¿Cómo envío un enlace de pago?', 5], ['¿Cómo bloqueo fechas por mantenimiento?', 8], ['¿Dónde cambio mis tarifas de temporada?', 2], ['¿Dónde veo la comisión que no pagué?', 9]];
+    var foco = document.createElement('div'), fondo = document.createElement('div'), copi = document.createElement('div');
+    foco.className = 'foco'; foco.hidden = true; fondo.className = 'copi-fondo'; fondo.hidden = true;
+    copi.className = 'copi'; copi.hidden = true; copi.setAttribute('role', 'dialog'); copi.setAttribute('aria-labelledby', 'copiT');
+    document.body.appendChild(fondo); document.body.appendChild(foco); document.body.appendChild(copi);
+    var activo = false, i = 0, uno = null, paso = null;
+
+    function hechas() { return TAREAS.filter(function (t) { return est.hecho[t.id]; }).length; }
+    function pintarBoton() {
+      var n = hechas(); $('#guiaN').textContent = n + '/' + TAREAS.length;
+      $('#guiaArco').setAttribute('stroke-dasharray', (94.25 * n / TAREAS.length).toFixed(2) + ' 94.25');
+      $('#guiaBtn').setAttribute('aria-label', 'Guía de primeros pasos: ' + n + ' de ' + TAREAS.length + ' listos');
+    }
+    function completar(id) {
+      if (est.hecho[id]) return; est.hecho[id] = true; guardarEst(); pintarBoton(); if (!$('#guiaPanel').hidden) pintarPanel();
+      var b = $('#guiaBtn'); b.classList.remove('celebra'); void b.offsetWidth; b.classList.add('celebra');
+    }
+    function pintarPanel() {
+      var n = hechas();
+      $('#guiaPanel').innerHTML = '<div class="gp-cab"><span class="copi-ava"><img src="../assets/isotipo-desarrollando.png" alt=""></span><div><h2 id="guiaPT">Primeros pasos</h2><small>' + n + ' de ' + TAREAS.length + ' listos</small></div><button type="button" class="copi-x" data-g="cerrar" aria-label="Cerrar la guía">×</button></div>' +
+        '<div class="barra"><i style="width:' + Math.round(100 * n / TAREAS.length) + '%"></i></div>' +
+        TAREAS.map(function (t) { var h = est.hecho[t.id]; return '<div class="tarea' + (h ? ' hecha' : '') + '"><span class="chk" aria-hidden="true">' + (h ? '✓' : '') + '</span><div><b>' + t.t + '</b><small>' + (h ? 'Listo' : t.d) + '</small></div>' + (h ? '' : '<button type="button" class="btn btn-s btn-sm" data-g="mostrar" data-t="' + t.id + '">Mostrarme</button>') + '</div>'; }).join('') +
+        '<div class="preg"><h3>Pregúntele al copiloto</h3><div class="chips">' + PREG.map(function (q, k) { return '<button type="button" data-g="preg" data-k="' + k + '">' + q[0] + '</button>'; }).join('') + '</div></div>' +
+        '<div class="gp-pie"><button type="button" class="btn btn-s btn-sm" data-g="todo">Repetir el recorrido</button><small style="color:var(--suave)">Su avance se guarda solo.</small></div>';
+    }
+    function abrirPanelGuia(abre) {
+      var p = $('#guiaPanel'); if (abre) { pintarPanel(); var gb = $('#guiaBtn').getBoundingClientRect(); p.style.top = innerWidth > 700 ? Math.max(70, Math.round(gb.bottom + 10)) + 'px' : ''; } p.hidden = !abre; $('#guiaBtn').setAttribute('aria-expanded', abre ? 'true' : 'false');
+      if (abre) { var x = $('[data-g="cerrar"]', p); if (x) x.focus(); }
+    }
+    $('#guiaBtn').addEventListener('click', function () { if (activo) terminar(); abrirPanelGuia($('#guiaPanel').hidden); });
+    $('#guiaPanel').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-g]'); if (!b) return; var g = b.dataset.g;
+      if (g === 'cerrar') { abrirPanelGuia(false); $('#guiaBtn').focus(); return; }
+      abrirPanelGuia(false);
+      if (g === 'todo') return iniciar(1);
+      if (g === 'preg') return iniciar(PREG[+b.dataset.k][1], true);
+      if (g === 'mostrar') { var t = TAREAS.filter(function (x) { return x.id === b.dataset.t; })[0]; if (t.paso === 'conex') return iniciar(CONEX, true); return iniciar(t.paso, true); }
+    });
+
+    function pasoActual() { return paso; }
+    function iniciar(desde, solo) {
+      activo = true; uno = !!solo; paso = typeof desde === 'object' ? desde : P[desde]; i = typeof desde === 'object' ? -1 : desde;
+      mostrar();
+    }
+    function terminar(sinVisto) {
+      activo = false; foco.hidden = true; fondo.hidden = true; copi.hidden = true;
+      if (!sinVisto) { est.visto = true; guardarEst(); }
+    }
+    function ir(k) { if (k < 0 || k >= P.length) return terminar(); i = k; paso = P[k]; mostrar(); }
+    function mostrar() {
+      var p = paso;
+      if (p.cerrar && !$('#velo').hidden) cerrarPanel();
+      if (p.tab) { if (!document.getElementById('crm').classList.contains('activa')) window.ir('crm'); seleccionarTab(p.tab); }
+      if (p.antes) p.antes();
+      if (p.detalle && $('#velo').hidden) { var r = RES.filter(function (x) { return x.crm && x.e === 'nueva'; })[0]; if (r) abrir(r.id); }
+      pintarCopi();
+      var el = p.sel && document.querySelector(p.sel);
+      if (el && el.getClientRects().length) { var rr = el.getBoundingClientRect(), grande = rr.height > innerHeight * .55, fijo = getComputedStyle(el).position === 'fixed'; if (fijo) {} else if (grande && !p.detalle) window.scrollTo({ top: scrollY + rr.top - 84, behavior: reducido ? 'auto' : 'smooth' }); else el.scrollIntoView({ block: 'center', behavior: reducido ? 'auto' : 'smooth' }); }
+      colocar(); setTimeout(colocar, reducido ? 30 : 420);
+    }
+    function pintarCopi() {
+      var p = paso, n = P.length - 2, k = i, primario;
+      var cuenta = p.centro ? 'HospedAndo' : (uno ? 'Le muestro' : 'Paso ' + k + ' de ' + n);
+      var acc;
+      if (p.bienvenida) acc = '<button type="button" class="btn btn-s btn-sm" data-c="despues">Lo veo después</button><button type="button" class="btn btn-p btn-sm" data-c="sig">Empezar el recorrido</button>';
+      else if (p.final) acc = '<button type="button" class="btn btn-s btn-sm" data-c="lista">Ver mis primeros pasos</button><button type="button" class="btn btn-p btn-sm" data-c="config">Configurar mi alojamiento</button>';
+      else if (uno) acc = '<button type="button" class="btn btn-s btn-sm" data-c="lista">Volver a la guía</button><button type="button" class="btn btn-p btn-sm" data-c="fin">Entendido</button>';
+      else acc = '<button type="button" class="saltar" data-c="fin">Saltar el recorrido</button>' + (k > 1 ? '<button type="button" class="btn btn-s btn-sm" data-c="ant">Atrás</button>' : '') + '<button type="button" class="btn btn-p btn-sm" data-c="sig">' + 'Siguiente' + '</button>';
+      copi.className = 'copi' + (p.centro ? ' centro' : '');
+      copi.setAttribute('aria-modal', p.centro ? 'true' : 'false');
+      copi.innerHTML = (p.centro ? '<div class="copi-portada">' + escena({ nom: p.final ? 'mirador' : 'familiar' }) + '</div>' : '') +
+        '<div class="cab-c"><span class="copi-ava"><img src="../assets/isotipo-desarrollando.png" alt=""></span><div><b>Copiloto</b><small>' + cuenta + '</small></div><button type="button" class="copi-x" data-c="fin" aria-label="Cerrar el copiloto">×</button></div>' +
+        '<h3 id="copiT">' + p.t + '</h3><p>' + p.x + '</p>' + (p.pista ? '<div class="pista">' + p.pista + '</div>' : '') +
+        (!p.centro && !uno ? '<div class="prog"><i style="width:' + Math.round(100 * k / n) + '%"></i></div>' : '') + '<div class="acc">' + acc + '</div>';
+      copi.hidden = false;
+      primario = $('.btn-p', copi); if (primario) primario.focus({ preventScroll: true });
+    }
+    function colocar() {
+      if (!activo) return;
+      var p = paso, vw = innerWidth, vh = innerHeight, movil = vw <= 700;
+      if (p.centro) { foco.hidden = true; fondo.hidden = false; copi.style.top = ''; copi.style.left = ''; return; }
+      fondo.hidden = true;
+      var el = p.sel && document.querySelector(p.sel), cw = copi.offsetWidth, ch = copi.offsetHeight, ct, cl;
+      if (!el || !el.getClientRects().length) { foco.hidden = true; ct = movil ? vh - ch - 92 : vh - ch - 24; cl = movil ? 10 : vw - cw - 24; copi.style.top = ct + 'px'; copi.style.left = cl + 'px'; return; }
+      var r = el.getBoundingClientRect(), pad = 8;
+      var t0 = Math.max(r.top - pad, 4), l0 = Math.max(r.left - pad, 4);
+      foco.hidden = false;
+      foco.style.top = t0 + 'px'; foco.style.left = l0 + 'px';
+      foco.style.width = Math.max(0, Math.min(r.right + pad, vw - 4) - l0) + 'px'; foco.style.height = Math.max(0, Math.min(r.bottom + pad, vh - 4) - t0) + 'px';
+      if (movil) { cl = 10; var abajo = vh - ch - 92; if (r.height > vh * .55) ct = abajo; else if (r.top + r.height / 2 > vh / 2) ct = Math.max(12, Math.min(72, r.top - ch - 14)); else ct = abajo; }
+      else if (r.height > vh * .55 || r.width > vw * .8) { ct = vh - ch - 24; cl = vw - cw - 24; }
+      else {
+        if (r.bottom + 14 + ch < vh - 12) ct = r.bottom + 14; else if (r.top - 14 - ch > 70) ct = r.top - 14 - ch; else ct = Math.min(Math.max(r.top, 76), vh - ch - 12);
+        cl = Math.min(Math.max(r.left, 12), vw - cw - 12);
+        if (ct < r.bottom && ct + ch > r.top) cl = r.right + 14 + cw < vw ? r.right + 14 : Math.max(12, r.left - 14 - cw);
+      }
+      copi.style.top = Math.round(ct) + 'px'; copi.style.left = Math.round(cl) + 'px';
+    }
+    var cuadro = 0;
+    function recolocar() { if (!activo || cuadro) return; cuadro = requestAnimationFrame(function () { cuadro = 0; colocar(); }); }
+    window.addEventListener('resize', recolocar); window.addEventListener('scroll', recolocar, true);
+    copi.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-c]'); if (!b) return; var c = b.dataset.c;
+      if (c === 'sig') { if (paso.final) return terminar(); return ir(i + 1); }
+      if (c === 'ant') return ir(i - 1);
+      if (c === 'despues') { terminar(); aviso('Cuando quiera, abra el botón «Guía», arriba'); return; }
+      if (c === 'fin') { terminar(); $('#guiaBtn').focus(); return; }
+      if (c === 'lista') { terminar(); if (!$('#velo').hidden) cerrarPanel(); window.ir('crm'); abrirPanelGuia(true); return; }
+      if (c === 'config') { terminar(); seleccionarTab('config'); return; }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { if (activo) terminar(); if (!$('#guiaPanel').hidden) { abrirPanelGuia(false); $('#guiaBtn').focus(); } }
+    });
+    document.addEventListener('hosp:log', function (e) { TAREAS.forEach(function (t) { if (t.log && e.detail.indexOf(t.log) === 0) completar(t.id); }); });
+    document.addEventListener('hosp:abrir', function (e) {
+      var r = porId(e.detail.id); if (!r) return;
+      if (r.e === 'nueva' && !e.detail.modo) completar('abrir');
+      if (activo && !uno && paso.espera && !e.detail.modo) ir(i + 1);
+      else if (activo) setTimeout(colocar, 60);
+    });
+    window.guiaInicio = function () { if (!est.visto) setTimeout(function () { iniciar(0); }, 500); };
+    pintarBoton();
+  })();
   $('#fab').addEventListener('click', function () { seleccionarTab('calendario'); $('#calNueva').click(); });
   (function () {
     var a = $('#heroArte'); if (!a || !window.matchMedia || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
