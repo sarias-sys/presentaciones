@@ -155,7 +155,7 @@ h2 em, h1 em { font-style: normal; color: var(--acc); }
     <div class="col"><ul class="check">
       <li><label><input type="checkbox" data-k="3a"><span><b>Conecta Wompi o Mercado Pago</b>Toda la plata de cada boleta entra directo a tu cuenta. Puedes tener las dos y cada evento escoge con cuál cobra. Mercado Pago queda «En revisión de Bailando» antes de activarse.</span></label></li>
       <li><label><input type="checkbox" data-k="3b"><span><b>Recarga tu saldo</b>De ahí sale la comisión de Bailando. La recarga se habilita cuando conectas tu medio de pago.</span></label></li>
-      <li><label><input type="checkbox" data-k="3c"><span><b>Empieza en Pruebas</b>Mientras tu cuenta diga «Pruebas: no cobra de verdad», las compras no mueven plata real: ideal para ensayar.</span></label></li>
+      <li><label><input type="checkbox" data-k="3c"><span><b>¿Aún sin llaves de Wompi? Usa el Modo prueba</b>Más abajo en Facturación está el Modo prueba de Bailando: recorres toda la plataforma con una tarjeta de prueba y ninguna compra cobra plata real.</span></label></li>
     </ul>
       <p class="tip"><b>Tu comisión:</b> tu primer evento no paga; desde el segundo sube 1&nbsp;% por evento, hasta un tope de 9&nbsp;%. Un evento cuenta cuando vende su primera boleta. Las ventas de taquilla y las cortesías también descuentan del saldo: recárgalo antes de la noche.</p></div>
     <figure class="shot"><img src="../assets/bailando/panel/facturacion.jpg" alt="Pantalla de Configuración, pestaña Facturación, con Wompi y Mercado Pago" loading="lazy"><figcaption>Configuración › Facturación</figcaption></figure>
@@ -197,7 +197,7 @@ h2 em, h1 em { font-style: normal; color: var(--acc); }
   <p class="where">En el panel: <b>Eventos › tu evento</b>, <b>Configuración › Facturación</b> y <b>Mi página</b></p>
   <div class="step">
     <div class="col"><ul class="check">
-      <li><label><input type="checkbox" data-k="6a"><span><b>Haz una compra de prueba</b>Con tu cuenta todavía en Pruebas, compra una boleta, revisa que te llegue con su QR al correo y escanéala en la puerta.</span></label></li>
+      <li><label><input type="checkbox" data-k="6a"><span><b>Haz una compra de prueba</b>Con el Modo prueba (o tu cuenta de Wompi en Pruebas), compra una boleta, revisa que te llegue con su QR al correo y escanéala en la puerta.</span></label></li>
       <li><label><input type="checkbox" data-k="6b"><span><b>Pasa a cobro real</b>Cuando todo funcione, revisa en Facturación que tu cuenta ya no diga «Pruebas». Si necesitas ayuda para el cambio, escríbenos.</span></label></li>
       <li><label><input type="checkbox" data-k="6c"><span><b>Copia el link público</b>Ponlo en tu bio de Instagram, tus estados y tus grupos de WhatsApp.</span></label></li>
       <li><label><input type="checkbox" data-k="6d"><span><b>Completa Mi página y tu carta</b>Portada, publicaciones y fotos de tu lugar; la carta con tus productos y destacados.</span></label></li>
@@ -224,7 +224,7 @@ h2 em, h1 em { font-style: normal; color: var(--acc); }
   </div>
   <div class="step pane" data-pane="t">
     <div class="col"><ul class="check">
-      <li><label><input type="checkbox" data-k="7c"><span><b>Vende en taquilla</b>Escoge evento, tipo de boleta, nombre de quien compra y medio de pago. Sale del mismo cupo de la web, descuenta la comisión del saldo y aquí solo se venden boletas.</span></label></li>
+      <li><label><input type="checkbox" data-k="7c"><span><b>Vende en taquilla</b>Escoge evento, tipo de boleta, nombre de quien compra y medio de pago (efectivo o datáfono). Sale del mismo cupo de la web, descuenta la comisión del saldo y aquí solo se venden boletas.</span></label></li>
     </ul></div>
     <figure class="shot"><img src="../assets/bailando/panel/taquilla.jpg" alt="Pantalla de Taquilla" loading="lazy"><figcaption>Taquilla</figcaption></figure>
   </div>
@@ -289,7 +289,7 @@ addEventListener('resize',fit); fit();
 
 // Tema claro / oscuro
 const tb=document.querySelector('[data-theme-btn]');
-function paintTheme(){ const l=document.documentElement.dataset.theme==='light'; tb.textContent=l?'☾ Modo oscuro':'☀ Modo claro'; tb.setAttribute('aria-label',l?'Cambiar a modo oscuro':'Cambiar a modo claro'); }
+function paintTheme(){ const l=document.documentElement.dataset.theme==='light'; document.querySelectorAll('.shot img').forEach(im=>{ const a=im.getAttribute('src'), b=l?a.replace('/panel/','/panel-claro/'):a.replace('/panel-claro/','/panel/'); if(a!==b) im.setAttribute('src',b); }); tb.textContent=l?'☾ Modo oscuro':'☀ Modo claro'; tb.setAttribute('aria-label',l?'Cambiar a modo oscuro':'Cambiar a modo claro'); }
 tb.addEventListener('click',()=>{ const l=document.documentElement.dataset.theme!=='light'; if(l) document.documentElement.dataset.theme='light'; else delete document.documentElement.dataset.theme; try{ localStorage.setItem('bailando-tema',l?'light':'dark'); }catch(e){} paintTheme(); });
 paintTheme();
 // Visor de imágenes
