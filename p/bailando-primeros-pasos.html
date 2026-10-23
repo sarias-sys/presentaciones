@@ -1,0 +1,296 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Bailando · Primeros pasos</title>
+<link rel="icon" href="../assets/isotipo-desarrollando.png">
+<style>
+@font-face { font-family: 'Jakarta'; font-weight: 400; font-display: swap; src: url('../assets/fonts/plus-jakarta-sans-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Jakarta'; font-weight: 500; font-display: swap; src: url('../assets/fonts/plus-jakarta-sans-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Jakarta'; font-weight: 600; font-display: swap; src: url('../assets/fonts/plus-jakarta-sans-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Jakarta'; font-weight: 700; font-display: swap; src: url('../assets/fonts/plus-jakarta-sans-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Jakarta'; font-weight: 800; font-display: swap; src: url('../assets/fonts/plus-jakarta-sans-latin-800-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Mono'; font-weight: 700; font-display: swap; src: url('../assets/fonts/space-mono-latin-700-normal.woff2') format('woff2'); }
+:root { --bg:#070707; --s1:#111112; --s2:#18181a; --line:#2a2a2d; --lime:#CAFF42; --tx:#F5F5F5; --mut:#B8B8BC; --mut2:#9C9CA2; }
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { background: #000; overflow: hidden; font-family: Jakarta, system-ui, sans-serif; color: var(--tx); }
+button { font-family: inherit; }
+.vstage { position: fixed; inset: 0 0 60px 0; overflow: hidden; }
+.deck { position: absolute; left: 50%; top: 50%; width: 1280px; height: 720px; transform-origin: center center; }
+.deck > section { position: absolute; inset: 0; background: var(--bg); padding: 40px 64px 0; opacity: 0; visibility: hidden; transition: opacity .3s ease; overflow: hidden; }
+.deck > section.on { opacity: 1; visibility: visible; }
+@media (prefers-reduced-motion: reduce) { .deck > section { transition: none; } }
+.top { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-weight: 800; font-size: 22px; letter-spacing: -.04em; color: var(--lime); }
+.tag { font-family: Mono, monospace; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--bg); background: var(--lime); padding: 4px 10px; border-radius: 6px; }
+h1, h2 { margin: 0; letter-spacing: -.03em; font-weight: 800; }
+h2 { font-size: 40px; line-height: 1.05; margin-top: 14px; }
+h2 em, h1 em { font-style: normal; color: var(--lime); }
+.where { margin-top: 6px; font-size: 15px; color: var(--mut); }
+.where b { color: var(--tx); font-weight: 700; }
+.step { display: grid; grid-template-columns: 1fr 640px; gap: 36px; margin-top: 22px; align-items: start; }
+.shot { margin: 0; }
+.shot img { display: block; width: 640px; height: 400px; object-fit: cover; object-position: top left; border-radius: 14px; border: 1px solid var(--line); box-shadow: 0 24px 60px rgba(0,0,0,.55); }
+.shot figcaption { margin-top: 8px; font-size: 12px; color: var(--mut2); }
+.check { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.check label { display: grid; grid-template-columns: 26px 1fr; gap: 12px; align-items: start; cursor: pointer; background: var(--s1); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 15px; line-height: 1.45; color: #DADADE; }
+.check label b { color: #fff; display: block; font-size: 16px; margin-bottom: 2px; }
+.check input { appearance: none; -webkit-appearance: none; width: 24px; height: 24px; border-radius: 7px; border: 2px solid #4a4a50; margin: 1px 0 0; cursor: pointer; display: grid; place-items: center; }
+.check input:checked { background: var(--lime); border-color: var(--lime); }
+.check input:checked::after { content: ''; width: 6px; height: 11px; border: solid var(--bg); border-width: 0 3px 3px 0; transform: rotate(45deg) translate(-1px,-1px); }
+.check input:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.check label:has(input:checked) { border-color: rgba(202,255,66,.45); }
+.tip { margin-top: 12px; font-size: 14px; line-height: 1.45; color: #DADADE; border-left: 3px solid var(--lime); padding-left: 12px; }
+.tip b { color: var(--lime); }
+/* Portada */
+.cover h1 { font-size: 78px; line-height: .95; margin-top: 46px; }
+.cover .lead { font-size: 19px; line-height: 1.5; color: #D2D2D6; max-width: 640px; margin: 18px 0 0; }
+.map { position: absolute; right: 64px; top: 120px; width: 470px; display: flex; flex-direction: column; gap: 8px; }
+.map button { all: unset; cursor: pointer; display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; align-items: center; background: var(--s1); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; font-size: 15px; font-weight: 600; }
+.map button:hover { border-color: #55555b; }
+.map button:focus-visible { outline: 2px solid var(--lime); }
+.map i { font-style: normal; width: 30px; height: 30px; border-radius: 50%; background: #26262a; display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+.map .done i { background: var(--lime); color: var(--bg); }
+.map small { font-size: 12px; color: var(--mut2); font-variant-numeric: tabular-nums; }
+.prog-wrap { margin-top: 30px; max-width: 520px; }
+.prog-wrap span { font-size: 13px; color: var(--mut); font-weight: 600; }
+.bar { height: 12px; border-radius: 999px; background: #232326; margin-top: 8px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--lime); transition: width .3s; }
+.reset { all: unset; cursor: pointer; margin-top: 10px; font-size: 12px; color: var(--mut2); text-decoration: underline; }
+/* Noche: pestañas */
+.tabs { display: flex; gap: 8px; margin-top: 18px; }
+.tabs button { border: 1px solid var(--line); background: var(--s1); color: var(--tx); border-radius: 999px; padding: 9px 20px; font-weight: 700; font-size: 14px; cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--lime); color: var(--bg); border-color: var(--lime); }
+.tabs button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.pane { display: none; } .pane.on { display: grid; }
+/* Cierre */
+.help { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 34px; }
+.help a, .help div { background: var(--s1); border: 1px solid var(--line); border-radius: 18px; padding: 26px; text-decoration: none; color: var(--tx); display: flex; flex-direction: column; gap: 8px; }
+.help a:hover { border-color: var(--lime); }
+.help b { font-size: 22px; letter-spacing: -.02em; } .help span { font-size: 15px; line-height: 1.45; color: var(--mut); }
+.help em { font-style: normal; color: var(--lime); font-weight: 700; font-size: 15px; margin-top: auto; }
+/* Barra */
+.vbar { position: fixed; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 10px; padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); color: #D9D9DD; font-size: 13px; background: #0b0b0c; border-top: 1px solid #222; z-index: 5; }
+.nb { border: 0; background: rgba(255,255,255,.12); color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 18px; }
+.nb:hover { background: rgba(255,255,255,.22); }
+.nb:focus-visible, .idx:focus-visible, .menu button:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
+.cnt { font-variant-numeric: tabular-nums; min-width: 64px; text-align: center; }
+.vsp { flex: 1; } .hint { opacity: .7; }
+.idx { border: 0; background: rgba(255,255,255,.12); color: #fff; height: 40px; padding: 0 16px; border-radius: 20px; cursor: pointer; font: 600 13px Jakarta, sans-serif; }
+.prog { position: fixed; left: 0; top: 0; height: 3px; background: var(--lime); z-index: 6; transition: width .3s; }
+.menu { position: fixed; inset: 0; background: rgba(7,7,7,.95); z-index: 10; display: none; overflow: auto; padding: 40px 16px; }
+.menu.open { display: block; }
+.menu h3 { color: #fff; font-size: 20px; margin: 0 auto 16px; max-width: 760px; }
+.menu ol { list-style: none; margin: 0 auto; padding: 0; max-width: 760px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 6px 20px; }
+.menu button { width: 100%; text-align: left; border: 0; background: transparent; color: #D9D9DD; font: 500 14px Jakarta, sans-serif; padding: 9px 10px; border-radius: 8px; cursor: pointer; display: flex; gap: 10px; }
+.menu button:hover, .menu button[aria-current="true"] { background: rgba(255,255,255,.1); color: #fff; }
+.menu button span { color: var(--mut2); min-width: 22px; }
+.rot { display: none; position: fixed; top: 14px; left: 0; right: 0; text-align: center; color: var(--mut); font: 500 13px Jakarta, sans-serif; padding: 0 16px; z-index: 4; }
+@media (orientation: portrait) and (max-width: 640px) { .rot { display: block; } .hint { display: none; } .menu ol { grid-template-columns: minmax(0,1fr); } }
+</style></head><body>
+<div class="prog"></div><p class="rot">Gira el teléfono para ver la guía más grande</p>
+<main class="vstage"><div class="deck">
+
+<section class="cover">
+  <div class="top"><span class="logo">Bailando</span><span class="tag">Guía de inicio</span></div>
+  <h1>Primeros pasos<br>con <em>Bailando</em></h1>
+  <p class="lead">Tu primer evento listo para vender, paso a paso. Marca cada tarea cuando la termines: esta guía recuerda tu avance en este navegador.</p>
+  <div class="prog-wrap"><span data-total>0 de 0 tareas listas</span><div class="bar"><i data-totalbar></i></div><button type="button" class="reset" data-reset>Reiniciar el avance</button></div>
+  <nav class="map" aria-label="Pasos de la guía" data-map></nav>
+</section>
+
+<section data-step="1" data-title="Tu negocio">
+  <div class="top"><span class="logo">Bailando</span><span class="tag">Paso 1 de 7</span></div>
+  <h2>Deja listos <em>los datos de tu negocio</em></h2>
+  <p class="where">En el panel: <b>Configuración › Organización</b></p>
+  <div class="step">
+    <ul class="check">
+      <li><label><input type="checkbox" data-k="1a"><span><b>Nombre y enlace público</b>El enlace es la dirección de tu página en Bailando. Si lo cambias después, los enlaces viejos dejan de funcionar.</span></label></li>
+      <li><label><input type="checkbox" data-k="1b"><span><b>Razón social y NIT</b>Aparecen en tu página pública.</span></label></li>
+      <li><label><input type="checkbox" data-k="1c"><span><b>País, moneda y zona horaria</b>Colombia, peso colombiano y America/Bogota. Guarda los cambios.</span></label></li>
+    </ul>
+    <figure class="shot"><img src="../assets/bailando/panel/organizacion.jpg" alt="Pantalla de Configuración, pestaña Organización" loading="lazy"><figcaption>Configuración › Organización</figcaption></figure>
+  </div>
+</section>
+
+<section data-step="2" data-title="Sedes y marca">
+  <div class="top"><span class="logo">Bailando</span><span class="tag">Paso 2 de 7</span></div>
+  <h2>Crea tu sede y <em>sube tu marca</em></h2>
+  <p class="where">En el panel: <b>Configuración › Sedes</b> y <b>Configuración › Marca</b></p>
+  <div class="step">
+    <ul class="check">
+      <li><label><input type="checkbox" data-k="2a"><span><b>Crea tu sede</b>Dirección y aforo. Cada evento se asocia a una sede, y puedes tener varias.</span></label></li>
+      <li><label><input type="checkbox" data-k="2b"><span><b>Logo para la boleta</b>Cuadrado o compacto: aparece arriba en la boleta.</span></label></li>
+      <li><label><input type="checkbox" data-k="2c"><span><b>Logo para la web</b>Horizontal y con fondo transparente, va arriba en tu cartelera.</span></label></li>
+      <li><label><input type="checkbox" data-k="2d"><span><b>Aspecto de tu cartelera y de tu carta</b>Cartelera oscura o clara; carta con fotos o en lista.</span></label></li>
+    </ul>
+    <figure class="shot"><img src="../assets/bailando/panel/sedes.jpg" alt="Pantalla de Configuración, pestaña Sedes" loading="lazy"><figcaption>Configuración › Sedes</figcaption></figure>
+  </div>
+</section>
+
+<section data-step="3" data-title="Cobro y saldo">
+  <div class="top"><span class="logo">Bailando</span><span class="tag">Paso 3 de 7</span></div>
+  <h2>Conecta tu cobro: <em>la plata va a tu cuenta</em></h2>
+  <p class="where">En el panel: <b>Configuración › Facturación</b> y <b>Saldo</b></p>
+  <div class="step">
+    <ul class="check">
+      <li><label><input type="checkbox" data-k="3a"><span><b>Conecta Wompi o Mercado Pago</b>Toda la plata de cada boleta entra directo a tu cuenta. Puedes tener las dos y cada evento escoge con cuál cobra. Mercado Pago queda «En revisión de Bailando» antes de activarse.</span></label></li>
+      <li><label><input type="checkbox" data-k="3b"><span><b>Recarga tu saldo</b>De ahí sale la comisión de Bailando. La recarga se habilita cuando conectas tu medio de pago.</span></label></li>
+      <li><label><input type="checkbox" data-k="3c"><span><b>Empieza en Pruebas</b>Mientras tu cuenta diga «Pruebas: no cobra de verdad», las compras no mueven plata real: ideal para ensayar.</span></label></li>
+    </ul>
+    <figure class="shot"><img src="../assets/bailando/panel/facturacion.jpg" alt="Pantalla de Configuración, pestaña Facturación, con Wompi y Mercado Pago" loading="lazy"><figcaption>Configuración › Facturación</figcaption></figure>
+  </div>
+  <p class="tip"><b>Tu comisión:</b> tu primer evento no paga; desde el segundo sube 1&nbsp;% por evento, hasta un tope de 9&nbsp;%. Un evento cuenta cuando vende su primera boleta. Las ventas de taquilla y las cortesías también descuentan del saldo: recárgalo antes de la noche.</p>
+</section>
+
+<section data-step="4" data-title="Tu equipo">
+  <div class="top"><span class="logo">Bailando</span><span class="tag">Paso 4 de 7</span></div>
+  <h2>Invita a tu <em>equipo</em></h2>
+  <p class="where">En el panel: <b>Configuración › Usuarios</b></p>
+  <div class="step">
+    <ul class="check">
+      <li><label><input type="checkbox" data-k="4a"><span><b>Invita a tu gerente o administrador</b>Escribe su correo y escoge el rol. Le llega un correo para definir su contraseña.</span></label></li>
+      <li><label><input type="checkbox" data-k="4b"><span><b>Invita a quien maneja la puerta</b>El rol Puerta es para quien escanea las boletas en la entrada.</span></label></li>
+      <li><label><input type="checkbox" data-k="4c"><span><b>Solo lectura para quien solo consulta</b>Por ejemplo, tu contador o un socio.</span></label></li>
+    </ul>
+    <figure class="shot"><img src="../assets/bailando/panel/usuarios.jpg" alt="Pantalla de Configuración, pestaña Usuarios" loading="lazy"><figcaption>Configuración › Usuarios · nombres de ejemplo</figcaption></figure>
+  </div>
+</section>
+
+<section data-step="5" data-title="Crea tu evento">
+  <div class="top"><span class="logo">Bailando</span><span class="tag">Paso 5 de 7</span></div>
+  <h2>Arma tu evento <em>en 6 pasos</em></h2>
+  <p class="where">En el panel: <b>Eventos › Nuevo evento</b>. La ficha va en orden: La noche · Artista y música · Imágenes · Boletas · Palcos · Cobro y publicación</p>
+  <div class="step">
+    <ul class="check">
+      <li><label><input type="checkbox" data-k="5a"><span><b>La noche, artista e imágenes</b>Título, sede, inicio, fin y apertura de puertas; la descripción y la música; las imágenes del evento.</span></label></li>
+      <li><label><input type="checkbox" data-k="5b"><span><b>Boletas y etapas</b>Cada tipo de boleta con su precio base y su cupo. Dentro de cada tipo agrega etapas de precio, como preventa.</span></label></li>
+      <li><label><input type="checkbox" data-k="5c"><span><b>Palcos</b>Si vendes palcos, créalos numerados, cada uno con su precio.</span></label></li>
+      <li><label><input type="checkbox" data-k="5d"><span><b>Cobro y publicación</b>Escoge con qué cuenta cobra el evento y publícalo.</span></label></li>
+    </ul>
+    <figure class="shot"><img src="../assets/bailando/panel/boletas.jpg" alt="Ficha del evento, paso 4 Boletas" loading="lazy"><figcaption>Ficha del evento › 4 Boletas · evento de ejemplo</figcaption></figure>
+  </div>
+</section>
+
+<section data-step="6" data-title="Prueba y comparte">
+  <div class="top"><span class="logo">Bailando</span><span class="tag">Paso 6 de 7</span></div>
+  <h2>Prueba la compra y <em>comparte tu evento</em></h2>
+  <p class="where">En el panel: <b>Eventos › tu evento</b>, <b>Configuración › Facturación</b> y <b>Mi página</b></p>
+  <div class="step">
+    <ul class="check">
+      <li><label><input type="checkbox" data-k="6a"><span><b>Haz una compra de prueba</b>Con tu cuenta todavía en Pruebas, compra una boleta, revisa que te llegue con su QR al correo y escanéala en la puerta.</span></label></li>
+      <li><label><input type="checkbox" data-k="6b"><span><b>Pasa a cobro real</b>Cuando todo funcione, revisa en Facturación que tu cuenta ya no diga «Pruebas». Si necesitas ayuda para el cambio, escríbenos.</span></label></li>
+      <li><label><input type="checkbox" data-k="6c"><span><b>Copia el link público</b>Ponlo en tu bio de Instagram, tus estados y tus grupos de WhatsApp.</span></label></li>
+      <li><label><input type="checkbox" data-k="6d"><span><b>Completa Mi página y tu carta</b>Portada, publicaciones y fotos de tu lugar; la carta con tus productos y destacados.</span></label></li>
+    </ul>
+    <figure class="shot"><img src="../assets/bailando/panel/mipagina.jpg" alt="Pantalla Mi página" loading="lazy"><figcaption>Mi página · el link de cada evento está en su Resumen: Copiar link público</figcaption></figure>
+  </div>
+</section>
+
+<section data-step="7" data-title="La noche del evento">
+  <div class="top"><span class="logo">Bailando</span><span class="tag">Paso 7 de 7</span></div>
+  <h2>La noche del evento <em>y el día después</em></h2>
+  <div class="tabs" role="tablist" aria-label="Momentos de la noche">
+    <button type="button" role="tab" aria-selected="true" data-tab="p">Puerta</button>
+    <button type="button" role="tab" aria-selected="false" data-tab="t">Taquilla</button>
+    <button type="button" role="tab" aria-selected="false" data-tab="c">Cortesías</button>
+    <button type="button" role="tab" aria-selected="false" data-tab="d">Después</button>
+  </div>
+  <div class="step pane on" data-pane="p">
+    <ul class="check">
+      <li><label><input type="checkbox" data-k="7a"><span><b>Abre el escáner en el celular de la puerta</b>En el menú, Escáner de puerta. Ábrelo con señal y antes de que llegue la gente.</span></label></li>
+      <li><label><input type="checkbox" data-k="7b"><span><b>Supervisa desde el panel</b>Ingreso sobre boletas emitidas, ritmo por franjas de 15 minutos e incidencias.</span></label></li>
+    </ul>
+    <figure class="shot"><img src="../assets/bailando/panel/puerta.jpg" alt="Pestaña Puerta del evento" loading="lazy"><figcaption>Eventos › tu evento › Puerta</figcaption></figure>
+  </div>
+  <div class="step pane" data-pane="t">
+    <ul class="check">
+      <li><label><input type="checkbox" data-k="7c"><span><b>Vende en taquilla</b>Escoge evento, tipo de boleta, nombre de quien compra y medio de pago. Sale del mismo cupo de la web, descuenta la comisión del saldo y aquí solo se venden boletas.</span></label></li>
+    </ul>
+    <figure class="shot"><img src="../assets/bailando/panel/taquilla.jpg" alt="Pantalla de Taquilla" loading="lazy"><figcaption>Taquilla</figcaption></figure>
+  </div>
+  <div class="step pane" data-pane="c">
+    <ul class="check">
+      <li><label><input type="checkbox" data-k="7d"><span><b>Emite cortesías</b>Tipo de boleta, motivo y los nombres, uno por línea. Cada cortesía descuenta del saldo lo mismo que una boleta paga; antes de emitir ves el cargo.</span></label></li>
+    </ul>
+    <figure class="shot"><img src="../assets/bailando/panel/cortesias.jpg" alt="Pestaña Cortesías del evento" loading="lazy"><figcaption>Eventos › tu evento › Cortesías</figcaption></figure>
+  </div>
+  <div class="step pane" data-pane="d">
+    <ul class="check">
+      <li><label><input type="checkbox" data-k="7e"><span><b>Revisa el resumen</b>Recaudado, boletas vendidas sobre el cupo, órdenes e ingresados.</span></label></li>
+      <li><label><input type="checkbox" data-k="7f"><span><b>Descarga tus ventas</b>Eventos › tu evento › Ventas › Exportar a CSV (se abre en Excel). Ahí también ves los carritos abandonados. Si vas a escribirles, hazlo solo a quienes autorizaron recibir mensajes.</span></label></li>
+    </ul>
+    <figure class="shot"><img src="../assets/bailando/panel/resumen.jpg" alt="Resumen del evento" loading="lazy" style="height:auto;max-height:400px"><figcaption>Eventos › tu evento › Resumen · evento de ejemplo</figcaption><p class="tip">El módulo <b>Conciliación</b> aparece en el menú pero aún está en construcción.</p></figure>
+  </div>
+</section>
+
+<section>
+  <div class="top"><span class="logo">Bailando</span><span class="tag">Ayuda</span></div>
+  <h2 style="font-size:64px;margin-top:60px">¿Te quedó <em>alguna duda?</em></h2>
+  <p class="where" style="font-size:18px;margin-top:12px">Te acompañamos a montar tu primer evento.</p>
+  <div class="help">
+    <a href="https://bailando.desarrollandoando.com/ingresar" target="_blank" rel="noopener"><b>Entra a tu panel</b><span>bailando.desarrollandoando.com/ingresar</span><em>Ir al panel →</em></a>
+    <a href="https://wa.me/573116057980" target="_blank" rel="noopener"><b>Escríbenos por WhatsApp</b><span>+57 311 605 7980</span><em>Abrir WhatsApp →</em></a>
+    <div><b>Tu avance</b><span data-total2>0 de 0 tareas listas</span><em data-nextstep>Empieza por el paso 1</em></div>
+  </div>
+</section>
+
+</div></main>
+<nav class="vbar" aria-label="Navegación">
+  <button type="button" class="nb" data-prev aria-label="Anterior">‹</button><span class="cnt"></span><button type="button" class="nb" data-next aria-label="Siguiente">›</button>
+  <span class="vsp"></span><span class="hint">Avanza con las flechas del teclado o deslizando</span>
+  <button type="button" class="idx" data-idx>Índice</button>
+</nav>
+<div class="menu" role="dialog" aria-label="Índice"><h3>Índice</h3><ol data-menu></ol></div>
+<script>
+(function(){
+const deck=document.querySelector('.deck'), S=[...deck.children], n=S.length;
+const cnt=document.querySelector('.cnt'), prog=document.querySelector('.prog'), menu=document.querySelector('.menu');
+const titles=['Portada','1 · Tu negocio','2 · Sedes y marca','3 · Cobro y saldo','4 · Tu equipo','5 · Crea tu evento','6 · Prueba y comparte','7 · La noche del evento','Ayuda'];
+document.querySelector('[data-menu]').innerHTML=titles.map((t,k)=>'<li><button type="button" data-k="'+k+'"><span>'+(k+1)+'</span>'+t+'</button></li>').join('');
+let i=0;
+function fit(){ const s=Math.min(innerWidth/1280,(innerHeight-60)/720); deck.style.transform='translate(-50%,-50%) scale('+s+')'; }
+function go(k){ i=Math.max(0,Math.min(n-1,k)); S.forEach((s,j)=>{ s.classList.toggle('on',j===i); s.setAttribute('aria-hidden',String(j!==i)); if('inert' in s) s.inert=(j!==i); });
+  cnt.textContent=(i+1)+' / '+n; prog.style.width=((i+1)/n*100)+'%';
+  menu.querySelectorAll('button[data-k]').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.k===i)));
+  try{ history.replaceState(null,'','#s'+(i+1)); }catch(e){} }
+document.querySelector('[data-prev]').onclick=()=>go(i-1);
+document.querySelector('[data-next]').onclick=()=>go(i+1);
+document.querySelector('[data-idx]').onclick=()=>menu.classList.add('open');
+menu.addEventListener('click',e=>{ const b=e.target.closest('button[data-k]'); if(b) go(+b.dataset.k); menu.classList.remove('open'); });
+addEventListener('keydown',e=>{ const t=e.target; if(t.matches('input,textarea,select')) return; if(e.key===' '&&t.closest('button,a,label')) return;
+  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(i+1);} else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(i-1);}
+  else if(e.key==='Home') go(0); else if(e.key==='End') go(n-1); else if(e.key==='Escape') menu.classList.remove('open'); });
+let x0=null; addEventListener('touchstart',e=>{ x0=e.touches[0].clientX; },{passive:true});
+addEventListener('touchend',e=>{ if(x0===null) return; const d=e.changedTouches[0].clientX-x0; if(Math.abs(d)>50) go(i+(d<0?1:-1)); x0=null; });
+addEventListener('resize',fit); fit();
+
+// Pestañas
+const tabs=[...document.querySelectorAll('[data-tab]')], panes=[...document.querySelectorAll('[data-pane]')];
+tabs.forEach(t=>t.addEventListener('click',()=>{ tabs.forEach(x=>x.setAttribute('aria-selected',String(x===t))); panes.forEach(p=>p.classList.toggle('on',p.dataset.pane===t.dataset.tab)); }));
+
+// Avance guardado en este navegador
+const KEY='bailando-primeros-pasos-v1';
+let st={}; try{ st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ st={}; }
+const boxes=[...document.querySelectorAll('input[data-k]')];
+const steps=[...document.querySelectorAll('section[data-step]')];
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
+function render(){
+  boxes.forEach(b=>{ b.checked=!!st[b.dataset.k]; });
+  const done=boxes.filter(b=>b.checked).length, tot=boxes.length;
+  document.querySelector('[data-total]').textContent=done+' de '+tot+' tareas listas';
+  document.querySelector('[data-total2]').textContent=done+' de '+tot+' tareas listas';
+  document.querySelector('[data-totalbar]').style.width=(tot?done/tot*100:0)+'%';
+  let next=null;
+  document.querySelector('[data-map]').innerHTML=steps.map(s=>{ const bs=[...s.querySelectorAll('input[data-k]')], d=bs.filter(b=>b.checked).length, ok=d===bs.length;
+    if(!ok&&next===null) next=s; return '<button type="button" class="'+(ok?'done':'')+'" data-go="'+S.indexOf(s)+'"><i>'+(ok?'✓':s.dataset.step)+'</i><span>'+s.dataset.title+'</span><small>'+d+'/'+bs.length+'</small></button>'; }).join('');
+  document.querySelector('[data-nextstep]').textContent= next ? 'Sigue con el paso '+next.dataset.step+': '+next.dataset.title : '¡Todo listo! Ya puedes vender';
+}
+boxes.forEach(b=>b.addEventListener('change',()=>{ st[b.dataset.k]=b.checked; save(); render(); }));
+document.querySelector('[data-map]').addEventListener('click',e=>{ const b=e.target.closest('[data-go]'); if(b) go(+b.dataset.go); });
+document.querySelector('[data-reset]').addEventListener('click',()=>{ st={}; save(); render(); });
+render();
+const h=/^#s(\d+)$/.exec(location.hash); go(h?(+h[1]-1):0);
+})();
+</script>
+</body></html>
