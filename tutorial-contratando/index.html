@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tutorial ContratAndo</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+body{margin:0}img{max-width:100%}
+/* Layout: reproductor fijo a la izquierda, lista de lecciones como "etapas de un kanban" a la derecha */
+:root{
+  --bg:#f6f5fb; --surface:#ffffff; --ink:#17142b; --muted:#625d7a; --line:#e6e2f2;
+  --violet:#7c3aed; --violet-soft:#efe8fe; --violet-ink:#5b21b6; --ok:#0f9f6e;
+  --f-display:"Poppins",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Poppins",ui-sans-serif,system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e0c16; --surface:#17142b; --ink:#f1eefb; --muted:#a9a3c4; --line:#2a2545;
+  --violet:#9b6bff; --violet-soft:#241c44; --violet-ink:#c4adff; --ok:#34d399; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e0c16; --surface:#17142b; --ink:#f1eefb; --muted:#a9a3c4; --line:#2a2545;
+  --violet:#9b6bff; --violet-soft:#241c44; --violet-ink:#c4adff; --ok:#34d399; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+.wrap{max-width:1240px;margin:0 auto;padding-block:28px 56px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px 24px;margin-bottom:24px}
+.brand{font-family:var(--f-display);font-weight:700;font-size:15px;color:var(--violet);letter-spacing:.01em}
+.brand span{color:var(--muted);font-weight:500}
+h1{font-family:var(--f-display);font-size:clamp(26px,4vw,38px);line-height:1.15;margin:6px 0 6px;text-wrap:balance;font-weight:700}
+.lede{color:var(--muted);max-width:60ch;margin:0}
+.cta{display:inline-flex;align-items:center;gap:8px;background:var(--violet);color:#fff;text-decoration:none;
+  font-weight:600;padding:11px 18px;border-radius:999px;white-space:nowrap}
+.cta:hover{filter:brightness(1.08)}
+.cta:focus-visible,.lesson:focus-visible,.nav button:focus-visible{outline:3px solid var(--violet);outline-offset:3px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+.player{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;min-width:0}
+video{display:block;width:100%;aspect-ratio:16/9;background:#0e0c16}
+.meta{padding:18px 20px 20px;display:grid;gap:8px}
+.kicker{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--violet-ink)}
+.meta h2{margin:0;font-family:var(--f-display);font-size:22px;line-height:1.25;text-wrap:balance}
+.meta p{margin:0;color:var(--muted);max-width:68ch}
+.nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.nav button{font:inherit;font-size:14px;font-weight:500;border:1px solid var(--line);background:var(--bg);color:var(--ink);
+  border-radius:999px;padding:7px 14px;cursor:pointer}
+.nav button:disabled{opacity:.4;cursor:default}
+aside{min-width:0}
+.col-head{display:flex;align-items:center;justify-content:space-between;margin:2px 4px 10px}
+.col-head b{font-size:14px}
+.count{font-family:var(--f-mono);font-size:12px;color:var(--violet-ink);background:var(--violet-soft);border-radius:999px;padding:2px 9px}
+ol.lessons{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.lesson{width:100%;display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:center;text-align:left;
+  font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px;cursor:pointer}
+.lesson:hover{border-color:var(--violet)}
+.lesson[aria-current="true"]{border-color:var(--violet);box-shadow:0 0 0 1px var(--violet) inset}
+.lesson img{width:96px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;display:block;max-width:100%}
+.lesson .t{font-weight:600;font-size:14px;line-height:1.3}
+.lesson .s{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted);margin-top:3px}
+.code{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.dur{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.done{color:var(--ok);font-weight:600}
+.note{margin-top:14px;font-size:13px;color:var(--muted);padding:12px 14px;border:1px dashed var(--line);border-radius:12px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand">ContratAndo <span>· Centro de ayuda</span></div>
+      <h1>Aprende a contratar con ContratAndo</h1>
+      <p class="lede">Un resumen de un minuto y 8 lecciones cortas, con pantallas reales de la plataforma: desde crear tu cuenta hasta pedir los documentos de contratación.</p>
+    </div>
+    <a class="cta" href="https://crm.desarrollando.co/contratando" target="_blank" rel="noopener">Agenda una demo sin compromiso</a>
+  </header>
+
+  <div class="grid">
+    <section class="player" aria-live="polite">
+      <video id="vid" controls playsinline preload="metadata" poster="p0.jpg" src="v0.mp4"></video>
+      <div class="meta">
+        <div class="kicker" id="kicker">Resumen</div>
+        <h2 id="title">ContratAndo en 60 segundos</h2>
+        <p id="desc"></p>
+        <div class="nav">
+          <button id="prev" type="button">← Anterior</button>
+          <button id="next" type="button">Siguiente lección →</button>
+        </div>
+      </div>
+    </section>
+
+    <aside>
+      <div class="col-head"><b>Lecciones</b><span class="count" id="count">0/9 vistas</span></div>
+      <ol class="lessons" id="list"></ol>
+      <p class="note">Los videos usan una empresa de ejemplo con candidatos ficticios. Lo que ves en pantalla es la plataforma real.</p>
+    </aside>
+  </div>
+</div>
+
+<script>
+const L=[
+ {k:"Resumen",t:"ContratAndo en 60 segundos",d:51.7,x:"El recorrido completo: cargo, formulario, reglas, WhatsApp, pruebas y contratación."},
+ {k:"Lección 1",t:"Crea tu cuenta",d:42.4,x:"Registro sin tarjeta, datos de tu empresa e invitación a tu equipo con roles."},
+ {k:"Lección 2",t:"Crea tu vacante",d:49.6,x:"El asistente de cinco pasos: información, compensación, requisitos, configuración interna y revisión."},
+ {k:"Lección 3",t:"Arma tu formulario con preguntas filtro",d:40.9,x:"Campos básicos, preguntas de opción única o múltiple y el enlace para compartir."},
+ {k:"Lección 4",t:"Etapas y reglas automáticas",d:44.3,x:"El tablero por vacante y las reglas que mueven candidatos según sus respuestas, con simulación previa."},
+ {k:"Lección 5",t:"WhatsApp automático",d:41.5,x:"Mensajes por etapa con plantillas aprobadas por Meta y el historial de envíos."},
+ {k:"Lección 6",t:"Publica y recibe candidatos",d:38.4,x:"Enlace del formulario, campañas en Facebook e Instagram y el control de la vacante."},
+ {k:"Lección 7",t:"Pruebas psicométricas según el cargo",d:58.1,x:"Batería recomendada por nivel y área, fichas técnicas y enlace único para el candidato."},
+ {k:"Lección 8",t:"Revisa y contrata",d:38.0,x:"Perfil del candidato, perfil compartido por 7 días y documentos de contratación."}
+];
+const $=id=>document.getElementById(id);
+const vid=$("vid"), list=$("list");
+let cur=0, seen=new Set();
+try{ (JSON.parse(localStorage.getItem("ca_seen")||"[]")).forEach(i=>seen.add(i)); }catch(e){}
+const fmt=s=>{s=Math.round(s);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+function render(){
+  list.innerHTML="";
+  L.forEach((l,i)=>{
+    const li=document.createElement("li");
+    const b=document.createElement("button");
+    b.className="lesson"; b.type="button"; b.id="lesson-"+i;
+    b.setAttribute("aria-current", i===cur?"true":"false");
+    b.innerHTML=`<img src="p${i}.jpg" alt="" loading="lazy"><div><div class="code">${i===0?"RESUMEN":"L"+i}</div><div class="t"></div><div class="s"><span class="dur">${fmt(l.d)}</span>${seen.has(i)?'<span class="done">✓ Vista</span>':''}</div></div>`;
+    b.querySelector(".t").textContent=l.t;
+    b.addEventListener("click",()=>select(i,true));
+    li.appendChild(b); list.appendChild(li);
+  });
+  $("count").textContent=seen.size+"/"+L.length+" vistas";
+}
+function select(i,play){
+  cur=i; const l=L[i];
+  vid.src="v"+i+".mp4"; vid.poster="p"+i+".jpg";
+  $("kicker").textContent=l.k; $("title").textContent=l.t; $("desc").textContent=l.x;
+  $("prev").disabled=i===0; $("next").disabled=i===L.length-1;
+  $("next").textContent= i===0 ? "Empezar lección 1 →" : "Siguiente lección →";
+  render();
+  const h=i===0?"resumen":"leccion-"+i;
+  if(location.hash!=="#"+h) history.replaceState(null,"","#"+h);
+  if(play){ vid.play().catch(()=>{}); }
+}
+vid.addEventListener("ended",()=>{
+  seen.add(cur); try{localStorage.setItem("ca_seen",JSON.stringify([...seen]))}catch(e){}
+  render();
+});
+$("prev").addEventListener("click",()=>cur>0&&select(cur-1,true));
+$("next").addEventListener("click",()=>cur<L.length-1&&select(cur+1,true));
+function fromHash(){
+  const m=location.hash.match(/^#leccion-(\d)$/);
+  return m && +m[1]<L.length ? +m[1] : 0;
+}
+window.addEventListener("hashchange",()=>{const i=fromHash(); if(i!==cur) select(i,false);});
+select(fromHash(),false);
+</script>
+
+</body>
+</html>
