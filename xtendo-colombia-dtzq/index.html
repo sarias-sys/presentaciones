@@ -189,6 +189,7 @@ tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transfo
 .df-us{border-color:var(--accent)!important;background:var(--accent-soft)!important}
 .df-us h3{color:var(--accent)}
 .pilot .panel{align-content:start}
+select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--bg);color:var(--ink)}
 </style>
 </head>
 <body>
@@ -361,8 +362,13 @@ tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transfo
             <div class="seg" role="group" id="termSeg"><button type="button" data-term="0" data-i="term0"></button><button type="button" data-term="6" data-i="term6"></button><button type="button" data-term="12" data-i="term12"></button></div>
           </div>
         </div>
+        <div class="row-in">
+          <label class="f" for="ctry"><span id="ctryL"></span><select id="ctry"></select></label>
+          <label class="f" for="minw"><span id="minL"></span><input id="minw" type="number" min="0" step="10000" value="1750905"></label>
+        </div>
+        <p class="note" id="ctryNote"></p>
         <div class="grid-in"><table>
-          <thead><tr><th data-i="thRole"></th><th class="r" data-i="thPeople"></th><th class="r" data-i="thSal"></th></tr></thead>
+          <thead><tr><th data-i="thRole"></th><th class="r" data-i="thPeople"></th><th class="r" id="thSalCol"></th></tr></thead>
           <tbody id="inBody"></tbody>
         </table></div>
         <div class="row-in">
@@ -464,6 +470,14 @@ tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transfo
   const FEE_B=4000, SETUP_B=3000000, MIN_B=500000;
   const SETUP=SMLV;                  // 1 SMLV por tipo de vacante (A, C y piloto)
   const BANDS=[[1,50,25],[51,100,22],[101,200,19],[201,300,16],[301,500,13],[501,Infinity,10]];
+  const COUNTRIES={
+    co:{cur:"COP",fx:1,min:SMLV,pagos:12,sal:{loc:SMLV,bil:2500000,qa:2000000,tr:2300000,gtr:2100000,tl:2600000},step:10000},
+    gr:{cur:"EUR",fx:3534,min:920,pagos:14,sal:{loc:1000,bil:1300,qa:1300,tr:1300,gtr:1300,tl:1450},step:10},
+    bo:{cur:"BOB",fx:TRM/12.12,min:3300,pagos:13,sal:{loc:3300,bil:5000,qa:4500,tr:4500,gtr:4500,tl:5500},step:50},
+    ot:{cur:"USD",fx:TRM,min:400,pagos:12,sal:null,step:10}
+  };
+  const RATIO={loc:1,bil:2500000/SMLV,qa:2000000/SMLV,tr:2300000/SMLV,gtr:2100000/SMLV,tl:2600000/SMLV};
+  let country="co";
   const ROLES=[
     {k:"loc", sal:SMLV,    people:30, leads:60, cpl:2000, tests:["VERBA","EXACTA","PERFIL 5","ÍNTEGRA","ARRAIGO","CONTACTO"]},
     {k:"bil", sal:2500000, people:14, leads:50, cpl:4000, tests:["VERBA","EXACTA","PERFIL 5","ÍNTEGRA","ARRAIGO","CONTACTO"]},
@@ -533,7 +547,7 @@ tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transfo
     rP:"Salarios de referencia de ofertas en Colombia en 2026, básicos al mes. Precio de referencia por persona contratada en la opción A, primera banda (1 a 50 personas al mes) y sin contrato: 25 % del salario básico mensual del cargo, sin pruebas. Las pruebas y la voz se suman solo si se usan.",
     rNote:"Xtendo contrata en Colombia, Grecia, Bolivia y otros países. El porcentaje se calcula sobre el salario básico mensual del cargo en el país de la vacante; esta tabla usa salarios de Colombia.",
     thRole:"Cargo", thMarket:"Mercado en Colombia", thTests:"Batería sugerida (opcional)", thAvg:"Cobro al 15 % del salario anual", thAvgShort:"Cobro al 15 % anual",
-    thPeople:"Personas al mes", thSal:"Salario básico mensual (COP)", thLeads:"Leads por contratado", thCpl:"Pauta por lead (COP)",
+    thPeople:"Personas al mes", thSal:"Salario básico mensual ({c})", cCountry:"País de la vacante", cMin:"Salario mínimo mensual del país ({c})", cNames:{co:"Colombia",gr:"Grecia",bo:"Bolivia",ot:"Otro país (en dólares)"}, cNote:"Escriban los salarios en la moneda del país. Se convierten a pesos con la tasa del 29 de octubre de 2026: 1 € = 3.534 COP, 1 Bs = {bob} COP y 1 US$ = 3.162,35 COP. El setup sigue siendo un salario mínimo colombiano. En Grecia el cobro de referencia usa 14 salarios al año y en Bolivia 13; los salarios de Grecia y Bolivia por cargo son estimados.", thLeads:"Leads por contratado", thCpl:"Pauta por lead (COP)",
     roles:{loc:["Agente de servicio al cliente (BPO)","Español","Desde el salario mínimo hasta 2,0 millones"],
            bil:["Agente BPO bilingüe","Inglés B2 o superior","2,28–2,77 millones + bonos"],
            qa:["Analista de calidad","Monitoreo y calibración","1,5–2,1 millones"],
@@ -651,7 +665,7 @@ tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transfo
     rP:"Reference base salaries from job offers in Colombia in 2026, per month. Reference price per hire under option A, first band (1 to 50 people a month), no contract: 25% of the role's monthly base salary. Tests and voice are added only if used.",
     rNote:"Xtendo hires in Colombia, Greece, Bolivia and other countries. The percentage is calculated on the role's monthly base salary in the vacancy's country; this table uses Colombian salaries.",
     thRole:"Role", thMarket:"Market in Colombia", thTests:"Suggested battery (optional)", thAvg:"Fee at 15% of annual salary", thAvgShort:"15% annual fee",
-    thPeople:"People per month", thSal:"Monthly base salary (COP)", thLeads:"Leads per hire", thCpl:"Ad cost per lead (COP)",
+    thPeople:"People per month", thSal:"Monthly base salary ({c})", cCountry:"Country of the vacancy", cMin:"Country monthly minimum wage ({c})", cNames:{co:"Colombia",gr:"Greece",bo:"Bolivia",ot:"Other country (in dollars)"}, cNote:"Enter salaries in the country's currency. They are converted to pesos at the 29 October 2026 rate: €1 = COP 3,534, Bs 1 = COP {bob} and US$1 = COP 3,162.35. Setup is still one Colombian minimum wage. In Greece the reference fee uses 14 salaries a year and in Bolivia 13; role salaries for Greece and Bolivia are estimates.", thLeads:"Leads per hire", thCpl:"Ad cost per lead (COP)",
     roles:{loc:["BPO customer service agent","Spanish","From minimum wage up to COP 2.0M"],
            bil:["Bilingual BPO agent","English B2 or above","COP 2.28–2.77M + bonuses"],
            qa:["Quality analyst","Monitoring and calibration","COP 1.5–2.1M"],
@@ -747,6 +761,11 @@ tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transfo
     document.querySelectorAll("#langSeg button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===lang)));
     document.querySelectorAll("#curSeg button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.cur===cur)));
     document.querySelectorAll("#termSeg button").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.term===term)));
+    const C=COUNTRIES[country];
+    $("ctry").innerHTML=Object.keys(COUNTRIES).map(k=>`<option value="${k}"${k===country?" selected":""}>${t.cNames[k]}</option>`).join("");
+    $("ctryL").textContent=t.cCountry; $("minL").textContent=fill(t.cMin,{c:C.cur});
+    $("thSalCol").textContent=fill(t.thSal,{c:C.cur});
+    $("ctryNote").textContent=fill(t.cNote,{bob:new Intl.NumberFormat(locale(),{maximumFractionDigits:2}).format(TRM/12.12)});
     $("caps").innerHTML=t.caps.map((c,i)=>`<div class="cap"><span class="k">0${i+1}</span><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join("");
     $("autos").innerHTML=t.autos.map(a=>`<div class="arow"><span class="when">${a[0]}</span><span class="arr" aria-hidden="true">→</span><span class="what">${a[1]}</span></div>`).join("");
     $("plF").innerHTML=t.plF.map(x=>`<li>${x}</li>`).join("");
@@ -827,7 +846,7 @@ tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transfo
     const band=bandOf(Math.max(people,1)), bp=band[2]/100, setupT=types*SETUP;
     let tot={M:0,A:0}, testsM=0, voiceM=0;
     const rows=ROLES.map((r,i)=>{
-      const p=num("p"+i), s=num("s"+i);
+      const p=num("p"+i), s=num("s"+i)*COUNTRIES[country].fx;
       const M=s*pagos*pct, A=s*bp*tf+testsPH+voicePH;
       tot.M+=p*M; tot.A+=p*A; testsM+=p*testsPH; voiceM+=p*voicePH;
       return {r,p,M,A};
@@ -853,6 +872,15 @@ tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transfo
       <div><span class="tag" style="color:var(--b)">${t.optB}</span><span class="amt">${t.bLater}</span><span class="sub">${t.sum.B}</span></div>`;
   }
 
+  function setCountry(k){
+    country=k; const C=COUNTRIES[k];
+    $("minw").value=C.min; $("minw").step=C.step; $("pagos").value=C.pagos;
+    ROLES.forEach((r,i)=>{const el=$("s"+i); el.step=C.step; el.value=C.sal?C.sal[r.k]:Math.round(C.min*RATIO[r.k]/C.step)*C.step;});
+    renderStatic(); calc();
+  }
+  document.addEventListener("change",e=>{if(e.target.id==="ctry") setCountry(e.target.value);});
+  document.addEventListener("input",e=>{if(e.target.id==="minw"){const C=COUNTRIES[country]; const m=num("minw");
+    ROLES.forEach((r,i)=>{ if(!C.sal||r.k==="loc") $("s"+i).value=r.k==="loc"?m:Math.round(m*RATIO[r.k]/C.step)*C.step; }); calc();}});
   document.querySelectorAll("#themeSeg button").forEach(b=>b.addEventListener("click",()=>{theme=b.dataset.themeSet;store.set("xtco-theme",theme);applyTheme();}));
   document.querySelectorAll("#langSeg button").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.lang;store.set("xtco-lang",lang);renderStatic();renderPrices();}));
   document.querySelectorAll("#curSeg button").forEach(b=>b.addEventListener("click",()=>{cur=b.dataset.cur;store.set("xtco-cur",cur);renderStatic();renderPrices();}));
