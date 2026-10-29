@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../assets/isotipo-desarrollando.png">
+<title>Propuesta Xtendo Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: una columna de lectura que pasa por video, plataforma, cargos y opciones, y termina en una mesa de trabajo (entradas | resultado) y un comparativo. */
+:root{
+  --bg:#f6f5fa; --surface:#ffffff; --sunk:#efedf6; --ink:#1b1530; --muted:#5b5672; --line:#e2deee;
+  --accent:#6a35d4; --accent-ink:#ffffff; --accent-soft:#ece5fb; --good:#0d7a48; --good-soft:#e2f4ea; --warn:#9a5b00; --warn-soft:#fbefd9;
+  --comp:#8d879f; --b:#2d6fb8; --c:#b5547c;
+  --f-display:"Poppins","Noto Sans", ui-sans-serif, system-ui, sans-serif;
+  --f-body:"Poppins","Noto Sans", ui-sans-serif, system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --r-sm:6px; --r-md:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#110f18; --surface:#1a1724; --sunk:#14121c; --ink:#f1eef9; --muted:#aaa4bf; --line:#2d293d;
+  --accent:#b197fc; --accent-ink:#160f2b; --accent-soft:#2a2242; --good:#5fd49a; --good-soft:#163428; --warn:#f0b65c; --warn-soft:#3a2b12; --comp:#6f6985; --b:#6fa8e8; --c:#e38fb3; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#110f18; --surface:#1a1724; --sunk:#14121c; --ink:#f1eef9; --muted:#aaa4bf; --line:#2d293d;
+  --accent:#b197fc; --accent-ink:#160f2b; --accent-soft:#2a2242; --good:#5fd49a; --good-soft:#163428; --warn:#f0b65c; --warn-soft:#3a2b12; --comp:#6f6985; --b:#6fa8e8; --c:#e38fb3; color-scheme:dark}
+html[lang="el"]{--f-display:"Noto Sans", ui-sans-serif, system-ui, sans-serif; --f-body:"Noto Sans", ui-sans-serif, system-ui, sans-serif}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-weight:300;font-size:15px;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 48px}
+.wrap{max-width:1140px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.14;text-wrap:balance;margin:0}
+h1{font-size:clamp(1.8rem, 4vw, 2.9rem);font-weight:700;letter-spacing:-0.01em}
+h2{font-size:clamp(1.3rem, 2.4vw, 1.8rem)}
+h3{font-size:1.02rem}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:500}
+html[lang="el"] .eyebrow{font-family:var(--f-body);letter-spacing:.08em;font-weight:600}
+.lede{color:var(--muted);max-width:66ch;font-size:1.02rem}
+.num{font-variant-numeric:tabular-nums}
+section{padding-block:44px 6px;display:grid;gap:18px}
+section > header{display:grid;gap:8px}
+.note{font-size:.84rem;color:var(--muted)}
+
+/* Barra superior */
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding-block:18px 14px;border-bottom:1px solid var(--line)}
+.brand{font-family:"Poppins",sans-serif;font-weight:600;font-size:1.15rem;color:var(--accent)}
+.brand small{display:block;font-weight:400;font-size:.72rem;color:var(--muted);letter-spacing:.02em}
+.ctrls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:inline-flex;gap:3px;background:var(--sunk);padding:3px;border-radius:var(--r-md);max-width:100%;overflow-x:auto}
+.seg button{font:inherit;font-weight:500;font-size:.82rem;border:0;background:transparent;color:var(--muted);padding:6px 10px;border-radius:var(--r-sm);cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 0 var(--line)}
+button:focus-visible, input:focus-visible, summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chip{display:inline-flex;align-items:center;font-size:.76rem;font-weight:500;padding:4px 10px;border-radius:999px;background:var(--warn-soft);color:var(--warn)}
+
+/* Portada */
+.hero{padding-block:34px 4px;display:grid;gap:14px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:8px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;display:grid;gap:2px;align-content:start}
+.fact b{font-family:var(--f-display);font-weight:600;font-size:1.45rem}
+.fact span{color:var(--muted);font-size:.85rem}
+.fact.hl{border-color:var(--accent)}
+.fact.hl b{color:var(--accent)}
+
+/* Video */
+.video{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:18px;align-items:center}
+@media (max-width:820px){.video{grid-template-columns:1fr}}
+.vbox{background:#0e0c16;border-radius:var(--r-md);overflow:hidden;aspect-ratio:16/9;max-width:100%}
+.vbox video{width:100%;height:100%;display:block;object-fit:contain;background:#0e0c16}
+
+/* Tarjetas de la plataforma */
+.caps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.cap{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:16px;display:grid;gap:6px;align-content:start}
+.cap .k{font-family:var(--f-mono);font-size:.72rem;color:var(--accent)}
+.cap p{color:var(--muted);font-size:.9rem}
+
+/* Automatizaciones */
+.auto{display:grid;gap:0;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);overflow:hidden}
+.arow{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1.4fr);gap:10px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--line)}
+.arow:last-child{border-bottom:0}
+.arow .when{font-weight:500}
+.arow .arr{color:var(--accent);text-align:center}
+.arow .what{color:var(--muted)}
+@media (max-width:560px){.arow{grid-template-columns:1fr}.arow .arr{display:none}.arow .what{padding-left:12px;border-left:2px solid var(--accent-soft)}}
+
+/* Tablas */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface)}
+table{border-collapse:collapse;width:100%}
+.tbl table{min-width:760px}
+th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:500;background:var(--sunk)}
+html[lang="el"] th{letter-spacing:.03em}
+tbody tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+tfoot td{background:var(--sunk);font-weight:500}
+.role{font-weight:500}
+.sub{color:var(--muted);font-size:.83rem}
+.tests{display:flex;flex-wrap:wrap;gap:5px}
+.t{font-family:var(--f-mono);font-size:.7rem;padding:2px 7px;border-radius:var(--r-sm);background:var(--accent-soft);color:var(--accent)}
+.t.v{background:var(--good-soft);color:var(--good);font-family:var(--f-body)}
+.price{font-family:var(--f-display);font-weight:600;font-size:1.08rem}
+.save{color:var(--good);font-weight:500;font-size:.83rem}
+.best{display:inline-block;font-size:.7rem;font-weight:600;padding:2px 7px;border-radius:999px;background:var(--good-soft);color:var(--good);margin-left:6px;white-space:nowrap}
+td.win{background:var(--good-soft)}
+tr.ours td{background:var(--accent-soft)}
+tr.ours td.role{color:var(--accent)}
+
+/* Opciones */
+.models{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.model{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--mc,var(--accent));border-radius:var(--r-md);padding:18px;display:grid;gap:10px;align-content:start}
+.model .tag{font-family:var(--f-mono);font-size:.74rem;color:var(--mc,var(--accent));font-weight:500}
+.model ul{margin:0;padding-left:18px;display:grid;gap:4px;color:var(--muted);font-size:.9rem}
+.model .who{border-top:1px dashed var(--line);padding-top:10px;font-size:.86rem}
+.model .who b{font-weight:500}
+.mA{--mc:var(--accent)} .mB{--mc:var(--b)} .mC{--mc:var(--c)}
+.termnote{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--accent-soft);color:var(--ink);border-radius:var(--r-md);padding:12px 14px;font-size:.92rem}
+.termnote b{color:var(--accent);font-weight:600}
+
+/* Calculadora */
+.calc{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:900px){.calc{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:18px;display:grid;gap:16px;min-width:0}
+.grid-in{overflow-x:auto}
+.grid-in table{min-width:440px}
+.grid-in td,.grid-in th{padding:7px 8px}
+input[type=number]{font:inherit;font-family:var(--f-mono);font-size:.86rem;width:100%;min-width:62px;padding:6px 8px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--bg);color:var(--ink);text-align:right}
+.row-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+label.f{display:grid;gap:5px;font-size:.8rem;color:var(--muted);align-content:end}
+details{border-top:1px solid var(--line);padding-top:12px}
+summary{cursor:pointer;font-weight:500;font-size:.9rem}
+details[open] summary{margin-bottom:12px}
+.res{position:sticky;top:calc(env(safe-area-inset-top, 0px) + 12px)}
+.bars{display:grid;gap:12px}
+.bar{display:grid;gap:4px}
+.bar .lab{display:flex;justify-content:space-between;gap:8px;font-size:.86rem;align-items:baseline}
+.bar .lab b{font-weight:600}
+.track{height:12px;background:var(--sunk);border-radius:999px;overflow:hidden}
+.fill{height:100%;border-radius:999px;background:var(--accent);transition:width .35s cubic-bezier(.16,1,.3,1)}
+.fill.m{background:var(--comp)} .fill.B{background:var(--b)} .fill.C{background:var(--c)}
+.bar .meta{font-size:.78rem;color:var(--muted)}
+.headline{display:grid;gap:2px}
+.headline .k{font-size:.8rem;color:var(--muted)}
+.headline .v{font-family:var(--f-display);font-weight:700;font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:1.1;color:var(--good)}
+
+/* Condiciones y resumen */
+.conds{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.cond{border-top:2px solid var(--accent);padding-top:10px;display:grid;gap:4px;align-content:start}
+.cond p{color:var(--muted);font-size:.9rem}
+.summary{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:22px;display:grid;gap:16px}
+.sumgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.sumgrid > div{display:grid;gap:4px;padding:12px 14px;border-radius:var(--r-sm);background:var(--sunk)}
+.sumgrid .tag{font-family:var(--f-mono);font-size:.74rem;font-weight:500}
+.sumgrid .amt{font-family:var(--f-display);font-weight:600;font-size:1.15rem}
+.src{font-size:.8rem;color:var(--muted);display:grid;gap:4px}
+.src a{color:var(--accent)}
+footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:.84rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}}
+
+/* Añadidos v2: pruebas, piloto, opcionales, regiones */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+.tcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:13px 14px;display:grid;gap:4px;align-content:start}
+.tcard .t{justify-self:start}
+.tcard p{font-size:.86rem;color:var(--muted)}
+.tcard .basis{font-size:.8rem;color:var(--ink);border-left:2px solid var(--accent-soft);padding-left:8px}
+.pilot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:820px){.pilot{grid-template-columns:1fr}}
+.pilot ul{margin:0;padding-left:18px;display:grid;gap:4px;color:var(--muted);font-size:.92rem}
+.steps{display:grid;gap:10px;counter-reset:st;margin:0;padding:0;list-style:none}
+.steps li{counter-increment:st;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(st);font-family:var(--f-mono);font-weight:600;width:26px;height:26px;border-radius:999px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:.8rem}
+.steps b{font-weight:600}
+.steps span{color:var(--muted);font-size:.9rem;display:block}
+.addons{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.addon{border:1px dashed var(--accent);border-radius:var(--r-md);padding:14px 16px;display:grid;gap:6px;background:var(--surface)}
+.addon h3{color:var(--accent)}
+.addon p{font-size:.9rem;color:var(--muted)}
+.addon .pp{display:flex;flex-wrap:wrap;gap:8px}
+.addon .pp span{font-size:.84rem;padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--ink)}
+.bandlist{list-style:none;padding:0!important;margin:0;display:grid;gap:0!important;border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
+.bandlist li{display:flex;justify-content:space-between;gap:10px;padding:6px 10px;border-bottom:1px solid var(--line);color:var(--ink)}
+.bandlist li:last-child{border-bottom:0}
+.bandlist li b{font-weight:600;color:var(--c)}
+.bandlist li.on{background:var(--good-soft)}
+.regnote{font-size:.84rem;color:var(--muted)}
+tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.df-us{border-color:var(--accent)!important;background:var(--accent-soft)!important}
+.df-us h3{color:var(--accent)}
+.pilot .panel{align-content:start}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <div class="top">
+    <div class="brand">ContratAndo<small>by DesarrollAndo · Meta Business Partner</small></div>
+    <div class="ctrls">
+      <div class="seg" role="group" aria-label="Idioma / Language" id="langSeg">
+        <button type="button" data-lang="es">ES</button><button type="button" data-lang="en">EN</button>
+      </div>
+      <div class="seg" role="group" aria-label="COP / USD" id="curSeg">
+        <button type="button" data-cur="COP">$ COP</button><button type="button" data-cur="USD">US$ USD</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow" data-i="heroEy"></div>
+    <h1 data-i="h1"></h1>
+    <p class="lede" data-i="lede"></p>
+    <div class="facts">
+      <div class="fact"><b class="num" id="f1v"></b><span id="f1t"></span></div>
+      <div class="fact"><b class="num" id="f2v"></b><span data-i="f2"></span></div>
+      <div class="fact"><b class="num" id="f3v"></b><span data-i="f3"></span></div>
+      <div class="fact hl"><b class="num" id="f4v"></b><span data-i="f4"></span></div>
+    </div>
+  </div>
+
+  <section>
+    <header>
+      <div class="eyebrow" data-i="plEy"></div>
+      <h2 data-i="plH"></h2>
+      <p class="lede" data-i="plP"></p>
+    </header>
+    <div class="pilot">
+      <div class="panel"><h3 data-i="plFH"></h3><ul id="plF"></ul></div>
+      <div class="panel"><h3 data-i="plSH"></h3><ol class="steps" id="plS"></ol></div>
+    </div>
+    <p class="note" data-i="plNote"></p>
+  </section>
+
+  <section>
+    <div class="video">
+      <div class="vbox"><video id="vid" controls playsinline preload="metadata" poster="video/poster-es.jpg"><source id="vsrc" src="video/contratando-es.mp4" type="video/mp4"></video></div>
+      <div style="display:grid;gap:10px">
+        <div class="eyebrow" data-i="vEy"></div>
+        <h2 data-i="vH"></h2>
+        <p class="lede" data-i="vP"></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <div class="eyebrow" data-i="pEy"></div>
+      <h2 data-i="pH"></h2>
+    </header>
+    <div class="caps" id="caps"></div>
+  </section>
+
+  <section>
+    <header>
+      <div class="eyebrow" data-i="tmEy"></div>
+      <h2 data-i="tmH"></h2>
+      <p class="lede" data-i="tmP"></p>
+    </header>
+    <div class="pilot">
+      <div class="panel">
+        <h3 data-i="tmMan"></h3>
+        <div class="grid-in"><table style="min-width:0"><tbody id="tmBody"></tbody></table></div>
+        <p class="note" id="tmDays" style="font-weight:500;color:var(--ink)"></p>
+        <p class="note" data-i="tmRep"></p>
+        <div class="row-in">
+          <label class="f" for="tm1"><span id="tml0"></span><input id="tm1" type="number" min="0" step="1" value="10"></label>
+          <label class="f" for="tm2"><span id="tml1"></span><input id="tm2" type="number" min="0" step="1" value="3"></label>
+          <label class="f" for="tm3"><span id="tml2"></span><input id="tm3" type="number" min="0" max="100" step="5" value="20"></label>
+        </div>
+      </div>
+      <div class="panel df-us">
+        <h3 data-i="tmCa"></h3>
+        <div class="headline"><span class="v num" data-i="tmBig" style="color:var(--accent)"></span></div>
+        <ol class="steps" id="tmSteps"></ol>
+        <p class="note" data-i="tmMass" style="color:var(--ink);font-weight:500"></p>
+      </div>
+    </div>
+    <p class="note" data-i="tmNote"></p>
+  </section>
+
+
+  <section>
+    <header>
+      <div class="eyebrow" data-i="oEy"></div>
+      <h2 data-i="oH"></h2>
+      <p class="lede" data-i="oP"></p>
+    </header>
+    <div class="models" id="models"></div>
+    <div class="termnote"><span data-i="termNote"></span></div>
+    <div style="display:grid;gap:8px;margin-top:6px"><h3 data-i="btH"></h3><p class="note" id="btP"></p></div>
+    <div class="tbl"><table>
+      <thead><tr><th id="bt0"></th><th class="r" id="bt1"></th><th class="r" id="bt2"></th><th class="r" id="bt3"></th></tr></thead>
+      <tbody id="btBody"></tbody>
+    </table></div>
+    <div style="display:grid;gap:8px;margin-top:6px"><h3 data-i="svH"></h3><p class="note" id="svP"></p></div>
+    <div class="tbl"><table>
+      <thead><tr><th id="sv0"></th><th class="r" id="sv1"></th><th class="r" id="sv2"></th><th class="r" id="sv3"></th></tr></thead>
+      <tbody id="svBody"></tbody>
+    </table></div>
+    <p class="note" id="svNote"></p>
+    <div class="addons" id="addons"></div>
+  </section>
+
+
+  <section>
+    <header>
+      <div class="eyebrow" data-i="rEy"></div>
+      <h2 data-i="rH"></h2>
+      <p class="lede" data-i="rP"></p>
+    </header>
+    <div class="tbl"><table>
+      <thead><tr><th data-i="thRole"></th><th data-i="thMarket"></th><th data-i="thTests"></th><th class="r" data-i="thAvg"></th><th class="r">ContratAndo (A)</th></tr></thead>
+      <tbody id="roleBody"></tbody>
+    </table></div>
+    <p class="note" data-i="rNote"></p>
+  </section>
+
+  <section>
+    <header>
+      <div class="eyebrow" data-i="tEy"></div>
+      <h2 data-i="tH"></h2>
+      <p class="lede" data-i="tP"></p>
+    </header>
+    <div class="tgrid" id="tgrid"></div>
+    <p class="note" data-i="tCaution"></p>
+    <div class="tbl"><table>
+      <thead><tr><th data-i="tth1"></th><th class="r" data-i="tth2"></th><th class="r" data-i="tth3"></th><th class="r" data-i="tth4"></th></tr></thead>
+      <tbody id="testBody"></tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <header>
+      <div class="eyebrow" data-i="mkEy"></div>
+      <h2 data-i="mkH"></h2>
+      <p class="lede" data-i="mkP"></p>
+    </header>
+    <div class="tbl"><table>
+      <thead><tr><th data-i="mth1"></th><th data-i="mth2"></th><th data-i="mth3"></th><th data-i="mth4"></th></tr></thead>
+      <tbody id="mkBody"></tbody>
+    </table></div>
+    <div style="display:grid;gap:8px;margin-top:6px"><h3 data-i="dfH"></h3><p class="lede" data-i="dfP"></p></div>
+    <div class="pilot" id="dfGrid"></div>
+  </section>
+
+
+  <section id="calculadora">
+    <header>
+      <div class="eyebrow" data-i="cEy"></div>
+      <h2 data-i="cH"></h2>
+      <p class="lede" data-i="cP"></p>
+    </header>
+    <div class="calc">
+      <div class="panel">
+        <div class="row-in">
+          <div class="f" style="display:grid;gap:5px;font-size:.8rem;color:var(--muted)"><span data-i="termL"></span>
+            <div class="seg" role="group" id="termSeg"><button type="button" data-term="0" data-i="term0"></button><button type="button" data-term="6" data-i="term6"></button><button type="button" data-term="12" data-i="term12"></button></div>
+          </div>
+        </div>
+        <div class="grid-in"><table>
+          <thead><tr><th data-i="thRole"></th><th class="r" data-i="thPeople"></th><th class="r" data-i="thSal"></th></tr></thead>
+          <tbody id="inBody"></tbody>
+        </table></div>
+        <div class="row-in">
+          <label class="f" for="ev"><span data-i="aEv"></span><input id="ev" type="number" min="0" step="1" value="4"></label>
+          <label class="f" for="iv"><span data-i="aIv"></span><input id="iv" type="number" min="0" step="1" value="0"></label>
+          <label class="f" for="mins"><span data-i="aMin"></span><input id="mins" type="number" min="0" step="1" value="8"></label>
+        </div>
+        <details>
+          <summary data-i="assume"></summary>
+          <div style="display:grid;gap:14px">
+            <div class="row-in">
+              <label class="f" for="pct"><span data-i="aPct"></span><input id="pct" type="number" min="0" max="100" step="0.5" value="15"></label>
+              <label class="f" for="pagos"><span data-i="aPagos"></span><input id="pagos" type="number" min="12" max="16" step="1" value="12"></label>
+            </div>
+
+          </div>
+        </details>
+      </div>
+
+      <div class="panel res" aria-live="polite">
+        <div class="headline">
+          <span class="k" data-i="bestK"></span>
+          <span class="v num" id="hBest"></span>
+          <span class="note num" id="hBestSub"></span>
+        </div>
+        <div class="bars" id="bars"></div>
+        <p class="note" id="bandNote"></p>
+        <div style="display:grid;gap:6px"><h3 data-i="ppH"></h3>
+          <div class="grid-in"><table style="min-width:0"><thead><tr><th id="pp0"></th><th class="r" id="pp1"></th><th class="r" id="pp2"></th></tr></thead><tbody id="ppBody"></tbody></table></div>
+          <p class="note" data-i="ppNote"></p></div>
+        <p class="note" id="bNote"></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <div class="eyebrow" data-i="kEy"></div>
+      <h2 data-i="kH"></h2>
+      <p class="lede" data-i="kP"></p>
+    </header>
+    <div class="tbl"><table>
+      <thead><tr><th data-i="thRole"></th><th class="r" data-i="thAvgShort"></th><th class="r">ContratAndo (A)</th><th class="r" data-i="thSave"></th></tr></thead>
+      <tbody id="cmpBody"></tbody>
+      <tfoot id="cmpFoot"></tfoot>
+    </table></div>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th data-i="optA"></th><th data-i="optB"></th></tr></thead>
+      <tbody id="qualBody"></tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <header>
+      <div class="eyebrow" data-i="wEy"></div>
+      <h2 data-i="wH"></h2>
+      <p class="lede" data-i="wP"></p>
+    </header>
+    <div class="auto" id="autos"></div>
+    <p class="note" data-i="wNote"></p>
+  </section>
+
+  <section>
+    <header>
+      <div class="eyebrow" data-i="nEy"></div>
+      <h2 data-i="nH"></h2>
+    </header>
+    <div class="conds" id="conds"></div>
+  </section>
+
+  <section>
+    <div class="summary">
+      <div class="eyebrow" data-i="sEy"></div>
+      <h2 data-i="sH"></h2>
+      <p class="lede" data-i="sP"></p>
+      <div class="sumgrid" id="sumgrid"></div>
+    </div>
+  </section>
+
+  <section>
+    <header><div class="eyebrow" data-i="srcEy"></div></header>
+    <div class="src" id="srcList"></div>
+  </section>
+
+  <footer>
+    <span>Sergio Arias · ContratAndo by DesarrollAndo</span>
+    <span data-i="date"></span>
+  </footer>
+</div>
+<script>
+(function(){
+  /* ---------- Datos (COP) ---------- */
+  const TRM=3162.35;                 // TRM 29-oct-2026
+  const SMLV=1750905, AUX=249095;    // Colombia 2026
+  const PCT_A=0.25;                  // opción A: 25 % del salario básico mensual del cargo
+  const VOICE=1000;                  // COP por minuto de entrevista de voz (opcional)
+  const TESTS={0:12000,6:6000,12:3000};   // COP por candidato que presenta pruebas, según contrato
+  const TERMF={0:1,6:0.9,12:0.85};        // cada banda baja 10 % (6 meses) o 15 % (1 año o más)
+  const FEE_B=4000, SETUP_B=3000000, MIN_B=500000;
+  const SETUP=SMLV;                  // 1 SMLV por tipo de vacante (A, C y piloto)
+  const BANDS=[[1,50,25],[51,100,22],[101,200,19],[201,300,16],[301,500,13],[501,Infinity,10]];
+  const ROLES=[
+    {k:"loc", sal:SMLV,    people:30, leads:60, cpl:2000, tests:["VERBA","EXACTA","PERFIL 5","ÍNTEGRA","ARRAIGO","CONTACTO"]},
+    {k:"bil", sal:2500000, people:14, leads:50, cpl:4000, tests:["VERBA","EXACTA","PERFIL 5","ÍNTEGRA","ARRAIGO","CONTACTO"]},
+    {k:"qa",  sal:2000000, people:2,  leads:40, cpl:3000, tests:["VERBA","EXACTA","CIFRA","PERFIL 5","ÍNTEGRA","CONTACTO"]},
+    {k:"tr",  sal:2300000, people:1,  leads:40, cpl:3000, tests:["VERBA","PATRÓN","PERFIL 5","ÍNTEGRA","CONTACTO","MANDO"]},
+    {k:"gtr", sal:2100000, people:1,  leads:40, cpl:3000, tests:["CIFRA","PATRÓN","EXACTA","VERBA","PERFIL 5","ÍNTEGRA"]},
+    {k:"tl",  sal:2600000, people:2,  leads:40, cpl:3000, tests:["PATRÓN","CIFRA","VERBA","PERFIL 5","ÍNTEGRA","MANDO"]}
+  ];
+  /* Costo por contratación por región, en USD (lo/hi). Se llena con la investigación. */
+  const SRC=["Salario mínimo y auxilio 2026: <a href=\"https://consultorsalud.com/aumento-del-salario-minimo-en-colombia-2026/\" target=\"_blank\" rel=\"noopener\">decretos 1469 y 1470 de 2025</a> · TRM: <a href=\"https://www.infobae.com/colombia/2026/10/29/precio-del-dolar-hoy-en-colombia-cotizacion-de-apertura-del-29-de-octubre/\" target=\"_blank\" rel=\"noopener\">TRM del 29 de octubre de 2026</a>", "Salarios / Salaries: <a href=\"https://www.elempleo.com/co/ofertas-empleo/trabajo-agente-de-call-center-bilingue\" target=\"_blank\" rel=\"noopener\">portal de empleo: agentes bilingües</a>, <a href=\"https://www.elempleo.com/co/ofertas-empleo/trabajo-analista-de-calidad-call-center\" target=\"_blank\" rel=\"noopener\">portal de empleo: analista de calidad</a>, <a href=\"https://cazvid.com/en/job/team-lider-call-center-de-cobranza-en-bogota-colombia\" target=\"_blank\" rel=\"noopener\">portal de empleo: team leader</a>, <a href=\"https://www.elempleo.com/co/ofertas-trabajo/supervisor-de-cobranza-americas-1886776282\" target=\"_blank\" rel=\"noopener\">portal de empleo: supervisor</a>. Formador y GTR: estimados / estimates.", "Mercado en Colombia / Colombian market: <a href=\"https://epheadhunter.com/cuanto-cobra-una-empresa-de-seleccion-de-personal/\" target=\"_blank\" rel=\"noopener\">firma de selección: tarifas publicadas</a> · Temporales, portales, pruebas y software: listas de precios públicas y licitaciones consultadas en octubre de 2026 / public price lists and tenders, October 2026.", "Tiempo para citar / Scheduling time: <a href=\"https://prnewswire.com/news-releases/employees-waste-up-to-14-hours-scheduling-interviews-for-a-single-vacancy-300903798.html\" target=\"_blank\" rel=\"noopener\">encuesta a 272 reclutadores, 2019</a> · <a href=\"https://yello.co/blog/interview-scheduling-statistics/\" target=\"_blank\" rel=\"noopener\">encuesta a 200 profesionales de selección, 2019</a>", "Base científica de las pruebas / Test science: <a href=\"https://doi.org/10.1016/j.intell.2014.01.004\" target=\"_blank\" rel=\"noopener\">Condon y Revelle (2014), ICAR</a> · <a href=\"https://ipip.ori.org/\" target=\"_blank\" rel=\"noopener\">International Personality Item Pool</a> · <a href=\"https://doi.org/10.1037/apl0000994\" target=\"_blank\" rel=\"noopener\">Sackett, Zhang, Berry y Lievens (2022)</a>"];
+
+  const T={
+  es:{
+    chip:"Borrador · precios sujetos a aprobación",
+    heroEy:"Propuesta · Xtendo Global · Contratación de contact center",
+    h1:"Empecemos con un piloto: medimos su costo de adquisición real y con eso fijamos su tarifa.",
+    lede:"Atraemos candidatos donde los portales de empleo no llegan y los contactamos desde el primer minuto. Ustedes entrevistan a los que pasan y deciden. El piloto se hace con la opción A, por bandas, y con sus resultados confirmamos los porcentajes y valores.",
+    f1:"Setup del piloto por tipo de vacante: un salario mínimo colombiano de 2026",
+    f2:"Opción A: porcentaje de un salario básico mensual por persona, que baja con el volumen de contratación",
+    f3:"Cobro de un agente con salario mínimo al 15 % del salario anual, la tarifa más baja de una firma de selección en Colombia",
+    f4:"Opción A por el mismo agente en la primera banda (25 % de un salario básico mensual)",
+    vEy:"Video · 1:17", vH:"ContratAndo para empresas",
+    vP:"Del anuncio a la contratación: así trabaja ContratAndo, con pantallas de la plataforma real y las plantillas de WhatsApp que recibe el candidato.",
+    pEy:"La plataforma", pH:"Qué hace ContratAndo, de la atracción a la contratación",
+    caps:[["Atrae","Anuncios en Meta con formulario instantáneo. Cada lead entra automáticamente a la plataforma, con sus datos y respuestas."],
+          ["Conversa 24/7","Un asistente de IA responde por WhatsApp a cualquier hora, resuelve dudas del cargo y lleva al candidato al formulario."],
+          ["Habla como su candidato","Filtra en el idioma que ustedes elijan (español, inglés, griego u otro) y con la forma de hablar de cada país."],
+          ["Filtra","Preguntas de filtro y reglas que mueven a cada candidato en el tablero. Las reglas se prueban antes de activarlas."],
+          ["Evalúa","Si lo desean: baterías de pruebas con base científica por nivel de cargo y entrevista telefónica con asistente de voz."],
+          ["Automatiza","Mensajes de WhatsApp en cada etapa: citaciones, recordatorios y solicitud de documentos. Si lo desean, desde su propio número."],
+          ["Cita en masa","Citaciones masivas a entrevista, formación o contratación: 50 personas citadas en menos de 30 minutos."],
+          ["Contrata","Su equipo entrevista a los que pasan y decide. La plataforma pide los documentos de contratación y comparte perfiles."]],
+    tmEy:"Citar a 50 personas", tmH:"De días de llamadas a menos de 30 minutos",
+    tmP:"Así se compara citar a 50 candidatos aptos a una entrevista presencial. Ajusten los minutos según su operación.",
+    tmMan:"Proceso manual (estimado)", tmCa:"Con ContratAndo",
+    tmRows:["Llamar y citar a cada candidato (varios intentos)","Recordatorio el día antes","Reagendar a quienes no confirman o no asisten"],
+    tmTot:"Total", tmDays:"≈ {d} días de trabajo de una persona (8 horas al día)",
+    tmRep:"Y se repite cuando hay que citar a la formación y a la contratación.",
+    tmIn:["Minutos por candidato para citar","Minutos por recordatorio","% que hay que reagendar"],
+    tmBig:"Menos de 30 minutos",
+    tmSteps:[["Seleccionan a los 50 aptos","En el tablero, con un filtro o una regla."],["Los mueven a «Entrevista»","A cada uno le llega su citación por WhatsApp con fecha, hora y lugar."],["El resto sale solo","Recordatorio el día antes con «Confirmo» y «Reagendar»; quien reagenda queda marcado."]],
+    tmMass:"Lo mismo para las citaciones masivas a formación y a contratación.",
+    tmNote:"Referencia: el 90 % de los reclutadores necesita dos o más llamadas o correos para cerrar una cita, y el 67 % dice que agendar una sola entrevista le toma entre 30 minutos y 2 horas. Aquí se usa una estimación más baja, propia de una citación por teléfono.",
+    wEy:"Opcional · Su WhatsApp", wH:"Si lo desean, conectamos su cuenta de WhatsApp Business API",
+    wP:"Así, los mensajes salen desde el número de Xtendo, con plantillas aprobadas por Meta. Cada automatización se dispara sola cuando el candidato cambia de etapa o cumple una condición. Ejemplos:",
+    autos:[["Llega un lead nuevo","Bienvenida y enlace al formulario del cargo"],["Cumple los filtros","Enlace a sus pruebas, si la vacante las usa"],["Aprueba las pruebas","Llamada de entrevista por voz, si la vacante la usa"],["Pasa a entrevista","Citación con fecha, hora y dirección; recordatorio el día antes"],["No asistió","Mensaje para reagendar"],["Es seleccionado","Solicitud de documentos de contratación"],["Grupo de formación confirmado","Fecha de inicio, horario y lugar de la formación"],["No continúa en el proceso","Cierre cordial del proceso"]],
+    wNote:"Los cargos de Meta por cada mensaje los paga Xtendo directamente a Meta, según la tarifa de cada país.",
+    oEy:"Cómo cobramos", oH:"Opción A hoy, opción B a futuro",
+    oP:"La opción A es la del piloto y la que manejamos hoy con algunos de nuestros clientes BPO, con precios de referencia. La opción B es para más adelante: sus precios se definen después del piloto, con sus indicadores.",
+    optA:"Opción A", optB:"Opción B",
+    setupB:"Setup único de {setup} (un salario mínimo colombiano) por tipo de vacante: montaje de la pauta, asistente de texto 24/7 para perfilar, formulario y reglas",
+    mA:["Por persona contratada, por bandas","Les entregamos candidatos filtrados. Pagan un porcentaje del salario básico mensual de cada persona que contratan, según cuántas contratan en el mes. Estas son las bandas del piloto y sin contrato; con contrato, cada banda baja.",["Pauta en Meta y asistente de conversación incluidos","Pruebas y entrevista por voz: opcionales, se cobran aparte"],"Cómo se lee:","el porcentaje de la banda es el que se paga. Sin contrato, con 120 personas en el mes, por cada una se paga el 19 % de su salario básico mensual."],
+    mB:["Plataforma propia, a futuro","Para cuando su equipo quiera operar ContratAndo por su cuenta: les dejamos todo listo para que los leads lleguen a su cuenta de ContratAndo, y su equipo selecciona.",["Puesta a punto: montamos la pauta en Meta y el asistente, y publicamos 2 vacantes","Después, su equipo monta la pauta de las siguientes vacantes y decide cuánto invertir en Meta","Cobro por cada lead que llega a la plataforma y por cada candidato que carguen de su base","Pueden cargar su propia base de exempleados o candidatos para lanzarle automatizaciones","Pruebas y entrevista por voz, si las quieren aplicar"],"Precios:","se definen después del piloto, con sus indicadores."],
+    bandRow:"{a} personas", bandTop:"{a} o más", bandPct:"{p}", bandCap:"Porcentaje del salario básico mensual que se paga por cada persona, según el total de personas contratadas en el mes (todos los cargos y países):",
+    adT:"Opcional · Pruebas psicométricas", adP:"Se cobra por cada candidato que presenta pruebas, con la batería que corresponde al nivel del cargo. Ustedes deciden a quiénes se les aplican.", adPs:["Sin contrato: {t0} por candidato","Contrato de 6 meses: {t6}","Contrato de 1 año o más: {t12}"],
+    avT:"Opcional · Entrevista telefónica con asistente de voz", avP:"Un asistente de voz llama al candidato y lo entrevista con la rúbrica de su empresa. No está incluida en el precio por persona contratada: solo se cobran las entrevistas de los candidatos que ustedes elijan.", avPr:"{v} por minuto hablado",
+    termNote:"Sin contrato y en el piloto rigen las bandas de lista. Con contrato de 6 meses, <b>cada banda baja 10 %</b>; con contrato de 1 año o más, <b>cada banda baja 15 %</b>.", btH:"Bandas por tipo de contrato", btP:"Porcentaje del salario básico mensual y lo que cuesta cada persona, con el agente de servicio al cliente (BPO) de salario mínimo ({sal}) como referencia.", btCols:["Personas contratadas en el mes","Sin contrato y piloto","Contrato de 6 meses (−10 %)","Contrato de 1 año o más (−15 %)"],
+    svH:"Ejemplo: cuánto se ahorran con contrato", svP:"50 agentes de servicio al cliente (BPO) de salario mínimo al mes durante 6 meses (300 personas), en la primera banda de la opción A.", svCols:["","Sin contrato","Contrato de 6 meses","Contrato de 1 año o más"], svRows:["Porcentaje por persona","Costo por persona","Total en 6 meses (300 personas)","Pruebas opcionales (4 candidatos por persona)","Total con pruebas","Ahorro frente a sin contrato","Ahorro frente a un cobro del 15 % del salario anual"], svNote:"Sin contar el setup, que se paga una sola vez y es igual en los tres casos. Con un cobro del 15 % del salario anual, las mismas 300 personas costarían {firm}.",
+    plEy:"Primero, el piloto", plH:"El piloto define sus porcentajes y valores",
+    plP:"La propuesta parte de un piloto con la opción A, por bandas. Hemos trabajado con distintos BPO y cada uno contrata diferente: lo que cuesta llevar a una persona hasta su primer día cambia mucho de una empresa a otra. Por eso, con los resultados del piloto y su costo de adquisición real, confirmamos los porcentajes y valores de su tarifa.",
+    plFH:"Lo que cambia el costo de adquisición",
+    plF:["Si la formación es pagada o no","Cuántos días dura la capacitación","Horarios y turnos del cargo","Tipo de campaña: servicio, ventas, cobranza o bilingüe","Certificaciones o exámenes durante la capacitación","País y ciudad de la vacante"],
+    plSH:"Cómo funciona",
+    plS:[["Setup por vacante","Un salario mínimo colombiano ({setup}) por cada tipo de vacante del piloto, en cualquier país. Incluye el montaje de la pauta, el asistente de texto 24/7, el formulario, las reglas y las automatizaciones."],["Medimos","Leads por contratado, costo por lead, cuántos pasan filtros y pruebas, cuántos llegan a la formación y cuántos la terminan."],["Fijamos su tarifa","Con esos datos confirmamos los porcentajes de las bandas y los demás valores. Los precios de referencia de más abajo son el punto de partida."]],
+    plNote:"La inversión en pauta del piloto se acuerda antes de empezar.",
+    rEy:"Cargos", rH:"Agentes BPO y staff de operación: precio por cargo",
+    rP:"Salarios de referencia de ofertas en Colombia en 2026, básicos al mes. Precio de referencia por persona contratada en la opción A, primera banda (1 a 50 personas al mes) y sin contrato: 25 % del salario básico mensual del cargo, sin pruebas. Las pruebas y la voz se suman solo si se usan.",
+    rNote:"Xtendo contrata en Colombia, Grecia, Bolivia y otros países. El porcentaje se calcula sobre el salario básico mensual del cargo en el país de la vacante; esta tabla usa salarios de Colombia.",
+    thRole:"Cargo", thMarket:"Mercado en Colombia", thTests:"Batería sugerida (opcional)", thAvg:"Cobro al 15 % del salario anual", thAvgShort:"Cobro al 15 % anual",
+    thPeople:"Personas al mes", thSal:"Salario básico mensual (COP)", thLeads:"Leads por contratado", thCpl:"Pauta por lead (COP)",
+    roles:{loc:["Agente de servicio al cliente (BPO)","Español","Desde el salario mínimo hasta 2,0 millones"],
+           bil:["Agente BPO bilingüe","Inglés B2 o superior","2,28–2,77 millones + bonos"],
+           qa:["Analista de calidad","Monitoreo y calibración","1,5–2,1 millones"],
+           tr:["Formador(a)","Inducción y formación continua","2,0–2,6 millones (estimado)"],
+           gtr:["Analista GTR","Gestión en tiempo real y planificación","1,9–2,4 millones (estimado)"],
+           tl:["Team leader","Supervisión de equipo","2,0–2,6 millones + comisión"]},
+    less:"menos",
+    tEy:"Pruebas psicométricas", tH:"Pruebas con base científica",
+    tP:"Cada prueba de ContratAndo se construye sobre un formato o un modelo con respaldo en la investigación en selección de personal. Estas son las que usan las baterías de esta propuesta:",
+    tests:[["PATRÓN","Razonamiento abstracto","Detectar la regla de una secuencia y aplicarla.","Tipo de ítem del proyecto ICAR, de dominio público (Condon y Revelle, 2014)."],
+           ["CIFRA","Razonamiento numérico","Porcentajes, proporciones y variaciones del día a día laboral.","La habilidad cognitiva predice el desempeño en el trabajo (Sackett y colaboradores, 2022)."],
+           ["VERBA","Razonamiento verbal","Entender con precisión lo que se dice y deducir.","Tipo de ítem del proyecto ICAR (Condon y Revelle, 2014)."],
+           ["EXACTA","Atención al detalle","Comparar datos rápido y sin dejar pasar errores.","Formato de velocidad perceptual, usado por décadas en cargos de digitación y verificación."],
+           ["PERFIL 5","Conducta laboral","Responsabilidad, estabilidad, sociabilidad, cooperación y apertura.","Ítems del International Personality Item Pool para el modelo de cinco factores (Goldberg)."],
+           ["ÍNTEGRA","Integridad","Respeto por la norma y honestidad en el reporte.","Entre los predictores de mayor validez en la revisión de Sackett y colaboradores (2022)."],
+           ["ARRAIGO","Permanencia","Hechos de la historia laboral asociados con quedarse o irse pronto.","Formato de biodata, relevante frente a la rotación."],
+           ["CONTACTO","Servicio al cliente","Qué hace ante clientes difíciles, errores propios y roces.","Juicio situacional: predictor válido y más difícil de falsear que un cuestionario de autorreporte."],
+           ["MANDO","Liderazgo","Decidir con información incompleta, corregir y dar malas noticias.","Juicio situacional con contenido de supervisión."]],
+    tCaution:"Las pruebas apoyan la decisión y no reemplazan la entrevista. En Colombia, su interpretación la hace un psicólogo del equipo de selección (Ley 1090 de 2006).",
+    tth1:"Forma de compra", tth2:"Por prueba", tth3:"Batería por candidato", tth4:"Por contratado (4 evaluados)",
+    tRows:[["Prueba suelta en firma de selección","Precio con IVA, Colombia"],["Batería estándar en firma de selección","Precio con IVA, Colombia"],["Evaluación con psicólogo particular","Consulta en Bogotá"],["ContratAndo · sin contrato","Por candidato que presenta pruebas · antes de IVA"],["ContratAndo · contrato de 6 meses","Por candidato que presenta pruebas · antes de IVA"],["ContratAndo · contrato de 1 año o más","Por candidato que presenta pruebas · antes de IVA"]],
+    free:"Sin costo",
+    mkEy:"Referencia de mercado", mkH:"Lo que cobra el mercado en Colombia por reclutar",
+    mkP:"Referencias públicas de 2025 y 2026 de firmas de selección, empresas de servicios temporales, portales de empleo y software.", dfH:"Buscamos donde los demás no buscan", dfP:"Las firmas de selección buscan donde buscan todos: en los portales de empleo tradicionales, donde todas las empresas compiten por las mismas hojas de vida. Nosotros llegamos con pauta a personas que no están en esos portales y las atraemos al proceso.", dfRows:[["En un portal tradicional","El candidato se postula y espera días, semanas o incluso meses a que una persona revise su hoja de vida. Solo a un porcentaje muy bajo lo contactan."],["Con ContratAndo","El asistente lo contacta y empieza el proceso desde el minuto 1: resuelve sus dudas, lo filtra y lo lleva a la siguiente etapa."]],
+    mth1:"Servicio", mth2:"Pago inicial", mth3:"Pago recurrente", mth4:"Qué no incluye",
+    mk:[["Firma de selección (headhunter)","—","15–35 % del salario anual por persona; 15–25 % en cargos medios","Pruebas en muchos casos y pauta dedicada"],
+        ["Empresa de servicios temporales","—","7,5–10,9 % de AIU sobre la nómina, cada mes que la persona trabaje","La persona queda contratada por la temporal"],
+        ["Portal de empleo","—","{a} + IVA por aviso destacado","Filtro, pruebas, conversaciones y citaciones"],
+        ["Software de reclutamiento","Configuración aparte","{b} por usuario al mes","Pauta, equipo que lo opere y pruebas"],
+        ["ContratAndo · opción A","{setup} por tipo de vacante","Entre 25 % y 10 % de un salario básico mensual por persona, según la banda","Pruebas y voz, que son opcionales"]],
+    cEy:"Calculadora", cH:"Cuánto les costaría con la opción A",
+    cP:"Ajusten cuántas personas contratan al mes, el salario de cada cargo, el tipo de contrato y si quieren pruebas y entrevista por voz. La opción A se compara con un cobro del 15 % del salario anual por las mismas personas, la tarifa más baja de una firma de selección.",
+    termL:"Contrato", term0:"Sin contrato", term6:"6 meses", term12:"1 año o más",
+    assume:"Supuestos", aPct:"Comisión de mercado (% del salario anual)", aPagos:"Salarios al año", aEv:"Candidatos con pruebas por contratado", aIv:"Entrevistas de voz por contratado (opcional)", aMin:"Minutos por entrevista",
+    bestK:"Costo de la opción A con esta mezcla", perMonth:"al mes", avgM:"Cobro al 15 % del salario anual",
+    bestSub:"{pct} menos que un cobro del 15 % del salario anual. Si contratan lo mismo cada mes, se ahorran {save} en 12 meses, sin contar el setup.",
+    bandNote:"Banda de la opción A este mes: {n} personas → {p} del salario básico mensual por persona ({term}).", ppH:"Por persona contratada", ppCols:["Opción","Primer mes, con setup","Desde el segundo mes"], ppNote:"El setup se paga una sola vez: la vacante queda configurada y desde el segundo mes solo se paga por persona contratada, más las pruebas o la voz que usen.",
+    bNote:"En la opción A, la pauta, el asistente y el filtro los hacemos nosotros. Pruebas este mes: {tests}. Entrevistas de voz: {voice}. Los precios de la opción B se definen después del piloto.", thSave:"Ahorro",
+    kEy:"Comparativo", kH:"Cuánto cuesta contratar a una persona",
+    kP:"Con la mezcla y el contrato que eligieron arriba, incluidas las pruebas y la voz si las activaron.",
+    totalM:"Total del mes", cheapest:"más económica",
+    setupRow:"Pago único · setup ({n} tipos de vacante)", setupMeta:"+ {x} de pago único",
+    qual:[["Quién filtra","ContratAndo","Su equipo, con la plataforma"],["Pauta en Meta","Incluida","La montamos para las 2 primeras vacantes; luego ustedes deciden cuánto invertir"],["Pruebas psicométricas","Opcionales, por candidato: {t0} sin contrato, {t6} con 6 meses, {t12} con 1 año o más","Disponibles en la plataforma"],["Entrevista por voz","Opcional, {v} por minuto","Disponible"],["Base de datos propia","—","Pueden cargarla para lanzar automatizaciones"],["Cómo se paga","Entre 25 % y 10 % del salario básico mensual por persona según la banda; con contrato, cada banda baja 10 % o 15 %","Por lead y por candidato cargado; precios después del piloto"],["Les conviene si…","Quieren pagar solo por resultado","Tienen equipo de selección propio"]],
+    nEy:"Condiciones", nH:"Lo que queda por escrito",
+    conds:[["Piloto y setup","El piloto se hace con la opción A, por bandas. Setup: pago único de {setup} (un salario mínimo colombiano) por cada vacante del piloto y por cada nuevo tipo de vacante en la opción A. Incluye montar la pauta y configurar el asistente de texto que perfila a los candidatos las 24 horas, el formulario, las reglas y las automatizaciones."],
+           ["Precios de referencia","Los porcentajes y valores de esta página son los de referencia que manejamos hoy con algunos BPO. Los definitivos para Xtendo se confirman con los resultados del piloto."],
+           ["Bandas y contrato","Sin contrato y en el piloto rigen las bandas de lista. Con contrato de 6 meses, cada banda baja 10 %; con contrato de 1 año o más, cada banda baja 15 %."],
+           ["Pruebas","Opcionales, por candidato que presenta pruebas: {t0} sin contrato, {t6} con contrato de 6 meses y {t12} con contrato de 1 año o más."],
+           ["Opción B","Es una opción a futuro. Sus precios se definen después del piloto, con sus indicadores."],
+           ["Entrevista por voz","Opcional, solo para los candidatos que Xtendo elija: {v} por minuto hablado."],
+           ["Qué cuenta como contratado","La persona firmó contrato o empezó la formación, y queda marcada en ContratAndo. El corte es mensual. El porcentaje se calcula sobre el salario básico del cargo en su país."],
+           ["WhatsApp","Opcional: si lo desean, conectamos su cuenta de WhatsApp Business API. Los cargos de Meta por mensaje los paga Xtendo a Meta."],
+           ["Datos personales","En Colombia, tratamiento conforme a la Ley 1581 de 2012; en cada país, según su ley de datos. Con autorización de cada candidato y acuerdo de encargado del tratamiento con Xtendo."],
+           ["Tipos de vacante y países","Cada cargo en cada país cuenta como un tipo de vacante y lleva su propio setup. Los salarios en otra moneda se convierten a pesos con la tasa oficial del día de la factura."],
+           ["Precios","En pesos colombianos, antes de impuestos. Los valores en dólares son de referencia, a la TRM del 29 de octubre de 2026 (US$ 1 = 3.162,35 COP). Vigencia: 30 días."]],
+    sEy:"En resumen", sH:"Qué reciben y cómo elegir",
+    sP:"ContratAndo atrae candidatos donde los portales no llegan, los contacta desde el minuto 1 y los filtra; si lo desean, también aplica pruebas y entrevistas por voz. Ustedes entrevistan a quienes pasan y deciden. Empezamos con un piloto con la opción A y setup de un salario mínimo colombiano por tipo de vacante; con sus resultados confirmamos los porcentajes.",
+    sum:{A:"De 25 % a 10 % del salario básico mensual por persona, según la banda; con contrato, cada banda baja 10 % o 15 %. Nosotros hacemos el filtro.",B:"A futuro: su equipo opera la plataforma."}, bLater:"Precios después del piloto", sumMix:"con la mezcla de la calculadora, pruebas incluidas",
+    srcEy:"Fuentes", date:"29 de octubre de 2026"
+  },
+  en:{
+    chip:"Draft · prices subject to approval",
+    heroEy:"Proposal · Xtendo Global · Contact center hiring",
+    h1:"Let's start with a pilot: we measure your real acquisition cost and use it to set your rate.",
+    lede:"We attract candidates where job boards don't reach and contact them from the first minute. You interview those who pass and decide. The pilot uses option A, by bands, and its results confirm the percentages and amounts.",
+    f1:"Pilot setup per vacancy type: one 2026 Colombian minimum wage",
+    f2:"Option A: a percentage of one monthly base salary per hire, going down as hiring volume grows",
+    f3:"A minimum-wage agent at 15% of annual salary, the lowest rate of a recruitment firm in Colombia",
+    f4:"Option A for the same agent in the first band (25% of one monthly base salary)",
+    vEy:"Video · 1 minute", vH:"ContratAndo in one minute",
+    vP:"The video follows the page language. The screens shown are from the live platform.",
+    pEy:"The platform", pH:"What ContratAndo does, from attraction to hire",
+    caps:[["Attracts","Meta ads with instant forms. Every lead flows into the platform automatically, with its details and answers."],
+          ["Talks 24/7","An AI assistant replies on WhatsApp at any hour, answers questions about the role and takes the candidate to the form."],
+          ["Speaks like your candidate","Screens in the language you choose (Spanish, English, Greek or another) and in the way people speak in each country."],
+          ["Screens","Screening questions and rules that move each candidate across the board. Rules are tested before they go live."],
+          ["Assesses","If you want: science-based test batteries by job level and a phone interview with a voice assistant."],
+          ["Automates","WhatsApp messages at every stage: invitations, reminders and document requests. If you wish, from your own number."],
+          ["Invites in bulk","Mass invitations to interview, training or hiring: 50 people invited in under 30 minutes."],
+          ["Hires","Your team interviews those who pass and decides. The platform requests hiring documents and shares profiles."]],
+    tmEy:"Inviting 50 people", tmH:"From days of phone calls to under 30 minutes",
+    tmP:"Inviting 50 qualified candidates to an in-person interview: manual process vs. ContratAndo. Adjust the minutes to your operation.",
+    tmMan:"Manual process (estimate)", tmCa:"With ContratAndo",
+    tmRows:["Calling and booking each candidate (several attempts)","Reminder the day before","Rescheduling those who don't confirm or don't show up"],
+    tmTot:"Total", tmDays:"≈ {d} working days for one person (8 hours a day)",
+    tmRep:"And it repeats when you invite people to training and to hiring.",
+    tmIn:["Minutes per candidate to book","Minutes per reminder","% to reschedule"],
+    tmBig:"Under 30 minutes",
+    tmSteps:[["Select the 50 qualified candidates","On the board, with a filter or a rule."],["Move them to “Interview”","Each one gets an invitation on WhatsApp with date, time and place."],["The rest happens on its own","Reminder the day before with “Confirm” and “Reschedule”; anyone who reschedules is flagged."]],
+    tmMass:"The same for mass invitations to training and hiring.",
+    tmNote:"Reference: 90% of recruiters need two or more calls or emails to book an appointment, and 67% say scheduling a single interview takes them 30 minutes to 2 hours. A lower estimate, typical of phone booking, is used here.",
+    wEy:"Optional · Your WhatsApp", wH:"If you wish, we connect your WhatsApp Business API account",
+    wP:"That way messages go out from Xtendo's number, using Meta-approved templates. Each automation fires on its own when a candidate changes stage or meets a condition. Examples:",
+    autos:[["A new lead arrives","Welcome message and link to the role's form"],["Meets the screening criteria","Link to their tests, if the vacancy uses them"],["Passes the tests","Voice interview call, if the vacancy uses it"],["Moves to interview","Invitation with date, time and address; reminder the day before"],["Did not attend","Message to reschedule"],["Is selected","Request for hiring documents"],["Training group confirmed","Start date, schedule and location of training"],["Does not continue","A courteous closing message"]],
+    wNote:"Meta's per-message charges are paid by Xtendo directly to Meta, at each country's rate.",
+    oEy:"How we charge", oH:"Option A today, option B later",
+    oP:"Option A is the pilot option and the one we use today with some of the BPOs we work with, at reference prices. Option B is for later: its prices are set after the pilot, using its indicators.",
+    optA:"Option A", optB:"Option B",
+    setupB:"One-time setup of {setup} (one Colombian minimum wage) per vacancy type: ad setup, 24/7 text assistant for screening, form and rules",
+    mA:["Per hire, by bands","We deliver screened candidates. You pay a percentage of the monthly base salary of each person you hire, based on how many you hire in the month. These are the pilot and no-contract bands; with a contract, every band goes down.",["Meta ads and conversation assistant included","Tests and voice interview: optional, billed separately"],"How to read it:","the band's percentage is what you pay. With no contract and 120 people in the month, you pay 19% of each person's monthly base salary."],
+    mB:["Your own platform, later","For when your team wants to run ContratAndo on its own: we leave everything ready so leads arrive in your ContratAndo account, and your team makes the selection.",["Onboarding: we build the Meta ads and the assistant, and publish 2 vacancies","After that, your team builds the ads for the next vacancies and decides how much to invest on Meta","Charge per lead that reaches the platform and per candidate uploaded from your database","You can upload your own database of former employees or candidates to run automations","Tests and voice interview, if you want to apply them"],"Prices:","set after the pilot, using its indicators."],
+    bandRow:"{a} people", bandTop:"{a} or more", bandPct:"{p}", bandCap:"Percentage of the monthly base salary paid per person, based on the total number of people hired in the month (all roles and countries):",
+    adT:"Optional · Psychometric tests", adP:"Billed per candidate who takes the tests, with the battery for the job level. You decide who takes them.", adPs:["No contract: {t0} per candidate","6-month contract: {t6}","Contract of 1 year or more: {t12}"],
+    avT:"Optional · Phone interview with a voice assistant", avP:"A voice assistant calls the candidate and interviews them with your company's rubric. It is not included in the price per hire: only the interviews of the candidates you choose are billed.", avPr:"{v} per minute of conversation",
+    termNote:"With no contract and in the pilot, standard bands apply. With a 6-month contract, <b>each band drops by 10%</b>; with a contract of 1 year or more, <b>each band drops by 15%</b>.", btH:"Bands by contract type", btP:"Percentage of the monthly base salary and what each hire costs, using a minimum-wage BPO customer service agent ({sal}) as reference.", btCols:["People hired in the month","No contract and pilot","6-month contract (−10%)","Contract of 1 year or more (−15%)"],
+    svH:"Example: how much you save with a contract", svP:"50 minimum-wage BPO customer service agents a month for 6 months (300 people), in option A's first band.", svCols:["","No contract","6-month contract","Contract of 1 year or more"], svRows:["Percentage per person","Cost per person","Total over 6 months (300 people)","Optional tests (4 candidates per hire)","Total with tests","Savings vs. no contract","Savings vs. a fee of 15% of annual salary"], svNote:"Excluding setup, which is paid once and is the same in all three cases. At 15% of annual salary, the same 300 people would cost {firm}.",
+    plEy:"First, the pilot", plH:"The pilot sets your percentages and amounts",
+    plP:"The proposal starts with a pilot on option A, by bands. We have worked with several BPOs and each one hires differently: what it costs to get a person to day one varies a lot from company to company. So we use the pilot's results and your real acquisition cost to confirm the percentages and amounts of your rate.",
+    plFH:"What changes the acquisition cost",
+    plF:["Whether training is paid","How many days training lasts","Schedules and shifts","Type of campaign: service, sales, collections or bilingual","Certifications or exams during training","Country and city of the vacancy"],
+    plSH:"How it works",
+    plS:[["Setup per vacancy","One Colombian minimum wage ({setup}) per pilot vacancy type, in any country. Includes ad setup, the 24/7 text assistant, the form, the rules and the automations."],["We measure","Leads per hire, cost per lead, how many pass screening and tests, how many reach training and how many complete it."],["We set your rate","With that data we confirm the band percentages and other amounts. The reference prices below are the starting point."]],
+    plNote:"The pilot's ad budget is agreed before starting.",
+    rEy:"Roles", rH:"BPO agents and operations staff: price per role",
+    rP:"Reference base salaries from job offers in Colombia in 2026, per month. Reference price per hire under option A, first band (1 to 50 people a month), no contract: 25% of the role's monthly base salary. Tests and voice are added only if used.",
+    rNote:"Xtendo hires in Colombia, Greece, Bolivia and other countries. The percentage is calculated on the role's monthly base salary in the vacancy's country; this table uses Colombian salaries.",
+    thRole:"Role", thMarket:"Market in Colombia", thTests:"Suggested battery (optional)", thAvg:"Fee at 15% of annual salary", thAvgShort:"15% annual fee",
+    thPeople:"People per month", thSal:"Monthly base salary (COP)", thLeads:"Leads per hire", thCpl:"Ad cost per lead (COP)",
+    roles:{loc:["BPO customer service agent","Spanish","From minimum wage up to COP 2.0M"],
+           bil:["Bilingual BPO agent","English B2 or above","COP 2.28–2.77M + bonuses"],
+           qa:["Quality analyst","Monitoring and calibration","COP 1.5–2.1M"],
+           tr:["Trainer","Onboarding and ongoing training","COP 2.0–2.6M (estimate)"],
+           gtr:["Real-time analyst (RTA)","Real-time management and planning","COP 1.9–2.4M (estimate)"],
+           tl:["Team leader","Team supervision","COP 2.0–2.6M + commission"]},
+    less:"less",
+    tEy:"Psychometric tests", tH:"Science-based tests",
+    tP:"Each ContratAndo test is built on a format or model backed by personnel-selection research. These are the ones used in this proposal's batteries:",
+    tests:[["PATRÓN","Abstract reasoning","Spot the rule in a sequence and apply it.","Item type from the public-domain ICAR project (Condon & Revelle, 2014)."],
+           ["CIFRA","Numerical reasoning","Everyday work percentages, ratios and changes.","Cognitive ability predicts job performance (Sackett et al., 2022)."],
+           ["VERBA","Verbal reasoning","Understand precisely what is said and draw conclusions.","Item type from the ICAR project (Condon & Revelle, 2014)."],
+           ["EXACTA","Attention to detail","Compare data quickly without missing errors.","Perceptual-speed format, used for decades for data-entry and checking roles."],
+           ["PERFIL 5","Work behavior","Conscientiousness, stability, sociability, cooperation and openness.","International Personality Item Pool items for the five-factor model (Goldberg)."],
+           ["ÍNTEGRA","Integrity","Respect for rules and honest reporting.","Among the most valid predictors in the review by Sackett et al. (2022)."],
+           ["ARRAIGO","Retention","Work-history facts linked to staying or leaving early.","Biodata format, relevant to turnover."],
+           ["CONTACTO","Customer service","What they do with difficult customers, own mistakes and friction.","Situational judgment: a valid predictor, harder to fake than a self-report questionnaire."],
+           ["MANDO","Leadership","Deciding with incomplete information, correcting, giving bad news.","Situational judgment with supervisory content."]],
+    tCaution:"Tests support the decision and do not replace the interview. In Colombia, they are interpreted by a psychologist on the recruitment team (Law 1090 of 2006).",
+    tth1:"How it is sold", tth2:"Per test", tth3:"Battery per candidate", tth4:"Per hire (4 assessed)",
+    tRows:[["Single test at a recruitment firm","Price incl. VAT, Colombia"],["Standard battery at a recruitment firm","Price incl. VAT, Colombia"],["Assessment with a private psychologist","Consultation in Bogotá"],["ContratAndo · no contract","Per candidate who takes the tests · before VAT"],["ContratAndo · 6-month contract","Per candidate who takes the tests · before VAT"],["ContratAndo · contract of 1 year or more","Per candidate who takes the tests · before VAT"]],
+    free:"Free",
+    mkEy:"Market reference", mkH:"What the market in Colombia charges to recruit",
+    mkP:"Public 2025–2026 references from recruitment firms, temporary staffing agencies, job boards and software.", dfH:"We search where others don't", dfP:"Recruitment firms search where everyone searches: on traditional job boards, where every company competes for the same CVs. We use ads to reach people who are not on those boards and bring them into the process.", dfRows:[["On a traditional job board","The candidate applies and waits days, weeks or even months for someone to review their CV. Only a very small share are ever contacted."],["With ContratAndo","The assistant contacts them and starts the process from minute one: answers their questions, screens them and moves them to the next stage."]],
+    mth1:"Service", mth2:"Upfront", mth3:"Recurring", mth4:"Not included",
+    mk:[["Recruitment firm (headhunter)","—","15–35% of annual salary per hire; 15–25% for mid-level roles","Tests (often) and dedicated ads"],
+        ["Temporary staffing agency","—","7.5–10.9% markup on payroll, every month the person works","The person is employed by the agency"],
+        ["Job board","—","{a} + VAT per featured ad","Screening, tests, conversations and invitations"],
+        ["Recruiting software","Configuration billed separately","{b} per user per month","Ads, a team to run it, and tests"],
+        ["ContratAndo · option A","{setup} per vacancy type","Between 25% and 10% of one monthly base salary per hire, by band","Tests and voice, which are optional"]],
+    cEy:"Calculator", cH:"What option A would cost you",
+    cP:"Set how many people you hire each month, the salary for each role, the contract type and whether you want tests and voice interviews. Option A is compared with a fee of 15% of annual salary for the same people, the lowest rate of a recruitment firm.",
+    termL:"Contract", term0:"No contract", term6:"6 months", term12:"1 year or more",
+    assume:"Assumptions", aPct:"Market fee (% of annual salary)", aPagos:"Salaries per year", aEv:"Candidates tested per hire", aIv:"Voice interviews per hire (optional)", aMin:"Minutes per interview",
+    bestK:"Option A cost with this mix", perMonth:"per month", avgM:"Fee at 15% of annual salary",
+    bestSub:"{pct} less than a fee of 15% of annual salary. If you hire the same every month, you save {save} over 12 months, excluding setup.",
+    bandNote:"Option A band this month: {n} people → {p} of the monthly base salary per person ({term}).", ppH:"Per person hired", ppCols:["Option","First month, with setup","From the second month"], ppNote:"Setup is paid only once: the vacancy stays configured and from the second month you only pay per hire, plus any tests or voice interviews you use.",
+    bNote:"In option A we handle the ads, the assistant and the screening. Tests this month: {tests}. Voice interviews: {voice}. Option B prices are set after the pilot.", thSave:"Savings",
+    kEy:"Comparison", kH:"What one hire costs",
+    kP:"Using the mix and contract chosen above, including tests and voice if switched on.",
+    totalM:"Monthly total", cheapest:"lowest",
+    setupRow:"One-time · setup ({n} vacancy types)", setupMeta:"+ {x} one-time",
+    qual:[["Who screens","ContratAndo","Your team, using the platform"],["Meta ads","Included","We build them for the first 2 vacancies; then you decide how much to invest"],["Psychometric tests","Optional, per candidate: {t0} no contract, {t6} with 6 months, {t12} with 1 year or more","Available on the platform"],["Voice interview","Optional, {v} per minute","Available"],["Own database","—","You can upload it to run automations"],["How you pay","Between 25% and 10% of the monthly base salary per hire by band; with a contract, each band drops by 10% or 15%","Per lead and per uploaded candidate; prices after the pilot"],["Best if…","You want to pay only for results","You have your own recruitment team"]],
+    nEy:"Terms", nH:"What goes in writing",
+    conds:[["Pilot and setup","The pilot uses option A, by bands. Setup: a one-time fee of {setup} (one Colombian minimum wage) for each pilot vacancy type and for each new vacancy type under option A. It covers building the ads and configuring the 24/7 text assistant that screens candidates, the form, the rules and the automations."],
+           ["Reference prices","The percentages and amounts on this page are the references we use today with some BPOs. Xtendo's final ones are confirmed with the pilot's results."],
+           ["Bands and contract","With no contract and in the pilot, standard bands apply. With a 6-month contract, each band drops by 10%; with a contract of 1 year or more, each band drops by 15%."],
+           ["Tests","Optional, per candidate who takes the tests: {t0} with no contract, {t6} with a 6-month contract and {t12} with a contract of 1 year or more."],
+           ["Option B","It is an option for later. Its prices are set after the pilot, using its indicators."],
+           ["Voice interview","Optional, only for the candidates Xtendo chooses: {v} per minute of conversation."],
+           ["What counts as a hire","The person signed a contract or started training, and is marked in ContratAndo. Billing cut-off is monthly. The percentage is calculated on the role's base salary in its country."],
+           ["WhatsApp","Optional: if you wish, we connect your WhatsApp Business API account. Meta's per-message charges are paid by Xtendo to Meta."],
+           ["Personal data","In Colombia, processing under Law 1581 of 2012; in each country, under its data law. With each candidate's consent and a data processing agreement with Xtendo."],
+           ["Vacancy types and countries","Each role in each country counts as a vacancy type and has its own setup. Salaries in other currencies are converted to pesos at the official rate on the invoice date."],
+           ["Prices","In Colombian pesos, excluding taxes. Dollar amounts are for reference at the official rate of 29 October 2026 (US$1 = COP 3,162.35). Valid for 30 days."]],
+    sEy:"In short", sH:"What you get and how to choose",
+    sP:"ContratAndo attracts candidates where job boards don't reach, contacts them from minute one and screens them; if you want, it also runs tests and voice interviews. You interview those who pass and decide. We start with a pilot on option A at a setup of one Colombian minimum wage per vacancy type; its results confirm the percentages.",
+    sum:{A:"From 25% down to 10% of the monthly base salary per hire, by band; with a contract, each band drops by 10% or 15%. We do the screening.",B:"Later: your team runs the platform."}, bLater:"Prices after the pilot", sumMix:"with the calculator mix, tests included",
+    srcEy:"Sources", date:"29 October 2026"
+  }};
+
+  const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+  let lang=store.get("xtco-lang")||"es"; if(!T[lang]) lang="es";
+  let cur=store.get("xtco-cur")||"COP"; if(cur!=="COP"&&cur!=="USD") cur="COP";
+  let term=0;
+  const $=id=>document.getElementById(id);
+  const L=()=>T[lang];
+  const locale=()=>lang==="en"?"en-US":"es-CO";
+  function money(cop,dec){
+    const v=cur==="USD"?cop/TRM:cop;
+    const d=cur==="USD"?(dec!==undefined?dec:(Math.abs(v)<100?2:0)):0;
+    return new Intl.NumberFormat(locale(),{style:"currency",currency:cur,currencyDisplay:cur==="COP"&&lang==="en"?"code":"symbol",minimumFractionDigits:d,maximumFractionDigits:d}).format(v);
+  }
+  const pctTxt=p=>{const s=new Intl.NumberFormat(locale(),{maximumFractionDigits:2}).format(p);return lang==="es"?`${s} %`:`${s}%`;};
+  const fill=(s,o)=>s.replace(/\{(\w+)\}/g,(_,k)=>o[k]!==undefined?o[k]:"{"+k+"}");
+  const bandOf=n=>BANDS.find(b=>n>=b[0]&&n<=b[1])||BANDS[0];
+  const bandLabel=b=>{const t=L(), f=x=>new Intl.NumberFormat(locale()).format(x); return b[1]===Infinity?fill(t.bandTop,{a:f(b[0])}):fill(t.bandRow,{a:`${f(b[0])}–${f(b[1])}`});};
+
+  $("inBody").innerHTML=ROLES.map((r,i)=>`<tr><td class="role" data-rn="${i}"></td>
+    <td><input type="number" id="p${i}" min="0" step="1" value="${r.people}"></td>
+    <td><input type="number" id="s${i}" min="0" step="10000" value="${r.sal}"></td></tr>`).join("");
+
+  const num=id=>{const v=parseFloat($(id).value);return isFinite(v)&&v>=0?v:0};
+
+  function renderStatic(){
+    const t=L();
+    document.documentElement.lang=lang;
+    document.querySelectorAll("[data-i]").forEach(el=>{const v=t[el.dataset.i]; if(typeof v==="string") el.innerHTML=v;});
+    document.querySelectorAll("[data-rn]").forEach(el=>{el.textContent=t.roles[ROLES[+el.dataset.rn].k][0]});
+    document.querySelectorAll("#langSeg button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===lang)));
+    document.querySelectorAll("#curSeg button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.cur===cur)));
+    document.querySelectorAll("#termSeg button").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.term===term)));
+    $("caps").innerHTML=t.caps.map((c,i)=>`<div class="cap"><span class="k">0${i+1}</span><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join("");
+    $("autos").innerHTML=t.autos.map(a=>`<div class="arow"><span class="when">${a[0]}</span><span class="arr" aria-hidden="true">→</span><span class="what">${a[1]}</span></div>`).join("");
+    $("plF").innerHTML=t.plF.map(x=>`<li>${x}</li>`).join("");
+    t.tmIn.forEach((x,i)=>$("tml"+i).textContent=x);
+    $("tmSteps").innerHTML=t.tmSteps.map(s=>`<li><div><b>${s[0]}</b><span>${s[1]}</span></div></li>`).join("");
+    $("tgrid").innerHTML=t.tests.map(x=>`<div class="tcard"><span class="t">${x[0]}</span><h3>${x[1]}</h3><p>${x[2]}</p><span class="basis">${x[3]}</span></div>`).join("");
+    $("srcList").innerHTML=SRC.map(s=>`<span>${s}</span>`).join("");
+    const v=$("vid"), src=`video/contratando-${lang}.mp4`;
+    if(!$("vsrc").getAttribute("src").endsWith(src)){ $("vsrc").setAttribute("src",src); v.setAttribute("poster",`video/poster-${lang}.jpg`); v.load(); }
+  }
+
+  function renderPrices(){
+    const t=L(), vr=money(VOICE), su=money(SETUP);
+    const vals={voice:vr,fee:money(FEE_B),setup:su,setupB:money(SETUP_B),min:money(MIN_B),t0:money(TESTS[0]),t6:money(TESTS[6]),t12:money(TESTS[12]),v:vr,sal:money(SMLV)};
+    $("f1v").textContent=money(SMLV);
+    $("f1t").innerHTML=fill(t.f1,{aux:money(AUX)});
+    $("f2v").textContent=`${pctTxt(25)} → ${pctTxt(10)}`;
+    $("f3v").textContent=money(SMLV*12*0.15);
+    $("f4v").textContent=money(SMLV*PCT_A);
+    $("roleBody").innerHTML=ROLES.map(r=>{
+      const rn=t.roles[r.k], comp=r.sal*12*0.15, a=r.sal*PCT_A;
+      return `<tr><td><div class="role">${rn[0]}</div><div class="sub">${rn[1]}</div></td>
+        <td class="num">${rn[2]}</td>
+        <td><div class="tests">${r.tests.map(x=>`<span class="t">${x}</span>`).join("")}</div></td>
+        <td class="r num">${money(comp)}<div class="sub">${money(r.sal)}</div></td>
+        <td class="r"><div class="price num">${money(a)}</div><div class="save num">${pctTxt(Math.round((1-a/comp)*100))} ${t.less}</div></td></tr>`;}).join("");
+    const rng=(a,b)=>`${money(a)}–${money(b)}`;
+    const tv=[[money(101150),money(101150*6),money(101150*6*4)],["—",money(249900),money(249900*4)],["—",rng(60000,250000),rng(240000,1000000)],
+              ...[0,6,12].map(k=>["—",money(TESTS[k]),money(TESTS[k]*4)])];
+    $("testBody").innerHTML=t.tRows.map((row,i)=>`<tr${i>=3?' class="ours"':''}><td><div class="role">${row[0]}</div><div class="sub">${row[1]}</div></td>${tv[i].map(x=>`<td class="r num">${x}</td>`).join("")}</tr>`).join("");
+    const mv={a:money(175395),b:cur==="USD"?rng(15*TRM,55*TRM):rng(Math.round(15*TRM/1000)*1000,Math.round(55*TRM/1000)*1000),setup:su};
+    $("mkBody").innerHTML=t.mk.map((r,i)=>`<tr${i===t.mk.length-1?' class="ours"':''}><td class="role">${r[0]}</td>${r.slice(1).map(c=>`<td class="num">${fill(c,mv)}</td>`).join("")}</tr>`).join("");
+    $("dfGrid").innerHTML=t.dfRows.map((r,i)=>`<div class="panel${i?" df-us":""}"><h3>${r[0]}</h3><p class="note" style="font-size:.92rem">${r[1]}</p></div>`).join("");
+    // Opciones
+    const ul=items=>`<ul>${items.map(b=>`<li>${fill(b,vals)}</li>`).join("")}</ul>`;
+    const bands=`<p class="sub">${t.bandCap}</p><ul class="bandlist" id="bandList">${BANDS.map((b,i)=>`<li data-b="${i}"><span>${bandLabel(b)}</span><b>${fill(t.bandPct,{p:pctTxt(b[2])})}</b></li>`).join("")}</ul>`;
+    const opt=(cls,tag,m,withSetup,withBands)=>`<article class="model ${cls}"><span class="tag">${tag}</span><h3>${m[0]}</h3><p class="sub">${m[1]}</p>
+      ${ul(withSetup?[t.setupB].concat(m[2]):m[2])}${withBands?bands:""}
+      <p class="who"><b>${m[3]}</b> ${m[4]}</p></article>`;
+    $("models").innerHTML=opt("mA",t.optA,t.mA,true,true)+opt("mB",t.optB,t.mB,false,false);
+    // ejemplo de ahorro: 300 agentes con salario mínimo en la primera banda
+    const N=300, b1=BANDS[0][2]/100, firmT=SMLV*12*0.15*N;
+    const col=k=>{const per=SMLV*b1*TERMF[k], tot=per*N, te=TESTS[k]*4*N, all=tot+te; return {k,per,tot,te,all};};
+    const C=[0,6,12].map(col), base=C[0].all;
+    t.svCols.forEach((c,i)=>$("sv"+i).textContent=c); $("svP").textContent=t.svP; $("svNote").textContent=fill(t.svNote,{firm:money(firmT)});
+    const cell=(v,cls)=>`<td class="r num${cls||""}">${v}</td>`;
+    const rowsSv=[
+      C.map(c=>cell(`<span class="price">${pctTxt(Math.round(BANDS[0][2]*TERMF[c.k]*100)/100)}</span>`)),
+      C.map(c=>cell(money(c.per))),
+      C.map(c=>cell(money(c.tot))),
+      C.map(c=>cell(money(c.te))),
+      C.map(c=>cell(`<b>${money(c.all)}</b>`)),
+      C.map((c,i)=>cell(i?`<span class="save">${money(base-c.all)}</span>`:"—")),
+      C.map(c=>cell(`<span class="save">${money(firmT-c.all)}</span>`))];
+    $("svBody").innerHTML=rowsSv.map((r,i)=>`<tr${i>=5?' class="ours"':''}><td class="role">${t.svRows[i]}</td>${r.join("")}</tr>`).join("");
+    t.btCols.forEach((c,i)=>$("bt"+i).textContent=c); t.ppCols.forEach((c,i)=>$("pp"+i).textContent=c); $("btP").textContent=fill(t.btP,vals);
+    $("btBody").innerHTML=BANDS.map((b,i)=>`<tr><td class="role">${bandLabel(b)}</td>${[0,6,12].map(k=>`<td class="r"><div class="price num">${pctTxt(Math.round(b[2]*TERMF[k]*100)/100)}</div><div class="sub num">${money(SMLV*b[2]/100*TERMF[k])}</div></td>`).join("")}</tr>`).join("");
+    $("addons").innerHTML=`<div class="addon"><h3>${t.adT}</h3><p>${t.adP}</p><div class="pp">${t.adPs.map(x=>`<span>${fill(x,vals)}</span>`).join("")}</div></div>
+      <div class="addon"><h3>${t.avT}</h3><p>${t.avP}</p><div class="pp"><span>${fill(t.avPr,vals)}</span></div></div>`;
+    $("plS").innerHTML=t.plS.map(s=>`<li><div><b>${s[0]}</b><span>${fill(s[1],vals)}</span></div></li>`).join("");
+    $("conds").innerHTML=t.conds.map(c=>`<div class="cond"><h3>${c[0]}</h3><p>${fill(c[1],vals)}</p></div>`).join("");
+    $("qualBody").innerHTML=t.qual.map(q=>`<tr><td class="role">${q[0]}</td><td>${fill(q[1],vals)}</td><td>${fill(q[2],vals)}</td></tr>`).join("");
+    calc();
+  }
+
+  function calcTime(){
+    const t=L(), n=50, m1=num("tm1"), m2=num("tm2"), pr=num("tm3")/100;
+    const r=[n*m1, n*m2, n*pr*m1], tot=r.reduce((a,b)=>a+b,0);
+    const h=v=>{const x=v/60; return new Intl.NumberFormat(locale(),{maximumFractionDigits:1}).format(x)+" h";};
+    $("tmBody").innerHTML=t.tmRows.map((x,i)=>`<tr><td>${x}</td><td class="r num">${h(r[i])}</td></tr>`).join("")+`<tr><td><b>${t.tmTot}</b></td><td class="r num"><b class="price">${h(tot)}</b></td></tr>`;
+    $("tmDays").textContent=fill(t.tmDays,{d:new Intl.NumberFormat(locale(),{maximumFractionDigits:1}).format(tot/60/8)});
+  }
+  function calc(){
+    calcTime();
+    const t=L(), pct=num("pct")/100, pagos=num("pagos"), tf=TERMF[term];
+    const ev=num("ev"), testsPH=ev*TESTS[term], voicePH=num("iv")*num("mins")*VOICE;
+    let people=0, types=0; ROLES.forEach((r,i)=>{const p=num("p"+i); people+=p; if(p>0) types++;});
+    const band=bandOf(Math.max(people,1)), bp=band[2]/100, setupT=types*SETUP;
+    let tot={M:0,A:0}, testsM=0, voiceM=0;
+    const rows=ROLES.map((r,i)=>{
+      const p=num("p"+i), s=num("s"+i);
+      const M=s*pagos*pct, A=s*bp*tf+testsPH+voicePH;
+      tot.M+=p*M; tot.A+=p*A; testsM+=p*testsPH; voiceM+=p*voicePH;
+      return {r,p,M,A};
+    });
+    const sv=(m,a)=>m>0?`${money(m-a)}<div class="save num">${pctTxt(Math.round((1-a/m)*100))} ${t.less}</div>`:"—";
+    $("cmpBody").innerHTML=rows.map(x=>`<tr><td><div class="role">${t.roles[x.r.k][0]}</div><div class="sub num">${x.p} ${t.perMonth}</div></td><td class="r num">${money(x.M)}</td><td class="r num win">${money(x.A)}</td><td class="r num">${sv(x.M,x.A)}</td></tr>`).join("");
+    $("cmpFoot").innerHTML=`<tr><td>${t.totalM} · ${people}</td><td class="r num">${money(tot.M)}</td><td class="r num win">${money(tot.A)}</td><td class="r num">${sv(tot.M,tot.A)}</td></tr>
+      <tr><td>${fill(t.setupRow,{n:types})}</td><td class="r">—</td><td class="r num">${money(setupT)}</td><td class="r">—</td></tr>`;
+    const max=Math.max(tot.M,tot.A,1);
+    const items=[["M",t.avgM,tot.M,"m"],["A",t.optA,tot.A,""]];
+    $("bars").innerHTML=items.map(([k,lab,v,cls])=>{
+      const s=k==="M"?"":`<span class="meta num">${tot.M>0?pctTxt(Math.round((1-v/tot.M)*100))+" "+t.less:""} · ${fill(t.setupMeta,{x:money(setupT)})}</span>`;
+      return `<div class="bar"><div class="lab"><span><b>${lab}</b></span><span class="num">${money(v)} ${t.perMonth}</span></div>
+        <div class="track"><div class="fill ${cls}" style="width:${(v/max*100).toFixed(1)}%"></div></div>${s}</div>`;}).join("");
+    $("hBest").textContent=`${money(tot.A)} ${t.perMonth}`;
+    $("hBestSub").textContent=fill(t.bestSub,{pct:tot.M>0?pctTxt(Math.round((1-tot.A/tot.M)*100)):"—",save:money((tot.M-tot.A)*12)});
+    $("bandNote").textContent=fill(t.bandNote,{n:people,p:pctTxt(Math.round(band[2]*tf*100)/100),term:t["term"+term].toLowerCase()});
+    const pp=v=>people>0?money(v/people):"—";
+    $("ppBody").innerHTML=`<tr><td class="role">${t.optA}</td><td class="r num">${pp(tot.A+setupT)}</td><td class="r num">${pp(tot.A)}</td></tr><tr><td class="role">${t.avgM}</td><td class="r num">${pp(tot.M)}</td><td class="r num">${pp(tot.M)}</td></tr>`;
+    $("bNote").textContent=fill(t.bNote,{tests:money(testsM),voice:money(voiceM)});
+    document.querySelectorAll("#bandList li").forEach(li=>li.classList.toggle("on",BANDS[+li.dataset.b]===band));
+    $("sumgrid").innerHTML=`<div><span class="tag" style="color:var(--accent)">${t.optA}</span><span class="amt num">${money(tot.A)} ${t.perMonth}</span><span class="sub num">${fill(t.setupMeta,{x:money(setupT)})} · ${t.sumMix}</span><span class="sub">${t.sum.A}</span></div>
+      <div><span class="tag" style="color:var(--b)">${t.optB}</span><span class="amt">${t.bLater}</span><span class="sub">${t.sum.B}</span></div>`;
+  }
+
+  document.querySelectorAll("#langSeg button").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.lang;store.set("xtco-lang",lang);renderStatic();renderPrices();}));
+  document.querySelectorAll("#curSeg button").forEach(b=>b.addEventListener("click",()=>{cur=b.dataset.cur;store.set("xtco-cur",cur);renderStatic();renderPrices();}));
+  document.querySelectorAll("#termSeg button").forEach(b=>b.addEventListener("click",()=>{term=+b.dataset.term;renderStatic();calc();}));
+  document.addEventListener("input",e=>{if(e.target.matches("input"))calc();});
+  renderStatic(); renderPrices();
+})();
+
+</script>
+
+</body>
+</html>
