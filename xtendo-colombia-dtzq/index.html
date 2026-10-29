@@ -198,6 +198,9 @@ tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transfo
   <div class="top">
     <div class="brand">ContratAndo<small>by DesarrollAndo · Meta Business Partner</small></div>
     <div class="ctrls">
+      <div class="seg" role="group" aria-label="Tema / Theme" id="themeSeg">
+        <button type="button" data-theme-set="light" data-i="thL"></button><button type="button" data-theme-set="dark" data-i="thD"></button>
+      </div>
       <div class="seg" role="group" aria-label="Idioma / Language" id="langSeg">
         <button type="button" data-lang="es">ES</button><button type="button" data-lang="en">EN</button>
       </div>
@@ -474,6 +477,7 @@ tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transfo
 
   const T={
   es:{
+    thL:"☀ Claro", thD:"☾ Oscuro",
     heroEy:"Propuesta · Xtendo Global · Contratación de contact center",
     h1:"Empecemos con un piloto: medimos su costo de adquisición real y con eso fijamos su tarifa.",
     lede:"Atraemos candidatos donde los portales de empleo no llegan y los contactamos desde el primer minuto. Ustedes entrevistan a los que pasan y deciden. El piloto se hace con la opción A, por bandas, y con sus resultados confirmamos los porcentajes y valores.",
@@ -591,6 +595,7 @@ tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transfo
     srcEy:"Fuentes", date:"29 de octubre de 2026"
   },
   en:{
+    thL:"☀ Light", thD:"☾ Dark",
     heroEy:"Proposal · Xtendo Global · Contact center hiring",
     h1:"Let's start with a pilot: we measure your real acquisition cost and use it to set your rate.",
     lede:"We attract candidates where job boards don't reach and contact them from the first minute. You interview those who pass and decide. The pilot uses option A, by bands, and its results confirm the percentages and amounts.",
@@ -712,6 +717,9 @@ tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transfo
   let lang=store.get("xtco-lang")||"es"; if(!T[lang]) lang="es";
   let cur=store.get("xtco-cur")||"COP"; if(cur!=="COP"&&cur!=="USD") cur="COP";
   let term=0;
+  const sysDark=()=>{try{return window.matchMedia("(prefers-color-scheme: dark)").matches}catch(e){return false}};
+  let theme=store.get("xtco-theme"); if(theme!=="light"&&theme!=="dark") theme=sysDark()?"dark":"light";
+  const applyTheme=()=>{document.documentElement.setAttribute("data-theme",theme);document.querySelectorAll("#themeSeg button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.themeSet===theme)));};
   const $=id=>document.getElementById(id);
   const L=()=>T[lang];
   const locale=()=>lang==="en"?"en-US":"es-CO";
@@ -845,11 +853,12 @@ tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transfo
       <div><span class="tag" style="color:var(--b)">${t.optB}</span><span class="amt">${t.bLater}</span><span class="sub">${t.sum.B}</span></div>`;
   }
 
+  document.querySelectorAll("#themeSeg button").forEach(b=>b.addEventListener("click",()=>{theme=b.dataset.themeSet;store.set("xtco-theme",theme);applyTheme();}));
   document.querySelectorAll("#langSeg button").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.lang;store.set("xtco-lang",lang);renderStatic();renderPrices();}));
   document.querySelectorAll("#curSeg button").forEach(b=>b.addEventListener("click",()=>{cur=b.dataset.cur;store.set("xtco-cur",cur);renderStatic();renderPrices();}));
   document.querySelectorAll("#termSeg button").forEach(b=>b.addEventListener("click",()=>{term=+b.dataset.term;renderStatic();calc();}));
   document.addEventListener("input",e=>{if(e.target.matches("input"))calc();});
-  renderStatic(); renderPrices();
+  renderStatic(); renderPrices(); applyTheme();
 })();
 
 </script>
