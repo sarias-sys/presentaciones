@@ -190,6 +190,12 @@ tr.reg-h td{background:var(--sunk);font-weight:600;font-size:.82rem;text-transfo
 .df-us h3{color:var(--accent)}
 .pilot .panel{align-content:start}
 select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--bg);color:var(--ink)}
+.cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 22px;border-radius:12px;background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:.98rem;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.next{border-top:1px solid var(--line);padding-top:18px;display:grid;gap:14px}
+.next .steps{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 </style>
 </head>
 <body>
@@ -215,11 +221,12 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
     <div class="eyebrow" data-i="heroEy"></div>
     <h1 data-i="h1"></h1>
     <p class="lede" data-i="lede"></p>
+    <div class="cta"><a class="btn" id="ctaWa" target="_blank" rel="noopener"></a><a class="btn ghost" id="ctaCalc" href="#calculadora"></a></div>
     <div class="facts">
-      <div class="fact"><b class="num" id="f1v"></b><span id="f1t"></span></div>
+      <div class="fact hl"><b class="num" id="f1v"></b><span id="f1t"></span></div>
       <div class="fact"><b class="num" id="f2v"></b><span data-i="f2"></span></div>
       <div class="fact"><b class="num" id="f3v"></b><span data-i="f3"></span></div>
-      <div class="fact hl"><b class="num" id="f4v"></b><span data-i="f4"></span></div>
+      <div class="fact"><b class="num" id="f4v"></b><span data-i="f4"></span></div>
     </div>
   </div>
 
@@ -245,6 +252,15 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
         <p class="lede" data-i="vP"></p>
       </div>
     </div>
+  </section>
+
+  <section>
+    <header>
+      <div class="eyebrow" data-i="dfEy"></div>
+      <h2 data-i="dfH"></h2>
+      <p class="lede" data-i="dfP"></p>
+    </header>
+    <div class="pilot" id="dfGrid"></div>
   </section>
 
   <section>
@@ -344,8 +360,6 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
       <thead><tr><th data-i="mth1"></th><th data-i="mth2"></th><th data-i="mth3"></th><th data-i="mth4"></th></tr></thead>
       <tbody id="mkBody"></tbody>
     </table></div>
-    <div style="display:grid;gap:8px;margin-top:6px"><h3 data-i="dfH"></h3><p class="lede" data-i="dfP"></p></div>
-    <div class="pilot" id="dfGrid"></div>
   </section>
 
 
@@ -445,6 +459,11 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
       <h2 data-i="sH"></h2>
       <p class="lede" data-i="sP"></p>
       <div class="sumgrid" id="sumgrid"></div>
+      <div class="next">
+        <h3 data-i="nxH"></h3>
+        <ol class="steps" id="nxSteps"></ol>
+        <div class="cta"><a class="btn" id="ctaWa2" target="_blank" rel="noopener"></a><span class="note" data-i="nxNote"></span></div>
+      </div>
     </div>
   </section>
 
@@ -493,12 +512,12 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
   es:{
     thL:"☀ Claro", thD:"☾ Oscuro",
     heroEy:"Propuesta · Xtendo Global · Contratación de contact center",
-    h1:"Empecemos con un piloto: medimos su costo de adquisición real y con eso fijamos su tarifa.",
-    lede:"Atraemos candidatos donde los portales de empleo no llegan y los contactamos desde el primer minuto. Ustedes entrevistan a los que pasan y deciden. El piloto se hace con la opción A, por bandas, y con sus resultados confirmamos los porcentajes y valores.",
-    f1:"Setup del piloto por tipo de vacante: un salario mínimo colombiano de 2026",
-    f2:"Opción A: porcentaje de un salario básico mensual por persona, que baja con el volumen de contratación",
-    f3:"Cobro de un agente con salario mínimo al 15 % del salario anual, la tarifa más baja de una firma de selección en Colombia",
-    f4:"Opción A por el mismo agente en la primera banda (25 % de un salario básico mensual)",
+    h1:"Candidatos filtrados para su contact center desde el minuto uno, por una fracción de lo que cobra el mercado.",
+    lede:"Atraemos candidatos fuera de los portales de empleo, los contactamos apenas llegan y los filtramos en su idioma, a cualquier hora. Ustedes solo entrevistan a quienes pasan. Empezamos con un piloto: medimos su costo de adquisición real y con eso fijamos su tarifa.", ctaWa:"Agendar el piloto por WhatsApp", ctaCalc:"Calcular nuestro costo", waMsg:"Hola Sergio, vi la propuesta de ContratAndo para Xtendo y quiero hablar del piloto.",
+    f1:"menos que un cobro del 15 % del salario anual: {a} frente a {b} por un agente con salario mínimo",
+    f2:"para citar a 50 candidatos a entrevista, formación o contratación", f2v:"< 30 min",
+    f3:"el asistente contacta a cada candidato apenas llega, a cualquier hora y en su idioma", f3v:"Minuto 1",
+    f4:"setup del piloto por tipo de vacante: un salario mínimo colombiano. Con él medimos su costo real.",
     vEy:"Video · 1:17", vH:"ContratAndo para empresas",
     vP:"Del anuncio a la contratación: así trabaja ContratAndo, con pantallas de la plataforma real y las plantillas de WhatsApp que recibe el candidato.",
     pEy:"La plataforma", pH:"Qué hace ContratAndo, de la atracción a la contratación",
@@ -529,8 +548,8 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
     oP:"La opción A es la del piloto y la que manejamos hoy con algunos de nuestros clientes BPO, con precios de referencia. La opción B es para más adelante: sus precios se definen después del piloto, con sus indicadores.",
     optA:"Opción A", optB:"Opción B",
     setupB:"Setup único de {setup} (un salario mínimo colombiano) por tipo de vacante: montaje de la pauta, asistente de texto 24/7 para perfilar, formulario y reglas",
-    mA:["Por persona contratada, por bandas","Les entregamos candidatos filtrados. Pagan un porcentaje del salario básico mensual de cada persona que contratan, según cuántas contratan en el mes. Estas son las bandas del piloto y sin contrato; con contrato, cada banda baja.",["Pauta en Meta y asistente de conversación incluidos","Pruebas y entrevista por voz: opcionales, se cobran aparte"],"Cómo se lee:","el porcentaje de la banda es el que se paga. Sin contrato, con 120 personas en el mes, por cada una se paga el 19 % de su salario básico mensual."],
-    mB:["Plataforma propia, a futuro","Para cuando su equipo quiera operar ContratAndo por su cuenta: les dejamos todo listo para que los leads lleguen a su cuenta de ContratAndo, y su equipo selecciona.",["Puesta a punto: montamos la pauta en Meta y el asistente, y publicamos 2 vacantes","Después, su equipo monta la pauta de las siguientes vacantes y decide cuánto invertir en Meta","Cobro por cada lead que llega a la plataforma y por cada candidato que carguen de su base","Pueden cargar su propia base de exempleados o candidatos para lanzarle automatizaciones","Pruebas y entrevista por voz, si las quieren aplicar"],"Precios:","se definen después del piloto, con sus indicadores."],
+    mA:["Por persona contratada, por bandas","Les entregamos candidatos filtrados. Pagan un porcentaje del salario básico mensual de cada persona que contratan, según cuántas contratan en el mes. Estas son las bandas del piloto y sin contrato; con contrato de 6 meses, cada banda baja 10 %.",["Pauta en Meta y asistente de conversación incluidos","Pruebas y entrevista por voz: opcionales, se cobran aparte"],"Cómo se lee:","el porcentaje de la banda es el que se paga. Sin contrato, con 120 personas en el mes, por cada una se paga el 19 % de su salario básico mensual."],
+    mB:["Plataforma propia, a futuro","Para cuando su equipo quiera operar ContratAndo por su cuenta: les dejamos todo listo para que los leads lleguen a su cuenta de ContratAndo, y su equipo selecciona.",["Puesta a punto: montamos la pauta en Meta y el asistente, y publicamos 2 vacantes","Después, su equipo monta la pauta de las siguientes vacantes y decide cuánto invertir en Meta","Cobro por cada lead que llega a la plataforma y por cada candidato que carguen de su base","Pueden cargar su propia base de exempleados o candidatos para enviarles automatizaciones","Pruebas y entrevista por voz, si las quieren aplicar"],"Precios:","se definen después del piloto, con sus indicadores."],
     bandRow:"{a} personas", bandTop:"{a} o más", bandPct:"{p}", bandCap:"Porcentaje del salario básico mensual que se paga por cada persona, según el total de personas contratadas en el mes (todos los cargos y países):",
     adT:"Opcional · Pruebas psicométricas", adP:"Se cobra por cada candidato que presenta pruebas, con la batería que corresponde al nivel del cargo. Ustedes deciden a quiénes se les aplican.", adPs:["Sin contrato: {t0} por candidato","Contrato de 6 meses: {t6}"],
     avT:"Opcional · Entrevista telefónica con asistente de voz", avP:"Un asistente de voz llama al candidato y lo entrevista con la rúbrica de su empresa. No está incluida en el precio por persona contratada: solo se cobran las entrevistas de los candidatos que ustedes elijan.", avPr:"{v} por minuto hablado",
@@ -570,7 +589,7 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
     tth1:"Forma de compra", tth2:"Por prueba", tth3:"Batería por candidato", tth4:"Por contratado (4 evaluados)",
     tRows:[["Prueba suelta en firma de selección","Precio con IVA, Colombia"],["Batería estándar en firma de selección","Precio con IVA, Colombia"],["Evaluación con psicólogo particular","Consulta en Bogotá"],["ContratAndo · sin contrato","Por candidato que presenta pruebas · antes de IVA"],["ContratAndo · contrato de 6 meses","Por candidato que presenta pruebas · antes de IVA"]],
     free:"Sin costo",
-    mkEy:"Referencia de mercado", mkH:"Lo que cobra el mercado en Colombia por reclutar",
+    mkEy:"Referencia de mercado", dfEy:"Por qué ContratAndo", mkH:"Lo que cobra el mercado en Colombia por reclutar",
     mkP:"Referencias públicas de 2025 y 2026 de firmas de selección, empresas de servicios temporales, portales de empleo y software.", dfH:"Buscamos donde los demás no buscan", dfP:"Las firmas de selección buscan donde buscan todos: en los portales de empleo tradicionales, donde todas las empresas compiten por las mismas hojas de vida. Nosotros llegamos con pauta a personas que no están en esos portales y las atraemos al proceso.", dfRows:[["En un portal tradicional","El candidato se postula y espera días, semanas o incluso meses a que una persona revise su hoja de vida. Solo a un porcentaje muy bajo lo contactan."],["Con ContratAndo","El asistente lo contacta y empieza el proceso desde el minuto 1: resuelve sus dudas, lo filtra y lo lleva a la siguiente etapa."]],
     mth1:"Servicio", mth2:"Pago inicial", mth3:"Pago recurrente", mth4:"Qué no incluye",
     mk:[["Firma de selección (headhunter)","—","15–35 % del salario anual por persona; 15–25 % en cargos medios","Pruebas en muchos casos y pauta dedicada"],
@@ -603,22 +622,22 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
            ["Datos personales","En Colombia, tratamiento conforme a la Ley 1581 de 2012; en cada país, según su ley de datos. Con autorización de cada candidato y acuerdo de encargado del tratamiento con Xtendo."],
            ["Tipos de vacante y países","Cada cargo en cada país cuenta como un tipo de vacante y lleva su propio setup. Los salarios en otra moneda se convierten a pesos con la tasa oficial del día de la factura."],
            ["Precios","En pesos colombianos, antes de impuestos. Los valores en dólares son de referencia, a la TRM del 29 de octubre de 2026 (US$ 1 = 3.162,35 COP). Vigencia: 30 días."]],
-    sEy:"En resumen", sH:"Qué reciben y cómo elegir",
-    sP:"ContratAndo atrae candidatos donde los portales no llegan, los contacta desde el minuto 1 y los filtra; si lo desean, también aplica pruebas y entrevistas por voz. Ustedes entrevistan a quienes pasan y deciden. Empezamos con un piloto con la opción A y setup de un salario mínimo colombiano por tipo de vacante; con sus resultados confirmamos los porcentajes.",
+    sEy:"En resumen", sH:"Qué reciben y por qué empezar con el piloto",
+    sP:"ContratAndo atrae candidatos fuera de los portales, los contacta desde el minuto uno y los filtra en su idioma; si lo desean, también aplica pruebas y entrevistas por voz. Ustedes entrevistan a quienes pasan y deciden. El piloto les muestra, con sus propios datos, cuánto cuesta de verdad cada contratación.", nxH:"Siguiente paso: el piloto", nxSteps:[["Elegimos las vacantes","Una o dos vacantes y los países donde arrancamos."],["Montamos todo","Pauta, asistente, formulario y automatizaciones. Setup de un salario mínimo colombiano por tipo de vacante."],["Medimos y fijamos su tarifa","Con su costo de adquisición real confirmamos los porcentajes."]], nxNote:"Propuesta válida por 30 días.", ctaWa2:"Hablar con Sergio por WhatsApp",
     sum:{A:"De 25 % a 10 % del salario básico mensual por persona, según la banda; con contrato de 6 meses, cada banda baja 10 %. Nosotros hacemos el filtro.",B:"A futuro: su equipo opera la plataforma."}, bLater:"Precios después del piloto", sumMix:"con la mezcla de la calculadora, pruebas incluidas",
     srcEy:"Fuentes", date:"29 de octubre de 2026"
   },
   en:{
     thL:"☀ Light", thD:"☾ Dark",
     heroEy:"Proposal · Xtendo Global · Contact center hiring",
-    h1:"Let's start with a pilot: we measure your real acquisition cost and use it to set your rate.",
-    lede:"We attract candidates where job boards don't reach and contact them from the first minute. You interview those who pass and decide. The pilot uses option A, by bands, and its results confirm the percentages and amounts.",
-    f1:"Pilot setup per vacancy type: one 2026 Colombian minimum wage",
-    f2:"Option A: a percentage of one monthly base salary per hire, going down as hiring volume grows",
-    f3:"A minimum-wage agent at 15% of annual salary, the lowest rate of a recruitment firm in Colombia",
-    f4:"Option A for the same agent in the first band (25% of one monthly base salary)",
+    h1:"Screened candidates for your contact center from minute one, for a fraction of what the market charges.",
+    lede:"We attract candidates outside job boards, contact them the moment they arrive and screen them in their language, at any hour. You only interview those who pass. We start with a pilot: we measure your real acquisition cost and use it to set your rate.", ctaWa:"Book the pilot on WhatsApp", ctaCalc:"Calculate our cost", waMsg:"Hi Sergio, I saw the ContratAndo proposal for Xtendo and would like to talk about the pilot.",
+    f1:"less than a fee of 15% of annual salary: {a} vs. {b} for a minimum-wage agent",
+    f2:"to invite 50 candidates to interview, training or hiring", f2v:"< 30 min",
+    f3:"the assistant contacts each candidate as soon as they arrive, at any hour and in their language", f3v:"Minute 1",
+    f4:"pilot setup per vacancy type: one Colombian minimum wage. It is how we measure your real cost.",
     vEy:"Video · 1 minute", vH:"ContratAndo in one minute",
-    vP:"The video follows the page language. The screens shown are from the live platform.",
+    vP:"From ad to hire: how ContratAndo works, with screens from the live platform.",
     pEy:"The platform", pH:"What ContratAndo does, from attraction to hire",
     caps:[["Attracts","Meta ads with instant forms. Every lead flows into the platform automatically, with its details and answers."],
           ["Talks 24/7","An AI assistant replies on WhatsApp at any hour, answers questions about the role and takes the candidate to the form."],
@@ -647,7 +666,7 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
     oP:"Option A is the pilot option and the one we use today with some of the BPOs we work with, at reference prices. Option B is for later: its prices are set after the pilot, using its indicators.",
     optA:"Option A", optB:"Option B",
     setupB:"One-time setup of {setup} (one Colombian minimum wage) per vacancy type: ad setup, 24/7 text assistant for screening, form and rules",
-    mA:["Per hire, by bands","We deliver screened candidates. You pay a percentage of the monthly base salary of each person you hire, based on how many you hire in the month. These are the pilot and no-contract bands; with a contract, every band goes down.",["Meta ads and conversation assistant included","Tests and voice interview: optional, billed separately"],"How to read it:","the band's percentage is what you pay. With no contract and 120 people in the month, you pay 19% of each person's monthly base salary."],
+    mA:["Per hire, by bands","We deliver screened candidates. You pay a percentage of the monthly base salary of each person you hire, based on how many you hire in the month. These are the pilot and no-contract bands; with a 6-month contract, each band drops by 10%.",["Meta ads and conversation assistant included","Tests and voice interview: optional, billed separately"],"How to read it:","the band's percentage is what you pay. With no contract and 120 people in the month, you pay 19% of each person's monthly base salary."],
     mB:["Your own platform, later","For when your team wants to run ContratAndo on its own: we leave everything ready so leads arrive in your ContratAndo account, and your team makes the selection.",["Onboarding: we build the Meta ads and the assistant, and publish 2 vacancies","After that, your team builds the ads for the next vacancies and decides how much to invest on Meta","Charge per lead that reaches the platform and per candidate uploaded from your database","You can upload your own database of former employees or candidates to run automations","Tests and voice interview, if you want to apply them"],"Prices:","set after the pilot, using its indicators."],
     bandRow:"{a} people", bandTop:"{a} or more", bandPct:"{p}", bandCap:"Percentage of the monthly base salary paid per person, based on the total number of people hired in the month (all roles and countries):",
     adT:"Optional · Psychometric tests", adP:"Billed per candidate who takes the tests, with the battery for the job level. You decide who takes them.", adPs:["No contract: {t0} per candidate","6-month contract: {t6}"],
@@ -688,7 +707,7 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
     tth1:"How it is sold", tth2:"Per test", tth3:"Battery per candidate", tth4:"Per hire (4 assessed)",
     tRows:[["Single test at a recruitment firm","Price incl. VAT, Colombia"],["Standard battery at a recruitment firm","Price incl. VAT, Colombia"],["Assessment with a private psychologist","Consultation in Bogotá"],["ContratAndo · no contract","Per candidate who takes the tests · before VAT"],["ContratAndo · 6-month contract","Per candidate who takes the tests · before VAT"]],
     free:"Free",
-    mkEy:"Market reference", mkH:"What the market in Colombia charges to recruit",
+    mkEy:"Market reference", dfEy:"Why ContratAndo", mkH:"What the market in Colombia charges to recruit",
     mkP:"Public 2025–2026 references from recruitment firms, temporary staffing agencies, job boards and software.", dfH:"We search where others don't", dfP:"Recruitment firms search where everyone searches: on traditional job boards, where every company competes for the same CVs. We use ads to reach people who are not on those boards and bring them into the process.", dfRows:[["On a traditional job board","The candidate applies and waits days, weeks or even months for someone to review their CV. Only a very small share are ever contacted."],["With ContratAndo","The assistant contacts them and starts the process from minute one: answers their questions, screens them and moves them to the next stage."]],
     mth1:"Service", mth2:"Upfront", mth3:"Recurring", mth4:"Not included",
     mk:[["Recruitment firm (headhunter)","—","15–35% of annual salary per hire; 15–25% for mid-level roles","Tests (often) and dedicated ads"],
@@ -721,8 +740,8 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
            ["Personal data","In Colombia, processing under Law 1581 of 2012; in each country, under its data law. With each candidate's consent and a data processing agreement with Xtendo."],
            ["Vacancy types and countries","Each role in each country counts as a vacancy type and has its own setup. Salaries in other currencies are converted to pesos at the official rate on the invoice date."],
            ["Prices","In Colombian pesos, excluding taxes. Dollar amounts are for reference at the official rate of 29 October 2026 (US$1 = COP 3,162.35). Valid for 30 days."]],
-    sEy:"In short", sH:"What you get and how to choose",
-    sP:"ContratAndo attracts candidates where job boards don't reach, contacts them from minute one and screens them; if you want, it also runs tests and voice interviews. You interview those who pass and decide. We start with a pilot on option A at a setup of one Colombian minimum wage per vacancy type; its results confirm the percentages.",
+    sEy:"In short", sH:"What you get and why to start with the pilot",
+    sP:"ContratAndo attracts candidates outside job boards, contacts them from minute one and screens them in their language; if you want, it also runs tests and voice interviews. You interview those who pass and decide. The pilot shows you, with your own data, what each hire really costs.", nxH:"Next step: the pilot", nxSteps:[["We choose the vacancies","One or two vacancies and the countries where we start."],["We set everything up","Ads, assistant, form and automations. Setup of one Colombian minimum wage per vacancy type."],["We measure and set your rate","With your real acquisition cost we confirm the percentages."]], nxNote:"Proposal valid for 30 days.", ctaWa2:"Talk to Sergio on WhatsApp",
     sum:{A:"From 25% down to 10% of the monthly base salary per hire, by band; with a 6-month contract, each band drops by 10%. We do the screening.",B:"Later: your team runs the platform."}, bLater:"Prices after the pilot", sumMix:"with the calculator mix, tests included",
     srcEy:"Sources", date:"29 October 2026"
   }};
@@ -769,6 +788,9 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
     $("caps").innerHTML=t.caps.map((c,i)=>`<div class="cap"><span class="k">0${i+1}</span><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join("");
     $("autos").innerHTML=t.autos.map(a=>`<div class="arow"><span class="when">${a[0]}</span><span class="arr" aria-hidden="true">→</span><span class="what">${a[1]}</span></div>`).join("");
     $("plF").innerHTML=t.plF.map(x=>`<li>${x}</li>`).join("");
+    const wa="https://wa.me/573193760018?text="+encodeURIComponent(t.waMsg);
+    ["ctaWa","ctaWa2"].forEach(id=>{const a=$(id); a.href=wa; a.textContent=t[id];}); $("ctaCalc").textContent=t.ctaCalc;
+    $("nxSteps").innerHTML=t.nxSteps.map(s=>`<li><div><b>${s[0]}</b><span>${s[1]}</span></div></li>`).join("");
     t.tmIn.forEach((x,i)=>$("tml"+i).textContent=x);
     $("tmSteps").innerHTML=t.tmSteps.map(s=>`<li><div><b>${s[0]}</b><span>${s[1]}</span></div></li>`).join("");
     $("tgrid").innerHTML=t.tests.map(x=>`<div class="tcard"><span class="t">${x[0]}</span><h3>${x[1]}</h3><p>${x[2]}</p><span class="basis">${x[3]}</span></div>`).join("");
@@ -780,11 +802,10 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
   function renderPrices(){
     const t=L(), vr=money(VOICE), su=money(SETUP);
     const vals={voice:vr,fee:money(FEE_B),setup:su,setupB:money(SETUP_B),min:money(MIN_B),t0:money(TESTS[0]),t6:money(TESTS[6]),v:vr,sal:money(SMLV)};
-    $("f1v").textContent=money(SMLV);
-    $("f1t").innerHTML=fill(t.f1,{aux:money(AUX)});
-    $("f2v").textContent=`${pctTxt(25)} → ${pctTxt(10)}`;
-    $("f3v").textContent=money(SMLV*12*0.15);
-    $("f4v").textContent=money(SMLV*PCT_A);
+    $("f1v").textContent=pctTxt(Math.round((1-PCT_A/(12*0.15))*100));
+    $("f1t").innerHTML=fill(t.f1,{a:money(SMLV*PCT_A),b:money(SMLV*12*0.15)});
+    $("f2v").textContent=t.f2v; $("f3v").textContent=t.f3v;
+    $("f4v").textContent=money(SMLV);
     $("roleBody").innerHTML=ROLES.map(r=>{
       const rn=t.roles[r.k], comp=r.sal*12*0.15, a=r.sal*PCT_A;
       return `<tr><td><div class="role">${rn[0]}</div><div class="sub">${rn[1]}</div></td>
