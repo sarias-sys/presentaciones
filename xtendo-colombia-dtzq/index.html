@@ -294,12 +294,12 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
     <div class="termnote"><span data-i="termNote"></span></div>
     <div style="display:grid;gap:8px;margin-top:6px"><h3 data-i="btH"></h3><p class="note" id="btP"></p></div>
     <div class="tbl"><table>
-      <thead><tr><th id="bt0"></th><th class="r" id="bt1"></th><th class="r" id="bt2"></th><th class="r" id="bt3"></th></tr></thead>
+      <thead><tr><th id="bt0"></th><th class="r" id="bt1"></th><th class="r" id="bt2"></th></tr></thead>
       <tbody id="btBody"></tbody>
     </table></div>
     <div style="display:grid;gap:8px;margin-top:6px"><h3 data-i="svH"></h3><p class="note" id="svP"></p></div>
     <div class="tbl"><table>
-      <thead><tr><th id="sv0"></th><th class="r" id="sv1"></th><th class="r" id="sv2"></th><th class="r" id="sv3"></th></tr></thead>
+      <thead><tr><th id="sv0"></th><th class="r" id="sv1"></th><th class="r" id="sv2"></th></tr></thead>
       <tbody id="svBody"></tbody>
     </table></div>
     <p class="note" id="svNote"></p>
@@ -359,7 +359,7 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
       <div class="panel">
         <div class="row-in">
           <div class="f" style="display:grid;gap:5px;font-size:.8rem;color:var(--muted)"><span data-i="termL"></span>
-            <div class="seg" role="group" id="termSeg"><button type="button" data-term="0" data-i="term0"></button><button type="button" data-term="6" data-i="term6"></button><button type="button" data-term="12" data-i="term12"></button></div>
+            <div class="seg" role="group" id="termSeg"><button type="button" data-term="0" data-i="term0"></button><button type="button" data-term="6" data-i="term6"></button></div>
           </div>
         </div>
         <div class="row-in">
@@ -465,8 +465,8 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
   const SMLV=1750905, AUX=249095;    // Colombia 2026
   const PCT_A=0.25;                  // opción A: 25 % del salario básico mensual del cargo
   const VOICE=1000;                  // COP por minuto de entrevista de voz (opcional)
-  const TESTS={0:12000,6:6000,12:3000};   // COP por candidato que presenta pruebas, según contrato
-  const TERMF={0:1,6:0.9,12:0.85};        // cada banda baja 10 % (6 meses) o 15 % (1 año o más)
+  const TESTS={0:12000,6:6000};   // COP por candidato que presenta pruebas, según contrato
+  const TERMF={0:1,6:0.9};        // cada banda baja 10 % con contrato de 6 meses
   const FEE_B=4000, SETUP_B=3000000, MIN_B=500000;
   const SETUP=SMLV;                  // 1 SMLV por tipo de vacante (A, C y piloto)
   const BANDS=[[1,50,25],[51,100,22],[101,200,19],[201,300,16],[301,500,13],[501,Infinity,10]];
@@ -532,10 +532,10 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
     mA:["Por persona contratada, por bandas","Les entregamos candidatos filtrados. Pagan un porcentaje del salario básico mensual de cada persona que contratan, según cuántas contratan en el mes. Estas son las bandas del piloto y sin contrato; con contrato, cada banda baja.",["Pauta en Meta y asistente de conversación incluidos","Pruebas y entrevista por voz: opcionales, se cobran aparte"],"Cómo se lee:","el porcentaje de la banda es el que se paga. Sin contrato, con 120 personas en el mes, por cada una se paga el 19 % de su salario básico mensual."],
     mB:["Plataforma propia, a futuro","Para cuando su equipo quiera operar ContratAndo por su cuenta: les dejamos todo listo para que los leads lleguen a su cuenta de ContratAndo, y su equipo selecciona.",["Puesta a punto: montamos la pauta en Meta y el asistente, y publicamos 2 vacantes","Después, su equipo monta la pauta de las siguientes vacantes y decide cuánto invertir en Meta","Cobro por cada lead que llega a la plataforma y por cada candidato que carguen de su base","Pueden cargar su propia base de exempleados o candidatos para lanzarle automatizaciones","Pruebas y entrevista por voz, si las quieren aplicar"],"Precios:","se definen después del piloto, con sus indicadores."],
     bandRow:"{a} personas", bandTop:"{a} o más", bandPct:"{p}", bandCap:"Porcentaje del salario básico mensual que se paga por cada persona, según el total de personas contratadas en el mes (todos los cargos y países):",
-    adT:"Opcional · Pruebas psicométricas", adP:"Se cobra por cada candidato que presenta pruebas, con la batería que corresponde al nivel del cargo. Ustedes deciden a quiénes se les aplican.", adPs:["Sin contrato: {t0} por candidato","Contrato de 6 meses: {t6}","Contrato de 1 año o más: {t12}"],
+    adT:"Opcional · Pruebas psicométricas", adP:"Se cobra por cada candidato que presenta pruebas, con la batería que corresponde al nivel del cargo. Ustedes deciden a quiénes se les aplican.", adPs:["Sin contrato: {t0} por candidato","Contrato de 6 meses: {t6}"],
     avT:"Opcional · Entrevista telefónica con asistente de voz", avP:"Un asistente de voz llama al candidato y lo entrevista con la rúbrica de su empresa. No está incluida en el precio por persona contratada: solo se cobran las entrevistas de los candidatos que ustedes elijan.", avPr:"{v} por minuto hablado",
-    termNote:"Sin contrato y en el piloto rigen las bandas de lista. Con contrato de 6 meses, <b>cada banda baja 10 %</b>; con contrato de 1 año o más, <b>cada banda baja 15 %</b>.", btH:"Bandas por tipo de contrato", btP:"Porcentaje del salario básico mensual y lo que cuesta cada persona, con el agente de servicio al cliente (BPO) de salario mínimo ({sal}) como referencia.", btCols:["Personas contratadas en el mes","Sin contrato y piloto","Contrato de 6 meses (−10 %)","Contrato de 1 año o más (−15 %)"],
-    svH:"Ejemplo: cuánto se ahorran con contrato", svP:"50 agentes de servicio al cliente (BPO) de salario mínimo al mes durante 6 meses (300 personas), en la primera banda de la opción A.", svCols:["","Sin contrato","Contrato de 6 meses","Contrato de 1 año o más"], svRows:["Porcentaje por persona","Costo por persona","Total en 6 meses (300 personas)","Pruebas opcionales (4 candidatos por persona)","Total con pruebas","Ahorro frente a sin contrato","Ahorro frente a un cobro del 15 % del salario anual"], svNote:"Sin contar el setup, que se paga una sola vez y es igual en los tres casos. Con un cobro del 15 % del salario anual, las mismas 300 personas costarían {firm}.",
+    termNote:"Sin contrato y en el piloto rigen las bandas de lista. Con contrato de 6 meses, <b>cada banda baja 10 %</b>.", btH:"Bandas por tipo de contrato", btP:"Porcentaje del salario básico mensual y lo que cuesta cada persona, con el agente de servicio al cliente (BPO) de salario mínimo ({sal}) como referencia.", btCols:["Personas contratadas en el mes","Sin contrato y piloto","Contrato de 6 meses (−10 %)"],
+    svH:"Ejemplo: cuánto se ahorran con contrato", svP:"50 agentes de servicio al cliente (BPO) de salario mínimo al mes durante 6 meses (300 personas), en la primera banda de la opción A.", svCols:["","Sin contrato","Contrato de 6 meses"], svRows:["Porcentaje por persona","Costo por persona","Total en 6 meses (300 personas)","Pruebas opcionales (4 candidatos por persona)","Total con pruebas","Ahorro frente a sin contrato","Ahorro frente a un cobro del 15 % del salario anual"], svNote:"Sin contar el setup, que se paga una sola vez y es igual en los dos casos. Con un cobro del 15 % del salario anual, las mismas 300 personas costarían {firm}.",
     plEy:"Primero, el piloto", plH:"El piloto define sus porcentajes y valores",
     plP:"La propuesta parte de un piloto con la opción A, por bandas. Hemos trabajado con distintos BPO y cada uno contrata diferente: lo que cuesta llevar a una persona hasta su primer día cambia mucho de una empresa a otra. Por eso, con los resultados del piloto y su costo de adquisición real, confirmamos los porcentajes y valores de su tarifa.",
     plFH:"Lo que cambia el costo de adquisición",
@@ -568,7 +568,7 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
            ["MANDO","Liderazgo","Decidir con información incompleta, corregir y dar malas noticias.","Juicio situacional con contenido de supervisión."]],
     tCaution:"Las pruebas apoyan la decisión y no reemplazan la entrevista. En Colombia, su interpretación la hace un psicólogo del equipo de selección (Ley 1090 de 2006).",
     tth1:"Forma de compra", tth2:"Por prueba", tth3:"Batería por candidato", tth4:"Por contratado (4 evaluados)",
-    tRows:[["Prueba suelta en firma de selección","Precio con IVA, Colombia"],["Batería estándar en firma de selección","Precio con IVA, Colombia"],["Evaluación con psicólogo particular","Consulta en Bogotá"],["ContratAndo · sin contrato","Por candidato que presenta pruebas · antes de IVA"],["ContratAndo · contrato de 6 meses","Por candidato que presenta pruebas · antes de IVA"],["ContratAndo · contrato de 1 año o más","Por candidato que presenta pruebas · antes de IVA"]],
+    tRows:[["Prueba suelta en firma de selección","Precio con IVA, Colombia"],["Batería estándar en firma de selección","Precio con IVA, Colombia"],["Evaluación con psicólogo particular","Consulta en Bogotá"],["ContratAndo · sin contrato","Por candidato que presenta pruebas · antes de IVA"],["ContratAndo · contrato de 6 meses","Por candidato que presenta pruebas · antes de IVA"]],
     free:"Sin costo",
     mkEy:"Referencia de mercado", mkH:"Lo que cobra el mercado en Colombia por reclutar",
     mkP:"Referencias públicas de 2025 y 2026 de firmas de selección, empresas de servicios temporales, portales de empleo y software.", dfH:"Buscamos donde los demás no buscan", dfP:"Las firmas de selección buscan donde buscan todos: en los portales de empleo tradicionales, donde todas las empresas compiten por las mismas hojas de vida. Nosotros llegamos con pauta a personas que no están en esos portales y las atraemos al proceso.", dfRows:[["En un portal tradicional","El candidato se postula y espera días, semanas o incluso meses a que una persona revise su hoja de vida. Solo a un porcentaje muy bajo lo contactan."],["Con ContratAndo","El asistente lo contacta y empieza el proceso desde el minuto 1: resuelve sus dudas, lo filtra y lo lleva a la siguiente etapa."]],
@@ -580,7 +580,7 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
         ["ContratAndo · opción A","{setup} por tipo de vacante","Entre 25 % y 10 % de un salario básico mensual por persona, según la banda","Pruebas y voz, que son opcionales"]],
     cEy:"Calculadora", cH:"Cuánto les costaría con la opción A",
     cP:"Ajusten cuántas personas contratan al mes, el salario de cada cargo, el tipo de contrato y si quieren pruebas y entrevista por voz. La opción A se compara con un cobro del 15 % del salario anual por las mismas personas, la tarifa más baja de una firma de selección.",
-    termL:"Contrato", term0:"Sin contrato", term6:"6 meses", term12:"1 año o más",
+    termL:"Contrato", term0:"Sin contrato", term6:"6 meses", 
     assume:"Supuestos", aPct:"Comisión de mercado (% del salario anual)", aPagos:"Salarios al año", aEv:"Candidatos con pruebas por contratado", aIv:"Entrevistas de voz por contratado (opcional)", aMin:"Minutos por entrevista",
     bestK:"Costo de la opción A con esta mezcla", perMonth:"al mes", avgM:"Cobro al 15 % del salario anual",
     bestSub:"{pct} menos que un cobro del 15 % del salario anual. Si contratan lo mismo cada mes, se ahorran {save} en 12 meses, sin contar el setup.",
@@ -590,12 +590,12 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
     kP:"Con la mezcla y el contrato que eligieron arriba, incluidas las pruebas y la voz si las activaron.",
     totalM:"Total del mes", cheapest:"más económica",
     setupRow:"Pago único · setup ({n} tipos de vacante)", setupMeta:"+ {x} de pago único",
-    qual:[["Quién filtra","ContratAndo","Su equipo, con la plataforma"],["Pauta en Meta","Incluida","La montamos para las 2 primeras vacantes; luego ustedes deciden cuánto invertir"],["Pruebas psicométricas","Opcionales, por candidato: {t0} sin contrato, {t6} con 6 meses, {t12} con 1 año o más","Disponibles en la plataforma"],["Entrevista por voz","Opcional, {v} por minuto","Disponible"],["Base de datos propia","—","Pueden cargarla para lanzar automatizaciones"],["Cómo se paga","Entre 25 % y 10 % del salario básico mensual por persona según la banda; con contrato, cada banda baja 10 % o 15 %","Por lead y por candidato cargado; precios después del piloto"],["Les conviene si…","Quieren pagar solo por resultado","Tienen equipo de selección propio"]],
+    qual:[["Quién filtra","ContratAndo","Su equipo, con la plataforma"],["Pauta en Meta","Incluida","La montamos para las 2 primeras vacantes; luego ustedes deciden cuánto invertir"],["Pruebas psicométricas","Opcionales, por candidato: {t0} sin contrato o {t6} con contrato de 6 meses","Disponibles en la plataforma"],["Entrevista por voz","Opcional, {v} por minuto","Disponible"],["Base de datos propia","—","Pueden cargarla para lanzar automatizaciones"],["Cómo se paga","Entre 25 % y 10 % del salario básico mensual por persona según la banda; con contrato de 6 meses, cada banda baja 10 %","Por lead y por candidato cargado; precios después del piloto"],["Les conviene si…","Quieren pagar solo por resultado","Tienen equipo de selección propio"]],
     nEy:"Condiciones", nH:"Lo que queda por escrito",
     conds:[["Piloto y setup","El piloto se hace con la opción A, por bandas. Setup: pago único de {setup} (un salario mínimo colombiano) por cada vacante del piloto y por cada nuevo tipo de vacante en la opción A. Incluye montar la pauta y configurar el asistente de texto que perfila a los candidatos las 24 horas, el formulario, las reglas y las automatizaciones."],
            ["Precios de referencia","Los porcentajes y valores de esta página son los de referencia que manejamos hoy con algunos BPO. Los definitivos para Xtendo se confirman con los resultados del piloto."],
-           ["Bandas y contrato","Sin contrato y en el piloto rigen las bandas de lista. Con contrato de 6 meses, cada banda baja 10 %; con contrato de 1 año o más, cada banda baja 15 %."],
-           ["Pruebas","Opcionales, por candidato que presenta pruebas: {t0} sin contrato, {t6} con contrato de 6 meses y {t12} con contrato de 1 año o más."],
+           ["Bandas y contrato","Sin contrato y en el piloto rigen las bandas de lista. Con contrato de 6 meses, cada banda baja 10 %."],
+           ["Pruebas","Opcionales, por candidato que presenta pruebas: {t0} sin contrato y {t6} con contrato de 6 meses."],
            ["Opción B","Es una opción a futuro. Sus precios se definen después del piloto, con sus indicadores."],
            ["Entrevista por voz","Opcional, solo para los candidatos que Xtendo elija: {v} por minuto hablado."],
            ["Qué cuenta como contratado","La persona firmó contrato o empezó la formación, y queda marcada en ContratAndo. El corte es mensual. El porcentaje se calcula sobre el salario básico del cargo en su país."],
@@ -605,7 +605,7 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
            ["Precios","En pesos colombianos, antes de impuestos. Los valores en dólares son de referencia, a la TRM del 29 de octubre de 2026 (US$ 1 = 3.162,35 COP). Vigencia: 30 días."]],
     sEy:"En resumen", sH:"Qué reciben y cómo elegir",
     sP:"ContratAndo atrae candidatos donde los portales no llegan, los contacta desde el minuto 1 y los filtra; si lo desean, también aplica pruebas y entrevistas por voz. Ustedes entrevistan a quienes pasan y deciden. Empezamos con un piloto con la opción A y setup de un salario mínimo colombiano por tipo de vacante; con sus resultados confirmamos los porcentajes.",
-    sum:{A:"De 25 % a 10 % del salario básico mensual por persona, según la banda; con contrato, cada banda baja 10 % o 15 %. Nosotros hacemos el filtro.",B:"A futuro: su equipo opera la plataforma."}, bLater:"Precios después del piloto", sumMix:"con la mezcla de la calculadora, pruebas incluidas",
+    sum:{A:"De 25 % a 10 % del salario básico mensual por persona, según la banda; con contrato de 6 meses, cada banda baja 10 %. Nosotros hacemos el filtro.",B:"A futuro: su equipo opera la plataforma."}, bLater:"Precios después del piloto", sumMix:"con la mezcla de la calculadora, pruebas incluidas",
     srcEy:"Fuentes", date:"29 de octubre de 2026"
   },
   en:{
@@ -650,10 +650,10 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
     mA:["Per hire, by bands","We deliver screened candidates. You pay a percentage of the monthly base salary of each person you hire, based on how many you hire in the month. These are the pilot and no-contract bands; with a contract, every band goes down.",["Meta ads and conversation assistant included","Tests and voice interview: optional, billed separately"],"How to read it:","the band's percentage is what you pay. With no contract and 120 people in the month, you pay 19% of each person's monthly base salary."],
     mB:["Your own platform, later","For when your team wants to run ContratAndo on its own: we leave everything ready so leads arrive in your ContratAndo account, and your team makes the selection.",["Onboarding: we build the Meta ads and the assistant, and publish 2 vacancies","After that, your team builds the ads for the next vacancies and decides how much to invest on Meta","Charge per lead that reaches the platform and per candidate uploaded from your database","You can upload your own database of former employees or candidates to run automations","Tests and voice interview, if you want to apply them"],"Prices:","set after the pilot, using its indicators."],
     bandRow:"{a} people", bandTop:"{a} or more", bandPct:"{p}", bandCap:"Percentage of the monthly base salary paid per person, based on the total number of people hired in the month (all roles and countries):",
-    adT:"Optional · Psychometric tests", adP:"Billed per candidate who takes the tests, with the battery for the job level. You decide who takes them.", adPs:["No contract: {t0} per candidate","6-month contract: {t6}","Contract of 1 year or more: {t12}"],
+    adT:"Optional · Psychometric tests", adP:"Billed per candidate who takes the tests, with the battery for the job level. You decide who takes them.", adPs:["No contract: {t0} per candidate","6-month contract: {t6}"],
     avT:"Optional · Phone interview with a voice assistant", avP:"A voice assistant calls the candidate and interviews them with your company's rubric. It is not included in the price per hire: only the interviews of the candidates you choose are billed.", avPr:"{v} per minute of conversation",
-    termNote:"With no contract and in the pilot, standard bands apply. With a 6-month contract, <b>each band drops by 10%</b>; with a contract of 1 year or more, <b>each band drops by 15%</b>.", btH:"Bands by contract type", btP:"Percentage of the monthly base salary and what each hire costs, using a minimum-wage BPO customer service agent ({sal}) as reference.", btCols:["People hired in the month","No contract and pilot","6-month contract (−10%)","Contract of 1 year or more (−15%)"],
-    svH:"Example: how much you save with a contract", svP:"50 minimum-wage BPO customer service agents a month for 6 months (300 people), in option A's first band.", svCols:["","No contract","6-month contract","Contract of 1 year or more"], svRows:["Percentage per person","Cost per person","Total over 6 months (300 people)","Optional tests (4 candidates per hire)","Total with tests","Savings vs. no contract","Savings vs. a fee of 15% of annual salary"], svNote:"Excluding setup, which is paid once and is the same in all three cases. At 15% of annual salary, the same 300 people would cost {firm}.",
+    termNote:"With no contract and in the pilot, standard bands apply. With a 6-month contract, <b>each band drops by 10%</b>.", btH:"Bands by contract type", btP:"Percentage of the monthly base salary and what each hire costs, using a minimum-wage BPO customer service agent ({sal}) as reference.", btCols:["People hired in the month","No contract and pilot","6-month contract (−10%)"],
+    svH:"Example: how much you save with a contract", svP:"50 minimum-wage BPO customer service agents a month for 6 months (300 people), in option A's first band.", svCols:["","No contract","6-month contract"], svRows:["Percentage per person","Cost per person","Total over 6 months (300 people)","Optional tests (4 candidates per hire)","Total with tests","Savings vs. no contract","Savings vs. a fee of 15% of annual salary"], svNote:"Excluding setup, which is paid once and is the same in both cases. At 15% of annual salary, the same 300 people would cost {firm}.",
     plEy:"First, the pilot", plH:"The pilot sets your percentages and amounts",
     plP:"The proposal starts with a pilot on option A, by bands. We have worked with several BPOs and each one hires differently: what it costs to get a person to day one varies a lot from company to company. So we use the pilot's results and your real acquisition cost to confirm the percentages and amounts of your rate.",
     plFH:"What changes the acquisition cost",
@@ -686,7 +686,7 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
            ["MANDO","Leadership","Deciding with incomplete information, correcting, giving bad news.","Situational judgment with supervisory content."]],
     tCaution:"Tests support the decision and do not replace the interview. In Colombia, they are interpreted by a psychologist on the recruitment team (Law 1090 of 2006).",
     tth1:"How it is sold", tth2:"Per test", tth3:"Battery per candidate", tth4:"Per hire (4 assessed)",
-    tRows:[["Single test at a recruitment firm","Price incl. VAT, Colombia"],["Standard battery at a recruitment firm","Price incl. VAT, Colombia"],["Assessment with a private psychologist","Consultation in Bogotá"],["ContratAndo · no contract","Per candidate who takes the tests · before VAT"],["ContratAndo · 6-month contract","Per candidate who takes the tests · before VAT"],["ContratAndo · contract of 1 year or more","Per candidate who takes the tests · before VAT"]],
+    tRows:[["Single test at a recruitment firm","Price incl. VAT, Colombia"],["Standard battery at a recruitment firm","Price incl. VAT, Colombia"],["Assessment with a private psychologist","Consultation in Bogotá"],["ContratAndo · no contract","Per candidate who takes the tests · before VAT"],["ContratAndo · 6-month contract","Per candidate who takes the tests · before VAT"]],
     free:"Free",
     mkEy:"Market reference", mkH:"What the market in Colombia charges to recruit",
     mkP:"Public 2025–2026 references from recruitment firms, temporary staffing agencies, job boards and software.", dfH:"We search where others don't", dfP:"Recruitment firms search where everyone searches: on traditional job boards, where every company competes for the same CVs. We use ads to reach people who are not on those boards and bring them into the process.", dfRows:[["On a traditional job board","The candidate applies and waits days, weeks or even months for someone to review their CV. Only a very small share are ever contacted."],["With ContratAndo","The assistant contacts them and starts the process from minute one: answers their questions, screens them and moves them to the next stage."]],
@@ -698,7 +698,7 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
         ["ContratAndo · option A","{setup} per vacancy type","Between 25% and 10% of one monthly base salary per hire, by band","Tests and voice, which are optional"]],
     cEy:"Calculator", cH:"What option A would cost you",
     cP:"Set how many people you hire each month, the salary for each role, the contract type and whether you want tests and voice interviews. Option A is compared with a fee of 15% of annual salary for the same people, the lowest rate of a recruitment firm.",
-    termL:"Contract", term0:"No contract", term6:"6 months", term12:"1 year or more",
+    termL:"Contract", term0:"No contract", term6:"6 months", 
     assume:"Assumptions", aPct:"Market fee (% of annual salary)", aPagos:"Salaries per year", aEv:"Candidates tested per hire", aIv:"Voice interviews per hire (optional)", aMin:"Minutes per interview",
     bestK:"Option A cost with this mix", perMonth:"per month", avgM:"Fee at 15% of annual salary",
     bestSub:"{pct} less than a fee of 15% of annual salary. If you hire the same every month, you save {save} over 12 months, excluding setup.",
@@ -708,12 +708,12 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
     kP:"Using the mix and contract chosen above, including tests and voice if switched on.",
     totalM:"Monthly total", cheapest:"lowest",
     setupRow:"One-time · setup ({n} vacancy types)", setupMeta:"+ {x} one-time",
-    qual:[["Who screens","ContratAndo","Your team, using the platform"],["Meta ads","Included","We build them for the first 2 vacancies; then you decide how much to invest"],["Psychometric tests","Optional, per candidate: {t0} no contract, {t6} with 6 months, {t12} with 1 year or more","Available on the platform"],["Voice interview","Optional, {v} per minute","Available"],["Own database","—","You can upload it to run automations"],["How you pay","Between 25% and 10% of the monthly base salary per hire by band; with a contract, each band drops by 10% or 15%","Per lead and per uploaded candidate; prices after the pilot"],["Best if…","You want to pay only for results","You have your own recruitment team"]],
+    qual:[["Who screens","ContratAndo","Your team, using the platform"],["Meta ads","Included","We build them for the first 2 vacancies; then you decide how much to invest"],["Psychometric tests","Optional, per candidate: {t0} with no contract or {t6} with a 6-month contract","Available on the platform"],["Voice interview","Optional, {v} per minute","Available"],["Own database","—","You can upload it to run automations"],["How you pay","Between 25% and 10% of the monthly base salary per hire by band; with a 6-month contract, each band drops by 10%","Per lead and per uploaded candidate; prices after the pilot"],["Best if…","You want to pay only for results","You have your own recruitment team"]],
     nEy:"Terms", nH:"What goes in writing",
     conds:[["Pilot and setup","The pilot uses option A, by bands. Setup: a one-time fee of {setup} (one Colombian minimum wage) for each pilot vacancy type and for each new vacancy type under option A. It covers building the ads and configuring the 24/7 text assistant that screens candidates, the form, the rules and the automations."],
            ["Reference prices","The percentages and amounts on this page are the references we use today with some BPOs. Xtendo's final ones are confirmed with the pilot's results."],
-           ["Bands and contract","With no contract and in the pilot, standard bands apply. With a 6-month contract, each band drops by 10%; with a contract of 1 year or more, each band drops by 15%."],
-           ["Tests","Optional, per candidate who takes the tests: {t0} with no contract, {t6} with a 6-month contract and {t12} with a contract of 1 year or more."],
+           ["Bands and contract","With no contract and in the pilot, standard bands apply. With a 6-month contract, each band drops by 10%."],
+           ["Tests","Optional, per candidate who takes the tests: {t0} with no contract and {t6} with a 6-month contract."],
            ["Option B","It is an option for later. Its prices are set after the pilot, using its indicators."],
            ["Voice interview","Optional, only for the candidates Xtendo chooses: {v} per minute of conversation."],
            ["What counts as a hire","The person signed a contract or started training, and is marked in ContratAndo. Billing cut-off is monthly. The percentage is calculated on the role's base salary in its country."],
@@ -723,7 +723,7 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
            ["Prices","In Colombian pesos, excluding taxes. Dollar amounts are for reference at the official rate of 29 October 2026 (US$1 = COP 3,162.35). Valid for 30 days."]],
     sEy:"In short", sH:"What you get and how to choose",
     sP:"ContratAndo attracts candidates where job boards don't reach, contacts them from minute one and screens them; if you want, it also runs tests and voice interviews. You interview those who pass and decide. We start with a pilot on option A at a setup of one Colombian minimum wage per vacancy type; its results confirm the percentages.",
-    sum:{A:"From 25% down to 10% of the monthly base salary per hire, by band; with a contract, each band drops by 10% or 15%. We do the screening.",B:"Later: your team runs the platform."}, bLater:"Prices after the pilot", sumMix:"with the calculator mix, tests included",
+    sum:{A:"From 25% down to 10% of the monthly base salary per hire, by band; with a 6-month contract, each band drops by 10%. We do the screening.",B:"Later: your team runs the platform."}, bLater:"Prices after the pilot", sumMix:"with the calculator mix, tests included",
     srcEy:"Sources", date:"29 October 2026"
   }};
 
@@ -779,7 +779,7 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
 
   function renderPrices(){
     const t=L(), vr=money(VOICE), su=money(SETUP);
-    const vals={voice:vr,fee:money(FEE_B),setup:su,setupB:money(SETUP_B),min:money(MIN_B),t0:money(TESTS[0]),t6:money(TESTS[6]),t12:money(TESTS[12]),v:vr,sal:money(SMLV)};
+    const vals={voice:vr,fee:money(FEE_B),setup:su,setupB:money(SETUP_B),min:money(MIN_B),t0:money(TESTS[0]),t6:money(TESTS[6]),v:vr,sal:money(SMLV)};
     $("f1v").textContent=money(SMLV);
     $("f1t").innerHTML=fill(t.f1,{aux:money(AUX)});
     $("f2v").textContent=`${pctTxt(25)} → ${pctTxt(10)}`;
@@ -794,7 +794,7 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
         <td class="r"><div class="price num">${money(a)}</div><div class="save num">${pctTxt(Math.round((1-a/comp)*100))} ${t.less}</div></td></tr>`;}).join("");
     const rng=(a,b)=>`${money(a)}–${money(b)}`;
     const tv=[[money(101150),money(101150*6),money(101150*6*4)],["—",money(249900),money(249900*4)],["—",rng(60000,250000),rng(240000,1000000)],
-              ...[0,6,12].map(k=>["—",money(TESTS[k]),money(TESTS[k]*4)])];
+              ...[0,6].map(k=>["—",money(TESTS[k]),money(TESTS[k]*4)])];
     $("testBody").innerHTML=t.tRows.map((row,i)=>`<tr${i>=3?' class="ours"':''}><td><div class="role">${row[0]}</div><div class="sub">${row[1]}</div></td>${tv[i].map(x=>`<td class="r num">${x}</td>`).join("")}</tr>`).join("");
     const mv={a:money(175395),b:cur==="USD"?rng(15*TRM,55*TRM):rng(Math.round(15*TRM/1000)*1000,Math.round(55*TRM/1000)*1000),setup:su};
     $("mkBody").innerHTML=t.mk.map((r,i)=>`<tr${i===t.mk.length-1?' class="ours"':''}><td class="role">${r[0]}</td>${r.slice(1).map(c=>`<td class="num">${fill(c,mv)}</td>`).join("")}</tr>`).join("");
@@ -809,7 +809,7 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
     // ejemplo de ahorro: 300 agentes con salario mínimo en la primera banda
     const N=300, b1=BANDS[0][2]/100, firmT=SMLV*12*0.15*N;
     const col=k=>{const per=SMLV*b1*TERMF[k], tot=per*N, te=TESTS[k]*4*N, all=tot+te; return {k,per,tot,te,all};};
-    const C=[0,6,12].map(col), base=C[0].all;
+    const C=[0,6].map(col), base=C[0].all;
     t.svCols.forEach((c,i)=>$("sv"+i).textContent=c); $("svP").textContent=t.svP; $("svNote").textContent=fill(t.svNote,{firm:money(firmT)});
     const cell=(v,cls)=>`<td class="r num${cls||""}">${v}</td>`;
     const rowsSv=[
@@ -822,7 +822,7 @@ select{font:inherit;font-size:.9rem;width:100%;padding:6px 8px;border:1px solid 
       C.map(c=>cell(`<span class="save">${money(firmT-c.all)}</span>`))];
     $("svBody").innerHTML=rowsSv.map((r,i)=>`<tr${i>=5?' class="ours"':''}><td class="role">${t.svRows[i]}</td>${r.join("")}</tr>`).join("");
     t.btCols.forEach((c,i)=>$("bt"+i).textContent=c); t.ppCols.forEach((c,i)=>$("pp"+i).textContent=c); $("btP").textContent=fill(t.btP,vals);
-    $("btBody").innerHTML=BANDS.map((b,i)=>`<tr><td class="role">${bandLabel(b)}</td>${[0,6,12].map(k=>`<td class="r"><div class="price num">${pctTxt(Math.round(b[2]*TERMF[k]*100)/100)}</div><div class="sub num">${money(SMLV*b[2]/100*TERMF[k])}</div></td>`).join("")}</tr>`).join("");
+    $("btBody").innerHTML=BANDS.map((b,i)=>`<tr><td class="role">${bandLabel(b)}</td>${[0,6].map(k=>`<td class="r"><div class="price num">${pctTxt(Math.round(b[2]*TERMF[k]*100)/100)}</div><div class="sub num">${money(SMLV*b[2]/100*TERMF[k])}</div></td>`).join("")}</tr>`).join("");
     $("addons").innerHTML=`<div class="addon"><h3>${t.adT}</h3><p>${t.adP}</p><div class="pp">${t.adPs.map(x=>`<span>${fill(x,vals)}</span>`).join("")}</div></div>
       <div class="addon"><h3>${t.avT}</h3><p>${t.avP}</p><div class="pp"><span>${fill(t.avPr,vals)}</span></div></div>`;
     $("plS").innerHTML=t.plS.map(s=>`<li><div><b>${s[0]}</b><span>${fill(s[1],vals)}</span></div></li>`).join("");
