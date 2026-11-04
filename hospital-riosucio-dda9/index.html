@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Propuesta Hospital de Riosucio · DesarrollAndo</title>
+<meta name="description" content="Propuesta 2027 de WhatsApp con IA, citas y call center en la nube para el Hospital Departamental San Juan de Dios de Riosucio, Caldas.">
+<link rel="icon" href="../assets/isotipo-desarrollando.png">
+<script>
+(function(){try{var t=localStorage.getItem('da-tema');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+<style>
+/* Marca DesarrollAndo. Claro: fondo #ededed, acento structural. Oscuro: escenario #111827, acento highlight. */
+:root{
+  --bg:#ededed;--surface:#f7f7f8;--raised:#ffffff;--sunken:#dfe3e8;
+  --ink:#111827;--ink-2:#4b5563;--ink-3:#5b6472;
+  --accent:#2b599e;--accent-soft:#dfe4ed;--structural:#2b599e;--on-structural:#fff;--tech:#5a5396;
+  --line:rgba(17,24,39,.12);--control:#7c8594;
+  --good:#1d6f1d;--good-soft:#d8e4d9;--warn:#8a4b07;--warn-soft:#e8dfd6;--raiz:#b42727;
+  --wa-bg:#efeae2;--wa-in:#ffffff;--wa-out:#d9fdd3;--wa-ink:#111b21;--wa-time-in:#667781;--wa-time-out:#55665c;--wa-head:#1f6f5c;--wa-btn:#1f6f5c;--wa-bar:#f0f2f5;
+  --call:#1d6f45;--hang:#a33a3a;
+  --stage:#111827;--stage-ink:#ffffff;--stage-ink-2:#c1c3c8;--stage-accent:#85caee;--stage-line:rgba(255,255,255,.14);--stage-surface:#1a2036;
+  --mesh-a:rgba(43,89,158,.10);--mesh-b:rgba(90,83,150,.08);
+  --f:"Poppins",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --r:8px;--rs:6px;--ease:cubic-bezier(.16,1,.3,1);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111827;--surface:#1a2036;--raised:#232845;--sunken:#0c111d;
+  --ink:#ffffff;--ink-2:#c1c3c8;--ink-3:#a1a1aa;
+  --accent:#85caee;--accent-soft:#293850;
+  --line:rgba(255,255,255,.12);--control:#6b7394;
+  --good:#4cc94c;--good-soft:#213839;--warn:#e8973a;--warn-soft:#373137;--raiz:#e06060;
+  --wa-bg:#0b141a;--wa-in:#202c33;--wa-out:#005c4b;--wa-ink:#e9edef;--wa-time-in:#8696a0;--wa-time-out:#c3d6d0;--wa-btn:#7fd3b9;--wa-bar:#111b21;
+  --stage:#0c111d;--stage-surface:#1a2036;
+  --mesh-a:rgba(133,202,238,.10);--mesh-b:rgba(90,83,150,.16);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111827;--surface:#1a2036;--raised:#232845;--sunken:#0c111d;
+  --ink:#ffffff;--ink-2:#c1c3c8;--ink-3:#a1a1aa;
+  --accent:#85caee;--accent-soft:#293850;
+  --line:rgba(255,255,255,.12);--control:#6b7394;
+  --good:#4cc94c;--good-soft:#213839;--warn:#e8973a;--warn-soft:#373137;--raiz:#e06060;
+  --wa-bg:#0b141a;--wa-in:#202c33;--wa-out:#005c4b;--wa-ink:#e9edef;--wa-time-in:#8696a0;--wa-time-out:#c3d6d0;--wa-btn:#7fd3b9;--wa-bar:#111b21;
+  --stage:#0c111d;--stage-surface:#1a2036;
+  --mesh-a:rgba(133,202,238,.10);--mesh-b:rgba(90,83,150,.16);
+  color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:16px;line-height:1.6;
+  background-image:radial-gradient(60rem 36rem at 90% -10%,var(--mesh-a),transparent 60%),radial-gradient(50rem 40rem at -10% 25%,var(--mesh-b),transparent 60%);background-repeat:no-repeat}
+img,video,svg{max-width:100%}
+.wrap{max-width:1160px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+@media (min-width:720px){.wrap{padding-left:40px;padding-right:40px}}
+h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:0}
+h1{font-size:clamp(2.1rem,4.6vw,3.9rem);line-height:1.06;font-weight:700}
+h2{font-size:clamp(1.75rem,3.2vw,2.8rem);line-height:1.1;font-weight:600}
+h3{font-size:1.12rem;line-height:1.3;font-weight:600}
+p{margin:0}
+.hl{color:var(--accent)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:2px}
+button{font:inherit;color:inherit;cursor:pointer}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.eyebrow .n{font-family:var(--mono);font-weight:400;display:inline-flex;align-items:center;gap:10px}
+.eyebrow .n::after{content:"";width:28px;height:1px;background:currentColor;opacity:.6}
+.kicker{font-family:var(--mono);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.lead{font-size:1.1rem;font-weight:300;line-height:1.65;color:var(--ink-2);max-width:44rem}
+.muted{color:var(--ink-2);font-weight:300}
+.small{font-size:14px}
+.note{font-size:13px;color:var(--ink-3);margin-top:12px}
+.label{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.chip{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.06em;padding:3px 8px;border-radius:var(--rs);background:var(--accent-soft);color:var(--accent)}
+.chip.ex{background:var(--warn-soft);color:var(--warn)}
+/* nav */
+.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
+.top .wrap{display:flex;align-items:center;gap:16px;height:60px}
+.brand{font-weight:600;font-size:16px;white-space:nowrap;text-decoration:none;color:var(--ink)}
+.navlinks{display:flex;gap:2px;margin-left:auto}
+.navlinks a{text-decoration:none;color:var(--ink-2);font-size:.82rem;font-weight:500;padding:7px 10px;border-radius:var(--rs);white-space:nowrap}
+.navlinks a:hover{color:var(--ink)}
+.navlinks a.on{background:var(--accent-soft);color:var(--accent)}
+.iconbtn{width:38px;height:38px;flex:none;display:grid;place-items:center;border-radius:var(--rs);border:1px solid var(--control);background:transparent;color:var(--ink)}
+.iconbtn svg{width:18px;height:18px}
+.menubtn{display:none;margin-left:auto;height:38px;padding:0 12px;border-radius:var(--rs);border:1px solid var(--control);background:transparent;font-size:14px;font-weight:500;align-items:center;gap:6px}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:linear-gradient(90deg,var(--structural),var(--accent))}
+.sheet{position:fixed;inset:0;z-index:40;background:rgba(5,7,13,.5);display:flex;align-items:flex-end}
+.sheet nav{width:100%;background:var(--raised);border-radius:14px 14px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));display:grid;gap:4px}
+.sheet a{display:flex;gap:12px;align-items:center;padding:12px;border-radius:var(--rs);text-decoration:none;color:var(--ink);font-weight:500}
+.sheet a span{font-family:var(--mono);color:var(--accent);font-size:13px}
+.sheet a.on{background:var(--accent-soft)}
+@media (max-width:980px){.navlinks{display:none}.menubtn{display:inline-flex}}
+/* sections */
+section{padding-block:80px;border-bottom:1px solid var(--line)}
+.head{display:grid;gap:14px;margin-bottom:36px}
+.mod{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.hov{transition:transform .25s var(--ease),border-color .25s}
+.hov:hover{transform:translateY(-3px);border-color:var(--accent)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.split>*{min-width:0}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.rv.in{opacity:1;transform:none}
+/* hero */
+.hero{padding-block:64px 72px}
+.hero-grid{display:grid;grid-template-columns:7fr 5fr;gap:56px;align-items:center}
+.hero-grid>*{min-width:0}
+.logo{width:min(220px,56%);height:auto;display:block}
+.logo.dark{display:none}
+:root[data-theme="dark"] .logo.light{display:none}:root[data-theme="dark"] .logo.dark{display:block}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo.light{display:none}:root:not([data-theme="light"]) .logo.dark{display:block}}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--structural);color:var(--on-structural);text-decoration:none;font-weight:600;font-size:1.02rem;padding:13px 20px;border-radius:var(--r);border:0;transition:transform .2s var(--ease)}
+.cta:hover{transform:translateY(-2px)}
+.cta svg{width:18px;height:18px}
+.cta.ghost{background:transparent;color:var(--ink);border:1px solid var(--control)}
+.svclist{display:grid;margin-top:8px;border-top:1px solid var(--line);width:100%}
+.svclist a{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.svclist a:hover b{color:var(--accent)}
+.svclist .i{font-family:var(--mono);font-weight:300;font-size:1.4rem;color:var(--accent)}
+.svclist span{display:block;font-size:14px;color:var(--ink-2);font-weight:300}
+.svclist svg{width:18px;height:18px;color:var(--ink-3)}
+.saving{background:var(--stage);color:var(--stage-ink);border-radius:14px;padding:28px;display:grid;gap:18px;box-shadow:0 0 40px rgba(0,0,0,.18)}
+.saving .big{font-size:clamp(4rem,9vw,6.5rem);font-weight:700;line-height:.95;color:var(--stage-accent);font-variant-numeric:tabular-nums}
+.saving p{color:var(--stage-ink-2);font-weight:300}
+.bars{display:grid;gap:12px}
+.bar{display:grid;gap:6px}
+.bar div{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--stage-ink-2)}
+.bar div b{color:var(--stage-ink);font-weight:600;font-variant-numeric:tabular-nums}
+.bar i{display:block;height:12px;border-radius:3px}
+.bar.a i{background:rgba(255,255,255,.28)}
+.bar.b i{background:linear-gradient(90deg,var(--structural),var(--stage-accent))}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--stage-line);padding-top:14px}
+.facts div{display:grid;gap:2px}
+.facts b{font-size:1.5rem;font-weight:600;line-height:1.1}
+.facts span{font-size:12px;color:var(--stage-ink-2);line-height:1.35}
+/* journey */
+.journey{position:relative;padding:8px 0}
+.journey svg{display:block;width:100%;height:auto}
+.journey .v{display:none}
+.areas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px}
+.area{padding:22px;display:grid;gap:10px;align-content:start}
+.area p{color:var(--ink-2);font-weight:300;font-size:15px}
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{border:1px solid var(--control);background:transparent;border-radius:var(--rs);padding:9px 14px;font-size:14px;color:var(--ink-2)}
+.tabs button:hover{color:var(--ink)}
+.tabs button[aria-selected="true"]{background:var(--structural);border-color:var(--structural);color:var(--on-structural)}
+/* feat */
+.feat{display:grid;gap:14px;margin-top:22px}
+.feat div{display:grid;grid-template-columns:24px 1fr;gap:12px}
+.feat p{font-weight:300;color:var(--ink-2)}
+.feat p b{color:var(--ink);font-weight:600}
+.feat svg{width:20px;height:20px;color:var(--accent);margin-top:3px}
+.proof{margin-top:24px;padding:20px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0;display:grid;gap:6px}
+.proof p{color:var(--ink-2);font-weight:300;font-size:15px}
+/* phone */
+.phone{max-width:370px;margin:0 auto;border-radius:34px;padding:10px;background:#1f2937;box-shadow:0 18px 40px -20px rgba(0,0,0,.5)}
+.screen{border-radius:26px;overflow:hidden;background:var(--wa-bg);display:flex;flex-direction:column;height:560px}
+.wahead{background:var(--wa-head);color:#fff;padding:12px 14px;display:flex;gap:10px;align-items:center}
+.wahead .av{width:34px;height:34px;border-radius:50%;background:#fff;color:var(--wa-head);display:grid;place-items:center;font-weight:700;font-size:12px}
+.wahead small{display:block;opacity:.85;font-size:12px}
+.chat{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:86%;padding:8px 10px;border-radius:10px;font-size:14px;line-height:1.42;background:var(--wa-in);color:var(--wa-ink);white-space:pre-line;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.msg time{display:block;text-align:right;font-size:11px;color:var(--wa-time-in);margin-top:2px}
+.msg.me{align-self:flex-end;background:var(--wa-out)}
+.msg.me time{color:var(--wa-time-out)}
+.msg.sys{align-self:center;background:var(--accent-soft);color:var(--accent);font-size:12px;font-family:var(--mono);text-align:center;box-shadow:none}
+.quick{display:flex;flex-wrap:wrap;gap:6px;padding:10px;background:var(--wa-bar);border-top:1px solid var(--line);min-height:58px}
+.quick button{border:1px solid var(--wa-btn);color:var(--wa-btn);background:transparent;border-radius:var(--rs);padding:7px 12px;font-size:13px}
+.behind{margin-top:18px;padding:16px 18px;border:1px dashed var(--control);border-radius:var(--r);background:var(--surface);display:grid;gap:6px}
+.behind p{font-size:14px;color:var(--ink-2);font-weight:300}
+/* window */
+.win{border:1px solid var(--line);border-radius:var(--r);background:var(--raised);overflow:hidden;box-shadow:0 16px 40px -28px rgba(17,24,39,.45)}
+.wbar{display:flex;align-items:center;gap:8px;padding:9px 14px;background:var(--sunken);border-bottom:1px solid var(--line);font-size:12px;color:var(--ink-3)}
+.wbar i{width:10px;height:10px;border-radius:50%;background:var(--control);opacity:.5}
+.wbar .t{margin-left:8px;font-weight:600;color:var(--ink-2)}
+.inbox{display:grid;grid-template-columns:280px 1fr;min-height:420px}
+.inbox .list{border-right:1px solid var(--line);overflow-y:auto}
+.conv{display:grid;gap:4px;width:100%;text-align:left;padding:12px 14px;border:0;border-bottom:1px solid var(--line);background:none}
+.conv:hover,.conv.on{background:var(--surface)}
+.conv.on{box-shadow:inset 3px 0 0 var(--accent)}
+.conv .row{display:flex;justify-content:space-between;gap:8px;font-size:14px}
+.conv .row span{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.conv .pv{font-size:13px;color:var(--ink-2);font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pills{display:flex;gap:4px;flex-wrap:wrap}
+.pill{font-size:11px;padding:2px 7px;border-radius:4px;font-weight:500;display:inline-flex;align-items:center;gap:5px}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.p-new{background:var(--warn-soft);color:var(--warn)}.p-ok{background:var(--good-soft);color:var(--good)}.p-acc{background:var(--accent-soft);color:var(--accent)}
+.detail{padding:18px;display:grid;gap:14px;align-content:start;min-width:0}
+.dmeta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.dmeta div{background:var(--surface);border:1px solid var(--line);border-radius:var(--rs);padding:8px 10px;font-size:13px}
+.dmeta b{display:block;font-size:11px;font-family:var(--mono);color:var(--ink-3);font-weight:400;text-transform:uppercase;letter-spacing:.08em}
+.timeline{display:grid;gap:8px;font-size:14px}
+.timeline div{display:grid;grid-template-columns:64px 1fr;gap:10px}
+.timeline span{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.timeline p{color:var(--ink-2);font-weight:300}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--control);background:transparent;border-radius:var(--rs);padding:8px 12px;font-size:14px;transition:transform .2s var(--ease),border-color .2s}
+.btn:hover{border-color:var(--accent);transform:translateY(-2px)}
+.btn.pri,.btn[aria-pressed="true"]{background:var(--structural);border-color:var(--structural);color:var(--on-structural)}
+/* call center rows */
+.rows{display:grid;border-top:1px solid var(--line)}
+.rowi{display:grid;grid-template-columns:72px 1fr 1.1fr;gap:28px;padding:32px 0;border-bottom:1px solid var(--line);align-items:start}
+.rowi>*{min-width:0}
+.idx{font-family:var(--mono);font-weight:300;font-size:2.25rem;line-height:1;color:var(--accent)}
+.rowi .txt{display:grid;gap:10px}
+.rowi .txt p{color:var(--ink-2);font-weight:300}
+.ivr{display:grid;grid-template-columns:200px 1fr;gap:20px;background:var(--raised);border:1px solid var(--line);border-radius:14px;padding:20px}
+.ivr>*{min-width:0}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-content:start}
+.pad button{aspect-ratio:1;border-radius:50%;border:1px solid var(--control);background:var(--sunken);color:var(--ink);font-size:21px;font-weight:300}
+.pad button:hover{border-color:var(--accent)}
+.pad .call{grid-column:1/-1;aspect-ratio:auto;border-radius:var(--r);padding:11px;font-size:15px;font-weight:600;background:var(--call);border-color:var(--call);color:#fff}
+.pad .call.hang{background:var(--hang);border-color:var(--hang)}
+.ivrscreen{display:grid;gap:12px;align-content:start}
+.prompt{font-size:1.02rem;font-weight:300;line-height:1.55;min-height:120px}
+.ivrlog{font-family:var(--mono);font-size:12px;color:var(--ink-3);display:grid;gap:4px;max-height:120px;overflow-y:auto}
+.flowsvg{width:100%;height:auto;display:block}
+.flowlist{display:none;margin:0;padding:0;list-style:none;counter-reset:f;gap:8px}
+.flowlist li{counter-increment:f;display:flex;gap:12px;align-items:center;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);font-weight:500;font-size:15px}
+.flowlist li::before{content:counter(f,decimal-leading-zero);font-family:var(--mono);color:var(--accent);font-weight:400}
+.kstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kc{background:var(--surface);border:1px solid var(--line);border-radius:var(--rs);padding:10px 12px}
+.kc span{display:block;font-size:12px;color:var(--ink-3)}
+.kc b{display:block;font-size:24px;font-weight:600;line-height:1.15;font-variant-numeric:tabular-nums}
+.kc small{font-size:11px;color:var(--ink-3)}
+.kc.g b{color:var(--good)}
+.mtab{width:100%;border-collapse:collapse;font-size:13px}
+.mtab th{font-weight:600;font-size:11px;letter-spacing:.08em;color:var(--ink-3);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+.mtab td{padding:7px 8px;border-bottom:1px solid var(--line)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.avs{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;color:#fff;font-size:10px;font-weight:600;margin-right:6px;vertical-align:middle}
+.agents{display:flex;gap:5px;flex-wrap:wrap}
+.ag{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-family:var(--mono);background:var(--sunken);color:var(--ink-3);border:1px solid var(--line)}
+.ag.busy{background:var(--structural);color:#fff;border-color:var(--structural)}
+.ag.wa{background:var(--good-soft);color:var(--good)}
+.ag.pause{background:var(--warn-soft);color:var(--warn)}
+.cbody{display:grid;grid-template-columns:1fr 1fr}
+.cbody>div{padding:18px;min-width:0}
+.cbody>div+div{border-left:1px solid var(--line)}
+.timer{font-family:var(--mono);font-size:28px;font-variant-numeric:tabular-nums}
+.transcript{display:grid;gap:6px;font-size:14px;font-weight:300;max-height:240px;overflow-y:auto}
+.transcript b{font-family:var(--mono);font-size:11px;color:var(--accent);font-weight:400;margin-right:6px}
+.gallery{display:grid;grid-template-columns:1.2fr .8fr;gap:20px}
+.gallery>*{min-width:0}
+.vid video{width:100%;display:block;background:#000;aspect-ratio:16/9}
+.cap{padding:14px 16px;display:grid;gap:4px}
+.shotbtn{display:block;width:100%;padding:0;border:0;background:#0c0f14;cursor:zoom-in}
+.shotbtn img{display:block;width:100%;height:auto}
+/* report */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.tile b{display:block;font-size:28px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.tile span{font-size:13px;color:var(--ink-2);font-weight:300}
+.chartbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.beforeafter{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.beforeafter>div{padding:20px;display:grid;gap:8px;align-content:start}
+.beforeafter ul{margin:0;padding-left:18px;color:var(--ink-2);font-weight:300;font-size:15px;display:grid;gap:4px}
+.beforeafter .after{border-color:var(--accent)}
+/* stair */
+.stair{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:end}
+.step{padding:18px;display:grid;gap:8px;align-content:start;text-align:left}
+.step:nth-child(1){min-height:200px}.step:nth-child(2){min-height:240px}.step:nth-child(3){min-height:280px}.step:nth-child(4){min-height:320px}
+.step ul{margin:0;padding-left:18px;color:var(--ink-2);font-weight:300;font-size:14px;display:grid;gap:4px}
+.step .keep{font-size:12px;color:var(--good);font-weight:500}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{padding:22px;display:grid;gap:8px;align-content:start}
+.card p,.card li{color:var(--ink-2);font-weight:300;font-size:15px}
+.card ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.cols3>div{border-top:2px solid var(--accent);padding-top:16px;display:grid;gap:8px;align-content:start}
+.cols3 p{color:var(--ink-2);font-weight:300;font-size:15px}
+.lvl{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--line)}
+.lvl p{color:var(--ink-2);font-weight:300}
+.meter{display:grid;gap:6px;margin-top:4px}
+.meter .track{position:relative;height:10px;border-radius:3px;background:var(--sunken)}
+.meter .track i{position:absolute;top:-4px;width:2px;height:18px;background:var(--ink)}
+.meter .lbl{position:relative;height:18px;font-size:12px;color:var(--ink-3)}
+.meter .lbl span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+/* tables */
+.tbl{border:1px solid var(--line);border-radius:var(--r);background:var(--raised);overflow:hidden}
+table.t{width:100%;border-collapse:collapse;font-size:15px}
+.t th,.t td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.t th{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-3);font-weight:600}
+.t td.n,.t th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.t td.d{color:var(--ink-2);font-weight:300;font-size:14px}
+.t tr.tot td{font-weight:600;background:var(--accent-soft);border-bottom:0}
+/* invest stage */
+.stage{background:var(--stage);color:var(--stage-ink)}
+.stage .lead,.stage .muted{color:var(--stage-ink-2)}
+.stage .eyebrow,.stage .hl{color:var(--stage-accent)}
+.stage .tbl{background:var(--stage-surface);border-color:var(--stage-line)}
+.stage .t th{color:#a1a1aa}
+.stage .t td{border-color:var(--stage-line)}
+.stage .t td.d{color:var(--stage-ink-2)}
+.stage .t tr.tot td{background:#2b599e}
+.stage .mod{background:var(--stage-surface);border-color:var(--stage-line)}
+.stage .note{color:#a1a1aa}
+.stage :focus-visible{outline-color:var(--stage-accent)}
+.stage .btn{border-color:#6b7394;color:#fff}
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.calc>div{padding:20px;display:grid;gap:10px}
+.calc label{font-size:14px;color:var(--stage-ink-2)}
+.calc input[type=range]{width:100%;accent-color:var(--stage-accent)}
+.calc output{font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+.conds{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+.conds>div{padding:18px;display:grid;gap:6px;align-content:start}
+.conds p{color:var(--stage-ink-2);font-weight:300;font-size:14px}
+.conds .label{color:var(--stage-accent)}
+/* faq */
+details{border-bottom:1px solid var(--line);padding:16px 0}
+summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--accent);font-size:22px;line-height:1}
+details[open] summary::after{content:"–"}
+details p{margin-top:8px;color:var(--ink-2);font-weight:300;max-width:70ch}
+.copy{font-family:var(--mono);font-size:13px;background:var(--sunken);border-radius:4px;padding:2px 6px;user-select:all;color:var(--ink)}
+.final{background:var(--stage);color:var(--stage-ink);border-radius:14px;padding:32px;display:grid;gap:14px;justify-items:start}
+.final p{color:var(--stage-ink-2);font-weight:300}
+footer{padding-block:36px calc(36px + env(safe-area-inset-bottom));color:var(--ink-3);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+#lightbox{position:fixed;inset:0;z-index:50;background:rgba(5,7,13,.9);display:grid;place-items:center;padding:16px}
+#lightbox img{max-width:100%;max-height:88vh;border-radius:8px}
+#lbclose{position:absolute;top:calc(12px + env(safe-area-inset-top));right:12px;background:#fff;color:#111827;border:0}
+/* responsive */
+@media (max-width:980px){
+  .hero-grid,.split,.gallery{grid-template-columns:1fr}
+  .rowi{grid-template-columns:52px 1fr}.rowi .demo{grid-column:1/-1}
+  .tiles,.kstrip{grid-template-columns:repeat(2,1fr)}
+  .areas,.grid3,.cols3,.beforeafter,.calc{grid-template-columns:1fr}
+  .conds{grid-template-columns:1fr 1fr}
+  .stair{grid-template-columns:1fr 1fr}.step{min-height:0!important}
+  .cbody{grid-template-columns:1fr}.cbody>div+div{border-left:0;border-top:1px solid var(--line)}
+}
+@media (max-width:640px){
+  section{padding-block:56px}
+  .flowsvg{display:none}.flowlist{display:grid}
+  .journey .h{display:none}.journey .v{display:block;max-width:420px}
+  .inbox{grid-template-columns:1fr}.inbox .list{display:flex;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)}
+  .inbox .conv{min-width:220px;border-right:1px solid var(--line)}
+  .ivr{grid-template-columns:1fr}.pad{max-width:240px}
+  .pad button{min-height:56px}
+  .dmeta{grid-template-columns:1fr 1fr}
+  .stair,.conds{grid-template-columns:1fr}
+  .screen{height:520px}
+  .facts b{font-size:1.25rem}
+  .saving{padding:22px}
+  /* tablas a tarjetas */
+  table.cards thead{display:none}
+  table.cards,table.cards tbody,table.cards tr,table.cards td{display:block;width:100%}
+  table.cards tr{padding:12px 14px;border-bottom:1px solid var(--line)}
+  table.cards td{border:0;padding:3px 0;display:flex;justify-content:space-between;gap:12px;text-align:right}
+  table.cards td::before{content:attr(data-label);font-size:12px;color:var(--ink-3);text-align:left;font-weight:500}
+  .stage table.cards tr{border-color:var(--stage-line)}
+  .stage table.cards td::before{color:#a1a1aa}
+  table.cards td.first{display:block;text-align:left;font-weight:600}
+  table.cards td.first::before{display:none}
+  table.cards td.d{display:block;text-align:left}
+  table.cards td.d::before{display:none}
+  .stage .t tr.tot{background:#2b599e}
+  .stage .t tr.tot td{background:transparent}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap" style="position:relative">
+    <a class="brand" href="#inicio">DesarrollAndo</a>
+    <nav class="navlinks" id="navlinks" aria-label="Secciones">
+      <a href="#contexto">Día a día</a>
+      <a href="#flow">WhatsApp &amp; citas</a>
+      <a href="#conectando">Call center</a>
+      <a href="#continuidad">Día 1</a>
+      <a href="#seguridad">Datos &amp; soporte</a>
+      <a href="#inversion">Inversión</a>
+      <a href="#preguntas">Preguntas</a>
+    </nav>
+    <button class="menubtn" id="menubtn" type="button" aria-haspopup="true" aria-expanded="false">Secciones <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+    <button class="iconbtn" id="themebtn" type="button" aria-label="Cambiar tema"><svg id="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></svg></button>
+    <span class="progress" id="progress"></span>
+  </div>
+</header>
+<div class="sheet" id="sheet" hidden><nav aria-label="Secciones">
+  <a href="#inicio"><span>01</span>Inicio</a><a href="#contexto"><span>02</span>El día a día</a><a href="#flow"><span>03</span>WhatsApp con IA &amp; citas</a><a href="#conectando"><span>04</span>Call center en la nube</a><a href="#continuidad"><span>05</span>Día 1 &amp; continuidad</a><a href="#seguridad"><span>06</span>Datos, seguridad &amp; soporte</a><a href="#inversion"><span>07</span>Inversión &amp; condiciones</a><a href="#preguntas"><span>08</span>Preguntas &amp; contacto</a>
+</nav></div>
+
+<main>
+<!-- 01 PORTADA -->
+<section id="inicio" class="hero">
+  <div class="wrap hero-grid">
+    <div style="display:grid;gap:22px;justify-items:start">
+      <img class="logo light" src="media/logo-negro.png" alt="DesarrollAndo" width="900" height="497">
+      <img class="logo dark" src="media/logo-blanco.png" alt="DesarrollAndo" width="900" height="497">
+      <span class="kicker">Propuesta 2027 · Hospital de Riosucio</span>
+      <h1>Más de 300 mensajes semanales para citas &amp; <span class="hl">un solo equipo que los atiende.</span></h1>
+      <p class="lead">Un asistente con IA que recibe las solicitudes por WhatsApp a cualquier hora, y un call center en la nube para las mismas 13 líneas. Todo desde el navegador, con un solo soporte.</p>
+      <div class="actions"><a class="cta" href="#flow">Ver cómo funciona <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="cta ghost" href="#inversion">Ir a la inversión</a></div>
+      <div class="svclist">
+        <a href="#flow"><span class="i">01</span><div><b>Flow · WhatsApp con IA &amp; citas</b><span>Asistente 24 horas, solicitudes, confirmación y recordatorios.</span></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#conectando"><span class="i">02</span><div><b>ConectAndo · PBX en la nube &amp; call center</b><span>13 licencias, IVR, colas, grabación, transcripción y supervisión.</span></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#seguridad"><span class="i">03</span><div><b>Soporte &amp; acompañamiento</b><span>Lunes a sábado, gerente de cuenta, informe mensual y visitas a Riosucio.</span></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+    <aside class="saving" aria-label="Ahorro estimado">
+      <span class="eyebrow" style="color:var(--stage-accent)">Ahorro estimado en el valor fijo</span>
+      <div class="big">−18 %</div>
+      <p>Frente a los contratos 2026 del chatbot y de la PBX publicados en SECOP II. La telefonía se paga aparte, por consumo real.</p>
+      <div class="bars">
+        <div class="bar a"><div><span>Contratos 2026</span><b>$35.920.092</b></div><i style="width:100%"></i></div>
+        <div class="bar b"><div><span>Propuesta 2027</span><b>$29.578.092</b></div><i style="width:82.3%"></i></div>
+      </div>
+      <div class="facts">
+        <div><b>13</b><span>licencias, una por línea actual</span></div>
+        <div><b>4</b><span>semanas de implementación</span></div>
+        <div><b>1</b><span>proveedor y un solo soporte</span></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- 02 CONTEXTO -->
+<section id="contexto">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><span class="n">02</span>El día a día</span>
+      <h2>Una jornada en el hospital &amp; <span class="hl">dónde entra cada servicio.</span></h2>
+      <p class="lead">El estudio previo del hospital para 2026 habla de más de 300 mensajes semanales para citas por WhatsApp. A eso se suman las llamadas a las líneas virtuales y a la línea gratuita 01 8000.</p>
+    </div>
+    <div class="journey" role="img" aria-label="Recorrido del paciente: a las 6 a. m. escribe por WhatsApp y el asistente toma la solicitud; a las 7 a. m. llama y el IVR lo lleva a la cola; el equipo asigna la cita; el paciente confirma y recibe recordatorio; a fin de mes el hospital recibe el informe.">
+      <svg class="h" viewBox="0 0 1080 230" aria-hidden="true">
+        <line x1="110" y1="70" x2="970" y2="70" stroke="var(--line)" stroke-width="2"/>
+        <line x1="110" y1="70" x2="970" y2="70" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4 8"/>
+        <g font-family="Poppins, sans-serif">
+          <g transform="translate(110,0)"><circle cy="70" r="22" fill="var(--structural)"/><text y="76" text-anchor="middle" fill="#fff" font-size="15" font-weight="600">1</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">6:00 a. m.</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">Escribe por WhatsApp</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">El asistente toma</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">la solicitud</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">FLOW</text></g>
+          <g transform="translate(325,0)"><circle cy="70" r="22" fill="var(--structural)"/><text y="76" text-anchor="middle" fill="#fff" font-size="15" font-weight="600">2</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">7:00 a. m.</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">Llama al hospital</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">El IVR lo lleva</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">a la cola correcta</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">CONECTANDO</text></g>
+          <g transform="translate(540,0)"><circle cy="70" r="22" fill="var(--tech)"/><text y="76" text-anchor="middle" fill="#fff" font-size="15" font-weight="600">3</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">7:05 a. m.</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">El equipo asigna</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">Desde la bandeja,</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">con todo el historial</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">HOSPITAL</text></g>
+          <g transform="translate(755,0)"><circle cy="70" r="22" fill="var(--structural)"/><text y="76" text-anchor="middle" fill="#fff" font-size="15" font-weight="600">4</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">Antes de la cita</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">Confirma y recuerda</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">Menos inasistencias,</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">espacios liberados</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">FLOW</text></g>
+          <g transform="translate(970,0)"><circle cy="70" r="22" fill="var(--tech)"/><text y="76" text-anchor="middle" fill="#fff" font-size="15" font-weight="600">5</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">Fin de mes</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">Informe a gerencia</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">Citas, mensajes,</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">llamadas y tiempos</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">SOPORTE</text></g>
+        </g>
+      </svg>
+      <svg class="v" viewBox="0 0 360 560" aria-hidden="true">
+        <line x1="30" y1="30" x2="30" y2="530" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4 8"/>
+        <g font-family="Poppins, sans-serif">
+          <g transform="translate(0,30)"><circle cx="30" r="18" fill="var(--structural)"/><text x="30" y="5" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">1</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">6:00 A. M. · FLOW</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">Escribe por WhatsApp</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">El asistente toma la solicitud.</text></g>
+          <g transform="translate(0,150)"><circle cx="30" r="18" fill="var(--structural)"/><text x="30" y="5" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">2</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">7:00 A. M. · CONECTANDO</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">Llama al hospital</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">El IVR lo lleva a la cola correcta.</text></g>
+          <g transform="translate(0,270)"><circle cx="30" r="18" fill="var(--tech)"/><text x="30" y="5" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">3</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">7:05 A. M. · HOSPITAL</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">El equipo asigna</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">Desde la bandeja, con el historial.</text></g>
+          <g transform="translate(0,390)"><circle cx="30" r="18" fill="var(--structural)"/><text x="30" y="5" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">4</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">ANTES DE LA CITA · FLOW</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">Confirma y recuerda</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">Menos inasistencias.</text></g>
+          <g transform="translate(0,510)"><circle cx="30" r="18" fill="var(--tech)"/><text x="30" y="5" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">5</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">FIN DE MES · SOPORTE</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">Informe a gerencia</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">Citas, mensajes, llamadas y tiempos.</text></g>
+        </g>
+      </svg>
+    </div>
+    <div class="areas">
+      <div class="area mod hov rv"><span class="label">Consulta externa &amp; SIAU</span><h3>Citas y atención con trazabilidad</h3><p>Solicitudes por WhatsApp a cualquier hora, confirmación y recordatorio, etiquetas por motivo (PQRS, información, autorizaciones) y el historial completo de cada caso.</p></div>
+      <div class="area mod hov rv"><span class="label">Sistemas</span><h3>Menos infraestructura que mantener</h3><p>API oficial de Meta con el número del hospital, nada que instalar en servidores propios y licencias para agentes, supervisión y administración.</p></div>
+      <div class="area mod hov rv"><span class="label">Gerencia</span><h3>Un contrato claro y datos para decidir</h3><p>Valor fijo anual, telefonía por consumo, gerente de cuenta e informe mensual de citas, mensajes, llamadas y tiempos de respuesta.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 FLOW -->
+<section id="flow">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <div class="head" style="margin-bottom:0">
+          <span class="eyebrow"><span class="n">03</span>Servicio 1 · Flow</span>
+          <h2>WhatsApp con IA &amp; <span class="hl">citas confirmadas por el paciente.</span></h2>
+          <p class="lead">Pruebe el recorrido de un paciente en el simulador. Al lado verá lo que pasa en el hospital en cada paso.</p>
+        </div>
+        <div class="feat">
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><p>Línea en la <b>API oficial de Meta</b>, con el número verificado del hospital. Somos Meta Business Partner.</p></div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><p><b>Asistente con IA</b> que informa horarios y servicios, responde preguntas frecuentes y recibe la solicitud de cita, solo con la información que el hospital defina.</p></div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><p>Toma <b>documento, especialidad y tipo de cita</b>. El equipo asigna; el paciente recibe fecha, hora, la indicación de llegar 15 minutos antes y la petición de confirmar.</p></div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><p><b>Bandeja multiagente</b> con WhatsApp, Messenger, Instagram y chat web, y paso a un asesor cuando el paciente lo pide.</p></div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><p>Plan de <b>1.100 conversaciones al mes</b>. Una conversación es la ventana de 24 horas que se abre con un contacto, o de 72 horas cuando la inicia el paciente.</p></div>
+        </div>
+        <div class="proof"><span class="label">Probado en salud</span><p>Aplicamos el mismo flujo de citas por WhatsApp que operamos para varias IPS, entre muchos otros tipos de negocios y empresas, y que en un mes atiende miles de solicitudes. Referencias disponibles a solicitud del hospital.</p></div>
+      </div>
+      <div>
+        <div class="phone" aria-label="Simulador de WhatsApp">
+          <div class="screen">
+            <div class="wahead"><div class="av">HSJ</div><div><b style="font-size:15px">Hospital San Juan de Dios</b><small>Número verificado · asistente virtual</small></div></div>
+            <div class="chat" id="chat" aria-live="polite"></div>
+            <div class="quick" id="quick"></div>
+          </div>
+        </div>
+        <div class="behind" aria-live="polite"><span class="label">Del lado del hospital</span><p id="behind">El paciente escribe al número del hospital. La conversación entra a la bandeja y el asistente responde de inmediato.</p></div>
+        <p class="note" style="text-align:center">Simulación con datos de ejemplo. Los servicios, horarios y textos los define el hospital.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:64px">
+      <div class="head" style="margin-bottom:20px"><h3 style="font-size:1.4rem">La bandeja: un solo número &amp; <span class="hl">varios asesores.</span></h3><p class="muted">Cada asesor ve lo suyo, la supervisora ve todo y cada conversación queda con su estado. Haga clic en una conversación.</p></div>
+      <div class="win"><div class="wbar"><i></i><i></i><i></i><span class="t">Bandeja · Flow</span></div><div class="inbox">
+        <div class="list" id="convlist" role="listbox" aria-label="Conversaciones"></div>
+        <div class="detail" id="convdetail"></div>
+      </div></div>
+      <p class="note">Simulación con pacientes y datos ficticios.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 CONECTANDO -->
+<section id="conectando">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><span class="n">04</span>Servicio 2 · ConectAndo</span>
+      <h2>PBX en la nube &amp; <span class="hl">call center para las mismas 13 líneas.</span></h2>
+      <p class="lead">El paciente llama, el IVR lo orienta, la cola ordena la espera y el asesor atiende desde el navegador. Cada llamada queda grabada y transcrita.</p>
+    </div>
+    <svg class="flowsvg" viewBox="0 0 1080 110" role="img" aria-label="Recorrido de una llamada: entra, menú IVR, cola, asesor, grabación y transcripción">
+      <g font-family="Poppins, sans-serif" font-size="14" font-weight="500">
+        <rect x="0" y="30" width="170" height="50" rx="8" fill="var(--surface)" stroke="var(--line)"/><text x="85" y="61" text-anchor="middle" fill="var(--ink)">Entra la llamada</text>
+        <rect x="227" y="30" width="170" height="50" rx="8" fill="var(--surface)" stroke="var(--line)"/><text x="312" y="61" text-anchor="middle" fill="var(--ink)">Menú IVR</text>
+        <rect x="454" y="30" width="170" height="50" rx="8" fill="var(--surface)" stroke="var(--line)"/><text x="539" y="61" text-anchor="middle" fill="var(--ink)">Cola de espera</text>
+        <rect x="681" y="30" width="170" height="50" rx="8" fill="var(--structural)"/><text x="766" y="61" text-anchor="middle" fill="#fff">Asesor</text>
+        <rect x="908" y="30" width="172" height="50" rx="8" fill="var(--surface)" stroke="var(--line)"/><text x="994" y="61" text-anchor="middle" fill="var(--ink)">Grabación y texto</text>
+        <g stroke="var(--accent)" stroke-width="2" fill="none"><path d="M176 55h44m-8-6 8 6-8 6"/><path d="M403 55h44m-8-6 8 6-8 6"/><path d="M630 55h44m-8-6 8 6-8 6"/><path d="M857 55h44m-8-6 8 6-8 6"/></g>
+        <text x="312" y="104" text-anchor="middle" fill="var(--ink-3)" font-size="12" font-weight="400">citas · información · SIAU · asesor</text>
+        <text x="766" y="104" text-anchor="middle" fill="var(--ink-3)" font-size="12" font-weight="400">supervisión en vivo</text>
+      </g>
+    </svg>
+
+    <ol class="flowlist"><li>Entra la llamada</li><li>Menú IVR: citas, información, SIAU o asesor</li><li>Cola de espera</li><li>Asesor, con supervisión en vivo</li><li>Grabación y transcripción</li></ol>
+    <div class="rows" style="margin-top:28px">
+      <div class="rowi">
+        <span class="idx">01</span>
+        <div class="txt"><h3>IVR con menú, horarios &amp; colas</h3><p>Llame al hospital en el simulador. Con el sonido activo escuchará cada mensaje con voz natural. Marque «Fuera de horario» para oír el mensaje no hábil.</p><p class="small">Se conservan los números actuales y la línea <b style="color:var(--ink)">01 8000 189 827</b> mediante desvío o conexión con el operador del hospital; se valida con el operador actual.</p></div>
+        <div class="demo">
+          <div class="ivr" aria-label="Simulador de IVR">
+            <div class="pad" id="pad"></div>
+            <div class="ivrscreen">
+              <span class="label" id="ivrstate">Teléfono del paciente · listo para llamar</span>
+              <p class="prompt" id="prompt">Pulse «Llamar» para escuchar el menú del hospital.</p>
+              <div class="actions"><button class="btn" id="speak" type="button">Repetir mensaje</button><label class="small" style="display:flex;gap:6px;align-items:center;color:var(--ink-2)"><input type="checkbox" id="afterhours"> Fuera de horario</label></div>
+              <div class="ivrlog" id="ivrlog" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rowi">
+        <span class="idx">02</span>
+        <div class="txt"><h3>Supervisión en vivo &amp; consola del asesor</h3><p>La supervisora ve las llamadas en curso, la cola y el estado de los asesores. Puede escuchar, susurrar al asesor o intervenir. Voz y WhatsApp quedan en la misma pantalla.</p></div>
+        <div class="demo">
+          <div class="win">
+            <div class="ctop" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap">
+              <div><span class="label">Monitor · martes 10:05 a. m.</span><h3 style="margin-top:2px">Operación en vivo</h3></div>
+              <div style="display:grid;gap:6px;justify-items:end"><div class="agents" id="agents" aria-label="Estado de las 13 licencias"></div><span class="small muted" id="agentsum"></span></div>
+            </div>
+            <div style="padding:14px 16px;display:grid;gap:12px">
+              <div class="kstrip">
+                <div class="kc g"><span>En curso</span><b>3</b><small>llamadas</small></div>
+                <div class="kc"><span>En cola</span><b>1</b><small>espera 0:41</small></div>
+                <div class="kc"><span>Conectados</span><b>5</b><small>de 13</small></div>
+                <div class="kc"><span>Contestadas</span><b>96 %</b><small>de 178 hoy</small></div>
+              </div>
+              <table class="mtab cards"><thead><tr><th>Llamada</th><th>Paciente</th><th>Atiende</th></tr></thead><tbody>
+                <tr><td data-label="Duración" class="first">04:12 · Citas</td><td data-label="Paciente">310 *** 2287</td><td data-label="Atiende"><span class="avs" style="background:#2b599e">01</span>Asesora 01</td></tr>
+                <tr><td data-label="Duración" class="first">02:58 · SIAU</td><td data-label="Paciente">315 *** 9921</td><td data-label="Atiende"><span class="avs" style="background:#5a5396">02</span>Asesora 02</td></tr>
+                <tr><td data-label="Duración" class="first">01:36 · Citas</td><td data-label="Paciente">300 *** 1180</td><td data-label="Atiende"><span class="avs" style="background:#2b599e">04</span>Asesora 04</td></tr>
+                <tr><td data-label="Duración" class="first">00:41 · Citas</td><td data-label="Paciente">318 *** 7342</td><td data-label="Atiende"><span class="pill p-new">En cola · posición 1</span></td></tr>
+              </tbody></table>
+            </div>
+            <div class="cbody" style="border-top:1px solid var(--line)">
+              <div style="display:grid;gap:10px">
+                <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><span class="pill p-acc">Asesora 04 · Cola citas</span><span class="timer" id="timer">01:36</span></div>
+                <span class="label">Supervisión</span>
+                <div class="actions" id="sup">
+                  <button class="btn" data-m="escucha" type="button" aria-pressed="false">Escuchar</button>
+                  <button class="btn" data-m="susurro" type="button" aria-pressed="false">Susurrar</button>
+                  <button class="btn" data-m="interviene" type="button" aria-pressed="false">Intervenir</button>
+                </div>
+                <p class="small muted" id="supmsg" aria-live="polite">Escuchar sin que el paciente lo note, hablarle solo a la asesora o entrar a la llamada.</p>
+              </div>
+              <div><span class="label">Transcripción de una llamada grabada</span><div class="transcript" id="transcript" style="margin-top:8px"></div></div>
+            </div>
+          </div>
+          <p class="note">Recreación con datos ficticios.</p>
+        </div>
+      </div>
+      <div class="rowi">
+        <span class="idx">03</span>
+        <div class="txt"><h3>Así se ve la plataforma &amp; funciona hoy</h3><p>Una grabación de demostración y tres capturas de la plataforma de DesarrollAndo, limitadas a lo que incluye esta propuesta. Los datos están difuminados.</p><p class="small"><b style="color:var(--ink)">Telefonía por consumo real</b> a fijos y celulares nacionales: $56 por minuto, sin bolsa ni mínimos. <b style="color:var(--ink)">Grabación y transcripción</b> incluidas.</p></div>
+        <div class="demo">
+          <div class="win vid"><video src="../assets/cti/03-supervision.mp4" poster="../assets/cti/03-supervision.jpg" controls muted playsinline preload="none"></video><div class="cap"><h3>Supervisión en vivo</h3><p class="small muted">Escuchar, susurrar e intervenir en una conversación en curso. Grabación con datos de demostración.</p></div></div>
+          <div class="tabs" role="tablist" aria-label="Capturas" id="shottabs" style="margin-top:16px">
+            <button type="button" role="tab" aria-selected="true" data-i="0">Supervisión</button>
+            <button type="button" role="tab" aria-selected="false" data-i="1">Consola del asesor</button>
+            <button type="button" role="tab" aria-selected="false" data-i="2">Colas y reparto</button>
+          </div>
+          <figure class="win" style="margin:0" role="tabpanel">
+            <button type="button" class="shotbtn" id="shotbtn" aria-label="Ampliar captura"><img id="shotimg" src="media/live-supervision.jpg" alt="Supervisión en vivo de la plataforma" width="1536" height="674"></button>
+            <figcaption class="small muted" id="shotcap" style="padding:12px 16px">Vista general en tiempo real: interacciones, asesores en línea, llamadas activas, cola y estado de cada canal.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:56px">
+      <div class="head" style="margin-bottom:20px"><span class="label">Informe mensual</span><h3 style="font-size:1.4rem">Lo que recibe la gerencia &amp; <span class="hl">cómo cambia frente a hoy.</span></h3><p class="muted">Así podría verse el informe de un mes. <span class="chip ex">Datos de ejemplo</span></p></div>
+      <div class="tiles">
+        <div class="tile"><b>1.040</b><span>solicitudes de cita por WhatsApp</span></div>
+        <div class="tile"><b>87 %</b><span>citas confirmadas por el paciente</span></div>
+        <div class="tile"><b>&lt; 1 min</b><span>primera respuesta del asistente</span></div>
+        <div class="tile"><b>4.910</b><span>llamadas atendidas en las colas</span></div>
+      </div>
+      <div class="chartbox" style="margin-top:12px">
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center"><h3>Solicitudes del mes por día de la semana</h3><div class="actions" id="chartsw" role="group" aria-label="Canal"><button class="btn" aria-pressed="true" data-k="wa" type="button">WhatsApp</button><button class="btn" aria-pressed="false" data-k="voz" type="button">Llamadas</button></div></div>
+        <svg id="chart" viewBox="0 0 640 230" role="img" aria-label="Gráfico de barras de ejemplo"></svg>
+      </div>
+      <div class="beforeafter" style="margin-top:12px">
+        <div class="mod"><span class="label" style="color:var(--ink-3)">Hoy</span><h3>Dos contratos, dos soportes</h3><ul><li>Chatbot y PBX con proveedores y contratos distintos.</li><li>Información de WhatsApp y de llamadas por separado.</li></ul></div>
+        <div class="mod after"><span class="label">2027</span><h3>Un proveedor &amp; un informe</h3><ul><li>Un solo soporte de lunes a sábado y gerente de cuenta.</li><li>Informe mensual de citas, mensajes, llamadas y tiempos.</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 CONTINUIDAD -->
+<section id="continuidad">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><span class="n">05</span>Día 1 &amp; continuidad</span>
+      <h2>Cuatro semanas &amp; <span class="hl">pruebas antes de cada salida en vivo.</span></h2>
+      <p class="lead">Primero WhatsApp y luego el call center. Cada etapa se prueba con el equipo del hospital antes de abrirla a los pacientes.</p>
+    </div>
+    <div class="stair">
+      <div class="step mod rv"><span class="idx">01</span><span class="label">Semana 1 · Arranque</span><ul><li>Acta de inicio y accesos.</li><li>Servicios, horarios y preguntas frecuentes.</li><li>Diseño del menú y del asistente.</li></ul></div>
+      <div class="step mod rv"><span class="idx">02</span><span class="label">Semana 2 · WhatsApp</span><ul><li>Número en la API oficial y verificado.</li><li>Asistente con IA, bandeja y citas.</li><li>Pruebas con el equipo.</li></ul></div>
+      <div class="step mod rv"><span class="idx">03</span><span class="label">Semana 3 · Call center</span><ul><li>13 licencias, IVR y colas.</li><li>Desvío o conexión de los números y la 01 8000.</li><li>Operación en paralelo.</li></ul></div>
+      <div class="step mod rv"><span class="idx">04</span><span class="label">Semana 4 · En vivo</span><ul><li>Capacitación de 2 personas y entrega de manuales.</li><li>Ajustes finales.</li><li>Salida en vivo y primera visita a Riosucio.</li></ul></div>
+    </div>
+    <div class="grid3" style="margin-top:12px">
+      <div class="card mod"><span class="label">Lo que pedimos en la semana 1</span><ul><li>Servicios, sedes, horarios y preguntas frecuentes.</li><li>Acceso al Business Manager de Meta.</li><li>Datos del operador de las líneas y de la 01 8000.</li><li>Asesores, supervisores y sus roles.</li><li>Las 2 personas que se capacitan.</li></ul></div>
+      <div class="card mod"><span class="label">Capacitación &amp; manuales</span><p>Capacitamos a 2 personas de su equipo en el uso de las herramientas y entregamos los manuales, para que el hospital forme a su personal. Va incluido en las puestas en marcha.</p></div>
+      <div class="card mod"><span class="label">Contratación por etapas</span><p>Si el hospital lo prefiere, puede contratar primero el servicio de WhatsApp y después la PBX y el call center, con los mismos valores.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 SEGURIDAD -->
+<section id="seguridad">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><span class="n">06</span>Datos, seguridad &amp; soporte</span>
+      <h2>Respaldo &amp; <span class="hl">datos siempre del hospital.</span></h2>
+    </div>
+    <div class="cols3">
+      <div><span class="label">Ley 1581 de 2012</span><h3>Datos personales</h3><p>El hospital es responsable y DesarrollAndo encargado del tratamiento. Se firma un acuerdo de tratamiento de datos.</p></div>
+      <div><span class="label">Inteligencia artificial</span><h3>Sin entrenar modelos</h3><p>Los datos de los pacientes no se usan para entrenar modelos de IA. El asistente responde solo con la información que el hospital aprueba.</p></div>
+      <div><span class="label">Propiedad</span><h3>La información es del hospital</h3><p>Conversaciones, grabaciones y reportes se entregan en formatos abiertos al terminar el contrato.</p></div>
+    </div>
+    <div class="split" style="margin-top:48px">
+      <div>
+        <h3 style="font-size:1.3rem;margin-bottom:6px">Soporte de lunes a sábado, en tres niveles</h3>
+        <p class="muted small">Por WhatsApp, teléfono y correo. Objetivo de disponibilidad mensual: 99 %.</p>
+        <div style="margin-top:10px">
+          <div class="lvl"><span class="idx">01</span><div><h3>Asesoría</h3><p>Orientación por teléfono o WhatsApp.</p></div></div>
+          <div class="lvl"><span class="idx">02</span><div><h3>Acceso remoto</h3><p>El técnico se conecta y resuelve.</p></div></div>
+          <div class="lvl"><span class="idx">03</span><div><h3>Visita</h3><p>Visitas programadas a Riosucio y visita cuando el caso lo requiera.</p></div></div>
+        </div>
+      </div>
+      <div style="display:grid;gap:16px;align-content:start">
+        <div class="tbl"><table class="t cards">
+          <thead><tr><th>Severidad</th><th>Ejemplo</th><th>Respuesta</th><th>Solución o alternativa</th></tr></thead>
+          <tbody>
+            <tr><td class="first" data-label="Severidad" style="color:var(--raiz)">Crítica</td><td data-label="Ejemplo">Servicio caído</td><td data-label="Respuesta">1 hora</td><td data-label="Solución o alternativa">4 horas</td></tr>
+            <tr><td class="first" data-label="Severidad">Alta</td><td data-label="Ejemplo">Función principal degradada</td><td data-label="Respuesta">4 horas</td><td data-label="Solución o alternativa">1 día hábil</td></tr>
+            <tr><td class="first" data-label="Severidad">Media</td><td data-label="Ejemplo">Falla con alternativa</td><td data-label="Respuesta">1 día hábil</td><td data-label="Solución o alternativa">3 días hábiles</td></tr>
+            <tr><td class="first" data-label="Severidad">Baja</td><td data-label="Ejemplo">Consulta o ajuste menor</td><td data-label="Respuesta">2 días hábiles</td><td data-label="Solución o alternativa">5 días hábiles</td></tr>
+          </tbody></table></div>
+        <div class="mod" style="padding:18px">
+          <span class="label">Escalamiento</span>
+          <div class="meter" aria-label="Si un caso consume el 50 % del tiempo de solución escala al líder técnico; al 80 %, a la dirección de desarrollo">
+            <div class="lbl"><span style="left:50%">Líder técnico</span><span style="left:80%">Dirección</span></div>
+            <div class="track"><i style="left:50%"></i><i style="left:80%"></i><div style="height:100%;width:80%;background:linear-gradient(90deg,var(--structural),var(--accent));border-radius:3px"></div></div>
+            <div class="lbl"><span style="left:2%">0 %</span><span style="left:50%">50 %</span><span style="left:80%">80 %</span><span style="left:96%">100 %</span></div>
+          </div>
+          <p class="small muted" style="margin-top:6px">Del tiempo de solución consumido por un caso.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 INVERSION -->
+<section id="inversion" class="stage">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><span class="n">07</span>Inversión 2027 · Cotización DA-2026-85</span>
+      <h2>Un valor fijo claro &amp; <span class="hl">telefonía por lo que se usa.</span></h2>
+      <p class="lead">Vigente hasta el 31 de diciembre de 2026. Valores en pesos colombianos.</p>
+    </div>
+    <div class="tbl"><table class="t cards">
+      <thead><tr><th>Concepto</th><th>Detalle</th><th class="n">Mensual</th><th class="n">12 meses</th></tr></thead>
+      <tbody>
+        <tr><td class="first">Flow · WhatsApp con IA</td><td class="d">1.100 conversaciones al mes, bandeja multiagente, asistente con IA y citas</td><td class="n" data-label="Mensual">$524.000</td><td class="n" data-label="12 meses">$6.288.000</td></tr>
+        <tr><td class="first">Flow · puesta en marcha</td><td class="d">Asistente, línea y agenda de citas; capacitación de 2 personas y manuales</td><td class="n" data-label="Mensual">Pago inicial</td><td class="n" data-label="12 meses">$2.101.092</td></tr>
+        <tr><td class="first">ConectAndo · 13 licencias</td><td class="d">$100.000 por usuario al mes</td><td class="n" data-label="Mensual">$1.300.000</td><td class="n" data-label="12 meses">$15.600.000</td></tr>
+        <tr><td class="first">ConectAndo · puesta en marcha</td><td class="d">PBX, IVR, colas y migración de líneas; capacitación de 2 personas y manuales</td><td class="n" data-label="Mensual">Pago inicial</td><td class="n" data-label="12 meses">$2.900.000</td></tr>
+        <tr><td class="first">Soporte y acompañamiento</td><td class="d">Lunes a sábado en tres niveles, gerente de cuenta, informe mensual y visitas a Riosucio</td><td class="n" data-label="Mensual">$224.083</td><td class="n" data-label="12 meses">$2.689.000</td></tr>
+        <tr class="tot"><td class="first">Total valor fijo</td><td class="d" style="color:#fff">Puestas en marcha al inicio + 12 mensualidades</td><td class="n" data-label="Mensual">$2.048.083</td><td class="n" data-label="12 meses">$29.578.092</td></tr>
+      </tbody></table></div>
+
+    <div class="conds">
+      <div class="mod"><span class="label">Forma de pago</span><p>Puestas en marcha ($5.001.092) al iniciar, con el acta de inicio. El resto en 12 mensualidades vencidas, previa certificación de la supervisora.</p></div>
+      <div class="mod"><span class="label">Plazo</span><p>Del acta de inicio al 31 de diciembre de 2027.</p></div>
+      <div class="mod"><span class="label">Garantías</span><p>Las pólizas que exija el hospital, entre ellas cumplimiento (10 %) y calidad del servicio (20 %).</p></div>
+      <div class="mod"><span class="label">No incluye</span><p>Equipos de cómputo, diademas, internet del hospital ni las plantillas que Meta cobra cuando el hospital inicia conversaciones.</p></div>
+    </div>
+
+    <h3 style="margin-top:44px">Calcule los valores variables del mes</h3>
+    <p class="muted small" style="margin:6px 0 14px">Mueva los controles según el uso esperado. Es un estimado; se factura con el reporte real del mes.</p>
+    <div class="calc">
+      <div class="mod">
+        <label for="min">Minutos de llamadas salientes a fijos y celulares</label>
+        <input type="range" id="min" min="0" max="15000" step="100" value="3000">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap"><span class="small muted"><span id="minv">3.000</span> min × $56</span><output id="minc" for="min">$168.000</output></div>
+      </div>
+      <div class="mod">
+        <label for="conv">Conversaciones de WhatsApp en el mes</label>
+        <input type="range" id="conv" min="0" max="3000" step="10" value="1300">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap"><span class="small muted" id="convv">1.300 conversaciones · 200 adicionales × $400</span><output id="convc" for="conv">$80.000</output></div>
+      </div>
+    </div>
+    <p class="note">Dentro del plan, cada conversación sale en unos $476. Las adicionales a las 1.100 del mes, a $400. Hora de soporte fuera del alcance: $150.000 + IVA. Flow no genera IVA; el tratamiento tributario de las licencias y la telefonía de ConectAndo se confirma en la factura.</p>
+  </div>
+</section>
+
+<!-- 08 PREGUNTAS -->
+<section id="preguntas" style="border-bottom:0">
+  <div class="wrap split">
+    <div>
+      <div class="head"><span class="eyebrow"><span class="n">08</span>Para la reunión</span><h2>Preguntas frecuentes &amp; <span class="hl">área de sistemas.</span></h2></div>
+      <details><summary>¿Qué necesitamos instalar en el hospital?</summary><p>Nada en servidores propios. Los asesores trabajan desde el navegador con conexión a internet. Equipos de cómputo, diademas y la conectividad del hospital no están incluidos.</p></details>
+      <details><summary>¿Se integra con nuestro software de agenda?</summary><p>La propuesta no incluye integración con el software de agenda del hospital. El asistente recibe la solicitud y el asesor asigna la cita en la agenda actual del hospital.</p></details>
+      <details><summary>¿Conservamos el número de WhatsApp y las líneas actuales?</summary><p>Sí. El número del hospital se conecta a la API oficial de Meta y se verifica. Los números de voz y la línea 01 8000 se conservan mediante desvío o conexión con el operador; eso se valida con el operador actual.</p></details>
+      <details><summary>¿Qué responde el asistente y qué no?</summary><p>Responde solo con la información que el hospital defina: horarios, servicios, preguntas frecuentes y la toma de datos para la cita. No da diagnósticos. Cuando el paciente lo pide o el caso lo requiere, pasa la conversación a un asesor.</p></details>
+      <details><summary>¿Qué pasa con los datos al terminar el contrato?</summary><p>Conversaciones, grabaciones y reportes son del hospital y se entregan en formatos abiertos.</p></details>
+      <details><summary>¿Podemos empezar solo con WhatsApp?</summary><p>Sí. La contratación puede ser por etapas: primero WhatsApp y después la PBX y el call center, con los mismos valores.</p></details>
+    </div>
+    <div style="display:grid;gap:12px;align-content:start">
+      <div class="final">
+        <span class="eyebrow" style="color:var(--stage-accent)">Siguiente paso</span>
+        <h3 style="font-size:1.5rem">Mesa técnica &amp; demostración virtual de 30 minutos.</h3>
+        <p>Con las áreas de SIAU y sistemas, en la fecha que el hospital disponga.</p>
+        <a class="cta" href="https://wa.me/573193760018?text=Hola%20Sergio%2C%20queremos%20agendar%20la%20mesa%20t%C3%A9cnica%20de%20la%20propuesta%20del%20Hospital%20de%20Riosucio." target="_blank" rel="noopener">Agendar por WhatsApp <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="card mod">
+        <span class="label">Contacto</span>
+        <h3>Sergio Arias · Desarrollando Ando S.A.S.</h3>
+        <p class="small">Correo <span class="copy">sarias@desarrollandoando.com</span><br>WhatsApp <span class="copy">+57 319 376 0018</span></p>
+        <p class="small">Empresa de tecnología de Manizales, Caldas · NIT 901.908.287-3 · Meta Business Partner · 10 productos propios, para distintos sectores.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer><div class="wrap"><span>Desarrollando Ando S.A.S. · Propuesta para el Hospital Departamental San Juan de Dios de Riosucio, Caldas E.S.E.</span><span>Las pantallas interactivas son simulaciones con datos de ejemplo.</span></div></footer>
+
+<div id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Captura ampliada"><button class="iconbtn" id="lbclose" type="button" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button><img id="lbimg" alt=""></div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const num=n=>Math.round(n).toLocaleString('es-CO').replace(/,/g,'.');
+const fmt=n=>'$'+num(n);
+const root=document.documentElement;
+
+/* Tema */
+const SUN='<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',MOON='<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/>';
+const isDark=()=>root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+function paintIcon(){const d=isDark();$('#ico').innerHTML=d?SUN:MOON;$('#themebtn').setAttribute('aria-label',d?'Cambiar a modo claro':'Cambiar a modo oscuro')}
+$('#themebtn').onclick=()=>{const t=isDark()?'light':'dark';root.dataset.theme=t;try{localStorage.setItem('da-tema',t)}catch(e){}paintIcon();draw(ck)};
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{paintIcon();draw(ck)})}catch(e){}
+
+/* Menú móvil */
+const sheet=$('#sheet'),mb=$('#menubtn');
+mb.onclick=()=>{sheet.hidden=false;mb.setAttribute('aria-expanded','true');sheet.querySelector('a').focus()};
+sheet.onclick=e=>{if(e.target===sheet||e.target.closest('a')){sheet.hidden=true;mb.setAttribute('aria-expanded','false')}};
+
+/* WhatsApp */
+const chat=$('#chat'),quick=$('#quick'),behind=$('#behind');
+let clock=6*60+12,timers=[];
+const tnow=()=>{const h=Math.floor(clock/60),m=clock%60;clock+=1;return(((h+11)%12)+1)+':'+String(m).padStart(2,'0')+(h<12?' a. m.':' p. m.')};
+function add(text,who){const d=document.createElement('div');d.className='msg'+(who?' '+who:'');d.textContent=text;if(who!=='sys'){const t=document.createElement('time');t.textContent=tnow();d.appendChild(t)}chat.appendChild(d);chat.scrollTop=chat.scrollHeight}
+const later=(fn,ms)=>timers.push(setTimeout(fn,ms));
+function opts(list){quick.innerHTML='';list.forEach(([l,fn])=>{const b=document.createElement('button');b.type='button';b.textContent=l;b.onclick=()=>{quick.innerHTML='';add(l,'me');fn()};quick.appendChild(b)})}
+function say(texts,then,info){let d=0;texts.forEach(t=>{d+=650;later(()=>add(t),d)});if(info)later(()=>behind.textContent=info,200);later(then||(()=>{}),d+150)}
+function restart(){timers.forEach(clearTimeout);timers=[];chat.innerHTML='';clock=6*60+12;add('Hoy','sys');add('Hola, buenos días','me');start()}
+function start(){say(['¡Hola! Soy el asistente virtual del Hospital Departamental San Juan de Dios de Riosucio. ¿En qué le puedo ayudar?'],menu,'Son las 6:12 a. m. y no hay personal en línea. El asistente responde de inmediato y la conversación queda registrada en la bandeja.')}
+function menu(){opts([['Solicitar una cita',cita],['Horarios y servicios',horarios],['Hablar con un asesor',asesor]])}
+function cita(){say(['Con gusto. Escriba el número de documento del paciente, por favor.'],()=>opts([['1.053.000.000 (ejemplo)',esp]]),'El asistente pide los datos que el hospital definió para una solicitud de cita.')}
+function esp(){say(['Gracias. ¿Para qué servicio es la cita?'],()=>opts([['Medicina general',()=>tipo('Medicina general')],['Odontología',()=>tipo('Odontología')],['Pediatría',()=>tipo('Pediatría')]]),'Los servicios del menú son los que el hospital ofrece; aquí se muestran como ejemplo.')}
+function tipo(s){say(['¿Es primera vez o control?'],()=>opts([['Primera vez',()=>rec(s,'primera vez')],['Control',()=>rec(s,'control')]]))}
+function rec(s,t){say(['Listo. Recibimos su solicitud de '+s.toLowerCase()+' ('+t+'). Un asesor del hospital asigna la cita y le confirmamos por aquí la fecha y la hora.'],()=>later(()=>{add('7:05 a. m. · la asesora 02 asigna la cita','sys');clock=7*60+6;asign(s)},900),'La solicitud entra a la bandeja como «Pendiente de asignar», con documento, servicio y tipo de cita. A las 7:00 a. m. la asesora la asigna en la agenda del hospital.')}
+function asign(s){say(['Su cita de '+s.toLowerCase()+' quedó para el martes 9 de febrero a las 8:20 a. m. en consulta externa.\nPor favor llegue 15 minutos antes con su documento.\n¿Confirma su asistencia?'],()=>opts([['Sí, confirmo',()=>conf(true)],['No puedo asistir',()=>conf(false)]]),'El paciente recibe la fecha, la hora y la petición de confirmar. La conversación pasa a «Asignada, esperando confirmación».')}
+function conf(ok){if(ok){say(['¡Gracias! Su cita está confirmada. Le enviaremos un recordatorio el día anterior.'],()=>later(()=>{add('Lunes 8 de febrero · recordatorio automático','sys');add('Recordatorio: mañana martes a las 8:20 a. m. tiene cita en consulta externa. Llegue 15 minutos antes.');behind.textContent='El día anterior sale el recordatorio. Las citas confirmadas y las canceladas quedan en el informe mensual.';opts([['Volver a empezar',restart]])},900),'La cita queda «Confirmada». La supervisora la ve en la bandeja y en el informe.')}else{say(['Entendido. Liberamos ese espacio para otro paciente. ¿Quiere que un asesor le ayude a buscar otra fecha?'],()=>opts([['Sí, por favor',asesor],['Volver a empezar',restart]]),'El espacio se libera para otro paciente y la cancelación queda registrada.')}}
+function horarios(){say(['Consulta externa: lunes a viernes, 7:00 a. m. a 5:00 p. m. (ejemplo).\nUrgencias: 24 horas.\n¿Necesita algo más?'],()=>opts([['Solicitar una cita',cita],['Hablar con un asesor',asesor]]),'El asistente responde con la información que el hospital cargó y aprobó. Los horarios de este ejemplo no son los reales.')}
+function asesor(){say(['Le comunico con un asesor del SIAU. Le atenderá apenas esté disponible.'],()=>later(()=>{add('Un asesor del SIAU se une a la conversación','sys');add('Hola, le saluda la asesora 02 del SIAU. ¿En qué le ayudo?');opts([['Volver a empezar',restart]])},1100),'La conversación pasa a un asesor con todo el historial y queda etiquetada para el SIAU.')}
+restart();
+
+/* Bandeja */
+const convs=[
+ {n:'Paciente · María G.',t:'7:05',pv:'Solicitud de cita: medicina general, primera vez',st:[['p-ok','Confirmada'],['p-acc','Citas']],ch:'WhatsApp',as:'Asesora 02',tl:[['6:12','El paciente escribe; responde el asistente'],['6:14','Datos completos: documento, servicio, primera vez'],['7:05','La asesora 02 asigna la cita'],['7:09','El paciente confirma asistencia']]},
+ {n:'Paciente · Jorge R.',t:'7:18',pv:'¿Qué documentos llevo para la autorización?',st:[['p-new','Sin autorización'],['p-acc','SIAU']],ch:'WhatsApp',as:'Sin asignar',tl:[['7:16','El paciente pregunta por una autorización'],['7:18','El asistente lo marca «Sin autorización» y lo pasa al SIAU']]},
+ {n:'Paciente · Luz Dary M.',t:'7:31',pv:'Necesito cambiar mi cita del jueves',st:[['p-new','Pendiente'],['p-acc','Citas']],ch:'Messenger',as:'Asesora 05',tl:[['7:29','Llega por Facebook Messenger'],['7:31','Asignada a la asesora 05']]},
+ {n:'Paciente · Andrés P.',t:'8:02',pv:'Quiero radicar una queja',st:[['p-acc','PQRS']],ch:'WhatsApp',as:'SIAU',tl:[['7:58','El paciente pide radicar una queja'],['8:02','Etiqueta PQRS; queda con su historial para la respuesta']]},
+ {n:'Paciente · Nidia C.',t:'8:20',pv:'Recordatorio enviado: cita mañana 8:20 a. m.',st:[['p-ok','Recordatorio']],ch:'WhatsApp',as:'Automático',tl:[['8:20','Sale el recordatorio de la cita del día siguiente']]}
+];
+const list=$('#convlist'),det=$('#convdetail');
+function showConv(i){[...list.children].forEach((c,j)=>{c.classList.toggle('on',i===j);c.setAttribute('aria-selected',i===j)});const c=convs[i];
+ det.innerHTML='<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h3>'+c.n+'</h3><div class="pills">'+c.st.map(s=>'<span class="pill '+s[0]+'">'+s[1]+'</span>').join('')+'</div></div><div class="dmeta"><div><b>Canal</b>'+c.ch+'</div><div><b>Asignada a</b>'+c.as+'</div><div><b>Última actividad</b>'+c.t+' a. m.</div></div><div><span class="label">Trazabilidad</span><div class="timeline" style="margin-top:8px">'+c.tl.map(x=>'<div><span>'+x[0]+'</span><p>'+x[1]+'</p></div>').join('')+'</div></div><div class="actions"><button class="btn pri" type="button" data-a="as">Asignarme</button><button class="btn" type="button" data-a="et">Agregar etiqueta</button><button class="btn" type="button" data-a="ce">Cerrar caso</button></div><p class="small muted" id="actmsg" aria-live="polite"></p>';
+ det.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{det.querySelector('#actmsg').textContent={as:'La conversación queda asignada a usted y sale de la cola general.',et:'Las etiquetas (citas, PQRS, autorizaciones) alimentan el informe mensual por motivo de contacto.',ce:'El caso se cierra y queda en el historial con su resultado y su tiempo de respuesta.'}[b.dataset.a]})}
+convs.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.className='conv';b.setAttribute('role','option');b.innerHTML='<div class="row"><b>'+c.n+'</b><span>'+c.t+'</span></div><div class="pv">'+c.pv+'</div><div class="pills">'+c.st.map(s=>'<span class="pill '+s[0]+'">'+s[1]+'</span>').join('')+'</div>';b.onclick=()=>showConv(i);list.appendChild(b)});
+showConv(0);
+
+/* IVR */
+const pad=$('#pad'),prompt=$('#prompt'),ivrlog=$('#ivrlog'),ivrstate=$('#ivrstate'),after=$('#afterhours');
+let incall=false,cur=null,lastKey='menu';
+const T={menu:()=>after.checked?'Bienvenido al Hospital Departamental San Juan de Dios de Riosucio. En este momento estamos fuera del horario de atención. Para urgencias, acérquese al servicio de urgencias. También puede escribirnos por WhatsApp a este mismo número y el asistente tomará su solicitud.':'Bienvenido al Hospital Departamental San Juan de Dios de Riosucio. Esta llamada puede ser grabada para mejorar el servicio. Para citas, marque 1. Para información de servicios y horarios, marque 2. Para atención al usuario y PQRS, marque 3. Para hablar con un asesor, marque 0.',
+ 1:'Cola de citas. Usted es el número 3 en la fila. Tiempo estimado de espera: dos minutos. Un asesor lo atenderá en breve.',
+ 2:'Consulta externa atiende de lunes a viernes, de 7 de la mañana a 5 de la tarde. Urgencias atiende las 24 horas. Para volver al menú principal, marque asterisco.',
+ 3:'Atención al usuario y PQRS. Su llamada será atendida por el SIAU. Le recordamos que también puede escribirnos por WhatsApp a este número.',
+ 0:'Lo comunicamos con el siguiente asesor disponible. Por favor, no cuelgue.'};
+const AUD={menu:'audio/menu.mp3',fuera:'audio/fuera.mp3','1':'audio/op1.mp3','2':'audio/op2.mp3','3':'audio/op3.mp3','0':'audio/op0.mp3'};
+function log(t){const p=document.createElement('div');p.textContent='› '+t;ivrlog.prepend(p)}
+function stop(){try{speechSynthesis.cancel()}catch(e){}if(cur){cur.pause();cur=null}}
+function play(k){stop();const src=k==='menu'&&after.checked?AUD.fuera:AUD[k];if(!src)return;const a=new Audio(src);cur=a;a.play().catch(()=>{try{const u=new SpeechSynthesisUtterance(prompt.textContent);u.lang='es-CO';speechSynthesis.speak(u)}catch(e){}})}
+function say2(k){prompt.textContent=typeof T[k]==='function'?T[k]():T[k];lastKey=k;play(k)}
+function press(k){if(!incall){log('Pulse «Llamar» primero');return}
+ if(after.checked&&k!=='*'){log('Tecla '+k+' · fuera de horario, el menú no ofrece opciones');return}
+ if(k==='*'){say2('menu');log('Tecla * · vuelve al menú');ivrstate.textContent='En llamada · menú principal';return}
+ if(T[k]!==undefined){say2(k);log('Tecla '+k+({1:' · cola de citas',2:' · información',3:' · cola SIAU',0:' · cola general'}[k]||''));ivrstate.textContent='En llamada · opción '+k}else log('Tecla '+k+' · opción no válida')}
+['1','2','3','4','5','6','7','8','9','*','0','#'].forEach(k=>{const b=document.createElement('button');b.type='button';b.textContent=k;b.setAttribute('aria-label','Tecla '+k);b.onclick=()=>press(k);pad.appendChild(b)});
+const call=document.createElement('button');call.type='button';call.className='call';call.textContent='Llamar';pad.appendChild(call);
+call.onclick=()=>{incall=!incall;if(incall){call.textContent='Colgar';call.classList.add('hang');ivrstate.textContent='En llamada · menú principal';say2('menu');log('Llamada a la línea del hospital')}else{call.textContent='Llamar';call.classList.remove('hang');ivrstate.textContent='Teléfono del paciente · listo para llamar';prompt.textContent='Pulse «Llamar» para escuchar el menú del hospital.';log('Llamada finalizada');stop()}};
+after.onchange=()=>{if(incall){say2('menu');log(after.checked?'Cambia a horario no hábil':'Vuelve a horario hábil')}};
+$('#speak').onclick=()=>{if(incall)play(lastKey);else log('Pulse «Llamar» primero')};
+
+/* Monitor y consola */
+const st=['busy','busy','','busy','wa','pause','','','','','','',''];
+const lbl={busy:'En llamada',wa:'En WhatsApp',pause:'En pausa','':'Sin conexión'};
+st.forEach((s,i)=>{const a=document.createElement('span');a.className='ag '+s;a.textContent=String(i+1).padStart(2,'0');a.title='Asesor '+(i+1)+' · '+lbl[s];$('#agents').appendChild(a)});
+$('#agentsum').textContent='3 en llamada · 1 en WhatsApp · 1 en pausa · 8 sin conexión';
+let secs=96;setInterval(()=>{secs++;$('#timer').textContent=String(Math.floor(secs/60)).padStart(2,'0')+':'+String(secs%60).padStart(2,'0')},1000);
+[['Asesora','Hospital San Juan de Dios, buenos días. ¿En qué le ayudo?'],['Paciente','Buenos días, llamo para una cita de control con medicina general.'],['Asesora','Con gusto. Veo que ayer nos escribió por WhatsApp. ¿Me confirma el documento?'],['Paciente','Sí, es el mismo que les envié.'],['Asesora','Listo. Le tengo el jueves a las 10:40 a. m. Le llega la confirmación por WhatsApp.'],['Paciente','Perfecto, muchas gracias.']].forEach(l=>{const p=document.createElement('p');p.innerHTML='<b>'+l[0]+'</b>'+l[1];$('#transcript').appendChild(p)});
+const SM={escucha:'Escuchando: la supervisora oye la llamada; ni el paciente ni la asesora la escuchan.',susurro:'Susurro: la supervisora le habla solo a la asesora para orientarla; el paciente no la escucha.',interviene:'Intervención: la supervisora entra a la llamada y habla con el paciente y la asesora.'};
+$$('#sup button').forEach(b=>b.onclick=()=>{const on=b.getAttribute('aria-pressed')!=='true';$$('#sup button').forEach(x=>x.setAttribute('aria-pressed','false'));if(on){b.setAttribute('aria-pressed','true');$('#supmsg').textContent=SM[b.dataset.m]}else $('#supmsg').textContent='Escuchar sin que el paciente lo note, hablarle solo a la asesora o entrar a la llamada.'});
+
+/* Capturas */
+const SH=[['live-supervision','Supervisión','Vista general en tiempo real: interacciones, asesores en línea, llamadas activas, cola y estado de cada canal.'],['live-consola-b','Consola del asesor','El asesor se conecta y recibe en la misma pantalla las llamadas de su línea de voz y las conversaciones de sus bandejas, con sus colas abajo.'],['live-colas-b','Colas y reparto','Cada cola con sus canales, sus asesores, el tipo de reparto y la espera máxima. Para el hospital: citas, SIAU y asesor general.']];
+const simg=$('#shotimg'),lb=$('#lightbox'),lbi=$('#lbimg');
+$$('#shottabs button').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;$$('#shottabs button').forEach(x=>x.setAttribute('aria-selected',x===b));simg.src='media/'+SH[i][0]+'.jpg';simg.alt=SH[i][1]+' de la plataforma';$('#shotcap').textContent=SH[i][2]});
+let lastFocus=null;
+$('#shotbtn').onclick=()=>{lastFocus=document.activeElement;lbi.src=simg.src;lbi.alt=simg.alt;lb.hidden=false;$('#lbclose').focus()};
+function closeLb(){lb.hidden=true;if(lastFocus)lastFocus.focus()}
+lb.onclick=e=>{if(e.target!==lbi)closeLb()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!lb.hidden)closeLb();if(!sheet.hidden){sheet.hidden=true;mb.setAttribute('aria-expanded','false');mb.focus()}}});
+
+/* Gráfico */
+const data={wa:[228,195,183,175,148,70,41],voz:[1120,980,930,890,860,130,0]},days=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+const css=v=>getComputedStyle(root).getPropertyValue(v).trim();
+let ck='wa';
+function draw(k){const svg=$('#chart');const W=640,H=230,L=48,B=30,Tp=16,R=10,v=data[k],max=k==='wa'?250:1200,step=k==='wa'?50:300;let s='';
+ for(let x=0;x<=max;x+=step){const y=Tp+(H-Tp-B)*(1-x/max);s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'" stroke="'+css('--line')+'"/><text x="'+(L-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="'+css('--ink-3')+'" font-family="ui-monospace,monospace">'+num(x)+'</text>'}
+ const bw=(W-L-R)/v.length;v.forEach((n,i)=>{const h=(H-Tp-B)*(n/max),x=L+i*bw+bw*.22,y=H-B-h;s+='<rect x="'+x+'" y="'+y+'" width="'+(bw*.56)+'" height="'+h+'" rx="3" fill="'+css('--accent')+'"/><text x="'+(x+bw*.28)+'" y="'+(y-6)+'" text-anchor="middle" font-size="11" fill="'+css('--ink-2')+'">'+num(n)+'</text><text x="'+(x+bw*.28)+'" y="'+(H-10)+'" text-anchor="middle" font-size="12" fill="'+css('--ink-2')+'">'+days[i]+'</text>'});
+ svg.innerHTML=s}
+$$('#chartsw button').forEach(b=>b.onclick=()=>{ck=b.dataset.k;$$('#chartsw button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw(ck)});
+
+/* Calculadora */
+const mi=$('#min'),cv=$('#conv');
+function calc(){const m=+mi.value;$('#minv').textContent=num(m);$('#minc').textContent=fmt(m*56);const c=+cv.value,ex=Math.max(0,c-1100);$('#convv').textContent=num(c)+' conversaciones · '+(ex?num(ex)+(ex===1?' adicional':' adicionales')+' × $400':'dentro del plan de 1.100');$('#convc').textContent=fmt(ex*400)}
+mi.oninput=calc;cv.oninput=calc;calc();
+
+/* Navegación, progreso y aparición */
+const links=$$('#navlinks a,#sheet a'),prog=$('#progress');
+addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;prog.style.width=(h>0?scrollY/h*100:0)+'%'},{passive:true});
+try{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});$$('main section').forEach(s=>io.observe(s));
+ const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const sib=[...e.target.parentElement.children].filter(x=>x.classList.contains('rv'));e.target.style.transitionDelay=(sib.indexOf(e.target)*.08)+'s';e.target.classList.add('in');ro.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});$$('.rv').forEach(x=>ro.observe(x))}catch(e){$$('.rv').forEach(x=>x.classList.add('in'))}
+
+paintIcon();draw(ck);
+})();
+</script>
+</body>
+</html>
