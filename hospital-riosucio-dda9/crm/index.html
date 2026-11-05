@@ -7,69 +7,170 @@
 <title>CRM Llamadas Riosucio</title>
 <link rel="icon" href="../../assets/isotipo-desarrollando.png">
 <link rel="stylesheet" href="crm.css">
+<script>try{var t=localStorage.getItem('da-tema');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
     <div>
       <div class="lbl">Hospital San Juan de Dios · Riosucio · Asistente de voz Lucía</div>
-      <h1>Llamadas atendidas <span>&amp; citas por confirmar</span></h1>
+      <h1>Llamadas del asistente <span>&amp; seguimiento</span></h1>
     </div>
     <div class="acts">
-      <nav class="nav" aria-label="Vistas"><a href="./" aria-current="page">Llamadas</a><a href="extensiones.html">Por extensión</a><a href="../">Propuesta</a></nav>
+      <a class="navlink" href="../">← Propuesta</a>
       <span class="demo">Datos de ejemplo</span>
-      <span class="hook"><i></i>Webhook post-llamada · <span id="lastHook">—</span></span>
-      <button class="btn gh" id="simulate" type="button">Simular llamada entrante</button>
+      <span class="hook"><i></i>Webhook de Flow · <span id="lastHook">—</span></span>
+      <button class="btn gh" id="simulate" type="button">Simular llamada</button>
     </div>
   </header>
 
-  <section class="kpis" aria-label="Indicadores de atención">
-    <div class="kpi"><span class="lbl">Llamadas</span><b id="kTotal">0</b><small>recibidas por el asistente</small></div>
-    <div class="kpi g"><span class="lbl">Consultas básicas</span><b id="kBasic">0 %</b><small id="kBasicSub"></small></div>
-    <div class="kpi g"><span class="lbl">Resueltas sin asesor</span><b id="kSolved">0 %</b><small id="kSolvedSub"></small></div>
-    <div class="kpi"><span class="lbl">Citas por confirmar</span><b id="kPend">0</b><small>esperan fecha, hora y especialista</small></div>
-  </section>
-  <section class="panel transf" aria-label="Transferencias">
-    <div class="ph"><h2>Transferencias a extensiones</h2><span class="lbl">Horario de extensiones: L–V 8–18 · S 8–13</span></div>
-    <div class="tgrid">
-      <div class="kpi"><span class="lbl">Requerían transferencia</span><b id="kReq">0</b><small id="kReqSub"></small></div>
-      <div class="kpi"><span class="lbl">Transferidas con éxito</span><b id="kOk" style="color:var(--good)">0</b><small id="kOkSub"></small></div>
-      <div class="kpi"><span class="lbl">No contestó la extensión</span><b id="kNc" style="color:var(--bad)">0</b><small id="kNcSub"></small></div>
-      <div class="kpi"><span class="lbl">Fuera de horario</span><b id="kFh" style="color:var(--warn)">0</b><small id="kFhSub"></small></div>
-    </div>
-    <div class="tbody2">
-      <div><span class="lbl">De las que requerían transferencia</span><div class="tbar" id="tbar"></div><div class="legend"><span><i class="s-ok"></i>Con éxito</span><span><i class="s-nc"></i>No contestó</span><span><i class="s-fh"></i>Fuera de horario</span></div></div>
-      <div class="tbl" id="text"></div>
-    </div>
-  </section>
-
-  <div class="main">
-    <aside class="panel" aria-label="Tipificación">
-      <div class="ph"><h2>Tipificación</h2></div>
-      <div class="types" id="types"></div>
-    </aside>
-
-    <section class="panel" aria-label="Llamadas">
-      <div class="ph"><h2 id="listTitle">Todas las llamadas</h2><span class="lbl" id="listCount"></span></div>
-      <div class="filters">
-        <input id="q" type="search" placeholder="Buscar por nombre, cédula o teléfono" aria-label="Buscar">
-        <select id="fEsp" aria-label="Especialidad"><option value="">Todas las especialidades</option></select>
-        <select id="fEst" aria-label="Estado">
-          <option value="">Todos los estados</option>
-          <option value="por_confirmar">Cita por confirmar</option>
-          <option value="confirmacion_enviada">Confirmación enviada</option>
-          <option value="recordatorio_enviado">Recordatorio enviado</option>
-          <option value="devolver_llamada">Devolver llamada</option>
-          <option value="cerrada">Cerrada</option>
-        </select>
+  <section class="fbar panel" aria-label="Filtros">
+    <div class="frow">
+      <div class="seg" id="presets" role="group" aria-label="Periodo">
+        <button type="button" data-p="hoy">Hoy</button><button type="button" data-p="7d">7 días</button><button type="button" data-p="30d">30 días</button><button type="button" data-p="mes">Este mes</button><button type="button" data-p="mesant">Mes anterior</button><button type="button" data-p="todo">Todo</button>
       </div>
-      <div class="list" id="list"></div>
-    </section>
+      <div class="dates">
+        <label>Desde <input type="date" id="fDesde" min="2026-08-01" max="2026-11-05"></label>
+        <label>Hasta <input type="date" id="fHasta" min="2026-08-01" max="2026-11-05"></label>
+      </div>
+    </div>
+    <div class="frow sels">
+      <select id="fExt" aria-label="Extensión"><option value="">Todas las extensiones</option></select>
+      <select id="fMot" aria-label="Tipo de consulta"><option value="">Todos los motivos</option></select>
+      <select id="fEsp" aria-label="Especialidad"><option value="">Todas las especialidades</option></select>
+      <select id="fFranja" aria-label="Franja horaria"><option value="">Todas las franjas</option></select>
+      <select id="fHor" aria-label="Horario de extensiones"><option value="">Dentro y fuera de horario</option><option value="dentro">Dentro del horario de extensiones</option><option value="fuera">Fuera del horario de extensiones</option></select>
+      <select id="fDia" aria-label="Día"><option value="">Todos los días</option><option value="habil">Lunes a viernes</option><option value="sabado">Sábados</option><option value="domfest">Domingos y festivos</option><option value="1">Solo lunes</option><option value="2">Solo martes</option><option value="3">Solo miércoles</option><option value="4">Solo jueves</option><option value="5">Solo viernes</option></select>
+      <select id="fRes" aria-label="Transferencia"><option value="">Con y sin transferencia</option><option value="no_aplica">Resuelta por Lucía</option><option value="req">Requería transferencia</option><option value="exitosa">Transferida con éxito</option><option value="no_contesto">No contestó la extensión</option><option value="fuera_de_horario">Fuera de horario</option></select>
+      <select id="fEst" aria-label="Estado"><option value="">Todos los estados</option><option value="por_confirmar">Cita por confirmar</option><option value="confirmacion_enviada">Confirmación enviada</option><option value="recordatorio_enviado">Recordatorio enviado</option><option value="devolver_llamada">Devolver llamada</option><option value="cerrada">Cerrada</option></select>
+      <input id="q" type="search" placeholder="Nombre, cédula o teléfono" aria-label="Buscar">
+      <button type="button" class="btn gh sm" id="clear">Limpiar filtros</button>
+    </div>
+    <div class="fsum"><b id="fCount">0</b><span id="fRange"></span><span id="fChips" class="chips"></span></div>
+  </section>
 
-    <section class="panel detailpanel" aria-label="Ficha de la llamada" id="detail"></section>
-  </div>
+  <nav class="views" role="tablist" aria-label="Vistas">
+    <button type="button" role="tab" data-v="resumen">Resumen</button>
+    <button type="button" role="tab" data-v="extensiones">Por extensión</button>
+    <button type="button" role="tab" data-v="comparar">Comparar periodos</button>
+    <button type="button" role="tab" data-v="llamadas">Llamadas y citas</button>
+    <button type="button" role="tab" data-v="webhook">Datos del webhook</button>
+  </nav>
 
-  <p class="foot">Modelo para revisión. Las llamadas, pacientes y envíos son ficticios; los botones no envían mensajes reales.</p>
+  <!-- RESUMEN -->
+  <section id="v-resumen" class="view">
+    <div class="kpis k6" id="kpis"></div>
+    <div class="panel">
+      <div class="ph"><h2>¿Cómo terminó cada llamada?</h2><span class="lbl">Horario de extensiones: L–V 8–18 · S 8–13 · sin domingos ni festivos</span></div>
+      <div class="pad"><div class="tbar" id="outbar"></div><div class="legend" id="outleg"></div></div>
+    </div>
+    <div class="panel">
+      <div class="ph"><h2>Evolución</h2>
+        <div class="phc">
+          <div class="seg sm" id="gran" role="group" aria-label="Agrupar por"><button type="button" data-g="dia">Día</button><button type="button" data-g="semana">Semana</button><button type="button" data-g="mes">Mes</button></div>
+          <div class="seg sm" id="serie" role="group" aria-label="Ver"><button type="button" data-s="final">Resultado</button><button type="button" data-s="motivo">Motivo</button><button type="button" data-s="pct">Porcentajes</button></div>
+        </div>
+      </div>
+      <div class="chartwrap"><svg id="evo" role="img" aria-label="Evolución de llamadas"></svg></div>
+      <div class="legend pad0" id="evoleg"></div>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <div class="ph"><h2>Día y hora de las llamadas</h2><span class="lbl">Recuadro: horario de extensiones</span></div>
+        <div class="chartwrap"><svg id="heat" role="img" aria-label="Llamadas por día de la semana y hora"></svg></div>
+      </div>
+      <div class="panel">
+        <div class="ph"><h2>Por franja horaria</h2></div>
+        <div class="pad" id="franjas"></div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><div class="ph"><h2>Por tipo de consulta</h2><span class="lbl">Clic para filtrar</span></div><div class="tbl" id="tMot"></div></div>
+      <div class="panel"><div class="ph"><h2>Por especialidad</h2><span class="lbl">Citas nuevas y gestión</span></div><div class="tbl" id="tEsp"></div></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><div class="ph"><h2>¿Qué preguntan?</h2><span class="lbl">Información básica</span></div><div class="pad" id="temas"></div></div>
+      <div class="panel"><div class="ph"><h2>EPS de quienes llaman</h2></div><div class="pad" id="eps"></div></div>
+    </div>
+  </section>
+
+  <!-- POR EXTENSIÓN -->
+  <section id="v-extensiones" class="view" hidden>
+    <div class="extcards" id="extcards"></div>
+    <div class="panel">
+      <div class="ph"><h2 id="extTitle">Transferencias por hora</h2><span class="lbl">Franja verde: horario de extensiones</span></div>
+      <div class="chartwrap"><svg id="extHour" role="img" aria-label="Transferencias por hora"></svg></div>
+      <div class="legend pad0"><span><i class="s-ok"></i>Con éxito</span><span><i class="s-nc"></i>No contestó</span><span><i class="s-fh"></i>Fuera de horario</span></div>
+    </div>
+    <div class="panel">
+      <div class="ph"><h2>¿Cuándo no contesta cada extensión?</h2>
+        <div class="seg sm" id="naBy" role="group" aria-label="Ver por"><button type="button" data-n="franja">Por franja</button><button type="button" data-n="dia">Por día</button></div>
+      </div>
+      <div class="tbl" id="tNa"></div>
+      <p class="note">Porcentaje de transferencias, dentro del horario, que la extensión no contestó. Entre paréntesis, cuántas transferencias hubo.</p>
+    </div>
+    <div class="panel">
+      <div class="ph"><h2>Llamadas por devolver</h2><span class="lbl" id="cbCount"></span></div>
+      <div class="list short" id="cbList"></div>
+    </div>
+  </section>
+
+  <!-- COMPARAR -->
+  <section id="v-comparar" class="view" hidden>
+    <div class="panel">
+      <div class="ph"><h2>Comparar periodos</h2>
+        <div class="seg sm" id="cmpGran" role="group" aria-label="Comparar por"><button type="button" data-g="dia">Días</button><button type="button" data-g="semana">Semanas</button><button type="button" data-g="mes">Meses</button></div>
+      </div>
+      <div class="tbl" id="tCmp"></div>
+      <p class="note">Cada fila es un periodo dentro del rango elegido, del más reciente al más antiguo. La flecha compara con la fila de abajo. El fondo marca los valores más altos de cada columna.</p>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <div class="ph"><h2>Promedio diario por día de la semana</h2><span class="lbl" id="dowLbl"></span></div>
+        <div class="chartwrap"><svg id="dow" role="img" aria-label="Llamadas por día de la semana, periodo actual y anterior"></svg></div>
+        <div class="legend pad0"><span><i style="background:var(--accent)"></i>Periodo elegido</span><span><i style="background:var(--line-2)"></i>Periodo anterior</span></div>
+      </div>
+      <div class="panel">
+        <div class="ph"><h2>Periodo elegido frente al anterior</h2></div>
+        <div class="tbl" id="tPrev"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LLAMADAS -->
+  <section id="v-llamadas" class="view" hidden>
+    <div class="main">
+      <aside class="panel" aria-label="Tipificación"><div class="ph"><h2>Bandejas</h2></div><div class="types" id="types"></div></aside>
+      <section class="panel" aria-label="Llamadas">
+        <div class="ph"><h2 id="listTitle">Todas las llamadas</h2><span class="lbl" id="listCount"></span></div>
+        <div class="list" id="list"></div>
+      </section>
+      <section class="panel detailpanel" aria-label="Ficha de la llamada" id="detail"></section>
+    </div>
+  </section>
+
+  <!-- WEBHOOK -->
+  <section id="v-webhook" class="view" hidden>
+    <div class="panel">
+      <div class="ph"><h2>Del asistente al tablero</h2></div>
+      <ol class="pipe">
+        <li><b>Termina la llamada</b><span>Flow procesa la llamada: transcripción, grabación y análisis post-llamada.</span></li>
+        <li><b>Reenvío a webhook externo</b><span>Flow envía un evento con la llamada y el análisis a la URL que configuremos.</span></li>
+        <li><b>Recepción</b><span>Un escenario de Make o un endpoint propio recibe el evento y lo guarda en una base de datos.</span></li>
+        <li><b>Este tablero</b><span>Lee la base, calcula franjas, horario y estado de seguimiento, y envía las plantillas por WhatsApp desde Flow.</span></li>
+      </ol>
+    </div>
+    <div class="panel">
+      <div class="ph"><h2>De dónde sale cada dato</h2></div>
+      <div class="tbl" id="tFields"></div>
+    </div>
+    <div class="panel">
+      <div class="ph"><h2>Ejemplo del evento</h2><span class="lbl" id="plLbl"></span></div>
+      <div class="pad"><pre id="plJson" class="tall"></pre></div>
+    </div>
+  </section>
+
+  <p class="foot">Modelo para revisión. Las llamadas, pacientes y envíos son ficticios y se generan con datos de ejemplo de agosto a noviembre de 2026; los botones no envían mensajes reales.</p>
 </div>
 <div class="toast" id="toast" hidden role="status"></div>
 
