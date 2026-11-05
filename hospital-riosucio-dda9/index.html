@@ -498,6 +498,18 @@ footer{padding-bottom:84px}
 @media (max-width:860px){.crmshow{grid-template-columns:1fr}.scope{grid-template-columns:1fr}}
 @media (max-width:640px){.pfab.main span{display:none}.pfab.main{width:52px;padding:0;justify-content:center}.bkbar button{font-size:10px}}
 @media (prefers-reduced-motion:reduce){.saving:not(.go) .bar i{transform:none}}
+
+.trycall{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:18px 22px;margin-bottom:30px;border-radius:12px;background:var(--structural);color:var(--on-structural);position:relative;overflow:hidden}
+.trycall::after{content:"";position:absolute;right:-60px;top:-80px;width:260px;height:260px;border-radius:50%;background:var(--grad);opacity:.35;filter:blur(40px);pointer-events:none}
+.tcico{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:#fff;flex:none;animation:ring 2.4s ease-in-out infinite}
+.tcico svg{width:24px;height:24px}
+@keyframes ring{0%,100%{box-shadow:0 0 0 0 color-mix(in oklab,oklch(0.56 0.13 350) 55%,transparent)}50%{box-shadow:0 0 0 12px transparent}}
+.tctxt{flex:1 1 300px;display:grid;gap:2px;position:relative;z-index:1}
+.tctxt .label{color:inherit;opacity:.7}
+.tcnum{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-.03em;color:inherit;text-decoration:none;font-variant-numeric:tabular-nums;line-height:1.1}
+.tctxt p{margin:4px 0 0;opacity:.8;font-size:.92rem}
+.tccopy{position:relative;z-index:1;border:1px solid currentColor;background:transparent;color:inherit;border-radius:999px;padding:10px 18px;font:inherit;font-weight:600;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.tcico{animation:none}}
 </style>
 </head>
 <body>
@@ -929,6 +941,11 @@ footer{padding-bottom:84px}
       <button type="button" role="tab" id="pt-1" aria-controls="pp-1" aria-selected="false"><span>02</span>El tablero de llamadas</button>
     </div>
     <div class="ppanel" id="pp-0" role="tabpanel" aria-labelledby="pt-0">
+      <div class="trycall">
+        <span class="tcico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+        <div class="tctxt"><span class="label">Pruébelo ahora · línea de demostración</span><a class="tcnum" href="tel:+573009126528">300 912 6528</a><p>Llame y hable con Lucía: pregunte un horario, una dirección o pida una cita. Es el asistente de demostración del hospital, con datos de ejemplo.</p></div>
+        <button type="button" class="tccopy" id="tccopy">Copiar número</button>
+      </div>
       <div class="split">
         <div style="display:grid;gap:0">
         <div class="lvl"><span class="idx">01</span><div><h3>Pregunta para qué llama</h3><p>Cita nueva, gestión de una cita, información, resultados o autorizaciones, PQRS u otro motivo. Si describe una urgencia, lo envía a urgencias o al 123.</p></div></div>
@@ -1117,6 +1134,9 @@ $$('.ptabs [role=tab]').forEach((b,i,all)=>{b.onclick=()=>{all.forEach(x=>x.setA
 /* Botones flotantes */
 const pf=document.querySelector('.pfabs'),tt=$('#toTop');tt.onclick=()=>scrollTo({top:0,behavior:'smooth'});
 addEventListener('scroll',()=>{const y=scrollY;tt.classList.toggle('show',y>700);pf.classList.toggle('show',y>700)},{passive:true});
+
+/* Copiar número de demostración */
+(function(){const b=$('#tccopy');if(!b)return;b.onclick=()=>{const done=()=>{b.textContent='Copiado';setTimeout(()=>b.textContent='Copiar número',1800)};try{navigator.clipboard.writeText('3009126528').then(done,()=>{})}catch(e){}}})();
 paintIcon();draw(ck);
 })();
 </script>
