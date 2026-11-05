@@ -14,6 +14,10 @@ const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+Stri
 const fmtD=d=>DOW[d.getDay()].toLowerCase()+' '+d.getDate()+' '+MES[d.getMonth()];
 const fmtT=d=>fmtD(d)+' · '+d.toLocaleTimeString('es-CO',{hour:'numeric',minute:'2-digit'});
 const first=n=>String(n).split(' ')[0];
+/* Tarifa del asistente de voz: $650 por minuto, tarificado por segundo. */
+const PRECIO_MIN=650,PRECIO_SEG=PRECIO_MIN/60;
+const costo=c=>c.duracion_s*PRECIO_SEG;
+const cop=v=>'$'+nf(Math.round(v));
 const mmss=s=>Math.floor(s/60)+':'+String(Math.round(s%60)).padStart(2,'0');
 
 /* ===== Estado de filtros ===== */
@@ -52,11 +56,11 @@ const enRango=(c,a,b)=>c.hora_llamada>=a&&c.hora_llamada<=toEnd(b);
 let CUR=[],PREV=[];
 function aplicar(){CUR=calls.filter(c=>enRango(c,F.from,F.to)&&pasaNoFecha(c));const [a,b]=prevRange();PREV=calls.filter(c=>enRango(c,a,b)&&pasaNoFecha(c))}
 
-function S(l){const t=l.length,o={t,basic:0,solved:0,citas:0,gest:0,req:0,ok:0,nc:0,fh:0,urg:0,dur:0,sinOrden:0};
+function S(l){const t=l.length,o={t,basic:0,solved:0,citas:0,gest:0,req:0,ok:0,nc:0,fh:0,urg:0,dur:0,durSolved:0,sinOrden:0};
   for(const c of l){if(c.consulta_basica)o.basic++;if(c.resuelta_por_asistente)o.solved++;if(c.motivo_llamada==='cita_nueva'){o.citas++;if(c.tiene_orden===false)o.sinOrden++}if(c.motivo_llamada==='gestion_cita')o.gest++;
     if(c.requiere_transferencia){o.req++;if(c.resultado_transferencia==='exitosa')o.ok++;else if(c.resultado_transferencia==='no_contesto')o.nc++;else o.fh++}
-    if(c.urgencia_detectada)o.urg++;o.dur+=c.duracion_s}
-  o.durAvg=t?o.dur/t:0;o.pBasic=t?o.basic/t*100:0;o.pSolved=t?o.solved/t*100:0;o.pOk=o.req?o.ok/o.req*100:0;o.pNc=o.req?o.nc/o.req*100:0;o.pFh=o.req?o.fh/o.req*100:0;o.pReq=t?o.req/t*100:0;return o}
+    if(c.urgencia_detectada)o.urg++;o.dur+=c.duracion_s;if(c.resuelta_por_asistente)o.durSolved+=c.duracion_s}
+  o.durAvg=t?o.dur/t:0;o.cost=o.dur*PRECIO_SEG;o.costAvg=t?o.cost/t:0;o.costSolved=o.durSolved*PRECIO_SEG;o.costPerSolved=o.solved?o.costSolved/o.solved:0;o.min=o.dur/60;o.pBasic=t?o.basic/t*100:0;o.pSolved=t?o.solved/t*100:0;o.pOk=o.req?o.ok/o.req*100:0;o.pNc=o.req?o.nc/o.req*100:0;o.pFh=o.req?o.fh/o.req*100:0;o.pReq=t?o.req/t*100:0;return o}
 
 /* ===== Gráficos SVG (colores por variables CSS: cambian con el tema) ===== */
 const FIN=[['lucia','Resuelta por Lucía','var(--accent)'],['ok','Transferida con éxito','var(--good)'],['nc','No contestó la extensión','var(--bad)'],['fh','Fuera de horario','var(--warn)']];
@@ -73,14 +77,14 @@ function buckets(g,a,b){const out=[];let d=day0(a);const end=day0(b);
 function bucketOf(g,d){if(g==='dia')return iso(day0(d));if(g==='semana'){const x=day0(d);return iso(addD(x,-((x.getDay()+6)%7)))}return iso(new Date(d.getFullYear(),d.getMonth(),1))}
 
 function stacked(svg,cols,keys,opt={}){
-  const W=cw(svg),H=opt.h||260,L=44,R=10,Tp=14,B=30;const n=cols.length;
+  const W=cw(svg),H=opt.h||260,L=opt.money?66:44,R=10,Tp=14,B=30;const n=cols.length;
   const tot=cols.map(c=>keys.reduce((a,[k])=>a+(c.v[k]||0),0));const max=niceMax(Math.max(1,...tot));
   const bw=(W-L-R)/n,y=v=>Tp+(H-Tp-B)*(1-v/max);let s='';
   if(opt.band)s+=opt.band(L,bw,Tp,H-B);
-  for(let i=0;i<=4;i++){const v=max/4*i;s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" class="grid"/>`+T(L-6,y(v)+4,nf(Math.round(v)),'end')}
+  for(let i=0;i<=4;i++){const v=max/4*i;s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" class="grid"/>`+T(L-6,y(v)+4,opt.money?'$'+(v>=1e6?(v/1e6).toLocaleString('es-CO',{maximumFractionDigits:1})+' M':v>=1e3?nf(Math.round(v/1e3))+' mil':nf(Math.round(v))):nf(Math.round(v)),'end')}
   const step=Math.ceil(n/(opt.maxLabels||12));
   cols.forEach((c,i)=>{const x=L+i*bw+bw*.14,w=Math.max(1,bw*.72);let yb=H-B;
-    keys.forEach(([k,lab,col])=>{const v=c.v[k]||0;if(!v)return;const h=(H-Tp-B)*v/max;yb-=h;s+=`<rect x="${x.toFixed(1)}" y="${yb.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" style="fill:${col}"><title>${esc(c.l)} · ${lab}: ${nf(v)}</title></rect>`});
+    keys.forEach(([k,lab,col])=>{const v=c.v[k]||0;if(!v)return;const h=(H-Tp-B)*v/max;yb-=h;s+=`<rect x="${x.toFixed(1)}" y="${yb.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" style="fill:${col}"><title>${esc(c.l)} · ${lab}: ${opt.money?cop(v):nf(v)}</title></rect>`});
     if(i%step===0)s+=T(L+i*bw+bw/2,H-10,esc(c.s))});
   svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.innerHTML=s}
 function lines(svg,cols,series){
@@ -127,19 +131,31 @@ function delta(a,b,mode,goodUp){if(!PREV.length)return '<small class="dl">sin pe
   return `<small class="dl ${cls}">${d>0?'▲':d<0?'▼':'='} ${txt} <span>vs periodo anterior</span></small>`}
 function vResumen(){
   const s=S(CUR),p=S(PREV);
-  const K=(lbl,val,sub,d,g)=>`<div class="kpi${g?' g':''}"><span class="lbl">${lbl}</span><b>${val}</b><small>${sub}</small>${d}</div>`;
+  renderDecide();
+  const K=(lbl,val,sub,d,g,sk)=>`<div class="kpi${g?' g':''}"><span class="lbl">${lbl}</span><b>${val}</b><small>${sub}</small>${d}${sk||''}</div>`;
   $('#kpis').innerHTML=
-    K('Llamadas',nf(s.t),'recibidas por Lucía',delta(s.t,p.t,'n',null))+
-    K('Consultas básicas',Math.round(s.pBasic)+' %',nf(s.basic)+' solo pedían información',delta(s.pBasic,p.pBasic,'pp',null),1)+
-    K('Resueltas sin asesor',Math.round(s.pSolved)+' %',nf(s.solved)+' no pasaron a una persona',delta(s.pSolved,p.pSolved,'pp',true),1)+
-    K('Citas solicitadas',nf(s.citas),nf(s.sinOrden)+' sin orden médica',delta(s.citas,p.citas,'n',null))+
-    K('Transferencias con éxito',Math.round(s.pOk)+' %',nf(s.ok)+' de '+nf(s.req)+' que la requerían',delta(s.pOk,p.pOk,'pp',true))+
-    K('Duración promedio',mmss(s.durAvg),'minutos por llamada',delta(s.durAvg,p.durAvg,'n',false));
+    K('Llamadas',nf(s.t),'recibidas por Lucía',delta(s.t,p.t,'n',null),0,spark(x=>x.t))+
+    K('Consultas básicas',Math.round(s.pBasic)+' %',nf(s.basic)+' solo pedían información',delta(s.pBasic,p.pBasic,'pp',null),1,spark(x=>x.pBasic))+
+    K('Resueltas sin asesor',Math.round(s.pSolved)+' %',nf(s.solved)+' no pasaron a una persona',delta(s.pSolved,p.pSolved,'pp',true),1,spark(x=>x.pSolved))+
+    K('Citas solicitadas',nf(s.citas),nf(s.sinOrden)+' sin orden médica',delta(s.citas,p.citas,'n',null),0,spark(x=>x.citas))+
+    K('Transferencias con éxito',Math.round(s.pOk)+' %',nf(s.ok)+' de '+nf(s.req)+' que la requerían',delta(s.pOk,p.pOk,'pp',true),0,spark(x=>x.req?x.pOk:null))+
+    K('Duración promedio',mmss(s.durAvg),'minutos por llamada',delta(s.durAvg,p.durAvg,'n',false),0,spark(x=>x.durAvg));
   /* barra de resultado */
   const cnt={lucia:s.solved,ok:s.ok,nc:s.nc,fh:s.fh};
   $('#outbar').innerHTML=FIN.map(([k,l,c])=>cnt[k]?`<i style="flex:${cnt[k]};background:${c}" title="${l}: ${cnt[k]}"><span>${pct(cnt[k],s.t)} %</span></i>`:'').join('');
   $('#outleg').innerHTML=FIN.map(([k,l,c])=>`<button type="button" class="lg" data-r="${k}"><i style="background:${c}"></i>${l} · <b>${nf(cnt[k])}</b></button>`).join('');
   $$('#outleg .lg').forEach(b=>b.onclick=()=>{F.res={lucia:'no_aplica',ok:'exitosa',nc:'no_contesto',fh:'fuera_de_horario'}[b.dataset.r];update()});
+  /* costos */
+  const dias=ndays(),proy=s.cost/dias*30;
+  const C=(lbl,val,sub,d)=>`<div class="kpi"><span class="lbl">${lbl}</span><b>${val}</b><small>${sub}</small>${d||''}</div>`;
+  $('#costos').innerHTML=
+    C('Costo del periodo',cop(s.cost),nf(Math.round(s.min))+' minutos de asistente',delta(s.cost,p.cost,'n',null))+
+    C('Costo por llamada',cop(s.costAvg),'promedio · '+mmss(s.durAvg)+' min',delta(s.costAvg,p.costAvg,'n',false))+
+    C('Costo de las resueltas sin asesor',cop(s.costSolved),nf(s.solved)+' llamadas · '+cop(s.costPerSolved)+' cada una')+
+    C('Proyección a 30 días',cop(proy),'al ritmo del periodo elegido ('+dias+(dias===1?' día':' días')+')');
+  const cm=Object.entries(MOTIVOS).map(([k,v])=>{const l=CUR.filter(c=>c.motivo_llamada===k);return {l:v.n,v:l.reduce((a,c)=>a+costo(c),0),c:v.c,n:l.length}}).filter(x=>x.n).sort((a,b)=>b.v-a.v);
+  const mxc=Math.max(1,...cm.map(x=>x.v));
+  $('#costoMot').innerHTML=`<div class="hb">${cm.map(x=>`<div class="hbr"><span class="hl">${esc(x.l)}</span><span class="ht"><i style="width:${x.v/mxc*100}%;background:${x.c}"></i></span><span class="hv">${cop(x.v)} <small>${pct(x.v,s.cost)} %</small></span></div>`).join('')}</div>`;
   /* evolución */
   const g=gran||(ndays()<=21?'dia':ndays()<=120?'semana':'mes');
   $$('#gran button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.g===g));$$('#serie button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.s===serie));
@@ -150,6 +166,7 @@ function vResumen(){
     lines($('#evo'),cols,ser);$('#evoleg').innerHTML=legend(ser)}
   else if(serie==='motivo'){const keys=Object.entries(MOTIVOS).map(([k,v])=>[k,v.n,v.c]);
     stacked($('#evo'),bk.map((b,i)=>{const v={};groups[i].forEach(c=>v[c.motivo_llamada]=(v[c.motivo_llamada]||0)+1);return {...b,v}}),keys);$('#evoleg').innerHTML=legend(keys)}
+  else if(serie==='costo'){stacked($('#evo'),bk.map((b,i)=>{const v={};groups[i].forEach(c=>{const k=finKey(c);v[k]=(v[k]||0)+costo(c)});return {...b,v}}),FIN,{money:true});$('#evoleg').innerHTML=legend(FIN)+'<span>Valores en pesos: $650 por minuto, por segundo</span>'}
   else{stacked($('#evo'),bk.map((b,i)=>{const v={};groups[i].forEach(c=>{const k=finKey(c);v[k]=(v[k]||0)+1});return {...b,v}}),FIN);$('#evoleg').innerHTML=legend(FIN)}
   heat();
   /* franjas */
@@ -158,7 +175,7 @@ function vResumen(){
   $$('#franjas .frr').forEach(b=>b.onclick=()=>{F.franja=F.franja===b.dataset.f?'':b.dataset.f;update()});
   /* motivo */
   const rowsM=Object.entries(MOTIVOS).map(([k,v])=>{const l=CUR.filter(c=>c.motivo_llamada===k),t=S(l);return [k,v,t]}).filter(r=>r[2].t);
-  $('#tMot').innerHTML=`<table><thead><tr><th>Motivo</th><th>Llamadas</th><th>% del total</th><th>Resueltas por Lucía</th><th>Éxito transf.</th><th>Duración</th></tr></thead><tbody>${rowsM.map(([k,v,t])=>`<tr class="click${F.mot===k?' on':''}" data-m="${k}"><td><i class="dot" style="background:${v.c}"></i>${v.n}</td><td>${nf(t.t)}</td><td><span class="cbar"><i style="width:${pct(t.t,CUR.length)}%"></i></span>${pct(t.t,CUR.length)} %</td><td>${Math.round(t.pSolved)} %</td><td>${t.req?Math.round(t.pOk)+' %':'—'}</td><td>${mmss(t.durAvg)}</td></tr>`).join('')}</tbody></table>`;
+  $('#tMot').innerHTML=`<table><thead><tr><th>Motivo</th><th>Llamadas</th><th>% del total</th><th>Resueltas por Lucía</th><th>Éxito transf.</th><th>Duración</th><th>Costo</th></tr></thead><tbody>${rowsM.map(([k,v,t])=>`<tr class="click${F.mot===k?' on':''}" data-m="${k}"><td><i class="dot" style="background:${v.c}"></i>${v.n}</td><td>${nf(t.t)}</td><td><span class="cbar"><i style="width:${pct(t.t,CUR.length)}%"></i></span>${pct(t.t,CUR.length)} %</td><td>${Math.round(t.pSolved)} %</td><td>${t.req?Math.round(t.pOk)+' %':'—'}</td><td>${mmss(t.durAvg)}</td><td>${cop(t.cost)}</td></tr>`).join('')}</tbody></table>`;
   $$('#tMot tr[data-m]').forEach(r=>r.onclick=()=>{F.mot=F.mot===r.dataset.m?'':r.dataset.m;update()});
   /* especialidad */
   const ce=CUR.filter(c=>c.especialidad);const esps=[...new Set(ce.map(c=>c.especialidad))];
@@ -209,7 +226,7 @@ function vCmp(){
   let bk=buckets(cmpGran,F.from,F.to);const idx=Object.fromEntries(bk.map((b,i)=>[b.k,i]));const gr=bk.map(()=>[]);
   CUR.forEach(c=>{const i=idx[bucketOf(cmpGran,c.hora_llamada)];if(i!=null)gr[i].push(c)});
   let rows=bk.map((b,i)=>({b,s:S(gr[i])})).reverse();const cap=cmpGran==='dia'?62:cmpGran==='semana'?26:24;const cut=rows.length>cap;rows=rows.slice(0,cap);
-  const COLS=[['t','Llamadas',s=>nf(s.t),s=>s.t,null],['pBasic','% básicas',s=>Math.round(s.pBasic)+' %',s=>s.pBasic,null],['pSolved','% resueltas sin asesor',s=>Math.round(s.pSolved)+' %',s=>s.pSolved,true],['citas','Citas nuevas',s=>nf(s.citas),s=>s.citas,null],['req','Requerían transf.',s=>nf(s.req),s=>s.req,null],['pOk','% éxito',s=>s.req?Math.round(s.pOk)+' %':'—',s=>s.pOk,true],['pNc','% no contestó',s=>s.req?Math.round(s.pNc)+' %':'—',s=>s.pNc,false],['pFh','% fuera de horario',s=>s.req?Math.round(s.pFh)+' %':'—',s=>s.pFh,null],['durAvg','Duración',s=>mmss(s.durAvg),s=>s.durAvg,null]];
+  const COLS=[['t','Llamadas',s=>nf(s.t),s=>s.t,null],['pBasic','% básicas',s=>Math.round(s.pBasic)+' %',s=>s.pBasic,null],['pSolved','% resueltas sin asesor',s=>Math.round(s.pSolved)+' %',s=>s.pSolved,true],['citas','Citas nuevas',s=>nf(s.citas),s=>s.citas,null],['req','Requerían transf.',s=>nf(s.req),s=>s.req,null],['pOk','% éxito',s=>s.req?Math.round(s.pOk)+' %':'—',s=>s.pOk,true],['pNc','% no contestó',s=>s.req?Math.round(s.pNc)+' %':'—',s=>s.pNc,false],['pFh','% fuera de horario',s=>s.req?Math.round(s.pFh)+' %':'—',s=>s.pFh,null],['durAvg','Duración',s=>mmss(s.durAvg),s=>s.durAvg,null],['cost','Costo',s=>cop(s.cost),s=>s.cost,null],['costAvg','Costo por llamada',s=>cop(s.costAvg),s=>s.costAvg,false]];
   const mx=COLS.map(c=>Math.max(...rows.map(r=>c[3](r.s)||0)));
   const arrow=(a,b,good)=>{if(b==null)return '';const d=a-b;if(Math.abs(d)<0.5)return '<span class="ar">=</span>';const cls=good==null?'':(d>0)===good?'up':'down';return `<span class="ar ${cls}">${d>0?'▲':'▼'}</span>`};
   $('#tCmp').innerHTML=`<table class="cmp"><thead><tr><th>${{dia:'Día',semana:'Semana',mes:'Mes'}[cmpGran]}</th>${COLS.map(c=>`<th>${c[1]}</th>`).join('')}</tr></thead><tbody>${rows.map((r,i)=>{const nx=rows[i+1];const fe=cmpGran==='dia'&&(r.b.a.getDay()===0||esFestivo(r.b.a));
@@ -222,7 +239,7 @@ function vCmp(){
   order.forEach((w,i)=>{const x=L+i*gw;s+=`<rect x="${x+gw*.14}" y="${y(a[i])}" width="${gw*.34}" height="${H-B-y(a[i])}" style="fill:var(--accent)"><title>${DOWL[w]} · periodo elegido: ${a[i]}</title></rect><rect x="${x+gw*.52}" y="${y(b[i])}" width="${gw*.34}" height="${H-B-y(b[i])}" style="fill:var(--line-2)"><title>${DOWL[w]} · periodo anterior: ${b[i]}</title></rect>`+T(x+gw/2,H-8,DOW[w])});
   $('#dow').setAttribute('viewBox',`0 0 ${W} ${H}`);$('#dow').innerHTML=s;
   const s1=S(CUR),s0=S(PREV);
-  const RW=[['Llamadas',s1.t,s0.t,'n',nf,null],['Consultas básicas',s1.pBasic,s0.pBasic,'pp',v=>Math.round(v)+' %',null],['Resueltas sin asesor',s1.pSolved,s0.pSolved,'pp',v=>Math.round(v)+' %',true],['Citas nuevas',s1.citas,s0.citas,'n',nf,null],['Requerían transferencia',s1.req,s0.req,'n',nf,null],['Transferidas con éxito',s1.pOk,s0.pOk,'pp',v=>Math.round(v)+' %',true],['No contestó la extensión',s1.pNc,s0.pNc,'pp',v=>Math.round(v)+' %',false],['Fuera de horario',s1.pFh,s0.pFh,'pp',v=>Math.round(v)+' %',null],['Urgencias remitidas',s1.urg,s0.urg,'n',nf,null],['Duración promedio',s1.durAvg,s0.durAvg,'n',mmss,false]];
+  const RW=[['Llamadas',s1.t,s0.t,'n',nf,null],['Consultas básicas',s1.pBasic,s0.pBasic,'pp',v=>Math.round(v)+' %',null],['Resueltas sin asesor',s1.pSolved,s0.pSolved,'pp',v=>Math.round(v)+' %',true],['Citas nuevas',s1.citas,s0.citas,'n',nf,null],['Requerían transferencia',s1.req,s0.req,'n',nf,null],['Transferidas con éxito',s1.pOk,s0.pOk,'pp',v=>Math.round(v)+' %',true],['No contestó la extensión',s1.pNc,s0.pNc,'pp',v=>Math.round(v)+' %',false],['Fuera de horario',s1.pFh,s0.pFh,'pp',v=>Math.round(v)+' %',null],['Urgencias remitidas',s1.urg,s0.urg,'n',nf,null],['Duración promedio',s1.durAvg,s0.durAvg,'n',mmss,false],['Minutos del asistente',s1.min,s0.min,'n',v=>nf(Math.round(v)),null],['Costo del asistente',s1.cost,s0.cost,'n',cop,null],['Costo por llamada',s1.costAvg,s0.costAvg,'n',cop,false]];
   $('#tPrev').innerHTML=`<table><thead><tr><th>Indicador</th><th>Elegido</th><th>Anterior</th><th>Variación</th></tr></thead><tbody>${RW.map(([n,a,b,m,f,g])=>{let d,txt;if(m==='pp'){d=a-b;txt=(d>0?'+':'')+d.toFixed(1).replace('.',',')+' pp'}else{d=b?(a-b)/b*100:0;txt=b?(d>0?'+':'')+Math.round(d)+' %':'—'}const cls=Math.abs(d)<.5||g==null?'':(d>0)===g?'up':'down';return `<tr><td>${n}</td><td><b>${f(a)}</b></td><td>${PREV.length?f(b):'—'}</td><td class="dl ${cls}">${PREV.length?txt:'—'}</td></tr>`}).join('')}</tbody></table>`;
 }
 
@@ -265,7 +282,7 @@ function renderDetail(){
   const rt=RES[c.resultado_transferencia];
   el.innerHTML=`
   <div class="dsec">
-    <div class="dh"><div><span class="lbl">${c.id} · ${fmtT(c.hora_llamada)} · ${c.en_horario?'en horario':'fuera de horario'} · ${mmss(c.duracion_s)} min</span><h3>${esc(c.nombre_completo)}</h3></div><div class="tags">${tagsFor(c)}</div></div>
+    <div class="dh"><div><span class="lbl">${c.id} · ${fmtT(c.hora_llamada)} · ${c.en_horario?'en horario':'fuera de horario'} · ${mmss(c.duracion_s)} min · ${cop(costo(c))}</span><h3>${esc(c.nombre_completo)}</h3></div><div class="tags">${tagsFor(c)}</div></div>
     <p class="resumen">${esc(c.resumen)}</p>
     <div class="tabs" role="tablist"><button type="button" role="tab" data-t="datos" aria-selected="${tab==='datos'}">Datos post-llamada</button><button type="button" role="tab" data-t="trans" aria-selected="${tab==='trans'}">Transcripción</button></div>
   </div>
@@ -281,6 +298,7 @@ function renderDetail(){
     <div class="f"><span>SENTIMIENTO</span><b>${{Positive:'Positivo',Neutral:'Neutral',Negative:'Negativo'}[c.sentimiento]}</b></div>
     <div class="f"><span>REQUERÍA TRANSFERENCIA</span><b>${yn(c.requiere_transferencia)}${c.requiere_transferencia?' · '+EXT[c.extension_destino]:''}</b></div>
     <div class="f"><span>RESULTADO</span><b>${rt[0]}</b></div>
+    <div class="f" style="grid-column:1/-1"><span>COSTO DE LA LLAMADA</span><b>${cop(costo(c))} · ${c.duracion_s} segundos × $${(PRECIO_SEG).toLocaleString('es-CO',{maximumFractionDigits:2})} por segundo</b></div>
   </div></div>`:`
   <div class="dsec"><div class="tx">${tx.map(([q,t])=>`<p class="${q==='Lucía'?'ai':q==='Sistema'?'sys':'pt'}"><b>${q}</b>${esc(t)}</p>`).join('')}</div><p class="foot" style="margin:0">Transcripción y grabación llegan en el evento de Flow al terminar la llamada.</p></div>`}
   ${needsMsg?`
@@ -326,6 +344,7 @@ function vHook(){
    ['Urgencia y resumen','urgencia_detectada · resumen','Campos post-llamada ya configurados','Bandeja de urgencias remitidas'],
    ['Requería transferencia y resultado','requiere_transferencia · resultado_transferencia','Por agregar en Flow','Éxito, no contestó y fuera de horario por extensión'],
    ['Tema de la consulta básica','tema_consulta','Por agregar en Flow (sugerido)','Gráfico «¿Qué preguntan?»'],
+   ['Costo de la llamada','duration_ms','Calculado en el CRM: segundos × $650 / 60','Costos por periodo, motivo y llamada'],
    ['Dentro o fuera de horario, franja, festivo','—','Calculado en el CRM con la hora de inicio','Filtros de franja, día y horario'],
    ['Estado de seguimiento y envíos','—','Del CRM (lo marca el equipo)','Por confirmar, confirmación, recordatorio, devolver llamada']];
   $('#tFields').innerHTML=`<table><thead><tr><th>Dato</th><th>Campo</th><th>Origen</th><th>Para qué se usa</th></tr></thead><tbody>${FL.map(([a,b,o,u])=>`<tr><td><b>${a}</b></td><td class="mono sm">${b}</td><td><span class="tag ${/Por agregar/.test(o)?'wa':/CRM/.test(o)?'ac':'ok'}">${o}</span></td><td>${u}</td></tr>`).join('')}</tbody></table>`;
@@ -334,9 +353,83 @@ function vHook(){
   $('#plJson').textContent=JSON.stringify(payload(c),null,2);
 }
 
+/* ===== Para decidir: alarmas, pendientes y oportunidades ===== */
+const IC={
+ alert:'<path d="M12 3 2 21h20L12 3z"/><path d="M12 10v5M12 18h.01"/>',
+ phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/><path d="m16 3 5 5M21 3l-5 5"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>',
+ down:'<path d="m3 7 7 7 4-4 7 7"/><path d="M21 11v6h-6"/>',
+ up:'<path d="m3 17 7-7 4 4 7-7"/><path d="M21 13V7h-6"/>',
+ bulb:'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/>',
+ doc:'<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6z"/><path d="M14 3v6h6M9 14h6M9 17h4"/>',
+ moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+ heart:'<path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1z"/>',
+ check:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
+ peak:'<path d="M3 20h18M6 16v-4M10 16V8M14 16v-6M18 16V5"/>',
+ coin:'<circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.7 3 2 3 .9 3 2.1-1.3 1.9-3 1.9c-1.4 0-2.5-.5-3-1.5M12 6v2M12 16v2"/>'};
+const icon=(k,cls='')=>`<svg class="ic ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
+let INS=[];
+function insights(){
+  const out=[],s=S(CUR),p=S(PREV),fr={manana:'en la mañana (8–12)',mediodia:'al mediodía (12–14)',tarde:'en la tarde (14–18)'};
+  const go=(patch,v,b)=>()=>{Object.keys(FMAP).forEach(k=>F[k]='');Object.assign(F,patch);if(b)bandeja=b;view=v;limit=60;closeDrawer();update();window.scrollTo({top:0,behavior:'smooth'})};
+  /* 1. Pendientes con personas esperando */
+  const dev=calls.filter(c=>c.estado==='devolver_llamada');
+  if(dev.length){const old=Math.max(...dev.map(c=>(NOW-c.hora_llamada)/36e5));
+    out.push({sev:'alta',ic:'phone',t:'Llamadas por devolver',m:nf(dev.length),d:`Pendientes de todas las fechas. ${dev.length===1?'Una persona espera':nf(dev.length)+' personas esperan'} que el hospital les devuelva la llamada. La más antigua lleva ${old<1?'menos de una hora':Math.round(old)+' horas'}.`,a:'Abrir bandeja',fn:()=>{Object.keys(FMAP).forEach(k=>F[k]='');setPreset('todo');bandeja='devolver';view='llamadas';closeDrawer();update()}})}
+  const pc=calls.filter(c=>c.estado==='por_confirmar'),pcOld=pc.filter(c=>NOW-c.hora_llamada>864e5);
+  if(pc.length)out.push({sev:pcOld.length?'alta':'media',ic:'cal',t:'Citas sin confirmar',m:nf(pc.length),d:pcOld.length?`Pendientes de todas las fechas. ${nf(pcOld.length)} llevan más de 24 horas sin fecha, hora ni especialista. El paciente no sabe si tiene cita.`:`Solicitudes de hoy pendientes de fecha, hora y especialista.`,a:'Confirmar citas',fn:()=>{Object.keys(FMAP).forEach(k=>F[k]='');setPreset('todo');bandeja='por_confirmar';view='llamadas';closeDrawer();update()}});
+  /* 2. Extensiones que no contestan en una franja */
+  const inH=CUR.filter(c=>c.requiere_transferencia&&c.en_horario);const nc=[];
+  EXTK.forEach(k=>['manana','mediodia','tarde'].forEach(f=>{const l=inH.filter(c=>c.extension_destino===k&&c.franja===f);if(l.length>=5){const n=l.filter(c=>c.resultado_transferencia==='no_contesto').length,pp=n/l.length*100;if(pp>=25)nc.push({k,f,n,t:l.length,pp})}}));
+  nc.sort((a,b)=>b.pp-a.pp).slice(0,2).forEach(x=>out.push({sev:x.pp>=35?'alta':'media',ic:'alert',t:`${EXT[x.k]} no contesta ${fr[x.f]}`,m:Math.round(x.pp)+' %',d:`${x.n} de ${x.t} transferencias dentro del horario quedaron sin respuesta. Conviene cubrir esa franja con otra persona o desviar la extensión.`,a:'Ver extensión',fn:go({ext:x.k,franja:x.f},'extensiones')}));
+  /* 3. Fuera de horario */
+  if(s.req>=10&&s.pFh>=18){const fh=CUR.filter(c=>c.resultado_transferencia==='fuera_de_horario');
+    const ext1=fh.filter(c=>{const w=c.hora_llamada.getDay(),h=c.hora_llamada.getHours();return !esFestivo(c.hora_llamada)&&((w>=1&&w<=5&&(h===18||h===7))||(w===6&&h>=13&&h<15))}).length;
+    out.push({sev:'media',ic:'moon',t:'Necesitaban a una persona fuera de horario',m:nf(fh.length),d:`Son el ${Math.round(s.pFh)} % de las que requerían transferencia. Abrir las extensiones de 7 a 8 a. m. y de 6 a 7 p. m., y el sábado hasta las 3 p. m., habría atendido ${nf(ext1)} de ellas.`,a:'Ver llamadas',fn:go({res:'fuera_de_horario'},'llamadas','todas')})}
+  /* 4. Tendencias frente al periodo anterior */
+  if(PREV.length>=20){const d=s.pSolved-p.pSolved;
+    if(d<=-3)out.push({sev:'media',ic:'down',t:'Bajó la resolución sin asesor',m:d.toFixed(1).replace('.',',')+' pp',d:`Pasó de ${Math.round(p.pSolved)} % a ${Math.round(s.pSolved)} %. Revise qué motivos crecieron y si hay preguntas nuevas que Lucía no sabe responder.`,a:'Ver por motivo',fn:()=>{view='resumen';serie='motivo';closeDrawer();update();setTimeout(()=>document.getElementById('evo').scrollIntoView({behavior:'smooth',block:'center'}),50)}});
+    else if(d>=3)out.push({sev:'logro',ic:'up',t:'Subió la resolución sin asesor',m:'+'+d.toFixed(1).replace('.',',')+' pp',d:`Pasó de ${Math.round(p.pSolved)} % a ${Math.round(s.pSolved)} % frente al periodo anterior.`});
+    const dn=s.pNc-p.pNc;if(dn>=4)out.push({sev:'media',ic:'down',t:'Más extensiones sin contestar',m:'+'+dn.toFixed(1).replace('.',',')+' pp',d:`El ${Math.round(s.pNc)} % de las transferencias no fue contestado (antes ${Math.round(p.pNc)} %).`,a:'Ver por extensión',fn:()=>{view='extensiones';closeDrawer();update()}})}
+  const neg=CUR.filter(c=>c.sentimiento==='Negative');
+  if(CUR.length>=20&&neg.length/CUR.length>=.12){const by={};neg.forEach(c=>{const k=c.resultado_transferencia==='no_aplica'?c.motivo_llamada:c.resultado_transferencia;by[k]=(by[k]||0)+1});const top=Object.entries(by).sort((a,b)=>b[1]-a[1])[0];
+    out.push({sev:'media',ic:'heart',t:'Personas inconformes al colgar',m:Math.round(neg.length/CUR.length*100)+' %',d:`${nf(neg.length)} llamadas terminaron con sentimiento negativo. La causa más frecuente: ${(RES[top[0]]?RES[top[0]][0]:MOTIVOS[top[0]].n).toLowerCase()} (${top[1]}).`,a:'Ver llamadas',fn:go({res:RES[top[0]]?top[0]:'',mot:RES[top[0]]?'':top[0]},'llamadas','todas')})}
+  /* 5. Oportunidades */
+  const fg=CUR.filter(c=>c.tema_consulta==='fuera_guia');
+  if(fg.length>=3){const by={};fg.forEach(c=>{const q=(c.pregunta||'').replace(/[¿?]/g,'');by[q]=(by[q]||0)+1});const top=Object.entries(by).sort((a,b)=>b[1]-a[1]).slice(0,3);
+    out.push({sev:'opor',ic:'bulb',t:'Enseñarle a Lucía lo que más le preguntan',m:nf(fg.length),d:`Llamadas que pasaron a un asesor porque la respuesta no está en la guía. Las más repetidas: ${top.map(([q,n])=>`«${q}» (${n})`).join(', ')}. Con esas respuestas, Lucía las resolvería sola.`,a:'Ver llamadas',fn:go({mot:'informacion_basica',res:'req'},'llamadas','todas')})}
+  if(s.citas>=10&&s.sinOrden/s.citas>=.08)out.push({sev:'opor',ic:'doc',t:'Citas que llegan sin orden médica',m:pct(s.sinOrden,s.citas)+' %',d:`${nf(s.sinOrden)} de ${nf(s.citas)} solicitudes no tienen la orden. Enviar de inmediato la plantilla «Falta la orden» evita que el asesor tenga que llamar.`,a:'Ver solicitudes',fn:go({mot:'cita_nueva'},'llamadas','todas')});
+  if(s.solved){const h=s.durSolved/3600;out.push({sev:'logro',ic:'check',t:'Atención que no ocupó al equipo',m:h>=10?nf(Math.round(h))+' h':h.toFixed(1).replace('.',',')+' h',d:`Lucía resolvió ${nf(s.solved)} llamadas sin pasar a una persona, por ${cop(s.costSolved)} (${cop(s.costPerSolved)} cada una).`})}
+  if(CUR.length>=30){const m={};CUR.forEach(c=>{const k=c.hora_llamada.getDay()+'-'+c.hora_llamada.getHours();m[k]=(m[k]||0)+1});const [k,v]=Object.entries(m).sort((a,b)=>b[1]-a[1])[0];const [w,h]=k.split('-').map(Number);
+    out.push({sev:'opor',ic:'peak',t:'Hora pico de llamadas',m:DOW[w]+' '+h+' h',d:`Los ${DOWL[w]} de ${h} a ${h+1} es la hora con más llamadas (${v} en el periodo). Es la hora para tener todas las extensiones cubiertas.`,a:'Ver mapa',fn:()=>{view='resumen';closeDrawer();update();setTimeout(()=>document.getElementById('heat').scrollIntoView({behavior:'smooth',block:'center'}),50)}})}
+  if(s.urg)out.push({sev:'media',ic:'alert',t:'Urgencias remitidas',m:nf(s.urg),d:`Lucía indicó ir a urgencias o llamar al 123. ${pct(CUR.filter(c=>c.urgencia_detectada&&!c.en_horario).length,s.urg)} % llegaron fuera del horario de oficina.`,a:'Ver llamadas',fn:go({mot:'urgencia'},'llamadas','todas')});
+  const ord={alta:0,media:1,opor:2,logro:3};return out.sort((a,b)=>ord[a.sev]-ord[b.sev]);
+}
+const SEV={alta:['Alarma','bad'],media:['Atención','wa'],opor:['Oportunidad','ac'],logro:['Logro','ok']};
+const card=(x,i,compact)=>`<article class="ins ${x.sev}${compact?' cmp':''}"><div class="ih">${icon(x.ic)}<span class="tag ${SEV[x.sev][1]}">${SEV[x.sev][0]}</span></div><div class="im">${x.m}</div><h3>${esc(x.t)}</h3><p>${esc(x.d)}</p>${x.a?`<button type="button" class="ia" data-i="${i}">${x.a} →</button>`:''}</article>`;
+function renderDecide(){
+  INS=insights();const cnt=k=>INS.filter(x=>x.sev===k).length;
+  $('#decide').innerHTML=`<div class="dhd"><div><span class="lbl">Para decidir · ${F.preset==='hoy'?'hoy':fmtD(F.from)+' – '+fmtD(F.to)}</span><h2>Qué requiere atención</h2></div><div class="sem"><span class="s bad"><b>${cnt('alta')}</b> alarmas</span><span class="s wa"><b>${cnt('media')}</b> por revisar</span><span class="s ac"><b>${cnt('opor')}</b> oportunidades</span><span class="s ok"><b>${cnt('logro')}</b> logros</span></div></div><div class="insg">${INS.map((x,i)=>card(x,i)).join('')||'<div class="empty">Sin alertas con estos filtros.</div>'}</div>`;
+  $$('#decide .ia').forEach(b=>b.onclick=()=>INS[+b.dataset.i].fn());
+  badge();
+}
+function badge(){const n=(INS.length?INS:insights()).filter(x=>x.sev==='alta'||x.sev==='media').length;const b=$('#fabAlertN');b.textContent=n;b.hidden=!n;
+  const af=Object.keys(FMAP).filter(k=>F[k]).length;const fb=$('#fabFiltN');fb.textContent=af;fb.hidden=!af}
+function openDrawer(){if(!INS.length)INS=insights();const d=$('#drawer');$('#drawerBody').innerHTML=INS.map((x,i)=>card(x,i,1)).join('');$$('#drawerBody .ia').forEach(b=>b.onclick=()=>INS[+b.dataset.i].fn());d.hidden=false;$('#scrim').hidden=false;requestAnimationFrame(()=>d.classList.add('open'));$('#drawerClose').focus()}
+function closeDrawer(){const d=$('#drawer');if(d.hidden)return;d.classList.remove('open');$('#scrim').hidden=true;setTimeout(()=>d.hidden=true,200)}
+
+/* Mini tendencia diaria para las tarjetas */
+function spark(fn){if(ndays()<3)return '';const bk=buckets('dia',F.from,F.to),idx=Object.fromEntries(bk.map((b,i)=>[b.k,i])),g=bk.map(()=>[]);CUR.forEach(c=>{const i=idx[iso(day0(c.hora_llamada))];if(i!=null)g[i].push(c)});
+  const v=g.map(l=>l.length?fn(S(l)):null),vv=v.filter(x=>x!=null);if(vv.length<2)return '';const mn=Math.min(...vv),mx=Math.max(...vv),W=120,H=30,n=v.length;
+  const pts=v.map((x,i)=>x==null?null:[i/(n-1)*W,H-2-(mx===mn?.5:(x-mn)/(mx-mn))*(H-4)]).filter(Boolean);
+  const d='M'+pts.map(p=>p.map(z=>z.toFixed(1)).join(',')).join('L');
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><path d="${d}L${W},${H}L0,${H}Z" class="sa"/><path d="${d}" class="sl"/></svg>`}
+
 /* ===== Render general ===== */
 function update(){aplicar();syncUI();chipsUI();
   if(view==='resumen')vResumen();else if(view==='extensiones')vExt();else if(view==='comparar')vCmp();else if(view==='llamadas')vCalls();else vHook();
+  if(view!=='resumen'){INS=insights();badge()}
   $('#lastHook').textContent=fmtT(calls[0].hora_llamada);
   try{history.replaceState(null,'','#'+view)}catch(e){}}
 let tt;function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2600)}
@@ -355,6 +448,16 @@ $$('#serie button').forEach(b=>b.onclick=()=>{serie=b.dataset.s;vResumen()});
 $$('#cmpGran button').forEach(b=>b.onclick=()=>{cmpGran=b.dataset.g;vCmp()});
 $$('#naBy button').forEach(b=>b.onclick=()=>{naBy=b.dataset.n;vExt()});
 addEventListener('hashchange',()=>{const v=location.hash.slice(1);if(v!==view&&['resumen','extensiones','comparar','llamadas','webhook'].includes(v)){view=v;update()}});
+ $('#fabAlert').onclick=openDrawer;$('#drawerClose').onclick=closeDrawer;$('#scrim').onclick=closeDrawer;
+addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+const openF=o=>{const f=document.querySelector('.fbar');f.classList.toggle('open',o);$('#fMore').setAttribute('aria-expanded',o);$('#fMore').textContent=o?'Ocultar filtros':'Más filtros'};
+$('#fMore').onclick=()=>openF(!document.querySelector('.fbar').classList.contains('open'));
+$('#fabFilt').onclick=()=>{openF(true);document.querySelector('.fbar').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>$('#fExt').focus({preventScroll:true}),400)};
+$('#fabTop').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+$('#fabSim').onclick=()=>$('#simulate').click();
+function setTheme(t){document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('da-tema',t)}catch(e){}$('#fabTheme').setAttribute('aria-label',t==='dark'?'Cambiar a modo claro':'Cambiar a modo oscuro');update()}
+$('#fabTheme').onclick=()=>{const cur=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');setTheme(cur==='dark'?'light':'dark')};
+addEventListener('scroll',()=>{$('#fabTop').classList.toggle('show',scrollY>600)},{passive:true});
 let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(update,200)});
 
 const POOL=[
