@@ -431,6 +431,73 @@ summary::after{color:var(--ink)}
 footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
 .mfacts{grid-template-columns:1fr 1fr;gap:16px}
 @media (max-width:640px){.mfacts{grid-template-columns:1fr}h1{letter-spacing:-.04em}.saving .big{font-size:5.2rem}}
+/* ===== Capa interactiva 2: alcance, reparto, adicional y botones flotantes ===== */
+:root{--g0:oklch(0.58 0.14 350);--g1:oklch(0.72 0.09 350);--g2:oklch(0.5 0.12 255);--g3:oklch(0.68 0.08 255);--g4:oklch(0.55 0.13 300)}
+.hero .saving{position:relative;overflow:hidden}
+.hero .saving::after{content:"";position:absolute;inset:auto -30% -60% auto;width:70%;aspect-ratio:1;border-radius:50%;background:var(--grad);opacity:.14;filter:blur(40px);pointer-events:none}
+.saving .bar i{transform-origin:left;transition:transform 1.1s var(--ease)}
+.saving:not(.go) .bar i{transform:scaleX(0)}
+.mod.hov,.area,.step,.card{transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.area:hover,.step:hover,.card:hover{transform:translateY(-3px);box-shadow:0 18px 40px -28px rgba(0,0,0,.45)}
+.navplus{color:var(--accent)!important}
+.scopebox{border:1px solid var(--line);border-radius:10px;background:var(--raised);margin-bottom:22px;overflow:hidden}
+.stabs{display:flex;gap:0;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none}
+.stabs button{flex:1 0 auto;border:0;background:none;color:var(--ink-2);padding:14px 18px;font:inherit;font-size:.92rem;font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;white-space:nowrap}
+.stabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
+.stabs button[data-s="3"][aria-selected="true"]{border-bottom-color:var(--raiz);color:var(--raiz)}
+.spanel{padding:20px 22px}
+.scope{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 26px}
+.scope li{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;font-size:.95rem;color:var(--ink)}
+.scope svg{width:20px;height:20px;padding:3px;border-radius:50%;background:var(--good-soft);color:var(--good);margin-top:2px}
+.spanel[data-p="3"] .scope svg{background:color-mix(in oklab,var(--raiz) 14%,transparent);color:var(--raiz)}
+.sw{display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--c);margin-right:10px;vertical-align:0}
+#invt tbody tr[data-g]{cursor:pointer;transition:opacity .2s}
+#invt.focus tbody tr[data-g]:not(.on){opacity:.4}
+.breakdown{margin-top:14px;display:grid;gap:12px}
+.bkbar{display:flex;height:42px;border-radius:8px;overflow:hidden;background:var(--sunken)}
+.bkbar button{border:0;padding:0;cursor:pointer;background:var(--c);transition:flex-grow .6s var(--ease),opacity .2s;display:flex;align-items:center;justify-content:center;color:#fff;font:600 12px var(--mono);min-width:0;overflow:hidden}
+.bkbar.focus button:not(.on){opacity:.3}
+.bkleg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.85rem;color:var(--ink-2)}
+.bkleg button{border:0;background:none;color:inherit;font:inherit;padding:2px 0;cursor:pointer;display:inline-flex;align-items:center}
+.bkleg b{color:var(--ink);margin-left:6px;font-variant-numeric:tabular-nums}
+.plus{position:relative;background:linear-gradient(180deg,transparent,color-mix(in oklab,var(--accent) 6%,transparent) 30%,transparent)}
+.plus::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--grad)}
+.plusbanner{display:flex;gap:14px;align-items:center;flex-wrap:wrap;border:1.5px dashed color-mix(in oklab,var(--accent) 55%,transparent);border-radius:10px;padding:14px 18px;margin-bottom:36px;background:var(--raised)}
+.plusbanner p{margin:0;flex:1 1 320px;color:var(--ink-2);font-size:.95rem}
+.plusbanner b{color:var(--ink)}
+.pluschip{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--grad);padding:6px 12px;border-radius:999px}
+.plus .bignum{-webkit-text-stroke-color:color-mix(in oklab,var(--accent) 60%,transparent)}
+.ptabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.ptabs button{display:inline-flex;gap:10px;align-items:center;border:1px solid var(--line-strong);background:var(--raised);color:var(--ink-2);border-radius:999px;padding:10px 18px;font:inherit;font-weight:500;cursor:pointer}
+.ptabs button span{font:12px var(--mono);color:var(--ink-3)}
+.ptabs button[aria-selected="true"]{background:var(--structural);color:var(--on-structural);border-color:var(--structural)}
+.ptabs button[aria-selected="true"] span{color:inherit;opacity:.7}
+.crmshow{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:28px;align-items:center}
+.crmshow .shotlink{display:block;background:var(--raised)}
+.crmshow img{display:block;width:100%;height:auto}
+.crmshow img.dark{display:none}
+:root[data-theme="dark"] .crmshow img.light{display:none}:root[data-theme="dark"] .crmshow img.dark{display:block}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .crmshow img.light{display:none}:root:not([data-theme="light"]) .crmshow img.dark{display:block}}
+.crmtxt{display:grid;gap:12px}
+.crmtxt h3{font-size:1.45rem}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.checks li{padding-left:18px;position:relative;color:var(--ink-2);font-size:.95rem}
+.checks li::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:8px;border-radius:50%;background:var(--grad)}
+.checks b{color:var(--ink)}
+.pfabs{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:flex-end;gap:10px;z-index:60}
+.pfab{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 20px;border-radius:999px;border:1px solid var(--line-strong);background:var(--raised);color:var(--ink);text-decoration:none;font-weight:600;font-size:.95rem;box-shadow:0 12px 30px -12px rgba(0,0,0,.45);cursor:pointer;transition:transform .2s var(--ease),opacity .25s}
+.pfab:hover{transform:translateY(-2px)}
+.pfab svg{width:20px;height:20px;flex:none}
+.pfab.sm{width:44px;height:44px;padding:0;justify-content:center}
+.pfab.main{position:relative;border:0;color:#fff;background:var(--grad)}
+#toTop{opacity:0;pointer-events:none}
+#toTop.show{opacity:1;pointer-events:auto}
+.pfabs:not(.show) .pfab.main span{display:none}
+.pfabs:not(.show) .pfab.main{width:52px;padding:0;justify-content:center}
+footer{padding-bottom:84px}
+@media (max-width:860px){.crmshow{grid-template-columns:1fr}.scope{grid-template-columns:1fr}}
+@media (max-width:640px){.pfab.main span{display:none}.pfab.main{width:52px;padding:0;justify-content:center}.bkbar button{font-size:10px}}
+@media (prefers-reduced-motion:reduce){.saving:not(.go) .bar i{transform:none}}
 </style>
 </head>
 <body>
@@ -441,11 +508,11 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
       <a href="#contexto">Día a día</a>
       <a href="#flow">WhatsApp &amp; citas</a>
       <a href="#conectando">Call center</a>
-      <a href="#voz">Asistente de voz</a>
       <a href="#continuidad">Día 1</a>
       <a href="#seguridad">Datos &amp; soporte</a>
       <a href="#inversion">Inversión</a>
       <a href="#preguntas">Preguntas</a>
+      <a href="#adicional" class="navplus">+ Adicional</a>
     </nav>
     <button class="menubtn" id="menubtn" type="button" aria-haspopup="true" aria-expanded="false">Secciones <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
     <button class="iconbtn" id="themebtn" type="button" aria-label="Cambiar tema"><svg id="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></svg></button>
@@ -453,7 +520,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
   </div>
 </header>
 <div class="sheet" id="sheet" hidden><nav aria-label="Secciones">
-  <a href="#inicio"><span>01</span>Inicio</a><a href="#contexto"><span>02</span>El día a día</a><a href="#flow"><span>03</span>WhatsApp con IA &amp; citas</a><a href="#conectando"><span>04</span>Call center en la nube</a><a href="#voz"><span>05</span>Asistente de voz</a><a href="#continuidad"><span>06</span>Día 1 &amp; continuidad</a><a href="#seguridad"><span>07</span>Datos, seguridad &amp; soporte</a><a href="#inversion"><span>08</span>Inversión &amp; condiciones</a><a href="#preguntas"><span>09</span>Preguntas &amp; contacto</a>
+  <a href="#inicio"><span>01</span>Inicio</a><a href="#contexto"><span>02</span>El día a día</a><a href="#flow"><span>03</span>WhatsApp con IA &amp; citas</a><a href="#conectando"><span>04</span>Call center en la nube</a><a href="#continuidad"><span>05</span>Día 1 &amp; continuidad</a><a href="#seguridad"><span>06</span>Datos, seguridad &amp; soporte</a><a href="#inversion"><span>07</span>Inversión &amp; condiciones</a><a href="#preguntas"><span>08</span>Preguntas &amp; contacto</a><a href="#adicional"><span>+</span>Adicional: asistente de voz</a>
 </nav></div>
 
 <main>
@@ -475,7 +542,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
     </div>
     <aside class="saving" aria-label="Ahorro estimado">
       <span class="eyebrow" style="color:var(--stage-accent)">Ahorro estimado en el valor fijo</span>
-      <div class="big">−18 %</div>
+      <div class="big"><span id="cnt18">−18</span> %</div>
       <p>Frente a los contratos 2026 del chatbot y de la PBX publicados en SECOP II. La telefonía se paga aparte, por consumo real.</p>
       <div class="bars">
         <div class="bar a"><div><span>Contratos 2026</span><b>$35.920.092</b></div><i style="width:100%"></i></div>
@@ -494,7 +561,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
 <section id="contexto">
   <div class="wrap">
     <div class="head">
-      <span class="bignum" aria-hidden="true">02</span><span class="eyebrow"><span class="n">02 / 09</span>El día a día</span>
+      <span class="bignum" aria-hidden="true">02</span><span class="eyebrow"><span class="n">02 / 08</span>El día a día</span>
       <h2>Una jornada en el hospital &amp; <span class="hl">dónde entra cada servicio.</span></h2>
       <p class="lead">El estudio previo del hospital para 2026 habla de más de 300 mensajes semanales para citas por WhatsApp. A eso se suman las llamadas a las líneas virtuales y a la línea gratuita 01 8000.</p>
     </div>
@@ -535,7 +602,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
     <div class="split">
       <div>
         <div class="head" style="margin-bottom:0">
-          <span class="bignum" aria-hidden="true">03</span><span class="eyebrow"><span class="n">03 / 09</span>Servicio 1 · Flow</span>
+          <span class="bignum" aria-hidden="true">03</span><span class="eyebrow"><span class="n">03 / 08</span>Servicio 1 · Flow</span>
           <h2>WhatsApp con IA &amp; <span class="hl">citas confirmadas por el paciente.</span></h2>
           <p class="lead">Pruebe el recorrido de un paciente en el simulador. Al lado verá lo que pasa en el hospital en cada paso.</p>
         </div>
@@ -578,7 +645,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
 <section id="conectando">
   <div class="wrap">
     <div class="head">
-      <span class="bignum" aria-hidden="true">04</span><span class="eyebrow"><span class="n">04 / 09</span>Servicio 2 · ConectAndo</span>
+      <span class="bignum" aria-hidden="true">04</span><span class="eyebrow"><span class="n">04 / 08</span>Servicio 2 · ConectAndo</span>
       <h2>PBX en la nube &amp; <span class="hl">call center para las mismas 13 líneas.</span></h2>
       <p class="lead">El paciente llama, el IVR lo orienta, la cola ordena la espera y el asesor atiende desde el navegador. Cada llamada queda grabada y transcrita.</p>
     </div>
@@ -690,52 +757,11 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
   </div>
 </section>
 
-<!-- 05 ASISTENTE DE VOZ -->
-<section id="voz">
-  <div class="wrap">
-    <div class="head">
-      <span class="bignum" aria-hidden="true">05</span><span class="eyebrow"><span class="n">05 / 09</span>Propuesta adicional · Asistente de voz</span>
-      <h2>Un asistente que contesta &amp; <span class="hl">mide cuántas llamadas son básicas.</span></h2>
-      <p class="lead">Lucía contesta, entiende para qué llama la persona, resuelve lo básico y toma los datos de la cita. Solo transfiere lo que necesita a una persona. Proponemos un piloto para medir qué porcentaje de las llamadas del hospital ya no tendría que atender un asesor.</p>
-    </div>
-    <div class="split">
-      <div style="display:grid;gap:0">
-        <div class="lvl"><span class="idx">01</span><div><h3>Pregunta para qué llama</h3><p>Cita nueva, gestión de una cita, información, resultados o autorizaciones, PQRS u otro motivo. Si describe una urgencia, lo envía a urgencias o al 123.</p></div></div>
-        <div class="lvl"><span class="idx">02</span><div><h3>Resuelve lo básico, sin transferir</h3><p>Horarios, servicios, ubicación, requisitos y teléfonos, con la información que el hospital aprueba.</p></div></div>
-        <div class="lvl"><span class="idx">03</span><div><h3>Toma la solicitud de cita</h3><p>Especialidad, primera vez o control, EPS, si tiene la orden, cédula, nombre completo y teléfono. Un asesor confirma por teléfono o WhatsApp la fecha, la hora y el especialista.</p></div></div>
-        <div class="lvl"><span class="idx">04</span><div><h3>Transfiere a la extensión correcta</h3><p>Citas, SIAU, laboratorio, facturación o información, solo cuando el caso lo necesita.</p></div></div>
-      </div>
-      <div style="display:grid;gap:12px;align-content:start">
-        <div class="saving" style="gap:14px">
-          <span class="eyebrow" style="color:var(--ink-2)">Lo que mide el piloto</span>
-          <div class="facts mfacts" style="border-top:0;padding-top:0">
-            <div><b>% básicas</b><span>llamadas que solo pedían información que el asistente puede dar</span></div>
-            <div><b>% resueltas</b><span>llamadas que terminaron sin pasar a un asesor</span></div>
-          </div>
-          <p class="small">Cada llamada queda clasificada al terminar, con su motivo, si se resolvió, si se transfirió y a qué extensión, y los datos de la cita: especialidad, tipo, EPS, orden, cédula, nombre y teléfono.</p>
-        </div>
-        <div class="tbl"><table class="t cards"><thead><tr><th>Dato post-llamada</th><th>Ejemplo</th></tr></thead><tbody>
-          <tr><td class="first" data-label="Dato">motivo_llamada</td><td data-label="Ejemplo">información básica</td></tr>
-          <tr><td class="first" data-label="Dato">resuelta_por_asistente</td><td data-label="Ejemplo">sí</td></tr>
-          <tr><td class="first" data-label="Dato">transferida · extensión</td><td data-label="Ejemplo">no · —</td></tr>
-          <tr><td class="first" data-label="Dato">especialidad · tipo · EPS · orden</td><td data-label="Ejemplo">pediatría · control · Nueva EPS · sí</td></tr>
-        </tbody></table></div>
-      </div>
-    </div>
-    <div class="gallery" style="margin-top:40px">
-      <figure class="win" style="margin:0"><div class="wbar"><i></i><i></i><i></i><span class="t">Flow · Asistente de voz «Demo ESE Riosucio»</span></div><button type="button" class="shotbtn zoomable" style="background:var(--raised)" aria-label="Ampliar la configuración del asistente de voz"><img src="media/flow-asistente-voz.jpg" alt="Configuración real del asistente de voz del hospital en Flow: instrucciones, funciones y simulador de voz" width="1336" height="635"></button></figure>
-      <figure class="win" style="margin:0"><div class="wbar"><i></i><i></i><i></i><span class="t">Flow · Reportes de voz</span></div><button type="button" class="shotbtn zoomable" style="background:var(--raised)" aria-label="Ampliar el reporte de voz"><img src="media/flow-reporte-voz.jpg" alt="Reporte real de asistentes de voz en Flow con llamadas, contacto, interacción completa y efectividad" width="1020" height="380"></button><figcaption class="small muted" style="padding:12px 16px">Reporte de un asistente de demostración: llamadas, contacto, interacción completa y efectividad.</figcaption></figure>
-    </div>
-    <div class="actions" style="margin-top:24px"><a class="cta" href="crm/">Ver el modelo de CRM de llamadas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="cta ghost" href="crm/#extensiones">Ver por extensión</a></div>
-    <p class="note">Pantallas reales de Flow. El asistente de voz no está incluido en la cotización DA-2026-85: es una propuesta adicional para validar con un piloto, con valor por definir.</p>
-  </div>
-</section>
-
 <!-- 06 CONTINUIDAD -->
 <section id="continuidad">
   <div class="wrap">
     <div class="head">
-      <span class="bignum" aria-hidden="true">06</span><span class="eyebrow"><span class="n">06 / 09</span>Día 1 &amp; continuidad</span>
+      <span class="bignum" aria-hidden="true">05</span><span class="eyebrow"><span class="n">05 / 08</span>Día 1 &amp; continuidad</span>
       <h2>Cuatro semanas &amp; <span class="hl">pruebas antes de cada salida en vivo.</span></h2>
       <p class="lead">Primero WhatsApp y luego el call center. Cada etapa se prueba con el equipo del hospital antes de abrirla a los pacientes.</p>
     </div>
@@ -757,7 +783,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
 <section id="seguridad">
   <div class="wrap">
     <div class="head">
-      <span class="bignum" aria-hidden="true">07</span><span class="eyebrow"><span class="n">07 / 09</span>Datos, seguridad &amp; soporte</span>
+      <span class="bignum" aria-hidden="true">06</span><span class="eyebrow"><span class="n">06 / 08</span>Datos, seguridad &amp; soporte</span>
       <h2>Respaldo &amp; <span class="hl">datos siempre del hospital.</span></h2>
     </div>
     <div class="cols3">
@@ -802,20 +828,39 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
 <section id="inversion" class="stage">
   <div class="wrap">
     <div class="head">
-      <span class="bignum" aria-hidden="true">08</span><span class="eyebrow"><span class="n">08 / 09</span>Inversión 2027 · Cotización DA-2026-85</span>
+      <span class="bignum" aria-hidden="true">07</span><span class="eyebrow"><span class="n">07 / 08</span>Inversión 2027 · Cotización DA-2026-85</span>
       <h2>Un valor fijo claro &amp; <span class="hl">telefonía por lo que se usa.</span></h2>
       <p class="lead">Vigente hasta el 31 de diciembre de 2026. Valores en pesos colombianos.</p>
     </div>
-    <div class="tbl"><table class="t cards">
+    <div class="scopebox rv">
+      <div class="stabs" role="tablist" aria-label="Qué incluye">
+        <button type="button" role="tab" aria-selected="true" data-s="0">Flow · WhatsApp con IA</button>
+        <button type="button" role="tab" aria-selected="false" data-s="1">ConectAndo · call center</button>
+        <button type="button" role="tab" aria-selected="false" data-s="2">Soporte</button>
+        <button type="button" role="tab" aria-selected="false" data-s="3">No incluye</button>
+      </div>
+      <div class="spanel" data-p="0"><ul class="scope"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Línea en la API oficial de Meta con el número verificado del hospital.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Asistente con IA: horarios, servicios, preguntas frecuentes y solicitud de cita, solo con la información que el hospital defina.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Toma de documento, especialidad y tipo de cita; confirmación por el paciente y recordatorio.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Bandeja multiagente con WhatsApp, Messenger, Instagram y chat web, y paso a un asesor.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Plan de 1.100 conversaciones al mes.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Puesta en marcha: asistente, línea y agenda de citas; capacitación de 2 personas y manuales.</span></li></ul></div>
+      <div class="spanel" data-p="1" hidden><ul class="scope"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>13 licencias, una por línea actual.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>PBX en la nube con IVR, menú, horarios y colas.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Supervisión en vivo: escuchar, susurrar e intervenir.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Grabación y transcripción de las llamadas.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Se conservan los números y la 01 8000 mediante desvío o conexión; se valida con el operador actual.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Telefonía por consumo real: $56 por minuto a fijos y celulares nacionales, sin bolsa ni mínimos.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Puesta en marcha: PBX, IVR, colas y migración de líneas; capacitación de 2 personas y manuales.</span></li></ul></div>
+      <div class="spanel" data-p="2" hidden><ul class="scope"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Soporte preventivo de lunes a sábado, en tres niveles: asesoría, acceso remoto y soporte especializado.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Por WhatsApp, teléfono y correo, con tiempos de respuesta y solución por severidad.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Escalamiento al líder técnico y a la dirección de desarrollo.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Gerente de cuenta e informe mensual de citas, mensajes, llamadas y tiempos.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Objetivo de disponibilidad mensual: 99 %.</span></li></ul></div>
+      <div class="spanel" data-p="3" hidden><ul class="scope"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span>Equipos de cómputo, diademas ni internet del hospital.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span>Plantillas que Meta cobra cuando el hospital inicia conversaciones.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span>Integración con el software de agenda del hospital.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span>Horas de soporte especializado o de desarrollo fuera del alcance: $150.000 + IVA cada una.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span>El asistente de voz (ver el adicional al final).</span></li></ul></div>
+    </div>
+    <div class="tbl"><table class="t cards" id="invt">
       <thead><tr><th>Concepto</th><th>Detalle</th><th class="n">Mensual</th><th class="n">12 meses</th></tr></thead>
       <tbody>
-        <tr><td class="first">Flow · WhatsApp con IA</td><td class="d">1.100 conversaciones al mes, bandeja multiagente, asistente con IA y citas</td><td class="n" data-label="Mensual">$524.000</td><td class="n" data-label="12 meses">$6.288.000</td></tr>
-        <tr><td class="first">Flow · puesta en marcha</td><td class="d">Asistente, línea y agenda de citas; capacitación de 2 personas y manuales</td><td class="n" data-label="Mensual">Pago inicial</td><td class="n" data-label="12 meses">$2.101.092</td></tr>
-        <tr><td class="first">ConectAndo · 13 licencias</td><td class="d">$100.000 por usuario al mes</td><td class="n" data-label="Mensual">$1.300.000</td><td class="n" data-label="12 meses">$15.600.000</td></tr>
-        <tr><td class="first">ConectAndo · puesta en marcha</td><td class="d">PBX, IVR, colas y migración de líneas; capacitación de 2 personas y manuales</td><td class="n" data-label="Mensual">Pago inicial</td><td class="n" data-label="12 meses">$2.900.000</td></tr>
-        <tr><td class="first">Soporte y acompañamiento</td><td class="d">Soporte preventivo de lunes a sábado en tres niveles, gerente de cuenta e informe mensual</td><td class="n" data-label="Mensual">$224.083</td><td class="n" data-label="12 meses">$2.689.000</td></tr>
+        <tr data-g="0"><td class="first"><i class="sw" style="--c:var(--g0)"></i>Flow · WhatsApp con IA</td><td class="d">1.100 conversaciones al mes, bandeja multiagente, asistente con IA y citas</td><td class="n" data-label="Mensual">$524.000</td><td class="n" data-label="12 meses">$6.288.000</td></tr>
+        <tr data-g="1"><td class="first"><i class="sw" style="--c:var(--g1)"></i>Flow · puesta en marcha</td><td class="d">Asistente, línea y agenda de citas; capacitación de 2 personas y manuales</td><td class="n" data-label="Mensual">Pago inicial</td><td class="n" data-label="12 meses">$2.101.092</td></tr>
+        <tr data-g="2"><td class="first"><i class="sw" style="--c:var(--g2)"></i>ConectAndo · 13 licencias</td><td class="d">$100.000 por usuario al mes</td><td class="n" data-label="Mensual">$1.300.000</td><td class="n" data-label="12 meses">$15.600.000</td></tr>
+        <tr data-g="3"><td class="first"><i class="sw" style="--c:var(--g3)"></i>ConectAndo · puesta en marcha</td><td class="d">PBX, IVR, colas y migración de líneas; capacitación de 2 personas y manuales</td><td class="n" data-label="Mensual">Pago inicial</td><td class="n" data-label="12 meses">$2.900.000</td></tr>
+        <tr data-g="4"><td class="first"><i class="sw" style="--c:var(--g4)"></i>Soporte y acompañamiento</td><td class="d">Soporte preventivo de lunes a sábado en tres niveles, gerente de cuenta e informe mensual</td><td class="n" data-label="Mensual">$224.083</td><td class="n" data-label="12 meses">$2.689.000</td></tr>
         <tr class="tot"><td class="first">Total valor fijo</td><td class="d" style="color:inherit">Puestas en marcha al inicio + 12 mensualidades</td><td class="n" data-label="Mensual">$2.048.083</td><td class="n" data-label="12 meses">$29.578.092</td></tr>
       </tbody></table></div>
+
+    <div class="split3 rv">
+      <div class="breakdown" aria-label="Reparto del valor fijo de 12 meses">
+        <div class="bkbar" id="bkbar"></div>
+        <div class="bkleg" id="bkleg"></div>
+      </div>
+    </div>
 
     <div class="conds">
       <div class="mod"><span class="label">Forma de pago</span><p>Puestas en marcha ($5.001.092) al iniciar, con el acta de inicio. El resto en 12 mensualidades vencidas, previa certificación de la supervisora.</p></div>
@@ -846,7 +891,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
 <section id="preguntas" style="border-bottom:0">
   <div class="wrap split">
     <div>
-      <div class="head"><span class="bignum" aria-hidden="true">09</span><span class="eyebrow"><span class="n">09 / 09</span>Para la reunión</span><h2>Preguntas frecuentes &amp; <span class="hl">área de sistemas.</span></h2></div>
+      <div class="head"><span class="bignum" aria-hidden="true">08</span><span class="eyebrow"><span class="n">08 / 08</span>Para la reunión</span><h2>Preguntas frecuentes &amp; <span class="hl">área de sistemas.</span></h2></div>
       <details><summary>¿Qué necesitamos instalar en el hospital?</summary><p>Nada en servidores propios. Los asesores trabajan desde el navegador con conexión a internet. Equipos de cómputo, diademas y la conectividad del hospital no están incluidos.</p></details>
       <details><summary>¿Se integra con nuestro software de agenda?</summary><p>La propuesta no incluye integración con el software de agenda del hospital. El asistente recibe la solicitud y el asesor asigna la cita en la agenda actual del hospital.</p></details>
       <details><summary>¿Conservamos el número de WhatsApp y las líneas actuales?</summary><p>Sí. El número del hospital se conecta a la API oficial de Meta y se verifica. Los números de voz y la línea 01 8000 se conservan mediante desvío o conexión con el operador; eso se valida con el operador actual.</p></details>
@@ -870,9 +915,78 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
     </div>
   </div>
 </section>
+
+<!-- + ADICIONAL (fuera de la cotización) -->
+<section id="adicional" class="plus">
+  <div class="wrap">
+    <div class="plusbanner rv"><span class="pluschip">+ Adicional</span><p><b>No está incluido en la cotización DA-2026-85.</b> Lo mostramos como una opción para evaluar con un piloto; su valor se define aparte y no cambia nada de lo anterior.</p></div>
+    <div class="head">
+      <span class="bignum" aria-hidden="true">+</span><span class="eyebrow"><span class="n">Adicional</span>Asistente de voz &amp; tablero de llamadas</span>
+      <h2>Un paso más: <span class="hl">un asistente que contesta las llamadas.</span></h2>
+      <p class="lead">Lucía contesta, entiende para qué llama la persona, resuelve lo básico y toma los datos de la cita. Solo transfiere lo que necesita a una persona. Con un piloto, el hospital mide qué parte de sus llamadas ya no tendría que atender un asesor.</p>
+    </div>
+    <div class="ptabs" role="tablist" aria-label="Adicional">
+      <button type="button" role="tab" id="pt-0" aria-controls="pp-0" aria-selected="true"><span>01</span>El asistente de voz</button>
+      <button type="button" role="tab" id="pt-1" aria-controls="pp-1" aria-selected="false"><span>02</span>El tablero de llamadas</button>
+    </div>
+    <div class="ppanel" id="pp-0" role="tabpanel" aria-labelledby="pt-0">
+      <div class="split">
+        <div style="display:grid;gap:0">
+        <div class="lvl"><span class="idx">01</span><div><h3>Pregunta para qué llama</h3><p>Cita nueva, gestión de una cita, información, resultados o autorizaciones, PQRS u otro motivo. Si describe una urgencia, lo envía a urgencias o al 123.</p></div></div>
+        <div class="lvl"><span class="idx">02</span><div><h3>Resuelve lo básico, sin transferir</h3><p>Horarios, servicios, ubicación, requisitos y teléfonos, con la información que el hospital aprueba.</p></div></div>
+        <div class="lvl"><span class="idx">03</span><div><h3>Toma la solicitud de cita</h3><p>Especialidad, primera vez o control, EPS, si tiene la orden, cédula, nombre completo y teléfono. Un asesor confirma por teléfono o WhatsApp la fecha, la hora y el especialista.</p></div></div>
+        <div class="lvl"><span class="idx">04</span><div><h3>Transfiere a la extensión correcta</h3><p>Citas, SIAU, laboratorio, facturación o información, solo cuando el caso lo necesita.</p></div></div>
+      </div>
+        <div style="display:grid;gap:12px;align-content:start">
+        <div class="saving" style="gap:14px">
+          <span class="eyebrow" style="color:var(--ink-2)">Lo que mide el piloto</span>
+          <div class="facts mfacts" style="border-top:0;padding-top:0">
+            <div><b>% básicas</b><span>llamadas que solo pedían información que el asistente puede dar</span></div>
+            <div><b>% resueltas</b><span>llamadas que terminaron sin pasar a un asesor</span></div>
+          </div>
+          <p class="small">Cada llamada queda clasificada al terminar, con su motivo, si se resolvió, si se transfirió y a qué extensión, y los datos de la cita: especialidad, tipo, EPS, orden, cédula, nombre y teléfono.</p>
+        </div>
+        <div class="tbl"><table class="t cards"><thead><tr><th>Dato post-llamada</th><th>Ejemplo</th></tr></thead><tbody>
+          <tr><td class="first" data-label="Dato">motivo_llamada</td><td data-label="Ejemplo">información básica</td></tr>
+          <tr><td class="first" data-label="Dato">resuelta_por_asistente</td><td data-label="Ejemplo">sí</td></tr>
+          <tr><td class="first" data-label="Dato">transferida · extensión</td><td data-label="Ejemplo">no · —</td></tr>
+          <tr><td class="first" data-label="Dato">especialidad · tipo · EPS · orden</td><td data-label="Ejemplo">pediatría · control · Nueva EPS · sí</td></tr>
+        </tbody></table></div>
+      </div>
+      </div>
+      <div class="gallery" style="margin-top:40px">
+      <figure class="win" style="margin:0"><div class="wbar"><i></i><i></i><i></i><span class="t">Flow · Asistente de voz «Demo ESE Riosucio»</span></div><button type="button" class="shotbtn zoomable" style="background:var(--raised)" aria-label="Ampliar la configuración del asistente de voz"><img src="media/flow-asistente-voz.jpg" alt="Configuración real del asistente de voz del hospital en Flow: instrucciones, funciones y simulador de voz" width="1336" height="635"></button></figure>
+      <figure class="win" style="margin:0"><div class="wbar"><i></i><i></i><i></i><span class="t">Flow · Reportes de voz</span></div><button type="button" class="shotbtn zoomable" style="background:var(--raised)" aria-label="Ampliar el reporte de voz"><img src="media/flow-reporte-voz.jpg" alt="Reporte real de asistentes de voz en Flow con llamadas, contacto, interacción completa y efectividad" width="1020" height="380"></button><figcaption class="small muted" style="padding:12px 16px">Reporte de un asistente de demostración: llamadas, contacto, interacción completa y efectividad.</figcaption></figure>
+    </div>
+      <p class="note">Pantallas reales de Flow con el asistente de demostración del hospital.</p>
+    </div>
+    <div class="ppanel" id="pp-1" role="tabpanel" aria-labelledby="pt-1" hidden>
+      <div class="crmshow">
+        <figure class="win" style="margin:0"><div class="wbar"><i></i><i></i><i></i><span class="t">Tablero de llamadas · modelo</span></div><a class="shotlink" href="crm/" aria-label="Abrir el tablero de llamadas"><img class="light" src="media/crm-tablero.jpg" alt="Tablero de llamadas con alarmas, oportunidades e indicadores" width="2040" height="1290"><img class="dark" src="media/crm-tablero-oscuro.jpg" alt="Tablero de llamadas en modo oscuro" width="2040" height="1290"></a></figure>
+        <div class="crmtxt">
+          <span class="label">Cada llamada llega sola al terminar</span>
+          <h3>Del asistente a un tablero para decidir</h3>
+          <ul class="checks">
+            <li><b>Alarmas y oportunidades:</b> llamadas por devolver, citas sin confirmar, extensiones que no contestan y preguntas que Lucía aún no sabe responder.</li>
+            <li><b>Por extensión, franja y día:</b> qué se transfiere, qué se pierde y qué llega fuera de horario.</li>
+            <li><b>Citas por confirmar:</b> con los datos que tomó Lucía y la plantilla de WhatsApp lista para enviar.</li>
+            <li><b>Costo del asistente:</b> por periodo, por tipo de consulta y por llamada.</li>
+          </ul>
+          <div class="actions"><a class="cta" href="crm/">Abrir el tablero <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="cta ghost" href="crm/#extensiones">Ver por extensión</a></div>
+          <p class="note" style="margin:0">Modelo con datos de ejemplo. Con datos reales, se alimenta del webhook de Flow al terminar cada llamada.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 <footer><div class="wrap"><span>Desarrollando Ando S.A.S. · Propuesta para el Hospital Departamental San Juan de Dios de Riosucio, Caldas E.S.E.</span><span>Las pantallas interactivas son simulaciones con datos de ejemplo.</span></div></footer>
 
+<div class="pfabs" aria-label="Acciones rápidas">
+  <button type="button" class="pfab sm" id="toTop" aria-label="Volver arriba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg></button>
+  <a class="pfab sm" href="#inversion" aria-label="Ir a la inversión"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 6.5c-.8-1.5-2.6-2.5-5-2.5-3 0-5 1.5-5 3.6 0 4.9 10 2.6 10 7.5 0 2.1-2 3.9-5 3.9-2.4 0-4.4-1-5.2-2.7"/></svg></a>
+  <a class="pfab main" href="https://wa.me/573193760018?text=Hola%20Sergio%2C%20queremos%20agendar%20la%20mesa%20t%C3%A9cnica%20de%20la%20propuesta%20del%20Hospital%20de%20Riosucio." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-4.7A8.5 8.5 0 1 1 20.5 11.5z"/></svg><span>Agendar mesa técnica</span></a>
+</div>
 <div id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Captura ampliada"><button class="iconbtn" id="lbclose" type="button" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button><img id="lbimg" alt=""></div>
 
 <script>
@@ -980,6 +1094,29 @@ addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-inn
 try{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});$$('main section').forEach(s=>io.observe(s));
  const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const sib=[...e.target.parentElement.children].filter(x=>x.classList.contains('rv'));e.target.style.transitionDelay=(sib.indexOf(e.target)*.08)+'s';e.target.classList.add('in');ro.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});$$('.rv').forEach(x=>ro.observe(x))}catch(e){$$('.rv').forEach(x=>x.classList.add('in'))}
 
+
+/* Contador del ahorro y barras */
+(function(){const sv=document.querySelector('.hero .saving'),c=$('#cnt18');if(!sv||!c)return;const red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const run=()=>{sv.classList.add('go');if(red){c.textContent='−18';return}const t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/1100),e=1-Math.pow(1-k,3);c.textContent='−'+Math.round(18*e);if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)};
+ setTimeout(run,250)})();
+
+/* Qué incluye */
+$$('.stabs button').forEach(b=>b.onclick=()=>{$$('.stabs button').forEach(x=>x.setAttribute('aria-selected',x===b));$$('.spanel').forEach(p=>p.hidden=p.dataset.p!==b.dataset.s)});
+
+/* Reparto del valor fijo */
+const G=[['Flow · WhatsApp con IA',6288000],['Flow · puesta en marcha',2101092],['ConectAndo · 13 licencias',15600000],['ConectAndo · puesta en marcha',2900000],['Soporte y acompañamiento',2689000]];
+const TOT=G.reduce((a,g)=>a+g[1],0);let gsel=-1;
+$('#bkbar').innerHTML=G.map((g,i)=>`<button type="button" data-g="${i}" style="--c:var(--g${i});flex:${g[1]}" title="${g[0]}: ${fmt(g[1])}" aria-label="${g[0]}: ${fmt(g[1])}">${Math.round(g[1]/TOT*100)} %</button>`).join('');
+$('#bkleg').innerHTML=G.map((g,i)=>`<button type="button" data-g="${i}"><i class="sw" style="--c:var(--g${i})"></i>${g[0]}<b>${fmt(g[1])}</b></button>`).join('');
+function gfocus(i){gsel=gsel===i?-1:i;const on=gsel>=0;['#bkbar','#invt'].forEach(id=>$(id).classList.toggle('focus',on));$$('#bkbar button,#invt tr[data-g]').forEach(el=>el.classList.toggle('on',+el.dataset.g===gsel))}
+$$('#bkbar button,#bkleg button,#invt tr[data-g]').forEach(el=>el.addEventListener('click',()=>gfocus(+el.dataset.g)));
+
+/* Adicional: pestañas */
+$$('.ptabs [role=tab]').forEach((b,i,all)=>{b.onclick=()=>{all.forEach(x=>x.setAttribute('aria-selected',x===b));$$('.ppanel').forEach((p,j)=>p.hidden=j!==i)};b.onkeydown=e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){const n=all[(i+(e.key==='ArrowRight'?1:all.length-1))%all.length];n.focus();n.click()}}});
+
+/* Botones flotantes */
+const pf=document.querySelector('.pfabs'),tt=$('#toTop');tt.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+addEventListener('scroll',()=>{const y=scrollY;tt.classList.toggle('show',y>700);pf.classList.toggle('show',y>700)},{passive:true});
 paintIcon();draw(ck);
 })();
 </script>
