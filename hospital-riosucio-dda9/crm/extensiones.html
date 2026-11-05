@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Transferencias por extensión · Riosucio</title>
+<link rel="icon" href="../../assets/isotipo-desarrollando.png">
+<link rel="stylesheet" href="crm.css">
+<style>
+.chips{display:flex;gap:6px;flex-wrap:wrap;padding:12px 14px;border-bottom:1px solid var(--line)}
+.tbl tr.on td{background:var(--accent-soft)}
+.pc{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.mini{display:flex;height:10px;border-radius:3px;overflow:hidden;background:var(--sunken);min-width:90px}
+.chartwrap{padding:12px 14px;overflow-x:auto}
+.chartwrap svg{width:100%;min-width:560px;height:auto;display:block}
+.grid2{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:12px;align-items:start}
+@media (max-width:1000px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="lbl">Hospital San Juan de Dios · Riosucio · Asistente de voz Lucía</div>
+      <h1>Transferencias <span>por extensión</span></h1>
+    </div>
+    <div class="acts">
+      <nav class="nav" aria-label="Vistas"><a href="./">Llamadas</a><a href="extensiones.html" aria-current="page">Por extensión</a><a href="../">Propuesta</a></nav>
+      <span class="demo">Datos de ejemplo</span>
+    </div>
+  </header>
+
+  <section class="panel transf" aria-label="Extensión seleccionada">
+    <div class="ph"><h2 id="eName">Todas las extensiones</h2><span class="lbl">Horario: L–V 8–18 · S 8–13</span></div>
+    <div class="chips" id="chips" role="group" aria-label="Extensión"></div>
+    <div class="tgrid">
+      <div class="kpi"><span class="lbl">Requerían transferencia</span><b id="kReq">0</b><small id="kReqSub"></small></div>
+      <div class="kpi"><span class="lbl">Transferidas con éxito</span><b id="kOk" style="color:var(--good)">0</b><small id="kOkSub"></small></div>
+      <div class="kpi"><span class="lbl">No contestó la extensión</span><b id="kNc" style="color:var(--bad)">0</b><small id="kNcSub"></small></div>
+      <div class="kpi"><span class="lbl">Fuera de horario</span><b id="kFh" style="color:var(--warn)">0</b><small id="kFhSub"></small></div>
+    </div>
+  </section>
+
+  <div class="grid2">
+    <section class="panel" aria-label="Por hora del día">
+      <div class="ph"><h2>¿A qué hora piden la transferencia?</h2><span class="lbl">Hora del día</span></div>
+      <div class="chartwrap"><svg id="chart" viewBox="0 0 760 230" role="img" aria-label="Transferencias requeridas por hora del día, por resultado"></svg>
+        <div class="legend"><span><i class="s-ok"></i>Con éxito</span><span><i class="s-nc"></i>No contestó</span><span><i class="s-fh"></i>Fuera de horario</span></div></div>
+    </section>
+    <section class="panel" aria-label="Comparación de extensiones">
+      <div class="ph"><h2>Comparación de extensiones</h2></div>
+      <div class="tbl" id="cmp" style="padding:4px 14px 14px"></div>
+    </section>
+  </div>
+
+  <section class="panel" aria-label="Llamadas de la extensión">
+    <div class="ph"><h2>Llamadas que requerían la extensión</h2><span class="lbl" id="lcount"></span></div>
+    <div class="list" id="elist"></div>
+  </section>
+
+  <p class="foot">Modelo para revisión con datos ficticios. En producción, cada llamada llega del webhook de Flow con requiere_transferencia, extension_destino, resultado_transferencia y la hora.</p>
+</div>
+<script src="data.js"></script>
+<script src="ext.js"></script>
+</body>
+</html>
