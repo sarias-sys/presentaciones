@@ -429,7 +429,8 @@ main>section:nth-of-type(even) .mod{background:var(--raised)}
 details{border-bottom-color:var(--line-strong)}
 summary::after{color:var(--ink)}
 footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
-@media (max-width:640px){h1{letter-spacing:-.04em}.saving .big{font-size:5.2rem}}
+.mfacts{grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.mfacts{grid-template-columns:1fr}h1{letter-spacing:-.04em}.saving .big{font-size:5.2rem}}
 </style>
 </head>
 <body>
@@ -440,6 +441,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
       <a href="#contexto">Día a día</a>
       <a href="#flow">WhatsApp &amp; citas</a>
       <a href="#conectando">Call center</a>
+      <a href="#voz">Asistente de voz</a>
       <a href="#continuidad">Día 1</a>
       <a href="#seguridad">Datos &amp; soporte</a>
       <a href="#inversion">Inversión</a>
@@ -451,7 +453,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
   </div>
 </header>
 <div class="sheet" id="sheet" hidden><nav aria-label="Secciones">
-  <a href="#inicio"><span>01</span>Inicio</a><a href="#contexto"><span>02</span>El día a día</a><a href="#flow"><span>03</span>WhatsApp con IA &amp; citas</a><a href="#conectando"><span>04</span>Call center en la nube</a><a href="#continuidad"><span>05</span>Día 1 &amp; continuidad</a><a href="#seguridad"><span>06</span>Datos, seguridad &amp; soporte</a><a href="#inversion"><span>07</span>Inversión &amp; condiciones</a><a href="#preguntas"><span>08</span>Preguntas &amp; contacto</a>
+  <a href="#inicio"><span>01</span>Inicio</a><a href="#contexto"><span>02</span>El día a día</a><a href="#flow"><span>03</span>WhatsApp con IA &amp; citas</a><a href="#conectando"><span>04</span>Call center en la nube</a><a href="#voz"><span>05</span>Asistente de voz</a><a href="#continuidad"><span>06</span>Día 1 &amp; continuidad</a><a href="#seguridad"><span>07</span>Datos, seguridad &amp; soporte</a><a href="#inversion"><span>08</span>Inversión &amp; condiciones</a><a href="#preguntas"><span>09</span>Preguntas &amp; contacto</a>
 </nav></div>
 
 <main>
@@ -492,7 +494,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
 <section id="contexto">
   <div class="wrap">
     <div class="head">
-      <span class="bignum" aria-hidden="true">02</span><span class="eyebrow"><span class="n">02 / 08</span>El día a día</span>
+      <span class="bignum" aria-hidden="true">02</span><span class="eyebrow"><span class="n">02 / 09</span>El día a día</span>
       <h2>Una jornada en el hospital &amp; <span class="hl">dónde entra cada servicio.</span></h2>
       <p class="lead">El estudio previo del hospital para 2026 habla de más de 300 mensajes semanales para citas por WhatsApp. A eso se suman las llamadas a las líneas virtuales y a la línea gratuita 01 8000.</p>
     </div>
@@ -533,7 +535,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
     <div class="split">
       <div>
         <div class="head" style="margin-bottom:0">
-          <span class="bignum" aria-hidden="true">03</span><span class="eyebrow"><span class="n">03 / 08</span>Servicio 1 · Flow</span>
+          <span class="bignum" aria-hidden="true">03</span><span class="eyebrow"><span class="n">03 / 09</span>Servicio 1 · Flow</span>
           <h2>WhatsApp con IA &amp; <span class="hl">citas confirmadas por el paciente.</span></h2>
           <p class="lead">Pruebe el recorrido de un paciente en el simulador. Al lado verá lo que pasa en el hospital en cada paso.</p>
         </div>
@@ -560,12 +562,14 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
     </div>
 
     <div style="margin-top:64px">
-      <div class="head" style="margin-bottom:20px"><h3 style="font-size:1.4rem">La bandeja: un solo número &amp; <span class="hl">varios asesores.</span></h3><p class="muted">Cada asesor ve lo suyo, la supervisora ve todo y cada conversación queda con su estado. Haga clic en una conversación.</p></div>
-      <div class="win"><div class="wbar"><i></i><i></i><i></i><span class="t">Bandeja · Flow</span></div><div class="inbox">
-        <div class="list" id="convlist" role="listbox" aria-label="Conversaciones"></div>
-        <div class="detail" id="convdetail"></div>
-      </div></div>
-      <p class="note">Simulación con pacientes y datos ficticios.</p>
+      <div class="head" style="margin-bottom:20px"><h3 style="font-size:1.4rem">La bandeja de Flow: un solo número &amp; <span class="hl">varios asesores.</span></h3><p class="muted">Pantalla real de Flow. El asistente atiende y, cuando un caso necesita una persona, la conversación pasa al equipo con todo el historial. El asesor puede tomar el control o indicarle a la IA qué responder.</p></div>
+      <figure class="win" style="margin:0"><div class="wbar"><i></i><i></i><i></i><span class="t">Flow · Conversaciones</span></div><button type="button" class="shotbtn zoomable" style="background:var(--raised)" aria-label="Ampliar la bandeja de Flow"><img src="media/flow-bandeja.jpg" alt="Bandeja real de Flow con conversaciones, etiqueta Necesita humano, transferencia al equipo y la opción Indicarle a la IA" width="1336" height="635"></button></figure>
+      <div class="grid3" style="margin-top:12px">
+        <div class="card mod"><span class="label">Etiquetas</span><p>Cada conversación queda marcada: cierre, intención y «Necesita humano». Así nada se pierde entre asesores.</p></div>
+        <div class="card mod"><span class="label">Paso a una persona</span><p>Cuando el caso lo requiere, la conversación se transfiere al equipo y queda registrada la hora y el motivo.</p></div>
+        <div class="card mod"><span class="label">Indicarle a la IA</span><p>El asesor escribe una instrucción («confírmale la cita del jueves») y el asistente le responde al paciente.</p></div>
+      </div>
+      <p class="note">Captura real de la plataforma. Los nombres, números y mensajes de otros usuarios están difuminados.</p>
     </div>
   </div>
 </section>
@@ -574,7 +578,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
 <section id="conectando">
   <div class="wrap">
     <div class="head">
-      <span class="bignum" aria-hidden="true">04</span><span class="eyebrow"><span class="n">04 / 08</span>Servicio 2 · ConectAndo</span>
+      <span class="bignum" aria-hidden="true">04</span><span class="eyebrow"><span class="n">04 / 09</span>Servicio 2 · ConectAndo</span>
       <h2>PBX en la nube &amp; <span class="hl">call center para las mismas 13 líneas.</span></h2>
       <p class="lead">El paciente llama, el IVR lo orienta, la cola ordena la espera y el asesor atiende desde el navegador. Cada llamada queda grabada y transcrita.</p>
     </div>
@@ -686,11 +690,51 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
   </div>
 </section>
 
-<!-- 05 CONTINUIDAD -->
+<!-- 05 ASISTENTE DE VOZ -->
+<section id="voz">
+  <div class="wrap">
+    <div class="head">
+      <span class="bignum" aria-hidden="true">05</span><span class="eyebrow"><span class="n">05 / 09</span>Propuesta adicional · Asistente de voz</span>
+      <h2>Un asistente que contesta &amp; <span class="hl">mide cuántas llamadas son básicas.</span></h2>
+      <p class="lead">Lucía contesta, entiende para qué llama la persona, resuelve lo básico y toma los datos de la cita. Solo transfiere lo que necesita a una persona. Proponemos un piloto para medir qué porcentaje de las llamadas del hospital ya no tendría que atender un asesor.</p>
+    </div>
+    <div class="split">
+      <div style="display:grid;gap:0">
+        <div class="lvl"><span class="idx">01</span><div><h3>Pregunta para qué llama</h3><p>Cita nueva, gestión de una cita, información, resultados o autorizaciones, PQRS u otro motivo. Si describe una urgencia, lo envía a urgencias o al 123.</p></div></div>
+        <div class="lvl"><span class="idx">02</span><div><h3>Resuelve lo básico, sin transferir</h3><p>Horarios, servicios, ubicación, requisitos y teléfonos, con la información que el hospital aprueba.</p></div></div>
+        <div class="lvl"><span class="idx">03</span><div><h3>Toma la solicitud de cita</h3><p>Especialidad, primera vez o control, EPS, si tiene la orden, cédula, nombre completo y teléfono. Un asesor confirma por teléfono o WhatsApp la fecha, la hora y el especialista.</p></div></div>
+        <div class="lvl"><span class="idx">04</span><div><h3>Transfiere a la extensión correcta</h3><p>Citas, SIAU, laboratorio, facturación o información, solo cuando el caso lo necesita.</p></div></div>
+      </div>
+      <div style="display:grid;gap:12px;align-content:start">
+        <div class="saving" style="gap:14px">
+          <span class="eyebrow" style="color:var(--ink-2)">Lo que mide el piloto</span>
+          <div class="facts mfacts" style="border-top:0;padding-top:0">
+            <div><b>% básicas</b><span>llamadas que solo pedían información que el asistente puede dar</span></div>
+            <div><b>% resueltas</b><span>llamadas que terminaron sin pasar a un asesor</span></div>
+          </div>
+          <p class="small">Cada llamada queda clasificada al terminar, con su motivo, si se resolvió, si se transfirió y a qué extensión, y los datos de la cita: especialidad, tipo, EPS, orden, cédula, nombre y teléfono.</p>
+        </div>
+        <div class="tbl"><table class="t cards"><thead><tr><th>Dato post-llamada</th><th>Ejemplo</th></tr></thead><tbody>
+          <tr><td class="first" data-label="Dato">motivo_llamada</td><td data-label="Ejemplo">información básica</td></tr>
+          <tr><td class="first" data-label="Dato">resuelta_por_asistente</td><td data-label="Ejemplo">sí</td></tr>
+          <tr><td class="first" data-label="Dato">transferida · extensión</td><td data-label="Ejemplo">no · —</td></tr>
+          <tr><td class="first" data-label="Dato">especialidad · tipo · EPS · orden</td><td data-label="Ejemplo">pediatría · control · Nueva EPS · sí</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+    <div class="gallery" style="margin-top:40px">
+      <figure class="win" style="margin:0"><div class="wbar"><i></i><i></i><i></i><span class="t">Flow · Asistente de voz «Demo ESE Riosucio»</span></div><button type="button" class="shotbtn zoomable" style="background:var(--raised)" aria-label="Ampliar la configuración del asistente de voz"><img src="media/flow-asistente-voz.jpg" alt="Configuración real del asistente de voz del hospital en Flow: instrucciones, funciones y simulador de voz" width="1336" height="635"></button></figure>
+      <figure class="win" style="margin:0"><div class="wbar"><i></i><i></i><i></i><span class="t">Flow · Reportes de voz</span></div><button type="button" class="shotbtn zoomable" style="background:var(--raised)" aria-label="Ampliar el reporte de voz"><img src="media/flow-reporte-voz.jpg" alt="Reporte real de asistentes de voz en Flow con llamadas, contacto, interacción completa y efectividad" width="1020" height="380"></button><figcaption class="small muted" style="padding:12px 16px">Reporte de un asistente de demostración: llamadas, contacto, interacción completa y efectividad.</figcaption></figure>
+    </div>
+    <p class="note">Pantallas reales de Flow. El asistente de voz no está incluido en la cotización DA-2026-85: es una propuesta adicional para validar con un piloto, con valor por definir.</p>
+  </div>
+</section>
+
+<!-- 06 CONTINUIDAD -->
 <section id="continuidad">
   <div class="wrap">
     <div class="head">
-      <span class="bignum" aria-hidden="true">05</span><span class="eyebrow"><span class="n">05 / 08</span>Día 1 &amp; continuidad</span>
+      <span class="bignum" aria-hidden="true">06</span><span class="eyebrow"><span class="n">06 / 09</span>Día 1 &amp; continuidad</span>
       <h2>Cuatro semanas &amp; <span class="hl">pruebas antes de cada salida en vivo.</span></h2>
       <p class="lead">Primero WhatsApp y luego el call center. Cada etapa se prueba con el equipo del hospital antes de abrirla a los pacientes.</p>
     </div>
@@ -712,7 +756,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
 <section id="seguridad">
   <div class="wrap">
     <div class="head">
-      <span class="bignum" aria-hidden="true">06</span><span class="eyebrow"><span class="n">06 / 08</span>Datos, seguridad &amp; soporte</span>
+      <span class="bignum" aria-hidden="true">07</span><span class="eyebrow"><span class="n">07 / 09</span>Datos, seguridad &amp; soporte</span>
       <h2>Respaldo &amp; <span class="hl">datos siempre del hospital.</span></h2>
     </div>
     <div class="cols3">
@@ -757,7 +801,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
 <section id="inversion" class="stage">
   <div class="wrap">
     <div class="head">
-      <span class="bignum" aria-hidden="true">07</span><span class="eyebrow"><span class="n">07 / 08</span>Inversión 2027 · Cotización DA-2026-85</span>
+      <span class="bignum" aria-hidden="true">08</span><span class="eyebrow"><span class="n">08 / 09</span>Inversión 2027 · Cotización DA-2026-85</span>
       <h2>Un valor fijo claro &amp; <span class="hl">telefonía por lo que se usa.</span></h2>
       <p class="lead">Vigente hasta el 31 de diciembre de 2026. Valores en pesos colombianos.</p>
     </div>
@@ -801,7 +845,7 @@ footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
 <section id="preguntas" style="border-bottom:0">
   <div class="wrap split">
     <div>
-      <div class="head"><span class="bignum" aria-hidden="true">08</span><span class="eyebrow"><span class="n">08 / 08</span>Para la reunión</span><h2>Preguntas frecuentes &amp; <span class="hl">área de sistemas.</span></h2></div>
+      <div class="head"><span class="bignum" aria-hidden="true">09</span><span class="eyebrow"><span class="n">09 / 09</span>Para la reunión</span><h2>Preguntas frecuentes &amp; <span class="hl">área de sistemas.</span></h2></div>
       <details><summary>¿Qué necesitamos instalar en el hospital?</summary><p>Nada en servidores propios. Los asesores trabajan desde el navegador con conexión a internet. Equipos de cómputo, diademas y la conectividad del hospital no están incluidos.</p></details>
       <details><summary>¿Se integra con nuestro software de agenda?</summary><p>La propuesta no incluye integración con el software de agenda del hospital. El asistente recibe la solicitud y el asesor asigna la cita en la agenda actual del hospital.</p></details>
       <details><summary>¿Conservamos el número de WhatsApp y las líneas actuales?</summary><p>Sí. El número del hospital se conecta a la API oficial de Meta y se verifica. Los números de voz y la línea 01 8000 se conservan mediante desvío o conexión con el operador; eso se valida con el operador actual.</p></details>
@@ -870,21 +914,6 @@ function horarios(){say(['Consulta externa: lunes a viernes, 7:00 a. m. a 5:00 p
 function asesor(){say(['Le comunico con un asesor del SIAU. Le atenderá apenas esté disponible.'],()=>later(()=>{add('Un asesor del SIAU se une a la conversación','sys');add('Hola, le saluda la asesora 02 del SIAU. ¿En qué le ayudo?');opts([['Volver a empezar',restart]])},1100),'La conversación pasa a un asesor con todo el historial y queda etiquetada para el SIAU.')}
 restart();
 
-/* Bandeja */
-const convs=[
- {n:'Paciente · María G.',t:'7:05',pv:'Solicitud de cita: medicina general, primera vez',st:[['p-ok','Confirmada'],['p-acc','Citas']],ch:'WhatsApp',as:'Asesora 02',tl:[['6:12','El paciente escribe; responde el asistente'],['6:14','Datos completos: documento, servicio, primera vez'],['7:05','La asesora 02 asigna la cita'],['7:09','El paciente confirma asistencia']]},
- {n:'Paciente · Jorge R.',t:'7:18',pv:'¿Qué documentos llevo para la autorización?',st:[['p-new','Sin autorización'],['p-acc','SIAU']],ch:'WhatsApp',as:'Sin asignar',tl:[['7:16','El paciente pregunta por una autorización'],['7:18','El asistente lo marca «Sin autorización» y lo pasa al SIAU']]},
- {n:'Paciente · Luz Dary M.',t:'7:31',pv:'Necesito cambiar mi cita del jueves',st:[['p-new','Pendiente'],['p-acc','Citas']],ch:'Messenger',as:'Asesora 05',tl:[['7:29','Llega por Facebook Messenger'],['7:31','Asignada a la asesora 05']]},
- {n:'Paciente · Andrés P.',t:'8:02',pv:'Quiero radicar una queja',st:[['p-acc','PQRS']],ch:'WhatsApp',as:'SIAU',tl:[['7:58','El paciente pide radicar una queja'],['8:02','Etiqueta PQRS; queda con su historial para la respuesta']]},
- {n:'Paciente · Nidia C.',t:'8:20',pv:'Recordatorio enviado: cita mañana 8:20 a. m.',st:[['p-ok','Recordatorio']],ch:'WhatsApp',as:'Automático',tl:[['8:20','Sale el recordatorio de la cita del día siguiente']]}
-];
-const list=$('#convlist'),det=$('#convdetail');
-function showConv(i){[...list.children].forEach((c,j)=>{c.classList.toggle('on',i===j);c.setAttribute('aria-selected',i===j)});const c=convs[i];
- det.innerHTML='<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h3>'+c.n+'</h3><div class="pills">'+c.st.map(s=>'<span class="pill '+s[0]+'">'+s[1]+'</span>').join('')+'</div></div><div class="dmeta"><div><b>Canal</b>'+c.ch+'</div><div><b>Asignada a</b>'+c.as+'</div><div><b>Última actividad</b>'+c.t+' a. m.</div></div><div><span class="label">Trazabilidad</span><div class="timeline" style="margin-top:8px">'+c.tl.map(x=>'<div><span>'+x[0]+'</span><p>'+x[1]+'</p></div>').join('')+'</div></div><div class="actions"><button class="btn pri" type="button" data-a="as">Asignarme</button><button class="btn" type="button" data-a="et">Agregar etiqueta</button><button class="btn" type="button" data-a="ce">Cerrar caso</button></div><p class="small muted" id="actmsg" aria-live="polite"></p>';
- det.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{det.querySelector('#actmsg').textContent={as:'La conversación queda asignada a usted y sale de la cola general.',et:'Las etiquetas (citas, PQRS, autorizaciones) alimentan el informe mensual por motivo de contacto.',ce:'El caso se cierra y queda en el historial con su resultado y su tiempo de respuesta.'}[b.dataset.a]})}
-convs.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.className='conv';b.setAttribute('role','option');b.innerHTML='<div class="row"><b>'+c.n+'</b><span>'+c.t+'</span></div><div class="pv">'+c.pv+'</div><div class="pills">'+c.st.map(s=>'<span class="pill '+s[0]+'">'+s[1]+'</span>').join('')+'</div>';b.onclick=()=>showConv(i);list.appendChild(b)});
-showConv(0);
-
 /* IVR */
 const pad=$('#pad'),prompt=$('#prompt'),ivrlog=$('#ivrlog'),ivrstate=$('#ivrstate'),after=$('#afterhours');
 let incall=false,cur=null,lastKey='menu';
@@ -924,6 +953,7 @@ const simg=$('#shotimg'),lb=$('#lightbox'),lbi=$('#lbimg');
 $$('#shottabs button').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;$$('#shottabs button').forEach(x=>x.setAttribute('aria-selected',x===b));simg.src='media/'+SH[i][0]+'.jpg';simg.alt=SH[i][1]+' de la plataforma';$('#shotcap').textContent=SH[i][2]});
 let lastFocus=null;
 $('#shotbtn').onclick=()=>{lastFocus=document.activeElement;lbi.src=simg.src;lbi.alt=simg.alt;lb.hidden=false;$('#lbclose').focus()};
+$$('.zoomable').forEach(b=>b.onclick=()=>{const im=b.querySelector('img');lastFocus=b;lbi.src=im.src;lbi.alt=im.alt;lb.hidden=false;$('#lbclose').focus()});
 function closeLb(){lb.hidden=true;if(lastFocus)lastFocus.focus()}
 lb.onclick=e=>{if(e.target!==lbi)closeLb()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!lb.hidden)closeLb();if(!sheet.hidden){sheet.hidden=true;mb.setAttribute('aria-expanded','false');mb.focus()}}});
