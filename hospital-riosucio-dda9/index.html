@@ -10,44 +10,43 @@
 <script>
 (function(){try{var t=localStorage.getItem('da-tema');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+<link rel="preload" href="fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* Marca DesarrollAndo. Claro: fondo #ededed, acento structural. Oscuro: escenario #111827, acento highlight. */
+@font-face{font-family:"Geist";src:url("fonts/Geist-Variable.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url("fonts/GeistMono-Variable.woff2") format("woff2");font-weight:100 900;font-display:swap}
+/* Estilo Portfolio DesarrollAndo 2026: papel claro, tinta casi negra, Geist, etiquetas en Geist Mono y degradado magenta-violeta-azul en las cifras. */
 :root{
-  --bg:#ededed;--surface:#f7f7f8;--raised:#ffffff;--sunken:#dfe3e8;
-  --ink:#111827;--ink-2:#4b5563;--ink-3:#5b6472;
-  --accent:#2b599e;--accent-soft:#dfe4ed;--structural:#2b599e;--on-structural:#fff;--tech:#5a5396;
-  --line:rgba(17,24,39,.12);--control:#7c8594;
-  --good:#1d6f1d;--good-soft:#d8e4d9;--warn:#8a4b07;--warn-soft:#e8dfd6;--raiz:#b42727;
+  --bg:#FAFAF8;--bg-alt:#F0F0EC;--surface:#E9E9E4;--raised:#FFFFFF;--sunken:#E2E2DC;
+  --ink:#111111;--ink-2:#555555;--ink-3:#6B6B66;
+  --accent:oklch(0.45 0.09 275);--accent-soft:#E6E5EE;--structural:#111111;--on-structural:#FAFAF8;--tech:#5a5396;
+  --grad:linear-gradient(90deg,oklch(0.56 0.13 350),oklch(0.5 0.13 300),oklch(0.5 0.12 255));
+  --line:rgba(17,17,17,.10);--line-strong:rgba(17,17,17,.18);--control:#8A8A84;
+  --good:#1d6f1d;--good-soft:#dde6da;--warn:oklch(0.5 0.1 70);--warn-soft:#ece5d8;--raiz:#b42727;
   --wa-bg:#efeae2;--wa-in:#ffffff;--wa-out:#d9fdd3;--wa-ink:#111b21;--wa-time-in:#667781;--wa-time-out:#55665c;--wa-head:#1f6f5c;--wa-btn:#1f6f5c;--wa-bar:#f0f2f5;
   --call:#1d6f45;--hang:#a33a3a;
-  --stage:#111827;--stage-ink:#ffffff;--stage-ink-2:#c1c3c8;--stage-accent:#85caee;--stage-line:rgba(255,255,255,.14);--stage-surface:#1a2036;
-  --mesh-a:rgba(43,89,158,.10);--mesh-b:rgba(90,83,150,.08);
-  --f:"Poppins",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --r:8px;--rs:6px;--ease:cubic-bezier(.16,1,.3,1);
+  --stage:var(--surface);--stage-ink:var(--ink);--stage-ink-2:var(--ink-2);--stage-accent:var(--accent);--stage-line:var(--line);--stage-surface:var(--raised);
+  --f:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r:4px;--rs:2px;--ease:cubic-bezier(.16,1,.3,1);
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#111827;--surface:#1a2036;--raised:#232845;--sunken:#0c111d;
-  --ink:#ffffff;--ink-2:#c1c3c8;--ink-3:#a1a1aa;
-  --accent:#85caee;--accent-soft:#293850;
-  --line:rgba(255,255,255,.12);--control:#6b7394;
-  --good:#4cc94c;--good-soft:#213839;--warn:#e8973a;--warn-soft:#373137;--raiz:#e06060;
+  --bg:#111110;--bg-alt:#171715;--surface:#1F1F1C;--raised:#262622;--sunken:#0B0B0A;
+  --ink:#F4F4F0;--ink-2:#B8B8B1;--ink-3:#9C9C95;
+  --accent:oklch(0.8 0.08 285);--accent-soft:#25243A;--structural:#F4F4F0;--on-structural:#111111;
+  --grad:linear-gradient(90deg,oklch(0.74 0.14 350),oklch(0.7 0.14 300),oklch(0.74 0.12 255));
+  --line:rgba(255,255,255,.10);--line-strong:rgba(255,255,255,.2);--control:#6E6E68;
+  --good:#5fcf6a;--good-soft:#1d2f20;--warn:oklch(0.78 0.11 75);--warn-soft:#33291a;--raiz:#ef7b7b;
   --wa-bg:#0b141a;--wa-in:#202c33;--wa-out:#005c4b;--wa-ink:#e9edef;--wa-time-in:#8696a0;--wa-time-out:#c3d6d0;--wa-btn:#7fd3b9;--wa-bar:#111b21;
-  --stage:#0c111d;--stage-surface:#1a2036;
-  --mesh-a:rgba(133,202,238,.10);--mesh-b:rgba(90,83,150,.16);
   color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#111827;--surface:#1a2036;--raised:#232845;--sunken:#0c111d;
-  --ink:#ffffff;--ink-2:#c1c3c8;--ink-3:#a1a1aa;
-  --accent:#85caee;--accent-soft:#293850;
-  --line:rgba(255,255,255,.12);--control:#6b7394;
-  --good:#4cc94c;--good-soft:#213839;--warn:#e8973a;--warn-soft:#373137;--raiz:#e06060;
+  --bg:#111110;--bg-alt:#171715;--surface:#1F1F1C;--raised:#262622;--sunken:#0B0B0A;
+  --ink:#F4F4F0;--ink-2:#B8B8B1;--ink-3:#9C9C95;
+  --accent:oklch(0.8 0.08 285);--accent-soft:#25243A;--structural:#F4F4F0;--on-structural:#111111;
+  --grad:linear-gradient(90deg,oklch(0.74 0.14 350),oklch(0.7 0.14 300),oklch(0.74 0.12 255));
+  --line:rgba(255,255,255,.10);--line-strong:rgba(255,255,255,.2);--control:#6E6E68;
+  --good:#5fcf6a;--good-soft:#1d2f20;--warn:oklch(0.78 0.11 75);--warn-soft:#33291a;--raiz:#ef7b7b;
   --wa-bg:#0b141a;--wa-in:#202c33;--wa-out:#005c4b;--wa-ink:#e9edef;--wa-time-in:#8696a0;--wa-time-out:#c3d6d0;--wa-btn:#7fd3b9;--wa-bar:#111b21;
-  --stage:#0c111d;--stage-surface:#1a2036;
-  --mesh-a:rgba(133,202,238,.10);--mesh-b:rgba(90,83,150,.16);
   color-scheme:dark}
 *{box-sizing:border-box}[hidden]{display:none!important}
 html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
@@ -364,12 +363,79 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .stage .t tr.tot td{background:transparent}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}.rv{opacity:1;transform:none}}
+
+/* ===== Piel Portfolio ===== */
+body{background:var(--bg);background-image:none;font-weight:400;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-weight:700}
+h1{font-size:clamp(2.4rem,5.4vw,4.8rem);line-height:1.02;letter-spacing:-.05em}
+h2{font-size:clamp(2rem,3.8vw,3.4rem);line-height:1.04;letter-spacing:-.045em}
+h3{letter-spacing:-.02em}
+.hl{color:inherit;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead,.muted,.feat p,.area p,.card p,.card li,.cols3 p,.lvl p,.timeline p,.proof p,.behind p,.step ul,.beforeafter ul,details p,.conds p,.saving p{font-weight:400}
+.lead{color:var(--ink-2);font-size:1.15rem}
+.eyebrow{font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.14em;color:var(--ink-2)}
+.eyebrow .n{order:2;margin-left:auto;font-size:.8rem}
+.eyebrow .n::after{display:none}
+.head .eyebrow{width:100%;border-bottom:1px solid var(--line);padding-bottom:12px}
+.kicker,.label{font-family:var(--mono);font-weight:400;letter-spacing:.14em;color:var(--accent);font-size:.78rem}
+.kicker{color:var(--ink-2)}
+section{border-bottom:0}
+main>section:nth-of-type(even){background:var(--bg-alt)}
+.top{background:color-mix(in srgb,var(--bg) 88%,transparent)}
+.brand{display:inline-flex;align-items:center;gap:8px;font-weight:700;letter-spacing:-.02em}
+.brand img{display:block}
+.navlinks a{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.navlinks a.on{background:transparent;color:var(--ink);box-shadow:inset 0 -2px 0 var(--ink);border-radius:0}
+.iconbtn,.menubtn{border-color:var(--line-strong);border-radius:999px}
+.progress{background:var(--grad)}
+.hero .logo{display:none!important}
+.hero{padding-block:72px 88px}
+.cta{background:var(--structural);color:var(--on-structural);border-radius:2px;font-weight:600}
+.cta.ghost{background:transparent;color:var(--ink);border:0;padding-inline:4px;text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1px}
+.mod{background:var(--surface);border:1px solid transparent;border-radius:var(--r);box-shadow:none}
+main>section:nth-of-type(even) .mod{background:var(--raised)}
+.hov:hover{border-color:var(--ink)}
+.svclist .i,.idx,.saving .big,.facts b,.tile b,.kc b,.compare b,.week .idx{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.idx{font-family:var(--f);font-weight:700;letter-spacing:-.05em}
+.svclist .i{font-family:var(--f);font-weight:700;font-size:1.5rem;letter-spacing:-.04em}
+.saving{background:var(--raised);color:var(--ink);border:1px solid var(--line);border-radius:var(--r);box-shadow:none;padding:32px}
+.saving .big{font-size:clamp(5rem,11vw,8.5rem);letter-spacing:-.06em;line-height:.9}
+.saving .eyebrow{color:var(--ink-2)!important}
+.bar.a i{background:var(--sunken)}
+.bar.b i{background:var(--grad)}
+.facts{border-top-color:var(--line)}
+.facts b{font-size:2rem;letter-spacing:-.04em}
+.chip,.pill{border-radius:999px}
+.tabs button,.btn{border-radius:999px;border-color:var(--line-strong)}
+.tabs button[aria-selected="true"],.btn.pri,.btn[aria-pressed="true"],.roles button.on{background:var(--structural);border-color:var(--structural);color:var(--on-structural)}
+.proof{border-left:0;background:var(--surface);border-radius:var(--r);position:relative;padding-left:24px}
+.proof::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--grad);border-radius:3px 0 0 3px}
+.cols3>div{border-top:1px solid var(--ink)}
+.win{border-radius:6px;box-shadow:0 24px 48px -32px rgba(0,0,0,.35)}
+.wbar{background:var(--bg-alt)}
+.ag.busy{color:var(--on-structural)}
+.meter .track div{background:var(--grad)!important}
+.tbl{border-radius:var(--r)}
+.t th{font-family:var(--mono);font-weight:400;letter-spacing:.12em}
+.t tr.tot td,.stage .t tr.tot td{background:var(--structural);color:var(--on-structural)}
+.stage{background:var(--bg-alt);color:var(--ink)}
+.stage .eyebrow{color:var(--ink-2)}
+.stage .t th,.stage .note,.stage table.cards td::before{color:var(--ink-3)}
+.stage .btn{border-color:var(--line-strong);color:var(--ink)}
+.final{background:var(--raised);color:var(--ink);border:1px solid var(--line);border-radius:var(--r)}
+.final .eyebrow{color:var(--ink-2)!important}
+.flowlist li,.kc,.tile,.chartbox,.dmeta div{border-radius:var(--r)}
+.bignum{display:block;font-family:var(--f);font-weight:700;font-size:clamp(5rem,12vw,9rem);line-height:.85;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1.5px var(--line-strong);user-select:none;margin-bottom:-.15em}
+details{border-bottom-color:var(--line-strong)}
+summary::after{color:var(--ink)}
+footer{font-family:var(--mono);font-size:12px;letter-spacing:.04em}
+@media (max-width:640px){h1{letter-spacing:-.04em}.saving .big{font-size:5.2rem}}
 </style>
 </head>
 <body>
 <header class="top">
   <div class="wrap" style="position:relative">
-    <a class="brand" href="#inicio">DesarrollAndo</a>
+    <a class="brand" href="#inicio"><img src="../assets/isotipo-desarrollando.png" alt="" width="22" height="22">DesarrollAndo</a>
     <nav class="navlinks" id="navlinks" aria-label="Secciones">
       <a href="#contexto">Día a día</a>
       <a href="#flow">WhatsApp &amp; citas</a>
@@ -426,7 +492,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section id="contexto">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow"><span class="n">02</span>El día a día</span>
+      <span class="bignum" aria-hidden="true">02</span><span class="eyebrow"><span class="n">02 / 08</span>El día a día</span>
       <h2>Una jornada en el hospital &amp; <span class="hl">dónde entra cada servicio.</span></h2>
       <p class="lead">El estudio previo del hospital para 2026 habla de más de 300 mensajes semanales para citas por WhatsApp. A eso se suman las llamadas a las líneas virtuales y a la línea gratuita 01 8000.</p>
     </div>
@@ -435,21 +501,21 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <line x1="110" y1="70" x2="970" y2="70" stroke="var(--line)" stroke-width="2"/>
         <line x1="110" y1="70" x2="970" y2="70" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4 8"/>
         <g font-family="Poppins, sans-serif">
-          <g transform="translate(110,0)"><circle cy="70" r="22" fill="var(--structural)"/><text y="76" text-anchor="middle" fill="#fff" font-size="15" font-weight="600">1</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">6:00 a. m.</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">Escribe por WhatsApp</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">El asistente toma</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">la solicitud</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">FLOW</text></g>
-          <g transform="translate(325,0)"><circle cy="70" r="22" fill="var(--structural)"/><text y="76" text-anchor="middle" fill="#fff" font-size="15" font-weight="600">2</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">7:00 a. m.</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">Llama al hospital</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">El IVR lo lleva</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">a la cola correcta</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">CONECTANDO</text></g>
-          <g transform="translate(540,0)"><circle cy="70" r="22" fill="var(--tech)"/><text y="76" text-anchor="middle" fill="#fff" font-size="15" font-weight="600">3</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">7:05 a. m.</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">El equipo asigna</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">Desde la bandeja,</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">con todo el historial</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">HOSPITAL</text></g>
-          <g transform="translate(755,0)"><circle cy="70" r="22" fill="var(--structural)"/><text y="76" text-anchor="middle" fill="#fff" font-size="15" font-weight="600">4</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">Antes de la cita</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">Confirma y recuerda</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">Menos inasistencias,</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">espacios liberados</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">FLOW</text></g>
-          <g transform="translate(970,0)"><circle cy="70" r="22" fill="var(--tech)"/><text y="76" text-anchor="middle" fill="#fff" font-size="15" font-weight="600">5</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">Fin de mes</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">Informe a gerencia</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">Citas, mensajes,</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">llamadas y tiempos</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">SOPORTE</text></g>
+          <g transform="translate(110,0)"><circle cy="70" r="22" fill="var(--ink)"/><text y="76" text-anchor="middle" fill="var(--bg)" font-size="15" font-weight="600">1</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">6:00 a. m.</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">Escribe por WhatsApp</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">El asistente toma</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">la solicitud</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">FLOW</text></g>
+          <g transform="translate(325,0)"><circle cy="70" r="22" fill="var(--ink)"/><text y="76" text-anchor="middle" fill="var(--bg)" font-size="15" font-weight="600">2</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">7:00 a. m.</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">Llama al hospital</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">El IVR lo lleva</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">a la cola correcta</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">CONECTANDO</text></g>
+          <g transform="translate(540,0)"><circle cy="70" r="22" fill="var(--ink)"/><text y="76" text-anchor="middle" fill="var(--bg)" font-size="15" font-weight="600">3</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">7:05 a. m.</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">El equipo asigna</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">Desde la bandeja,</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">con todo el historial</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">HOSPITAL</text></g>
+          <g transform="translate(755,0)"><circle cy="70" r="22" fill="var(--ink)"/><text y="76" text-anchor="middle" fill="var(--bg)" font-size="15" font-weight="600">4</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">Antes de la cita</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">Confirma y recuerda</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">Menos inasistencias,</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">espacios liberados</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">FLOW</text></g>
+          <g transform="translate(970,0)"><circle cy="70" r="22" fill="var(--ink)"/><text y="76" text-anchor="middle" fill="var(--bg)" font-size="15" font-weight="600">5</text><text y="122" text-anchor="middle" fill="var(--accent)" font-size="13" font-family="ui-monospace,monospace">Fin de mes</text><text y="146" text-anchor="middle" fill="var(--ink)" font-size="15" font-weight="600">Informe a gerencia</text><text y="168" text-anchor="middle" fill="var(--ink-2)" font-size="13">Citas, mensajes,</text><text y="186" text-anchor="middle" fill="var(--ink-2)" font-size="13">llamadas y tiempos</text><text y="212" text-anchor="middle" fill="var(--ink-3)" font-size="11" letter-spacing="1.5">SOPORTE</text></g>
         </g>
       </svg>
       <svg class="v" viewBox="0 0 360 560" aria-hidden="true">
         <line x1="30" y1="30" x2="30" y2="530" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4 8"/>
         <g font-family="Poppins, sans-serif">
-          <g transform="translate(0,30)"><circle cx="30" r="18" fill="var(--structural)"/><text x="30" y="5" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">1</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">6:00 A. M. · FLOW</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">Escribe por WhatsApp</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">El asistente toma la solicitud.</text></g>
-          <g transform="translate(0,150)"><circle cx="30" r="18" fill="var(--structural)"/><text x="30" y="5" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">2</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">7:00 A. M. · CONECTANDO</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">Llama al hospital</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">El IVR lo lleva a la cola correcta.</text></g>
-          <g transform="translate(0,270)"><circle cx="30" r="18" fill="var(--tech)"/><text x="30" y="5" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">3</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">7:05 A. M. · HOSPITAL</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">El equipo asigna</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">Desde la bandeja, con el historial.</text></g>
-          <g transform="translate(0,390)"><circle cx="30" r="18" fill="var(--structural)"/><text x="30" y="5" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">4</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">ANTES DE LA CITA · FLOW</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">Confirma y recuerda</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">Menos inasistencias.</text></g>
-          <g transform="translate(0,510)"><circle cx="30" r="18" fill="var(--tech)"/><text x="30" y="5" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">5</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">FIN DE MES · SOPORTE</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">Informe a gerencia</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">Citas, mensajes, llamadas y tiempos.</text></g>
+          <g transform="translate(0,30)"><circle cx="30" r="18" fill="var(--ink)"/><text x="30" y="5" text-anchor="middle" fill="var(--bg)" font-size="13" font-weight="600">1</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">6:00 A. M. · FLOW</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">Escribe por WhatsApp</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">El asistente toma la solicitud.</text></g>
+          <g transform="translate(0,150)"><circle cx="30" r="18" fill="var(--ink)"/><text x="30" y="5" text-anchor="middle" fill="var(--bg)" font-size="13" font-weight="600">2</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">7:00 A. M. · CONECTANDO</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">Llama al hospital</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">El IVR lo lleva a la cola correcta.</text></g>
+          <g transform="translate(0,270)"><circle cx="30" r="18" fill="var(--ink)"/><text x="30" y="5" text-anchor="middle" fill="var(--bg)" font-size="13" font-weight="600">3</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">7:05 A. M. · HOSPITAL</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">El equipo asigna</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">Desde la bandeja, con el historial.</text></g>
+          <g transform="translate(0,390)"><circle cx="30" r="18" fill="var(--ink)"/><text x="30" y="5" text-anchor="middle" fill="var(--bg)" font-size="13" font-weight="600">4</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">ANTES DE LA CITA · FLOW</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">Confirma y recuerda</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">Menos inasistencias.</text></g>
+          <g transform="translate(0,510)"><circle cx="30" r="18" fill="var(--ink)"/><text x="30" y="5" text-anchor="middle" fill="var(--bg)" font-size="13" font-weight="600">5</text><text x="64" y="-6" fill="var(--accent)" font-size="12" font-family="ui-monospace,monospace">FIN DE MES · SOPORTE</text><text x="64" y="14" fill="var(--ink)" font-size="15" font-weight="600">Informe a gerencia</text><text x="64" y="34" fill="var(--ink-2)" font-size="13">Citas, mensajes, llamadas y tiempos.</text></g>
         </g>
       </svg>
     </div>
@@ -467,7 +533,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="split">
       <div>
         <div class="head" style="margin-bottom:0">
-          <span class="eyebrow"><span class="n">03</span>Servicio 1 · Flow</span>
+          <span class="bignum" aria-hidden="true">03</span><span class="eyebrow"><span class="n">03 / 08</span>Servicio 1 · Flow</span>
           <h2>WhatsApp con IA &amp; <span class="hl">citas confirmadas por el paciente.</span></h2>
           <p class="lead">Pruebe el recorrido de un paciente en el simulador. Al lado verá lo que pasa en el hospital en cada paso.</p>
         </div>
@@ -508,7 +574,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section id="conectando">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow"><span class="n">04</span>Servicio 2 · ConectAndo</span>
+      <span class="bignum" aria-hidden="true">04</span><span class="eyebrow"><span class="n">04 / 08</span>Servicio 2 · ConectAndo</span>
       <h2>PBX en la nube &amp; <span class="hl">call center para las mismas 13 líneas.</span></h2>
       <p class="lead">El paciente llama, el IVR lo orienta, la cola ordena la espera y el asesor atiende desde el navegador. Cada llamada queda grabada y transcrita.</p>
     </div>
@@ -517,7 +583,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <rect x="0" y="30" width="170" height="50" rx="8" fill="var(--surface)" stroke="var(--line)"/><text x="85" y="61" text-anchor="middle" fill="var(--ink)">Entra la llamada</text>
         <rect x="227" y="30" width="170" height="50" rx="8" fill="var(--surface)" stroke="var(--line)"/><text x="312" y="61" text-anchor="middle" fill="var(--ink)">Menú IVR</text>
         <rect x="454" y="30" width="170" height="50" rx="8" fill="var(--surface)" stroke="var(--line)"/><text x="539" y="61" text-anchor="middle" fill="var(--ink)">Cola de espera</text>
-        <rect x="681" y="30" width="170" height="50" rx="8" fill="var(--structural)"/><text x="766" y="61" text-anchor="middle" fill="#fff">Asesor</text>
+        <rect x="681" y="30" width="170" height="50" rx="8" fill="var(--ink)"/><text x="766" y="61" text-anchor="middle" fill="var(--on-structural)">Asesor</text>
         <rect x="908" y="30" width="172" height="50" rx="8" fill="var(--surface)" stroke="var(--line)"/><text x="994" y="61" text-anchor="middle" fill="var(--ink)">Grabación y texto</text>
         <g stroke="var(--accent)" stroke-width="2" fill="none"><path d="M176 55h44m-8-6 8 6-8 6"/><path d="M403 55h44m-8-6 8 6-8 6"/><path d="M630 55h44m-8-6 8 6-8 6"/><path d="M857 55h44m-8-6 8 6-8 6"/></g>
         <text x="312" y="104" text-anchor="middle" fill="var(--ink-3)" font-size="12" font-weight="400">citas · información · SIAU · asesor</text>
@@ -624,7 +690,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section id="continuidad">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow"><span class="n">05</span>Día 1 &amp; continuidad</span>
+      <span class="bignum" aria-hidden="true">05</span><span class="eyebrow"><span class="n">05 / 08</span>Día 1 &amp; continuidad</span>
       <h2>Cuatro semanas &amp; <span class="hl">pruebas antes de cada salida en vivo.</span></h2>
       <p class="lead">Primero WhatsApp y luego el call center. Cada etapa se prueba con el equipo del hospital antes de abrirla a los pacientes.</p>
     </div>
@@ -646,7 +712,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section id="seguridad">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow"><span class="n">06</span>Datos, seguridad &amp; soporte</span>
+      <span class="bignum" aria-hidden="true">06</span><span class="eyebrow"><span class="n">06 / 08</span>Datos, seguridad &amp; soporte</span>
       <h2>Respaldo &amp; <span class="hl">datos siempre del hospital.</span></h2>
     </div>
     <div class="cols3">
@@ -691,7 +757,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section id="inversion" class="stage">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow"><span class="n">07</span>Inversión 2027 · Cotización DA-2026-85</span>
+      <span class="bignum" aria-hidden="true">07</span><span class="eyebrow"><span class="n">07 / 08</span>Inversión 2027 · Cotización DA-2026-85</span>
       <h2>Un valor fijo claro &amp; <span class="hl">telefonía por lo que se usa.</span></h2>
       <p class="lead">Vigente hasta el 31 de diciembre de 2026. Valores en pesos colombianos.</p>
     </div>
@@ -703,7 +769,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <tr><td class="first">ConectAndo · 13 licencias</td><td class="d">$100.000 por usuario al mes</td><td class="n" data-label="Mensual">$1.300.000</td><td class="n" data-label="12 meses">$15.600.000</td></tr>
         <tr><td class="first">ConectAndo · puesta en marcha</td><td class="d">PBX, IVR, colas y migración de líneas; capacitación de 2 personas y manuales</td><td class="n" data-label="Mensual">Pago inicial</td><td class="n" data-label="12 meses">$2.900.000</td></tr>
         <tr><td class="first">Soporte y acompañamiento</td><td class="d">Soporte preventivo de lunes a sábado en tres niveles, gerente de cuenta e informe mensual</td><td class="n" data-label="Mensual">$224.083</td><td class="n" data-label="12 meses">$2.689.000</td></tr>
-        <tr class="tot"><td class="first">Total valor fijo</td><td class="d" style="color:#fff">Puestas en marcha al inicio + 12 mensualidades</td><td class="n" data-label="Mensual">$2.048.083</td><td class="n" data-label="12 meses">$29.578.092</td></tr>
+        <tr class="tot"><td class="first">Total valor fijo</td><td class="d" style="color:inherit">Puestas en marcha al inicio + 12 mensualidades</td><td class="n" data-label="Mensual">$2.048.083</td><td class="n" data-label="12 meses">$29.578.092</td></tr>
       </tbody></table></div>
 
     <div class="conds">
@@ -735,7 +801,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section id="preguntas" style="border-bottom:0">
   <div class="wrap split">
     <div>
-      <div class="head"><span class="eyebrow"><span class="n">08</span>Para la reunión</span><h2>Preguntas frecuentes &amp; <span class="hl">área de sistemas.</span></h2></div>
+      <div class="head"><span class="bignum" aria-hidden="true">08</span><span class="eyebrow"><span class="n">08 / 08</span>Para la reunión</span><h2>Preguntas frecuentes &amp; <span class="hl">área de sistemas.</span></h2></div>
       <details><summary>¿Qué necesitamos instalar en el hospital?</summary><p>Nada en servidores propios. Los asesores trabajan desde el navegador con conexión a internet. Equipos de cómputo, diademas y la conectividad del hospital no están incluidos.</p></details>
       <details><summary>¿Se integra con nuestro software de agenda?</summary><p>La propuesta no incluye integración con el software de agenda del hospital. El asistente recibe la solicitud y el asesor asigna la cita en la agenda actual del hospital.</p></details>
       <details><summary>¿Conservamos el número de WhatsApp y las líneas actuales?</summary><p>Sí. El número del hospital se conecta a la API oficial de Meta y se verifica. Los números de voz y la línea 01 8000 se conservan mediante desvío o conexión con el operador; eso se valida con el operador actual.</p></details>
