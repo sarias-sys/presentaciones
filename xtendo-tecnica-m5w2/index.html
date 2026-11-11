@@ -1,0 +1,338 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flow Omnicanal · Xtendo Global</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+html,body{margin:0;height:100%;background:#0a0a0a;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center center}
+#stage>section{position:absolute;inset:0;width:1920px;height:1080px;box-sizing:border-box;overflow:hidden}
+#stage>section:not(.on){display:none!important}
+#stage>section:not([style*="display"]){flex-direction:column}
+#stage>section *{box-sizing:border-box;margin:0}
+#stage div:not([style*="display"]){display:flex;flex-direction:column}
+#stage aside{display:none!important}
+#stage table{border-collapse:collapse}
+#stage th,#stage td{text-align:left;vertical-align:top;border-bottom:1px solid rgba(128,128,128,.28)}
+#stage th{font-weight:600}
+#stage a{color:inherit}
+#stage img{display:block}
+.nav{position:fixed;right:18px;bottom:14px;display:flex;gap:8px;align-items:center;font:500 13px Poppins,Arial,sans-serif;color:#9a9a9a;z-index:5}
+.nav button{background:rgba(30,30,30,.75);color:#fff;border:1px solid #333;border-radius:8px;width:36px;height:32px;cursor:pointer;font-size:16px}
+</style></head><body>
+<div id="stage">
+<section id="cover" data-transition="fade" style="background:radial-gradient(ellipse at 74% 44%, #12383c 0%, #0d1a1b 30%, #0a0a0a 62%);color:#fafafa;font-family:'Poppins', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:space-between">
+<img src="img/estrella.png" alt="" style="position:absolute;left:1180px;top:250px;width:560px;height:544px;object-fit:contain;opacity:0.9">
+<img src="img/logo.png" alt="DesarrollAndo" style="width:320px;height:160px;object-fit:contain;align-self:start">
+<div style="display:flex;flex-direction:column;gap:32px;width:1000px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#8c8c8c">Flow Omnicanal · Una plataforma de DesarrollAndo</p>
+<h1 style="font-size:96px;font-weight:600;line-height:1.02;letter-spacing:-2px">Marcar, atender, orquestar y medir. En un solo sistema.</h1>
+<p style="font-size:32px;font-weight:300;line-height:1.4;color:#a3a3a3;width:940px">Flow Omnicanal es un CTI propio, con voz, WhatsApp e IA, que corre sobre su troncal y se conecta con sus sistemas.</p>
+</div>
+<div style="position:absolute;left:128px;bottom:64px;width:1100px;display:flex;align-items:center;gap:20px">
+<p style="font-size:24px;color:#8c8c8c">DesarrollAndo · en alianza con</p>
+<img src="img/xentia.jpg" alt="Xentia Partner" style="width:99px;height:40px;object-fit:contain;border-radius:4px">
+</div>
+<aside>Sesión para el equipo técnico de Xtendo. La idea que debe quedar: no es un marcador más con integraciones pegadas, es una plataforma propia donde la llamada, el chat, la IA y los datos viven juntos. Al final están sus 18 preguntas respondidas en una página.</aside>
+</section>
+
+<section id="porque2" data-transition="fade" style="background:#fafaf9;color:#0a0a0a;font-family:'Poppins', Arial, sans-serif;padding:112px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#087a83">Por qué un CTI propio</p>
+<h2 style="font-size:44px;font-weight:600;line-height:1.15;letter-spacing:-0.5px">Menos piezas que integrar, más control de la operación</h2>
+</div>
+<table style="font-family:'Poppins', Arial, sans-serif;font-size:24px;color:#0a0a0a;padding:18px">
+<tr><th style="width:16%;color:#6b6b6b"></th><th style="width:40%;color:#6b6b6b">Con herramientas separadas</th><th style="width:44%;color:#087a83">Con Flow Omnicanal</th></tr>
+<tr><td><b>Datos</b></td><td style="color:#4a4a4a">Marcador, CRM y bot guardan cada uno su parte</td><td>Llamada, chat, gestión y grabación en el mismo registro</td></tr>
+<tr><td><b>Orquestación</b></td><td style="color:#4a4a4a">Integraciones punto a punto entre proveedores</td><td>Reglas dentro de la campaña: llamada, WhatsApp, nueva llamada</td></tr>
+<tr><td><b>Telefonía</b></td><td style="color:#4a4a4a">El proveedor define el operador y la tarifa</td><td>Su troncal SIP o la nuestra; el minuto lo negocia usted</td></tr>
+<tr><td><b>IA</b></td><td style="color:#4a4a4a">Un bot aparte, con su propio contrato</td><td>Agentes de voz, copiloto y calidad sobre los mismos datos</td></tr>
+<tr><td><b>Evolución</b></td><td style="color:#4a4a4a">La hoja de ruta la decide el fabricante</td><td>El equipo de DesarrollAndo la construye; el piloto prioriza lo que sigue</td></tr>
+</table>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#6b6b6b">Flow Omnicanal, plataforma de DesarrollAndo · Xtendo Global</p>
+<aside>Lámina de valor. Para un equipo técnico el argumento es de arquitectura: cada herramienta adicional es una integración que mantener y un dato que cruzar. En Flow todo vive en el mismo modelo de datos, la telefonía puede ser la de ellos y quien desarrolla la plataforma es quien los acompaña.</aside>
+</section>
+
+<section id="arq2" data-transition="fade" style="background:#f2f2ef;color:#0a0a0a;font-family:'Poppins', Arial, sans-serif;padding:112px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#087a83">Arquitectura</p>
+<h2 style="font-size:44px;font-weight:600;line-height:1.15;letter-spacing:-0.5px">Cómo se conecta con su operación</h2>
+</div>
+<div style="display:flex;align-items:stretch;gap:20px">
+<div style="flex:1;background:#ffffff;border:1px solid #e4e4e0;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#6b6b6b">Entradas</p>
+<p style="font-size:24px;line-height:1.35">Su troncal SIP u operador</p>
+<p style="font-size:24px;line-height:1.35">WhatsApp Business API</p>
+<p style="font-size:24px;line-height:1.35">Chat web</p>
+<p style="font-size:24px;line-height:1.35">Bases de campaña</p>
+</div>
+<div style="display:flex;align-items:center;justify-content:center;align-self:center;width:44px;font-size:40px;line-height:1;color:#087a83">→</div>
+<div style="flex:1.4;background:#0a0a0a;color:#fafafa;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#2fc2cf">Flow Omnicanal</p>
+<p style="font-size:24px;line-height:1.35">Marcador y campañas</p>
+<p style="font-size:24px;line-height:1.35">Colas y reparto de llamadas y chats</p>
+<p style="font-size:24px;line-height:1.35">Agentes de IA de voz y flujos</p>
+<p style="font-size:24px;line-height:1.35">Grabación, transcripción y reportes</p>
+</div>
+<div style="display:flex;align-items:center;justify-content:center;align-self:center;width:44px;font-size:40px;line-height:1;color:#087a83">→</div>
+<div style="flex:1;background:#ffffff;border:1px solid #e4e4e0;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#6b6b6b">Personas</p>
+<p style="font-size:24px;line-height:1.35">Asesor en el navegador</p>
+<p style="font-size:24px;line-height:1.35">Supervisor en vivo</p>
+<p style="font-size:24px;line-height:1.35">Back office</p>
+</div>
+<div style="display:flex;align-items:center;justify-content:center;align-self:center;width:44px;font-size:40px;line-height:1;color:#087a83">→</div>
+<div style="flex:1;background:#ffffff;border:1px solid #e4e4e0;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#6b6b6b">Sus sistemas</p>
+<p style="font-size:24px;line-height:1.35">CRM y BI</p>
+<p style="font-size:24px;line-height:1.35">Orion</p>
+<p style="font-size:24px;line-height:1.35">Por API y webhooks</p>
+</div>
+</div>
+<p style="font-size:24px;font-weight:300;line-height:1.45;color:#4a4a4a">En la nube, con una empresa separada por cliente; el asesor solo necesita navegador y diadema. DesarrollAndo es Meta Business Partner: las líneas de WhatsApp de Xtendo se conectan directo y las plantillas se crean desde la misma plataforma.</p>
+<p style="position:absolute;left:128px;bottom:64px;font-size:24px;color:#6b6b6b">Flow Omnicanal, plataforma de DesarrollAndo · Xtendo Global</p>
+<aside>De izquierda a derecha: las llamadas entran o salen por la troncal SIP de Xtendo (o la nuestra), WhatsApp por la API oficial de Meta, y todo se resuelve dentro de Flow. Los resultados salen hacia sus sistemas por API y webhooks; así se conecta Orion mientras no exista un conector directo.</aside>
+</section>
+
+<section id="marc2" data-transition="fade" style="background:#fafaf9;color:#0a0a0a;font-family:'Poppins', Arial, sans-serif;padding:96px 128px 144px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#087a83">Marcación y orquestación</p>
+<h2 style="font-size:44px;font-weight:600;line-height:1.15;letter-spacing:-0.5px">Cada resultado de la llamada dispara el siguiente paso</h2>
+</div>
+<div style="display:flex;gap:28px">
+<img src="img/campanas.jpg" alt="Inventario de campañas con modos vista previa, power y progresivo y cumplimiento de la Ley 2300" style="width:1064px;height:467px;object-fit:cover;border:1px solid #e4e4e0;border-radius:12px">
+<img src="img/reglas.jpg" alt="Reglas de reintento por resultado: si no contesta o está ocupado, añadir WhatsApp y volver a llamar en una hora, hasta tres intentos" style="width:400px;height:467px;object-fit:cover;border:1px solid #e4e4e0;border-radius:12px">
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px">
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Masivo en tres canales:</b> voz con asesores o agentes de IA, WhatsApp y SMS, sobre sus propias líneas.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Reglas por resultado:</b> no contesta, ocupado, contestadora o falla → WhatsApp y nueva llamada, hasta N intentos.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Modos y cumplimiento:</b> vista previa, progresivo y power; ventana legal y lista Robinson.</p>
+</div>
+<p style="position:absolute;left:128px;bottom:56px;font-size:24px;color:#6b6b6b">Flow Omnicanal, plataforma de DesarrollAndo · Xtendo Global · Capturas reales</p>
+<aside>Responde la pregunta del orquestador. Las reglas viven en la campaña: si el cliente no contesta, la plataforma le escribe por WhatsApp y programa otra llamada, sin integraciones externas. Modo, horario, días y pacing se cambian con la campaña activa. El horario de cada campaña se puede estrechar pero nunca ampliar más allá del tope legal. Para Bolivia se cargan sus reglas en el levantamiento.</aside>
+</section>
+
+<section id="asesor2" data-transition="fade" style="background:#f2f2ef;color:#0a0a0a;font-family:'Poppins', Arial, sans-serif;padding:96px 128px 144px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#087a83">Puesto del asesor</p>
+<h2 style="font-size:44px;font-weight:600;line-height:1.15;letter-spacing:-0.5px">Una pantalla para atender, vender y cerrar la gestión</h2>
+</div>
+<div style="display:flex;gap:32px;align-items:start">
+<img src="img/asesor-llamada.jpg" alt="Espacio de trabajo del asesor durante una llamada: silenciar, poner en espera, colgar, teclado, transferir y traducir, con la ficha del cliente a la derecha" style="width:1240px;height:544px;object-fit:cover;border:1px solid #e4e4e0;border-radius:12px">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px">
+<img src="img/asesor-cierre.jpg" alt="Cierre de gestión: resultado resuelto, pendiente o escalado, tipificación y tipo de caso" style="width:392px;height:172px;object-fit:cover;border:1px solid #e4e4e0;border-radius:12px">
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>En la llamada:</b> espera, teclado, transferencia y traducción.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Al lado:</b> ficha 360°, libreto con datos de la base y copiloto.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Al colgar:</b> resultado y tipificación obligatorios.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:56px;font-size:24px;color:#6b6b6b">Flow Omnicanal, plataforma de DesarrollAndo · Xtendo Global · Capturas reales tomadas hoy</p>
+<aside>Capturas reales de esta mañana, con una llamada de prueba. El asesor trabaja en el navegador. Al colgar queda en gestión posterior (ACW) y no le entran llamadas hasta registrar resultado y tipificación, que es lo que alimenta los reportes de venta. Si se traba, el botón «Pedir ayuda al líder» avisa al supervisor.</aside>
+</section>
+
+<section id="sup2" data-transition="fade" style="background:#fafaf9;color:#0a0a0a;font-family:'Poppins', Arial, sans-serif;padding:96px 128px 144px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#087a83">Supervisión y calidad</p>
+<h2 style="font-size:44px;font-weight:600;line-height:1.15;letter-spacing:-0.5px">El supervisor ve, escucha y corrige mientras pasa</h2>
+</div>
+<div style="display:flex;gap:32px;align-items:start">
+<img src="img/supervision.jpg" alt="Supervisión en vivo: interacciones, agentes en línea, llamadas activas, en espera, bots activos, nivel de servicio y estado de cada canal" style="width:1240px;height:544px;object-fit:cover;border:1px solid #e4e4e0;border-radius:12px">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>En vivo:</b> escuchar, susurrar al asesor o entrar a la llamada.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Equipo:</b> adherencia y pausas, con aprobación si se configura.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Calidad con IA:</b> nota por criterio, cumplimiento y errores críticos en cada llamada transcrita.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Además:</b> tablero del marcador, mapa de contactabilidad y grabaciones.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:56px;font-size:24px;color:#6b6b6b">Flow Omnicanal, plataforma de DesarrollAndo · Xtendo Global · Captura real tomada hoy</p>
+<aside>La vista en vivo muestra interacciones, agentes, llamadas activas, espera, bots y nivel de servicio por canal. La calidad automática evalúa todas las llamadas transcritas, no una muestra; se activa configurando el evaluador con la rúbrica de Xtendo en el piloto.</aside>
+</section>
+
+<section id="modelos2" data-transition="fade" style="background:#f2f2ef;color:#0a0a0a;font-family:'Poppins', Arial, sans-serif;padding:96px 128px 144px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#087a83">Modelos de IA</p>
+<h2 style="font-size:44px;font-weight:600;line-height:1.15;letter-spacing:-0.5px">Cada tarea con el modelo que mejor rinde, y ninguno amarrado</h2>
+</div>
+<div style="display:flex;gap:32px;align-items:start">
+<table style="font-family:'Poppins', Arial, sans-serif;font-size:24px;color:#0a0a0a;padding:12px;width:1000px">
+<tr><th style="width:28%;color:#6b6b6b">Componente</th><th style="width:72%;color:#6b6b6b">Proveedor y modelo</th></tr>
+<tr><td><b>Agente de voz</b></td><td>Modelos abiertos de baja latencia vía Groq, u otro del catálogo</td></tr>
+<tr><td><b>Voz sintética</b></td><td>ElevenLabs (Flash)</td></tr>
+<tr><td><b>Transcripción</b></td><td>Deepgram, separando asesor y cliente</td></tr>
+<tr><td><b>Asistentes de texto</b></td><td>Gemini (Google) u otro proveedor</td></tr>
+<tr><td><b>Calidad automática</b></td><td>Groq, OpenRouter u OpenAI</td></tr>
+<tr><td><b>Copiloto</b></td><td>Claude (Anthropic), con modelo de respaldo</td></tr>
+</table>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px">
+<img src="img/agente-voz.jpg" alt="Configuración de un agente de voz con pestañas General, Prompt y comportamiento, Voz y modelo, Transferencia, Avanzado y Versiones" style="width:632px;height:277px;object-fit:cover;border:1px solid #e4e4e0;border-radius:12px">
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a">El modelo se elige por agente: por costo, latencia o calidad. Cada agente se prueba y se publica por versiones.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a">Con su propio contrato, Xtendo usa su clave: se guarda cifrada y no se vuelve a mostrar.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:56px;font-size:24px;color:#6b6b6b">Flow Omnicanal, plataforma de DesarrollAndo · Xtendo Global · Captura real tomada hoy</p>
+<aside>Respuesta directa a la pregunta de los LLM. Cada componente tiene su proveedor y se cambia por agente sin tocar el resto. En voz manda la latencia, por eso los agentes de voz usan modelos abiertos servidos por Groq; en texto trabajamos con Gemini. Con sus propias claves (BYOK), el consumo de IA lo factura directamente el proveedor de Xtendo.</aside>
+</section>
+
+<section id="integ2" data-transition="fade" style="background:#fafaf9;color:#0a0a0a;font-family:'Poppins', Arial, sans-serif;padding:96px 128px 144px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#087a83">Integración y datos</p>
+<h2 style="font-size:44px;font-weight:600;line-height:1.15;letter-spacing:-0.5px">Sus sistemas reciben cada evento, sin pedirlo</h2>
+</div>
+<div style="display:flex;gap:32px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:12px">
+<img src="img/flujo.jpg" alt="Diseñador de flujos con los componentes Llamada a API, Plantilla de WhatsApp, Enviar SMS, Detectar intención y Resumir con IA" style="width:1060px;height:465px;object-fit:cover;border:1px solid #e4e4e0;border-radius:12px">
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a">En los flujos, el paso «Llamada a API» consulta o actualiza sus sistemas en mitad de la conversación.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:18px">
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Webhooks:</b> JSON firmado con HMAC-SHA256; hasta 5 reintentos en 24 horas.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>API:</b> claves con permisos mínimos y revocación inmediata.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>BI:</b> exportación CSV y PDF, y datos crudos por API.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Orion:</b> carga de bases y devolución de resultados por API.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>MCP:</b> consulta desde Claude o ChatGPT con los permisos del rol.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:56px;font-size:24px;color:#6b6b6b">Flow Omnicanal, plataforma de DesarrollAndo · Xtendo Global · Captura real tomada hoy</p>
+<aside>Punto clave para el equipo técnico. Webhooks firmados para que su CRM o BI reciban cada llamada y conversación al momento; API con claves de permisos mínimos; exportaciones para el BI. Con Orion, mientras no haya conector directo, se cargan las bases y se devuelven resultados por API; el formato se define en el levantamiento. El acceso por MCP queda en la auditoría, con un límite de 60 consultas por minuto por conexión.</aside>
+</section>
+
+<section id="bo" data-transition="fade" style="background:#f2f2ef;color:#0a0a0a;font-family:'Poppins', Arial, sans-serif;padding:96px 128px 144px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;justify-content:space-between;align-items:end;gap:24px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#087a83">Back office · Propuesta</p>
+<h2 style="font-size:44px;font-weight:600;line-height:1.15;letter-spacing:-0.5px">De la venta a la SIM activa, sin perder ninguna en el camino</h2>
+</div>
+</div>
+<div style="display:flex;gap:32px;align-items:start">
+<img src="img/backoffice.png" alt="Maqueta del back office en modo claro: tablero de entregas con filtros por fecha, asesor, operador y departamento, indicadores y ventas en el tiempo" style="width:1060px;height:596px;object-fit:cover;border:1px solid #e4e4e0;border-radius:12px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Tablero:</b> entregas por operador, departamento y asesor, con motivos de no entrega; filtra por día, semana o mes.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Trazabilidad:</b> cada venta cruzada con la sábana logística hasta la SIM activa.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Conciliación:</b> la liquidación mensual del cliente contra lo activado; muestra desviaciones y arma la reclamación.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:56px;font-size:24px;color:#6b6b6b">Flow Omnicanal, plataforma de DesarrollAndo · Maqueta con datos de prueba · <a target="_blank" rel="noopener" href="https://sarias-sys.github.io/presentaciones/xtendo-backoffice-k3p7/">Abrir la demo interactiva</a></p>
+<aside>Respuesta a la pregunta del back office. Es una propuesta: un módulo dentro de Flow donde Xtendo carga la sábana del operador logístico y la liquidación mensual de su cliente, y la plataforma cruza todo por número de pedido. El tablero filtra por fechas, asesor, operador y departamento; la conciliación muestra lo que el cliente no pagó o pagó de menos y prepara el texto de la reclamación. Así cada venta tiene su recorrido completo: venta con grabación, validación, despacho, entrega y activación de la SIM. La demo interactiva permite cargar una sábana de prueba en CSV y ver cómo se actualizan los estados. El formato de la sábana y la fuente de la activación se definen en el levantamiento.</aside>
+</section>
+
+<section id="seg2" data-transition="fade" style="background:#f2f2ef;color:#0a0a0a;font-family:'Poppins', Arial, sans-serif;padding:96px 128px 144px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#087a83">Seguridad y gobierno</p>
+<h2 style="font-size:44px;font-weight:600;line-height:1.15;letter-spacing:-0.5px">Cada persona ve lo que su rol le permite, y todo queda registrado</h2>
+</div>
+<div style="display:flex;gap:40px;align-items:start">
+<table style="font-family:'Poppins', Arial, sans-serif;font-size:24px;color:#0a0a0a;padding:12px;width:1060px">
+<tr><th style="width:24%;color:#6b6b6b">Rol</th><th style="width:76%;color:#6b6b6b">Qué puede hacer</th></tr>
+<tr><td><b>Propietario</b></td><td style="color:#4a4a4a">Todo lo del administrador, y da o quita esos dos roles</td></tr>
+<tr><td><b>Administrador</b></td><td style="color:#4a4a4a">Canales, proveedores, números, colas, IA, flujos, campañas y usuarios</td></tr>
+<tr><td><b>Supervisor</b></td><td style="color:#4a4a4a">Operación en vivo, marcador, pausas, grabaciones y reportes</td></tr>
+<tr><td><b>Desarrollador</b></td><td style="color:#4a4a4a">Telefonía, API, flujos y agentes de IA; no ve usuarios ni campañas</td></tr>
+<tr><td><b>Agente</b></td><td style="color:#4a4a4a">Su espacio de trabajo: llamadas, chats y contactos</td></tr>
+<tr><td><b>Visor</b></td><td style="color:#4a4a4a">Solo el tablero ejecutivo y la voz del cliente</td></tr>
+</table>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Auditoría:</b> quién, qué, cuándo y desde dónde, incluido lo que hace la IA.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Datos:</b> AWS en EE. UU.; transcripciones 36 meses, audio 24.</p>
+<p style="font-size:24px;font-weight:300;line-height:1.4;color:#4a4a4a"><b>Límite de la IA:</b> no escribe ni llama a clientes, no lanza campañas, no borra.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:56px;font-size:24px;color:#6b6b6b">Flow Omnicanal, plataforma de DesarrollAndo · Xtendo Global</p>
+<aside>Los seis roles por empresa. Cada cliente de Xtendo puede tener su propia empresa separada, con sus usuarios y datos. La auditoría registra también lo que consultan el copiloto y los asistentes externos. Antes de activar funciones de IA que procesan datos, la empresa acepta el tratamiento según la Ley 1581.</aside>
+</section>
+
+<section id="preg2" data-transition="fade" style="background:#fafaf9;color:#0a0a0a;font-family:'Poppins', Arial, sans-serif;padding:96px 128px 144px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;justify-content:space-between;align-items:end;gap:32px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#087a83">Sus preguntas</p>
+<h2 style="font-size:44px;font-weight:600;line-height:1.15;letter-spacing:-0.5px">Las 18 preguntas, en una página</h2>
+</div>
+<div style="display:flex;gap:24px">
+<p style="font-size:24px;color:#047857">● Hoy</p>
+<p style="font-size:24px;color:#087a83">● Propuesta</p>
+<p style="font-size:24px;color:#b45309">● Hoja de ruta</p>
+<p style="font-size:24px;color:#525252">● Se define juntos</p>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px">
+<table style="font-family:'Poppins', Arial, sans-serif;font-size:24px;color:#0a0a0a">
+<tr><th style="width:8%;color:#6b6b6b">#</th><th style="width:64%;color:#6b6b6b">Pregunta</th><th style="width:28%;color:#6b6b6b">Estado</th></tr>
+<tr><td>1</td><td>Televentas y cobranza</td><td style="color:#047857">Hoy</td></tr>
+<tr><td>2</td><td>Voz, WhatsApp, chat web y bots</td><td style="color:#047857">Hoy</td></tr>
+<tr><td>3</td><td>Orquestar la siguiente acción, según su requerimiento</td><td style="color:#047857">Hoy</td></tr>
+<tr><td>4</td><td>Personalizar campañas, bots e integraciones</td><td style="color:#047857">Hoy</td></tr>
+<tr><td>5</td><td>Voz masiva con asesores y bots</td><td style="color:#047857">Hoy</td></tr>
+<tr><td>6</td><td>SMS masivo</td><td style="color:#047857">Hoy</td></tr>
+<tr><td>7</td><td>WhatsApp masivo con plantillas</td><td style="color:#047857">Hoy</td></tr>
+<tr><td>8</td><td>Back office posventa</td><td style="color:#087a83">Propuesta</td></tr>
+<tr><td>9</td><td>Elegir el modelo de IA</td><td style="color:#047857">Hoy</td></tr>
+</table>
+<table style="font-family:'Poppins', Arial, sans-serif;font-size:24px;color:#0a0a0a">
+<tr><th style="width:8%;color:#6b6b6b">#</th><th style="width:64%;color:#6b6b6b">Pregunta</th><th style="width:28%;color:#6b6b6b">Estado</th></tr>
+<tr><td>10</td><td>Autonomía: campañas, libretos, reportes</td><td style="color:#047857">Hoy</td></tr>
+<tr><td>11</td><td>Marca blanca</td><td style="color:#525252">Se define juntos</td></tr>
+<tr><td>12</td><td>Reventa a sus clientes</td><td style="color:#525252">Se define juntos</td></tr>
+<tr><td>13</td><td>Analítica</td><td style="color:#047857">Hoy</td></tr>
+<tr><td>14</td><td>Control y monitoreo de asesores</td><td style="color:#047857">Hoy</td></tr>
+<tr><td>15</td><td>Datos crudos para su BI</td><td style="color:#047857">Hoy</td></tr>
+<tr><td>16</td><td>Grabaciones y chats almacenados</td><td style="color:#047857">Hoy</td></tr>
+<tr><td>17</td><td>Seguridad de la información</td><td style="color:#047857">Hoy</td></tr>
+<tr><td>18</td><td>Predictivo e integración con Orion</td><td style="color:#b45309">Hoja de ruta</td></tr>
+</table>
+</div>
+<p style="position:absolute;left:128px;bottom:56px;font-size:24px;color:#6b6b6b">Flow Omnicanal, plataforma de DesarrollAndo · Xtendo Global</p>
+<aside>Las 18 preguntas del correo de Cristian. Hoy: funciona en la plataforma. La orquestación se configura según el requerimiento de cada campaña; voz, WhatsApp y SMS masivos corren sobre las líneas de Xtendo, y como DesarrollAndo es Meta Business Partner las plantillas se crean desde la misma aplicación. Propuesta: el back office con la sábana logística, que se muestra en la lámina anterior. Hoja de ruta: el predictivo y el conector directo con Orion; mientras tanto, Orion carga bases y recibe resultados por API. Se define juntos: el back office se diseña en el levantamiento; marca blanca y reventa son condiciones comerciales a conversar.</aside>
+</section>
+
+<section id="piloto" data-transition="fade" style="background:radial-gradient(ellipse at 74% 44%, #12383c 0%, #0d1a1b 30%, #0a0a0a 62%);color:#fafafa;font-family:'Poppins', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#8c8c8c">Cómo empezamos</p>
+<h2 style="font-size:64px;font-weight:600;line-height:1.1;letter-spacing:-1px">Un piloto pequeño, medido contra su operación</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:24px">
+<div style="display:flex;flex-direction:column;gap:12px;border-top:4px solid #2fc2cf;padding:24px 0 0">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;color:#2fc2cf">Paso 1</p>
+<h3 style="font-size:32px;font-weight:600">Levantamiento</h3>
+<p style="font-size:24px;font-weight:300;line-height:1.45;color:#a3a3a3">Campaña, volúmenes, su marcador, su CRM y la secuencia a orquestar.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:4px solid #2fc2cf;padding:24px 0 0">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;color:#2fc2cf">Paso 2</p>
+<h3 style="font-size:32px;font-weight:600">Configuración</h3>
+<p style="font-size:24px;font-weight:300;line-height:1.45;color:#a3a3a3">Su troncal, las reglas de Bolivia, la campaña, los libretos y los usuarios.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:4px solid #2fc2cf;padding:24px 0 0">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;color:#2fc2cf">Paso 3</p>
+<h3 style="font-size:32px;font-weight:600">Piloto</h3>
+<p style="font-size:24px;font-weight:300;line-height:1.45;color:#a3a3a3">Un grupo pequeño de asesores y una campaña, con acompañamiento diario.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;border-top:4px solid #2fc2cf;padding:24px 0 0">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;color:#2fc2cf">Paso 4</p>
+<h3 style="font-size:32px;font-weight:600">Medición</h3>
+<p style="font-size:24px;font-weight:300;line-height:1.45;color:#a3a3a3">Contactabilidad, conversión y costo por venta frente a hoy.</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:44px;font-weight:600;line-height:1.15;letter-spacing:-1px">Software hecho por agentes. Respaldado por personas.</p>
+<p style="font-size:28px;font-weight:300;line-height:1.4;color:#a3a3a3">Con los resultados del piloto definimos juntos lo que sigue: predictivo, conector con Orion y back office.</p>
+</div>
+<div style="position:absolute;left:128px;bottom:56px;width:1664px;display:flex;align-items:center;gap:20px">
+<img src="img/logo.png" alt="DesarrollAndo" style="width:180px;height:90px;object-fit:contain">
+<p style="font-size:24px;color:#8c8c8c">en alianza con</p>
+<img src="img/xentia.jpg" alt="Xentia Partner" style="width:99px;height:40px;object-fit:contain;border-radius:4px">
+</div>
+<aside>Cerramos con el siguiente paso concreto: un piloto pequeño, con una campaña y unos pocos asesores, medido contra la operación actual de Xtendo. Con los resultados priorizamos juntos lo de la hoja de ruta, como el predictivo y Orion. La frase final es la de nuestra página web.</aside>
+</section>
+
+</div>
+<div class="nav"><button id="prev" aria-label="Anterior">‹</button><span id="num"></span><button id="next" aria-label="Siguiente">›</button><button id="fs" aria-label="Pantalla completa">⛶</button></div>
+<script>
+(function(){
+var st=document.getElementById('stage'),S=[].slice.call(st.children),i=0;
+[].forEach.call(st.querySelectorAll('table[style*="padding"]'),function(t){var m=t.style.padding;t.style.padding='';[].forEach.call(t.querySelectorAll('td,th'),function(c){c.style.padding=m})});
+[].forEach.call(st.querySelectorAll('table:not([data-p])'),function(t){[].forEach.call(t.querySelectorAll('td,th'),function(c){if(!c.style.padding)c.style.padding='0.35em 0.6em'})});
+function fit(){var s=Math.min(innerWidth/1920,innerHeight/1080);st.style.transform='translate(-50%,-50%) scale('+s+')'}
+function go(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(x,k){x.classList.toggle('on',k===i)});document.getElementById('num').textContent=(i+1)+' / '+S.length;try{history.replaceState(null,'','#'+(i+1))}catch(e){}}
+addEventListener('resize',fit);addEventListener('hashchange',function(){var n=parseInt(location.hash.slice(1),10);if(n&&n-1!==i)go(n-1)});
+addEventListener('keydown',function(e){if(['ArrowRight','PageDown',' '].indexOf(e.key)>=0){e.preventDefault();go(i+1)}if(['ArrowLeft','PageUp'].indexOf(e.key)>=0){e.preventDefault();go(i-1)}if(e.key==='f')fs()});
+document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
+function fs(){var d=document.documentElement;if(!document.fullscreenElement&&d.requestFullscreen)d.requestFullscreen();else if(document.exitFullscreen)document.exitFullscreen()}
+document.getElementById('fs').onclick=fs;
+var h=parseInt(location.hash.slice(1),10);fit();go(h?h-1:0);
+})();
+</script></body></html>

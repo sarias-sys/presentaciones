@@ -1,0 +1,291 @@
+pedido,linea,producto,valor,concepto
+P-23430,+591 7300 5047,Postpago nuevo,110,Comisión
+P-23436,+591 7300 5089,Portabilidad postpago,150,Comisión
+P-23438,+591 7300 5103,Prepago con recarga,30,Comisión
+P-23441,+591 7300 5124,Postpago nuevo,110,Comisión
+P-23442,+591 7300 5131,Portabilidad postpago,150,Comisión
+P-23443,+591 7300 5138,Postpago nuevo,110,Comisión
+P-23444,+591 7300 5145,Postpago nuevo,110,Comisión
+P-23447,+591 7300 5166,Portabilidad postpago,150,Comisión
+P-23448,+591 7300 5173,Postpago nuevo,110,Comisión
+P-23451,+591 7300 5194,Portabilidad postpago,150,Comisión
+P-23452,+591 7300 5201,Postpago nuevo,110,Comisión
+P-23453,+591 7300 5208,Postpago nuevo,110,Comisión
+P-23454,+591 7300 5215,Postpago nuevo,110,Comisión
+P-23455,+591 7300 5222,Portabilidad postpago,150,Comisión
+P-23456,+591 7300 5229,Portabilidad postpago,150,Comisión
+P-23458,+591 7300 5243,Portabilidad postpago,150,Comisión
+P-23460,+591 7300 5257,Prepago con recarga,40,Comisión
+P-23461,+591 7300 5264,Postpago nuevo,110,Comisión
+P-23462,+591 7300 5271,Postpago nuevo,110,Comisión
+P-23463,+591 7300 5278,Portabilidad postpago,150,Comisión
+P-23464,+591 7300 5285,Prepago con recarga,40,Comisión
+P-23465,+591 7300 5292,Portabilidad postpago,150,Comisión
+P-23467,+591 7300 5306,Portabilidad postpago,150,Comisión
+P-23469,+591 7300 5320,Prepago con recarga,40,Comisión
+P-23471,+591 7300 5334,Postpago nuevo,110,Comisión
+P-23472,+591 7300 5341,Portabilidad postpago,150,Comisión
+P-23473,+591 7300 5348,Postpago nuevo,110,Comisión
+P-23474,+591 7300 5355,Prepago con recarga,40,Comisión
+P-23475,+591 7300 5362,Postpago nuevo,110,Comisión
+P-23476,+591 7300 5369,Postpago nuevo,110,Comisión
+P-23477,+591 7300 5376,Portabilidad postpago,150,Comisión
+P-23478,+591 7300 5383,Portabilidad postpago,150,Comisión
+P-23479,+591 7300 5390,Prepago con recarga,40,Comisión
+P-23480,+591 7300 5397,Portabilidad postpago,150,Comisión
+P-23481,+591 7300 5404,Postpago nuevo,80,Comisión
+P-23482,+591 7300 5411,Postpago nuevo,110,Comisión
+P-23484,+591 7300 5425,Postpago nuevo,110,Comisión
+P-23485,+591 7300 5432,Portabilidad postpago,150,Comisión
+P-23487,+591 7300 5446,Postpago nuevo,110,Comisión
+P-23488,+591 7300 5453,Prepago con recarga,40,Comisión
+P-23489,+591 7300 5460,Postpago nuevo,110,Comisión
+P-23490,+591 7300 5467,Prepago con recarga,40,Comisión
+P-23491,+591 7300 5474,Postpago nuevo,110,Comisión
+P-23493,+591 7300 5488,Portabilidad postpago,150,Comisión
+P-23494,+591 7300 5495,Postpago nuevo,110,Comisión
+P-23496,+591 7300 5509,Portabilidad postpago,150,Comisión
+P-23497,+591 7300 5516,Postpago nuevo,110,Comisión
+P-23499,+591 7300 5530,Postpago nuevo,110,Comisión
+P-23500,+591 7300 5537,Postpago nuevo,110,Comisión
+P-23501,+591 7300 5544,Postpago nuevo,110,Comisión
+P-23502,+591 7300 5551,Portabilidad postpago,150,Comisión
+P-23505,+591 7300 5572,Portabilidad postpago,150,Comisión
+P-23507,+591 7300 5586,Postpago nuevo,110,Comisión
+P-23508,+591 7300 5593,Prepago con recarga,40,Comisión
+P-23510,+591 7300 5607,Postpago nuevo,110,Comisión
+P-23511,+591 7300 5614,Portabilidad postpago,150,Comisión
+P-23512,+591 7300 5621,Postpago nuevo,110,Comisión
+P-23513,+591 7300 5628,Portabilidad postpago,150,Comisión
+P-23516,+591 7300 5649,Prepago con recarga,40,Comisión
+P-23518,+591 7300 5663,Portabilidad postpago,150,Comisión
+P-23519,+591 7300 5670,Portabilidad postpago,150,Comisión
+P-23521,+591 7300 5684,Prepago con recarga,40,Comisión
+P-23524,+591 7300 5705,Portabilidad postpago,150,Comisión
+P-23525,+591 7300 5712,Postpago nuevo,110,Comisión
+P-23527,+591 7300 5726,Portabilidad postpago,150,Comisión
+P-23528,+591 7300 5733,Portabilidad postpago,150,Comisión
+P-23529,+591 7300 5740,Prepago con recarga,40,Comisión
+P-23531,+591 7300 5754,Portabilidad postpago,150,Comisión
+P-23532,+591 7300 5761,Postpago nuevo,110,Comisión
+P-23533,+591 7300 5768,Portabilidad postpago,150,Comisión
+P-23534,+591 7300 5775,Portabilidad postpago,150,Comisión
+P-23535,+591 7300 5782,Postpago nuevo,110,Comisión
+P-23536,+591 7300 5789,Prepago con recarga,40,Comisión
+P-23537,+591 7300 5796,Postpago nuevo,110,Comisión
+P-23538,+591 7300 5803,Portabilidad postpago,150,Comisión
+P-23539,+591 7300 5810,Portabilidad postpago,120,Comisión
+P-23540,+591 7300 5817,Portabilidad postpago,120,Comisión
+P-23542,+591 7300 5831,Postpago nuevo,110,Comisión
+P-23544,+591 7300 5845,Portabilidad postpago,150,Comisión
+P-23545,+591 7300 5852,Postpago nuevo,110,Comisión
+P-23547,+591 7300 5866,Postpago nuevo,110,Comisión
+P-23549,+591 7300 5880,Portabilidad postpago,150,Comisión
+P-23551,+591 7300 5894,Postpago nuevo,110,Comisión
+P-23552,+591 7300 5901,Portabilidad postpago,150,Comisión
+P-23555,+591 7300 5922,Prepago con recarga,40,Comisión
+P-23558,+591 7300 5943,Portabilidad postpago,150,Comisión
+P-23560,+591 7300 5957,Portabilidad postpago,150,Comisión
+P-23561,+591 7300 5964,Portabilidad postpago,150,Comisión
+P-23562,+591 7300 5971,Portabilidad postpago,120,Comisión
+P-23566,+591 7300 5999,Portabilidad postpago,150,Comisión
+P-23567,+591 7300 6006,Portabilidad postpago,150,Comisión
+P-23569,+591 7300 6020,Postpago nuevo,110,Comisión
+P-23570,+591 7300 6027,Postpago nuevo,110,Comisión
+P-23571,+591 7300 6034,Portabilidad postpago,150,Comisión
+P-23572,+591 7300 6041,Portabilidad postpago,150,Comisión
+P-23575,+591 7300 6062,Portabilidad postpago,120,Comisión
+P-23576,+591 7300 6069,Prepago con recarga,40,Comisión
+P-23577,+591 7300 6076,Prepago con recarga,40,Comisión
+P-23578,+591 7300 6083,Prepago con recarga,40,Comisión
+P-23580,+591 7300 6097,Portabilidad postpago,150,Comisión
+P-23581,+591 7300 6104,Postpago nuevo,110,Comisión
+P-23583,+591 7300 6118,Portabilidad postpago,150,Comisión
+P-23584,+591 7300 6125,Postpago nuevo,110,Comisión
+P-23586,+591 7300 6139,Prepago con recarga,40,Comisión
+P-23588,+591 7300 6153,Postpago nuevo,110,Comisión
+P-23589,+591 7300 6160,Postpago nuevo,110,Comisión
+P-23590,+591 7300 6167,Portabilidad postpago,150,Comisión
+P-23591,+591 7300 6174,Postpago nuevo,110,Comisión
+P-23592,+591 7300 6181,Postpago nuevo,110,Comisión
+P-23594,+591 7300 6195,Prepago con recarga,40,Comisión
+P-23595,+591 7300 6202,Postpago nuevo,110,Comisión
+P-23596,+591 7300 6209,Postpago nuevo,110,Comisión
+P-23598,+591 7300 6223,Portabilidad postpago,150,Comisión
+P-23604,+591 7300 6265,Portabilidad postpago,150,Comisión
+P-23605,+591 7300 6272,Postpago nuevo,110,Comisión
+P-23607,+591 7300 6286,Portabilidad postpago,150,Comisión
+P-23608,+591 7300 6293,Postpago nuevo,110,Comisión
+P-23609,+591 7300 6300,Prepago con recarga,40,Comisión
+P-23610,+591 7300 6307,Prepago con recarga,40,Comisión
+P-23611,+591 7300 6314,Portabilidad postpago,150,Comisión
+P-23613,+591 7300 6328,Postpago nuevo,110,Comisión
+P-23614,+591 7300 6335,Prepago con recarga,40,Comisión
+P-23617,+591 7300 6356,Portabilidad postpago,150,Comisión
+P-23618,+591 7300 6363,Portabilidad postpago,150,Comisión
+P-23621,+591 7300 6384,Portabilidad postpago,150,Comisión
+P-23622,+591 7300 6391,Portabilidad postpago,120,Comisión
+P-23623,+591 7300 6398,Portabilidad postpago,150,Comisión
+P-23625,+591 7300 6412,Portabilidad postpago,150,Comisión
+P-23626,+591 7300 6419,Portabilidad postpago,150,Comisión
+P-23630,+591 7300 6447,Portabilidad postpago,150,Comisión
+P-23631,+591 7300 6454,Portabilidad postpago,150,Comisión
+P-23632,+591 7300 6461,Postpago nuevo,110,Comisión
+P-23633,+591 7300 6468,Prepago con recarga,40,Comisión
+P-23634,+591 7300 6475,Portabilidad postpago,150,Comisión
+P-23636,+591 7300 6489,Prepago con recarga,40,Comisión
+P-23637,+591 7300 6496,Portabilidad postpago,150,Comisión
+P-23638,+591 7300 6503,Prepago con recarga,40,Comisión
+P-23639,+591 7300 6510,Postpago nuevo,110,Comisión
+P-23640,+591 7300 6517,Postpago nuevo,110,Comisión
+P-23641,+591 7300 6524,Postpago nuevo,110,Comisión
+P-23642,+591 7300 6531,Prepago con recarga,40,Comisión
+P-23644,+591 7300 6545,Postpago nuevo,110,Comisión
+P-23645,+591 7300 6552,Postpago nuevo,110,Comisión
+P-23646,+591 7300 6559,Postpago nuevo,110,Comisión
+P-23647,+591 7300 6566,Postpago nuevo,110,Comisión
+P-23649,+591 7300 6580,Portabilidad postpago,150,Comisión
+P-23650,+591 7300 6587,Portabilidad postpago,150,Comisión
+P-23651,+591 7300 6594,Prepago con recarga,40,Comisión
+P-23652,+591 7300 6601,Prepago con recarga,40,Comisión
+P-23653,+591 7300 6608,Portabilidad postpago,150,Comisión
+P-23654,+591 7300 6615,Portabilidad postpago,150,Comisión
+P-23655,+591 7300 6622,Postpago nuevo,110,Comisión
+P-23656,+591 7300 6629,Postpago nuevo,110,Comisión
+P-23657,+591 7300 6636,Prepago con recarga,40,Comisión
+P-23658,+591 7300 6643,Postpago nuevo,110,Comisión
+P-23664,+591 7300 6685,Postpago nuevo,110,Comisión
+P-23665,+591 7300 6692,Portabilidad postpago,150,Comisión
+P-23666,+591 7300 6699,Portabilidad postpago,150,Comisión
+P-23667,+591 7300 6706,Portabilidad postpago,150,Comisión
+P-23668,+591 7300 6713,Prepago con recarga,40,Comisión
+P-23669,+591 7300 6720,Postpago nuevo,110,Comisión
+P-23670,+591 7300 6727,Postpago nuevo,110,Comisión
+P-23671,+591 7300 6734,Postpago nuevo,110,Comisión
+P-23672,+591 7300 6741,Portabilidad postpago,150,Comisión
+P-23674,+591 7300 6755,Prepago con recarga,40,Comisión
+P-23675,+591 7300 6762,Postpago nuevo,110,Comisión
+P-23676,+591 7300 6769,Prepago con recarga,40,Comisión
+P-23677,+591 7300 6776,Postpago nuevo,110,Comisión
+P-23680,+591 7300 6797,Prepago con recarga,40,Comisión
+P-23681,+591 7300 6804,Postpago nuevo,110,Comisión
+P-23682,+591 7300 6811,Postpago nuevo,110,Comisión
+P-23683,+591 7300 6818,Portabilidad postpago,150,Comisión
+P-23684,+591 7300 6825,Portabilidad postpago,150,Comisión
+P-23685,+591 7300 6832,Portabilidad postpago,150,Comisión
+P-23686,+591 7300 6839,Prepago con recarga,40,Comisión
+P-23687,+591 7300 6846,Portabilidad postpago,150,Comisión
+P-23689,+591 7300 6860,Postpago nuevo,110,Comisión
+P-23690,+591 7300 6867,Prepago con recarga,40,Comisión
+P-23691,+591 7300 6874,Prepago con recarga,40,Comisión
+P-23692,+591 7300 6881,Portabilidad postpago,150,Comisión
+P-23693,+591 7300 6888,Postpago nuevo,110,Comisión
+P-23694,+591 7300 6895,Postpago nuevo,110,Comisión
+P-23695,+591 7300 6902,Portabilidad postpago,150,Comisión
+P-23696,+591 7300 6909,Postpago nuevo,110,Comisión
+P-23697,+591 7300 6916,Prepago con recarga,40,Comisión
+P-23698,+591 7300 6923,Prepago con recarga,40,Comisión
+P-23700,+591 7300 6937,Portabilidad postpago,150,Comisión
+P-23703,+591 7300 6958,Prepago con recarga,40,Comisión
+P-23704,+591 7300 6965,Postpago nuevo,110,Comisión
+P-23706,+591 7300 6979,Portabilidad postpago,150,Comisión
+P-23707,+591 7300 6986,Portabilidad postpago,150,Comisión
+P-23708,+591 7300 6993,Portabilidad postpago,150,Comisión
+P-23709,+591 7300 7000,Portabilidad postpago,150,Comisión
+P-23710,+591 7300 7007,Portabilidad postpago,150,Comisión
+P-23711,+591 7300 7014,Portabilidad postpago,150,Comisión
+P-23712,+591 7300 7021,Portabilidad postpago,150,Comisión
+P-23715,+591 7300 7042,Prepago con recarga,40,Comisión
+P-23717,+591 7300 7056,Portabilidad postpago,150,Comisión
+P-23718,+591 7300 7063,Prepago con recarga,40,Comisión
+P-23719,+591 7300 7070,Prepago con recarga,40,Comisión
+P-23721,+591 7300 7084,Postpago nuevo,110,Comisión
+P-23723,+591 7300 7098,Prepago con recarga,40,Comisión
+P-23724,+591 7300 7105,Portabilidad postpago,150,Comisión
+P-23725,+591 7300 7112,Postpago nuevo,110,Comisión
+P-23727,+591 7300 7126,Portabilidad postpago,150,Comisión
+P-23729,+591 7300 7140,Portabilidad postpago,150,Comisión
+P-23731,+591 7300 7154,Postpago nuevo,110,Comisión
+P-23732,+591 7300 7161,Prepago con recarga,40,Comisión
+P-23734,+591 7300 7175,Portabilidad postpago,150,Comisión
+P-23736,+591 7300 7189,Portabilidad postpago,150,Comisión
+P-23737,+591 7300 7196,Prepago con recarga,40,Comisión
+P-23741,+591 7300 7224,Portabilidad postpago,150,Comisión
+P-23742,+591 7300 7231,Portabilidad postpago,150,Comisión
+P-23743,+591 7300 7238,Portabilidad postpago,150,Comisión
+P-23744,+591 7300 7245,Postpago nuevo,110,Comisión
+P-23749,+591 7300 7280,Portabilidad postpago,150,Comisión
+P-23750,+591 7300 7287,Postpago nuevo,110,Comisión
+P-23751,+591 7300 7294,Portabilidad postpago,150,Comisión
+P-23752,+591 7300 7301,Portabilidad postpago,150,Comisión
+P-23753,+591 7300 7308,Postpago nuevo,110,Comisión
+P-23755,+591 7300 7322,Prepago con recarga,40,Comisión
+P-23756,+591 7300 7329,Portabilidad postpago,150,Comisión
+P-23757,+591 7300 7336,Postpago nuevo,110,Comisión
+P-23758,+591 7300 7343,Postpago nuevo,110,Comisión
+P-23759,+591 7300 7350,Prepago con recarga,40,Comisión
+P-23760,+591 7300 7357,Portabilidad postpago,150,Comisión
+P-23761,+591 7300 7364,Prepago con recarga,40,Comisión
+P-23762,+591 7300 7371,Postpago nuevo,110,Comisión
+P-23763,+591 7300 7378,Portabilidad postpago,150,Comisión
+P-23764,+591 7300 7385,Postpago nuevo,110,Comisión
+P-23765,+591 7300 7392,Portabilidad postpago,150,Comisión
+P-23766,+591 7300 7399,Prepago con recarga,40,Comisión
+P-23767,+591 7300 7406,Postpago nuevo,110,Comisión
+P-23769,+591 7300 7420,Portabilidad postpago,150,Comisión
+P-23770,+591 7300 7427,Postpago nuevo,110,Comisión
+P-23771,+591 7300 7434,Portabilidad postpago,150,Comisión
+P-23772,+591 7300 7441,Prepago con recarga,40,Comisión
+P-23773,+591 7300 7448,Prepago con recarga,40,Comisión
+P-23774,+591 7300 7455,Portabilidad postpago,150,Comisión
+P-23775,+591 7300 7462,Postpago nuevo,110,Comisión
+P-23776,+591 7300 7469,Prepago con recarga,40,Comisión
+P-23777,+591 7300 7476,Portabilidad postpago,150,Comisión
+P-23778,+591 7300 7483,Portabilidad postpago,150,Comisión
+P-23781,+591 7300 7504,Portabilidad postpago,150,Comisión
+P-23782,+591 7300 7511,Prepago con recarga,40,Comisión
+P-23783,+591 7300 7518,Prepago con recarga,40,Comisión
+P-23786,+591 7300 7539,Portabilidad postpago,150,Comisión
+P-23789,+591 7300 7560,Postpago nuevo,110,Comisión
+P-23792,+591 7300 7581,Portabilidad postpago,150,Comisión
+P-23793,+591 7300 7588,Portabilidad postpago,150,Comisión
+P-23794,+591 7300 7595,Prepago con recarga,40,Comisión
+P-23795,+591 7300 7602,Postpago nuevo,110,Comisión
+P-23797,+591 7300 7616,Prepago con recarga,40,Comisión
+P-23798,+591 7300 7623,Postpago nuevo,110,Comisión
+P-23801,+591 7300 7644,Postpago nuevo,110,Comisión
+P-23802,+591 7300 7651,Portabilidad postpago,150,Comisión
+P-23803,+591 7300 7658,Postpago nuevo,110,Comisión
+P-23804,+591 7300 7665,Portabilidad postpago,120,Comisión
+P-23806,+591 7300 7679,Postpago nuevo,110,Comisión
+P-23807,+591 7300 7686,Portabilidad postpago,150,Comisión
+P-23808,+591 7300 7693,Portabilidad postpago,150,Comisión
+P-23811,+591 7300 7714,Prepago con recarga,40,Comisión
+P-23813,+591 7300 7728,Postpago nuevo,110,Comisión
+P-23814,+591 7300 7735,Postpago nuevo,110,Comisión
+P-23816,+591 7300 7749,Postpago nuevo,80,Comisión
+P-23817,+591 7300 7756,Postpago nuevo,110,Comisión
+P-23819,+591 7300 7770,Portabilidad postpago,150,Comisión
+P-23820,+591 7300 7777,Portabilidad postpago,150,Comisión
+P-23821,+591 7300 7784,Portabilidad postpago,150,Comisión
+P-23825,+591 7300 7812,Postpago nuevo,110,Comisión
+P-23826,+591 7300 7819,Portabilidad postpago,150,Comisión
+P-23827,+591 7300 7826,Portabilidad postpago,150,Comisión
+P-23830,+591 7300 7847,Portabilidad postpago,150,Comisión
+P-23832,+591 7300 7861,Prepago con recarga,40,Comisión
+P-23836,+591 7300 7889,Portabilidad postpago,150,Comisión
+P-23837,+591 7300 7896,Postpago nuevo,110,Comisión
+P-23838,+591 7300 7903,Postpago nuevo,110,Comisión
+P-23840,+591 7300 7917,Portabilidad postpago,150,Comisión
+P-23846,+591 7300 7959,Prepago con recarga,40,Comisión
+P-23106,+591 7300 2779,Portabilidad postpago,-150,Descuento por baja temprana
+P-23114,+591 7300 2835,Prepago con recarga,-40,Descuento por baja temprana
+P-23257,+591 7300 3836,Portabilidad postpago,-150,Descuento por baja temprana
+P-23267,+591 7300 3906,Prepago con recarga,-40,Descuento por baja temprana
+P-23358,+591 7300 4543,Portabilidad postpago,-150,Descuento por baja temprana
+P-23492,+591 7300 5481,Postpago nuevo,110,Comisión
+P-23585,+591 7300 6132,Portabilidad postpago,150,Comisión
+P-23627,+591 7300 6426,Postpago nuevo,110,Comisión
+P-23701,+591 7300 6944,Prepago con recarga,40,Comisión
+P-23733,+591 7300 7168,Portabilidad postpago,150,Comisión
+P-91204,+591 7999 0012,Postpago nuevo,110,Comisión
