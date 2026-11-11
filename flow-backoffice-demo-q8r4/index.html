@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Back office Flow</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{color-scheme:light;--bg:#f6f6f4;--surface:#ffffff;--ink:#0a0a0a;--soft:#4a4a4a;--muted:#737373;--line:#e6e6e2;--chip:#f1f1ee;
+--accent:#087a83;--accent-soft:#e3f3f4;--ok:#047857;--ok-l:#7cc4a6;--ok-soft:#e5f4ee;--warn:#b45309;--warn-soft:#fbf0e3;--bad:#b42318;--bad-soft:#fbe9e7;--violet:#5b5fd6;
+--o1:#087a83;--o2:#5b5fd6;--o3:#c2410c}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 'Poppins',system-ui,'Segoe UI',sans-serif;margin:0}
+.app{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:100vh}
+.side{background:var(--surface);border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column;gap:20px;position:sticky;top:0;height:100vh}
+@media (max-width:900px){.app{grid-template-columns:1fr}.side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}.side .by,.nav span{display:none}.nav{flex-direction:row!important;flex-wrap:wrap}}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px}
+.brand i{width:28px;height:28px;border-radius:8px;background:var(--violet);color:#fff;display:grid;place-items:center;font-style:normal;font-size:13px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:10px 10px 4px}
+.nav a{color:var(--soft);text-decoration:none;padding:8px 10px;border-radius:8px;font-size:13.5px;cursor:pointer}
+.nav a.dim{color:#a3a3a3;cursor:default}
+.nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:500}
+.by{margin-top:auto;font-size:12px;color:var(--muted);line-height:1.5}.by b{color:var(--ink);font-weight:600}
+main{padding:24px clamp(16px,3vw,32px) 40px;display:flex;flex-direction:column;gap:16px;min-width:0}
+main>section{display:flex;flex-direction:column;gap:16px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.eyebrow{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
+h1{margin:0;font-size:24px;font-weight:600;letter-spacing:-.01em;text-wrap:balance}
+h2{margin:0;font-size:15px;font-weight:600}
+.sub{margin:4px 0 0;color:var(--muted);max-width:72ch}
+.tag{font:500 11px 'JetBrains Mono',monospace;background:var(--warn-soft);color:var(--warn);padding:4px 8px;border-radius:6px;white-space:nowrap}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;min-width:0}
+.pad{padding:16px 18px}
+.hd{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.hd small{color:var(--muted)}
+/* filtros */
+.fbar{padding:12px 14px;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+.seg button{appearance:none;border:0;border-right:1px solid var(--line);background:var(--surface);font:500 12.5px 'Poppins',sans-serif;color:var(--soft);padding:7px 11px;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.fl{display:flex;flex-direction:column;gap:3px;font-size:11.5px;color:var(--muted)}
+.fl input,.fl select,.sel{font:500 12.5px 'Poppins',sans-serif;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 8px;color:var(--ink);min-width:0;max-width:190px}
+.fsum{font-size:12px;color:var(--muted);margin-left:auto;align-self:center}
+/* kpis */
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+@media (max-width:1200px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:520px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{padding:14px 16px}
+.kpi .l{color:var(--muted);font-size:12px}
+.kpi .v{font-size:25px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.25}
+.kpi .d{font-size:12px;color:var(--muted)}
+.kpi.hl{background:var(--accent-soft);border-color:transparent}.kpi.hl .v{color:var(--accent)}
+.kpi.bad .v{color:var(--bad)}
+.row2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px}
+.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:1100px){.row2,.row3{grid-template-columns:1fr}}
+.ops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:700px){.ops{grid-template-columns:1fr}}
+.op{border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.op .n{display:flex;align-items:center;gap:8px;font-weight:600}
+.sw{width:10px;height:10px;border-radius:3px;display:inline-block}
+.op .big{font-size:28px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1}
+.op .big small{font-size:13px;color:var(--muted);font-weight:400}
+.op dl{display:grid;grid-template-columns:1fr auto;gap:3px 10px;margin:0;font-size:12.5px}
+.op dt{color:var(--muted)}.op dd{margin:0;font-variant-numeric:tabular-nums;text-align:right}
+.meter{height:8px;background:var(--chip);border-radius:4px;overflow:hidden}
+.meter i{display:block;height:100%;border-radius:4px}
+.bars{display:flex;flex-direction:column;gap:9px}
+.bar{display:grid;grid-template-columns:110px minmax(0,1fr) 92px;gap:10px;align-items:center;font-size:13px}
+.bar .t{height:12px;background:var(--chip);border-radius:6px;overflow:hidden;display:flex}
+.bar .t i{display:block;height:100%}
+.bar .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--soft)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:10px}
+.legend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;background:var(--c)}
+.mot{display:flex;flex-direction:column;gap:10px}
+.mot .r{display:grid;grid-template-columns:minmax(0,1fr) 48px 42px;gap:10px;align-items:center;font-size:13px}
+.mot .r .l{display:flex;flex-direction:column;gap:4px;min-width:0}
+.mot .r .n,.mot .r .p{text-align:right;font-variant-numeric:tabular-nums}.mot .r .p{color:var(--muted)}
+.chart{width:100%;height:auto;display:block}
+.chart text{font:11px 'Poppins',sans-serif;fill:var(--muted)}
+.acts{display:flex;flex-direction:column}
+.act{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line)}
+.act:first-child{border-top:0;padding-top:0}
+.act .c{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--accent)}
+.act b{font-weight:500;display:block}.act small{color:var(--muted)}
+.btn{appearance:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:500 12.5px 'Poppins',sans-serif;padding:7px 12px;border-radius:8px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.ideas{display:flex;flex-direction:column;gap:12px}
+.idea{border-left:3px solid var(--accent);padding:2px 0 2px 12px}
+.idea b{display:block;font-weight:500}.idea small{color:var(--muted)}
+.idea .imp{font:500 11px 'JetBrains Mono',monospace;color:var(--ok)}
+.upload{display:flex;align-items:center;gap:16px;padding:14px 16px;flex-wrap:wrap}
+.upload .ic{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:18px}
+.upload .t{flex:1;min-width:220px}.upload b{display:block}.upload small{color:var(--muted)}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start}
+@media (max-width:1100px){.grid{grid-template-columns:1fr}}
+.tbar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);gap:12px;flex-wrap:wrap}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{appearance:none;border:1px solid var(--line);background:var(--chip);color:var(--soft);font:500 12px 'Poppins',sans-serif;padding:5px 10px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-weight:500;color:var(--muted);font-size:12px}
+td.m{font:12.5px 'JetBrains Mono',monospace;color:var(--soft)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+#rows tr{cursor:pointer}#rows tr:hover{background:var(--chip)}#rows tr.sel{background:var(--accent-soft)}
+.b{display:inline-block;font-size:12px;font-weight:500;padding:3px 8px;border-radius:6px}
+.b.ok{background:var(--ok-soft);color:var(--ok)}.b.ac{background:var(--accent-soft);color:var(--accent)}.b.wa{background:var(--warn-soft);color:var(--warn)}.b.ba{background:var(--bad-soft);color:var(--bad)}.b.ne{background:var(--chip);color:var(--soft)}
+.al{color:var(--warn);font-size:12px}.al.bad{color:var(--bad)}
+.det{padding:18px;display:flex;flex-direction:column;gap:14px;position:sticky;top:90px}
+.det h3{margin:0;font-size:17px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:13px;margin:0}
+.kv dt{color:var(--muted)}.kv dd{margin:0}.kv dd.m{font-family:'JetBrains Mono',monospace;font-size:12.5px}
+.tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.tl li{display:grid;grid-template-columns:18px 1fr;gap:10px;padding-bottom:14px;position:relative}
+.tl li::before{content:"";position:absolute;left:8px;top:16px;bottom:0;width:2px;background:var(--line)}
+.tl li:last-child::before{display:none}
+.dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);background:var(--surface);margin-top:2px}
+.tl li.done .dot{background:var(--ok);border-color:var(--ok)}.tl li.now .dot{border-color:var(--warn);background:var(--warn-soft)}.tl li.fail .dot{background:var(--bad);border-color:var(--bad)}
+.tl b{font-weight:500;display:block}.tl small{color:var(--muted);font-size:12px}
+.src{font:500 10.5px 'JetBrains Mono',monospace;color:var(--muted);margin-left:6px}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.note{font-size:12px;color:var(--muted);margin:0}
+.more{padding:12px 16px;text-align:center}
+.claim{padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.claim textarea{width:100%;min-height:220px;font:12.5px/1.55 'JetBrains Mono',monospace;border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--ink);background:var(--bg);resize:vertical}
+.toast{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--ink);color:#fff;padding:10px 14px;border-radius:10px;font-size:13px;z-index:9}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><i>F</i>Flow Omnicanal</div>
+    <nav class="nav" id="nav">
+      <span>Operación</span>
+      <a class="dim">Supervisión</a><a class="dim">Campañas</a>
+      <span>Back office</span>
+      <a data-v="dashboard">Tablero de entregas</a><a data-v="traza">Trazabilidad de ventas</a><a data-v="concilia">Conciliación de pagos</a><a data-v="cargas">Cargas de archivos</a>
+    </nav>
+    <p class="by">Plataforma de <b>DesarrollAndo</b><br>Módulo de back office para BPO</p>
+  </aside>
+  <main>
+    <!-- filtros compartidos por tablero y trazabilidad -->
+    <div class="card fbar" id="fbar">
+      <div class="fl">Periodo<div class="seg" id="presets">
+        <button data-p="hoy">Hoy</button><button data-p="7">7 días</button><button data-p="30">30 días</button><button data-p="mes">Este mes</button><button data-p="mesant">Mes anterior</button><button data-p="todo">Todo</button>
+      </div></div>
+      <label class="fl">Desde<input type="date" id="f-from"></label>
+      <label class="fl">Hasta<input type="date" id="f-to"></label>
+      <label class="fl">Ver por<select id="f-gran"><option value="d">Día</option><option value="w">Semana</option><option value="m">Mes</option></select></label>
+      <label class="fl">Asesor<select id="f-ase"></select></label>
+      <label class="fl">Operador<select id="f-op"></select></label>
+      <label class="fl">Zona<select id="f-dep"></select></label>
+      <button class="btn" id="f-clear">Limpiar</button>
+      <span class="fsum" id="fsum"></span>
+    </div>
+
+    <!-- ============ TABLERO ============ -->
+    <section id="v-dashboard">
+      <div class="top">
+        <div><p class="eyebrow">Back office · Logística</p><h1>Tablero de entregas</h1>
+        <p class="sub">Cómo llegan las SIM al cliente: por fecha, operador logístico, zona y asesor, y por qué no se entregan.</p></div>
+        <span class="tag">PROPUESTA · DATOS DE PRUEBA</span>
+      </div>
+      <div class="kpis" id="dk"></div>
+      <div class="card pad">
+        <div class="hd"><h2>Ventas y resultado en el tiempo</h2><small id="trend-sub">Por fecha de venta</small></div>
+        <div class="tw"><svg class="chart" id="trend" viewBox="0 0 960 250" role="img" aria-label="Ventas por periodo según su resultado"></svg></div>
+        <div class="legend"><span style="--c:var(--accent)">Activada</span><span style="--c:var(--ok-l)">Entregada sin activar</span><span style="--c:var(--warn)">En proceso</span><span style="--c:var(--bad)">Caída (rechazo o devolución)</span><span style="--c:var(--ink)">— % venta neta</span></div>
+      </div>
+      <div class="card pad">
+        <div class="hd"><h2>Por operador logístico</h2><small>Operadores ficticios</small></div>
+        <div class="ops" id="ops"></div>
+      </div>
+      <div class="row2">
+        <div class="card pad">
+          <div class="hd"><h2>Entregas por zona</h2><small>Sobre lo despachado</small></div>
+          <div class="bars" id="deps"></div>
+          <div class="legend"><span style="--c:var(--ok)">Entregado</span><span style="--c:var(--warn)">En ruta</span><span style="--c:var(--bad)">No entregado</span></div>
+        </div>
+        <div class="card pad">
+          <div class="hd"><h2>Motivos de no entrega</h2><small id="mot-sub"></small></div>
+          <div class="mot" id="mot"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="tbar"><h2>Por asesor</h2><small class="note">Clic en un asesor para filtrar</small></div>
+        <div class="tw"><table style="min-width:860px"><thead><tr><th>Asesor</th><th class="n">Ventas</th><th class="n">Rechazadas</th><th class="n">Entregadas</th><th class="n">Activadas</th><th class="n">Venta neta</th><th class="n">Devueltas</th><th>Principal motivo de caída</th></tr></thead><tbody id="ase"></tbody></table></div>
+      </div>
+      <div class="row2">
+        <div class="card pad"><div class="hd"><h2>Próximas acciones</h2><small>Hoy, 11/11</small></div><div class="acts" id="acts"></div></div>
+        <div class="card pad"><div class="hd"><h2>Oportunidades de mejora</h2><small>Calculadas con el filtro actual</small></div><div class="ideas" id="ideas"></div></div>
+      </div>
+      <p class="note">Asesores, operadores, cifras y motivos son de prueba. En el piloto se calculan con las sábanas reales de cada operador y las ventas de Flow. Las fechas filtran por fecha de venta.</p>
+    </section>
+
+    <!-- ============ TRAZABILIDAD ============ -->
+    <section id="v-traza" hidden>
+      <div class="top">
+        <div><p class="eyebrow">Back office · Posventa</p><h1>Trazabilidad de ventas</h1>
+        <p class="sub">Cada venta de Flow se cruza con la sábana del operador logístico y con la activación de la SIM.</p></div>
+        <span class="tag">PROPUESTA · DATOS DE PRUEBA</span>
+      </div>
+      <div class="card upload">
+        <div class="ic">⇪</div>
+        <div class="t"><b>Sábana del operador logístico</b><small id="upinfo">Última carga: sabana_rapido-express_11-11.xlsx · 212 filas · 210 cruzadas</small></div>
+        <label class="btn pri">Cargar sábana (CSV)<input id="file" type="file" accept=".csv,text/csv" hidden></label>
+      </div>
+      <div class="kpis" id="tk"></div>
+      <div class="grid">
+        <div class="card">
+          <div class="tbar"><div class="chips" id="chips"></div><span class="note" id="count"></span></div>
+          <div class="tw"><table style="min-width:980px">
+            <thead><tr><th>Pedido</th><th>Fecha</th><th>Cliente</th><th>Línea</th><th>SIM (ICCID)</th><th>Asesor</th><th>Operador</th><th>Estado</th><th>Alerta</th></tr></thead>
+            <tbody id="rows"></tbody></table></div>
+          <div class="more" id="more"></div>
+        </div>
+        <div class="card det" id="det"></div>
+      </div>
+      <p class="note">Números, SIM, nombres y guías son de prueba. Entrega: sábana del operador logístico. Venta y validación: Flow. Activación: reporte del operador o API.</p>
+    </section>
+
+    <!-- ============ CONCILIACIÓN ============ -->
+    <section id="v-concilia" hidden>
+      <div class="top">
+        <div><p class="eyebrow">Back office · Facturación</p><h1>Conciliación de pagos</h1>
+        <p class="sub">El cliente envía cada mes la sábana de lo que va a pagar. Se cruza con las ventas activadas en Flow y quedan a la vista las diferencias y lo que hay que reclamar.</p></div>
+        <span class="tag">PROPUESTA · DATOS DE PRUEBA</span>
+      </div>
+      <div class="card upload">
+        <div class="ic">⇄</div>
+        <div class="t"><b>Sábana de liquidación del cliente</b><small id="liqinfo"></small></div>
+        <label class="fl">Mes liquidado<select class="sel" id="c-mes"><option value="7">Agosto 2026</option><option value="8">Septiembre 2026</option><option value="9" selected>Octubre 2026</option></select></label>
+        <label class="btn pri">Cargar liquidación (CSV)<input id="lfile" type="file" accept=".csv,text/csv" hidden></label>
+      </div>
+      <div class="kpis" id="ck"></div>
+      <div class="card">
+        <div class="tbar"><div class="chips" id="cchips"></div><button class="btn pri" id="mkclaim">Preparar reclamación</button></div>
+        <div class="tw"><table style="min-width:1080px">
+          <thead><tr><th></th><th>Pedido</th><th>Línea</th><th>Producto</th><th>Asesor</th><th>Activación</th><th class="n">Esperado</th><th class="n">Liquidado</th><th class="n">Diferencia</th><th>Hallazgo</th><th>Acción</th></tr></thead>
+          <tbody id="crows"></tbody></table></div>
+        <div class="more" id="cmore"></div>
+      </div>
+      <div class="card claim" id="claim" hidden>
+        <div class="hd" style="margin:0"><h2>Reclamación lista para enviar al cliente</h2><div class="btns"><button class="btn" id="copy">Copiar texto</button><button class="btn" id="closeclaim">Cerrar</button></div></div>
+        <textarea id="claimtxt" readonly></textarea>
+        <p class="note">Se adjunta el detalle por pedido con la grabación de la venta y la fecha de activación como soporte.</p>
+      </div>
+      <div class="row3">
+        <div class="card pad"><h2>Tarifas acordadas (prueba)</h2><p class="note" style="margin-top:8px;font-size:13px;line-height:1.8" id="tarifas"></p></div>
+        <div class="card pad"><h2>Cómo se cruza</h2><p class="note" style="margin-top:8px;font-size:13px;line-height:1.7">Por número de pedido; si no viene, por línea. Se compara contra las ventas activadas en el mes y contra la tarifa acordada por producto.</p></div>
+        <div class="card pad"><h2>Columnas de la sábana</h2><p class="note" style="margin-top:8px;font-size:13px;line-height:1.7">pedido · línea · producto · valor · concepto (comisión o descuento). Cada cliente se mapea una vez a su formato.</p></div>
+      </div>
+    </section>
+
+    <!-- ============ CARGAS ============ -->
+    <section id="v-cargas" hidden>
+      <div class="top">
+        <div><p class="eyebrow">Back office · Archivos</p><h1>Cargas de archivos</h1>
+        <p class="sub">Las sábanas de los operadores logísticos y la liquidación del cliente. La plataforma valida cada archivo, lo cruza y avisa lo que no cuadra.</p></div>
+        <span class="tag">PROPUESTA · DATOS DE PRUEBA</span>
+      </div>
+      <div class="card"><div class="tw"><table style="min-width:820px">
+        <thead><tr><th>Fecha</th><th>Origen</th><th>Archivo</th><th class="n">Filas</th><th class="n">Cruzadas</th><th class="n">Sin venta</th><th class="n">Errores</th><th>Estado</th></tr></thead>
+        <tbody>
+          <tr><td>11/11 07:40</td><td>Rápido Express</td><td class="m">sabana_rapido-express_11-11.xlsx</td><td class="n">212</td><td class="n">210</td><td class="n">2</td><td class="n">0</td><td><span class="b ok">Procesada</span></td></tr>
+          <tr><td>11/11 08:05</td><td>Andes Logística</td><td class="m">andes_reporte_20261111.csv</td><td class="n">174</td><td class="n">168</td><td class="n">4</td><td class="n">2</td><td><span class="b wa">Con observaciones</span></td></tr>
+          <tr><td>11/11 09:12</td><td>Ruta Sur Courier</td><td class="m">rutasur_entregas.xlsx</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td><span class="b ba">Pendiente de envío</span></td></tr>
+          <tr><td>05/11 16:20</td><td>Cliente · liquidación</td><td class="m">liquidacion_octubre_2026.xlsx</td><td class="n" id="cg-n">—</td><td class="n" id="cg-ok">—</td><td class="n" id="cg-sv">—</td><td class="n">0</td><td><span class="b wa">Con desviaciones</span></td></tr>
+        </tbody></table></div></div>
+      <div class="card pad"><h2>Archivos de ejemplo para probar</h2><p class="note" style="margin-top:8px;font-size:13px;line-height:1.8">Descárguelos y cárguelos en Trazabilidad o en Conciliación: <a href="sabana-prueba.csv">sábana logística de prueba</a> · <a href="liquidacion-prueba-octubre.csv">liquidación de octubre de prueba</a></p></div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var nf=new Intl.NumberFormat('es-CO');
+function bs(x){return '$ '+nf.format(Math.round(x))}
+function pc(a,b){return b?Math.round(a/b*100)+' %':'—'}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function pickW(R,w){var s=0,i;for(i=0;i<w.length;i++)s+=w[i];var r=R()*s;for(i=0;i<w.length;i++){r-=w[i];if(r<0)return i}return w.length-1}
+
+/* ---------- fechas: día 0 = 01/08/2026, hoy = 11/11/2026 ---------- */
+var BASE=Date.UTC(2026,7,1),TODAY=102,MES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+function dObj(i){return new Date(BASE+i*864e5)}
+function p2(n){return(n<10?'0':'')+n}
+function dt(i){var x=dObj(i);return p2(x.getUTCDate())+'/'+p2(x.getUTCMonth()+1)}
+function iso(i){var x=dObj(i);return x.getUTCFullYear()+'-'+p2(x.getUTCMonth()+1)+'-'+p2(x.getUTCDate())}
+function fromIso(s){var a=s.split('-');return Math.round((Date.UTC(+a[0],a[1]-1,+a[2])-BASE)/864e5)}
+function mon(i){return dObj(i).getUTCMonth()}
+function dow(i){return dObj(i).getUTCDay()}
+
+/* ---------- catálogos de prueba ---------- */
+var DEPS=['Capital','Norte','Centro','Occidente','Oriente','Costa','Sur','Llanos','Frontera'],DW=[380,300,240,70,60,70,60,35,25],DF=[1,.97,.96,.93,.91,.88,.84,.76,.7];
+var OPN=['Rápido Express','Andes Logística','Ruta Sur Courier'],OPC=['var(--o1)','var(--o2)','var(--o3)'],OPL=['RX','AN','RS'];
+var OPW=[[6,2,2],[2,6,2],[6,3,1],[3,4,3],[3,3,4],[2,6,2],[2,5,3],[1,1,8],[1,1,8]],OPB=[.93,.86,.8],OPD=[1.8,2.3,2.7],OPV=[.86,.79,.72];
+var ASE=[['Ana Rojas',1.2,.7,1,.8],['Luis Vargas',1,1,1,1],['Carla Méndez',1.1,.8,.8,1],['Jorge Quispe',.9,1.6,1.7,1.4],['Paola Suárez',1,1,1,1.6],['Diego Flores',.8,1.3,1,1],['Rocío Mamani',1.1,.9,1.2,.9],['Marco Gutiérrez',.9,1.8,1.3,1.2]].map(function(a){return{n:a[0],v:a[1],q:a[2],dir:a[3],doc:a[4]}});
+var MOT=['Cliente ausente','Dirección incompleta o errada','Cliente rechaza el pedido','Documento no coincide con el titular','Zona sin cobertura o de riesgo','Otros'],MW=[46,38,24,19,13,8];
+var PROD=[['Portabilidad postpago',60000],['Postpago nuevo',45000],['Prepago con recarga',18000]],PW=[45,35,20];
+
+/* ---------- ventas de prueba ---------- */
+var D=[],R=mulberry(20261111),id=22710;
+for(var d=0;d<=TODAY;d++){
+  var wd=dow(d),n=wd===0?5+Math.floor(R()*3):(wd===6?9+Math.floor(R()*4):12+Math.floor(R()*6));
+  if(d===TODAY)n=7;
+  for(var k=0;k<n;k++){
+    var a=pickW(R,ASE.map(function(x){return x.v})),dep=pickW(R,DW),pr=pickW(R,PW),A=ASE[a];
+    var s={id:'P-'+(id++),d:d,a:a,dep:dep,pr:pr,op:-1,e:'venta',mot:'',vd:null,dd:null,ed:null,ad:null,pv:false};
+    var i=D.length+1;s.c='Cliente de prueba '+String(i).padStart(4,'0');s.tel=('300'+String(1000000+i*7).slice(-7)).replace(/(\d{3})(\d{3})(\d{4})$/,'$1 $2 $3');s.sim='8900 0000 0000 '+String(10000000+i*13).replace(/(\d{4})(\d{4})/,'$1 $2');
+    D.push(s);
+    if(TODAY-d<1&&R()<.6)continue;
+    if(R()<.045*A.q){s.e='rechazada';s.vd=d;s.mot=R()<.6?'Audio de aceptación incompleto':'Datos del titular incompletos';continue}
+    s.vd=d+(R()<.7?0:1);if(s.vd>TODAY)s.vd=TODAY;s.e='validada';
+    var dd=s.vd+1+(R()<.03?2:0);if(dd>TODAY||(dd===TODAY&&R()<.5))continue;
+    s.dd=dd;s.op=pickW(R,OPW[dep]);s.e='despachada';s.g=OPL[s.op]+'-'+s.id.slice(2);
+    var dur=Math.max(1,Math.round(OPD[s.op]+(R()-.5)*2)),end=dd+dur;
+    var ok=R()<OPB[s.op]*DF[dep]*(A.dir>1.3?.95:1);
+    if(end>TODAY){s.e=dd===TODAY?'despachada':'ruta';continue}
+    if(!ok){var w=MW.slice();w[1]*=A.dir;w[3]*=A.doc;if(dep>=7)w[4]*=2.5;s.e='devuelta';s.mot=MOT[pickW(R,w)];s.ed=end;continue}
+    s.e='entregada';s.ed=end;s.pv=R()<OPV[s.op]/.9;
+    var ad=end+(R()<.6?0:(R()<.7?1:2));
+    if(R()<.9&&ad<=TODAY){s.e='activada';s.ad=ad}
+  }
+}
+var BY={};D.forEach(function(s){BY[s.id]=s});
+var DONE=function(s){return s.e==='entregada'||s.e==='activada'},MOV=function(s){return s.e==='despachada'||s.e==='ruta'};
+function alerta(s){
+  if(s.e==='validada'&&TODAY-s.vd>=2)return 'Sin despachar hace '+(TODAY-s.vd)+' días';
+  if(s.e==='entregada'&&TODAY-s.ed>=2)return TODAY-s.ed<=3?'Sin activar hace '+((TODAY-s.ed)*24)+' h':'Sin activar hace '+(TODAY-s.ed)+' días';
+  if(s.e==='ruta'&&TODAY-s.dd>OPD[s.op]+1.5)return 'Entrega demorada';
+  if(s.e==='devuelta'||s.e==='rechazada')return s.mot;
+  return '';
+}
+
+/* ---------- filtros ---------- */
+var F={from:TODAY-29,to:TODAY,gran:'d',a:-1,op:-1,dep:-1,preset:'30'};
+$('f-ase').innerHTML='<option value="-1">Todos</option>'+ASE.map(function(x,i){return '<option value="'+i+'">'+x.n+'</option>'}).join('');
+$('f-op').innerHTML='<option value="-1">Todos</option>'+OPN.map(function(x,i){return '<option value="'+i+'">'+x+'</option>'}).join('');
+$('f-dep').innerHTML='<option value="-1">Todos</option>'+DEPS.map(function(x,i){return '<option value="'+i+'">'+x+'</option>'}).join('');
+['f-from','f-to'].forEach(function(x){$(x).min=iso(0);$(x).max=iso(TODAY)});
+function autoGran(){var r=F.to-F.from;F.gran=r>120?'m':(r>45?'w':'d')}
+function preset(p){F.preset=p;
+  if(p==='hoy'){F.from=F.to=TODAY}else if(p==='7'){F.from=TODAY-6;F.to=TODAY}else if(p==='30'){F.from=TODAY-29;F.to=TODAY}
+  else if(p==='mes'){F.from=fromIso('2026-11-01');F.to=TODAY}else if(p==='mesant'){F.from=fromIso('2026-10-01');F.to=fromIso('2026-10-31')}else{F.from=0;F.to=TODAY}
+  autoGran()}
+function syncInputs(){$('f-from').value=iso(F.from);$('f-to').value=iso(F.to);$('f-gran').value=F.gran;$('f-ase').value=F.a;$('f-op').value=F.op;$('f-dep').value=F.dep;
+  [].forEach.call($('presets').children,function(b){b.setAttribute('aria-pressed',b.dataset.p===F.preset)})}
+function sel(){return D.filter(function(s){return s.d>=F.from&&s.d<=F.to&&(F.a<0||s.a===F.a)&&(F.dep<0||s.dep===F.dep)&&(F.op<0||s.op===F.op)})}
+$('presets').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;preset(b.dataset.p);render()});
+$('f-from').addEventListener('change',function(){if(!this.value)return;F.from=Math.max(0,fromIso(this.value));if(F.from>F.to)F.to=F.from;F.preset='';autoGran();render()});
+$('f-to').addEventListener('change',function(){if(!this.value)return;F.to=Math.min(TODAY,fromIso(this.value));if(F.to<F.from)F.from=F.to;F.preset='';autoGran();render()});
+$('f-gran').addEventListener('change',function(){F.gran=this.value;render()});
+$('f-ase').addEventListener('change',function(){F.a=+this.value;render()});
+$('f-op').addEventListener('change',function(){F.op=+this.value;render()});
+$('f-dep').addEventListener('change',function(){F.dep=+this.value;render()});
+$('f-clear').addEventListener('click',function(){F.a=F.op=F.dep=-1;preset('30');render()});
+
+/* ---------- tablero ---------- */
+function kpiHtml(k){return k.map(function(x){return '<div class="card kpi'+(x[3]?' '+x[3]:'')+'"><div class="l">'+x[0]+'</div><div class="v">'+x[1]+'</div><div class="d">'+x[2]+'</div></div>'}).join('')}
+function dash(S){
+  var desp=S.filter(function(s){return s.dd!==null}),ent=S.filter(DONE),dev=S.filter(function(s){return s.e==='devuelta'}),mov=S.filter(MOV),act=S.filter(function(s){return s.e==='activada'}),rej=S.filter(function(s){return s.e==='rechazada'});
+  var tm=ent.length?ent.reduce(function(t,s){return t+s.ed-s.d},0)/ent.length:0,pv=ent.filter(function(s){return s.pv}).length;
+  $('dk').innerHTML=kpiHtml([['Ventas',nf.format(S.length),rej.length+' rechazadas en validación'],['Despachados',nf.format(desp.length),'a '+new Set(desp.map(function(s){return s.op})).size+' operadores'],['Entregados',nf.format(ent.length),pc(ent.length,desp.length)+' de lo despachado'],['En primera visita',pc(pv,ent.length),'sin reagendar'],['No entregados',nf.format(dev.length),'+ '+mov.length+' en ruta','bad'],['Venta neta',pc(act.length,S.length),nf.format(act.length)+' SIM activadas','hl']]);
+  trend(S);
+  $('ops').innerHTML=OPN.map(function(o,i){var X=desp.filter(function(s){return s.op===i});if(F.op>=0&&F.op!==i)return '<div class="op" style="opacity:.45"><div class="n"><span class="sw" style="background:'+OPC[i]+'"></span>'+o+'</div><small class="note">Fuera del filtro</small></div>';
+    var E=X.filter(DONE),V=X.filter(function(s){return s.e==='devuelta'}),r=E.length+V.length,p=r?Math.round(E.length/r*100):0,t=E.length?(E.reduce(function(a,s){return a+s.ed-s.dd},0)/E.length):0;
+    return '<div class="op"><div class="n"><span class="sw" style="background:'+OPC[i]+'"></span>'+o+'</div><div class="big">'+(r?p+' %':'—')+' <small>entregado</small></div><div class="meter"><i style="width:'+p+'%;background:'+OPC[i]+'"></i></div><dl><dt>Despachados</dt><dd>'+nf.format(X.length)+'</dd><dt>Entregados</dt><dd>'+nf.format(E.length)+'</dd><dt>Devueltos</dt><dd>'+V.length+' · '+pc(V.length,r)+'</dd><dt>Primera visita</dt><dd>'+pc(E.filter(function(s){return s.pv}).length,E.length)+'</dd><dt>Días en entregar</dt><dd>'+t.toFixed(1).replace('.',',')+'</dd><dt>En ruta</dt><dd>'+X.filter(MOV).length+'</dd></dl></div>'}).join('');
+  var dep=DEPS.map(function(n,i){var X=desp.filter(function(s){return s.dep===i});return{n:n,t:X.length,e:X.filter(DONE).length,r:X.filter(MOV).length,v:X.filter(function(s){return s.e==='devuelta'}).length}}).filter(function(x){return x.t}).sort(function(a,b){return b.t-a.t});
+  $('deps').innerHTML=dep.length?dep.map(function(x){var e=x.e/x.t*100,r=x.r/x.t*100,v=x.v/x.t*100;return '<div class="bar"><span>'+x.n+'</span><div class="t" title="'+Math.round(e)+' % entregado · '+Math.round(r)+' % en ruta · '+Math.round(v)+' % no entregado"><i style="width:'+e+'%;background:var(--ok)"></i><i style="width:'+r+'%;background:var(--warn)"></i><i style="width:'+v+'%;background:var(--bad)"></i></div><span class="v">'+Math.round(e)+' % · '+x.t+'</span></div>'}).join(''):'<p class="note">Sin despachos en el filtro.</p>';
+  var mc=MOT.map(function(m){return[m,dev.filter(function(s){return s.mot===m}).length]}).sort(function(a,b){return b[1]-a[1]}),mx=mc[0][1]||1;
+  $('mot-sub').textContent=dev.length+' pedidos devueltos';
+  $('mot').innerHTML=dev.length?mc.map(function(m){return '<div class="r"><div class="l"><span>'+m[0]+'</span><div class="meter"><i style="width:'+(m[1]/mx*100)+'%;background:var(--bad)"></i></div></div><span class="n">'+m[1]+'</span><span class="p">'+pc(m[1],dev.length)+'</span></div>'}).join(''):'<p class="note">Sin devoluciones en el filtro.</p>';
+  $('ase').innerHTML=ASE.map(function(x,i){var X=S.filter(function(s){return s.a===i});if(!X.length)return '';var cai=X.filter(function(s){return s.e==='rechazada'||s.e==='devuelta'}),cnt={};cai.forEach(function(s){cnt[s.mot]=(cnt[s.mot]||0)+1});var top=Object.keys(cnt).sort(function(a,b){return cnt[b]-cnt[a]})[0];
+    var ac=X.filter(function(s){return s.e==='activada'}).length,vn=ac/X.length;
+    return '<tr data-a="'+i+'" style="cursor:pointer"><td><b style="font-weight:500">'+x.n+'</b></td><td class="n">'+X.length+'</td><td class="n">'+X.filter(function(s){return s.e==='rechazada'}).length+'</td><td class="n">'+X.filter(DONE).length+'</td><td class="n">'+ac+'</td><td class="n" style="color:'+(vn<.68?'var(--bad)':'inherit')+'">'+pc(ac,X.length)+'</td><td class="n">'+X.filter(function(s){return s.e==='devuelta'}).length+'</td><td>'+(top?top+' ('+cnt[top]+')':'—')+'</td></tr>'}).join('');
+  var re=D.filter(function(s){return(F.a<0||s.a===F.a)&&(F.op<0||s.op===F.op)&&(F.dep<0||s.dep===F.dep)});
+  var aus=re.filter(function(s){return s.e==='devuelta'&&s.mot==='Cliente ausente'&&TODAY-s.ed<=14}).length,dir=re.filter(function(s){return s.e==='devuelta'&&s.mot==='Dirección incompleta o errada'&&TODAY-s.ed<=14}).length,
+      sa=re.filter(function(s){return s.e==='entregada'&&TODAY-s.ed>=2&&TODAY-s.ed<=30}).length,sd=re.filter(function(s){return s.e==='validada'&&TODAY-s.vd>=2}).length;
+  var ACT=[[aus,'Entregas por reagendar','Cliente ausente, últimos 14 días · WhatsApp con franjas','Enviar WhatsApp'],[dir,'Direcciones por confirmar','Devueltas por dirección, últimos 14 días · llamada del asesor','Crear campaña'],[sa,'Entregadas sin activar hace más de 48 h','Últimos 30 días · recordatorio de activación al cliente','Enviar recordatorio'],[sd,'Validadas sin despachar hace más de 48 h','Escalar al operador logístico','Escalar']];
+  $('acts').innerHTML=ACT.map(function(a){return '<div class="act"><span class="c">'+a[0]+'</span><div><b>'+a[1]+'</b><small>'+a[2]+'</small></div><button class="btn" data-a="'+a[3]+'">'+a[3]+'</button></div>'}).join('');
+  var sh=function(m){return dev.length?dev.filter(function(s){return s.mot===m}).length/dev.length:0},ideas=[];
+  ideas.push(['Agendar la franja de entrega por WhatsApp',Math.round(sh('Cliente ausente')*100)+' % de las no entregas es cliente ausente. Mensaje automático con tres franjas el día del despacho.','Hasta '+Math.round(dev.length*sh('Cliente ausente')*.6)+' entregas más en un periodo igual']);
+  ideas.push(['Confirmar la dirección en la llamada de venta',Math.round(sh('Dirección incompleta o errada')*100)+' % es por dirección. Un paso en el libreto y un WhatsApp con la ubicación antes del despacho.','Hasta '+Math.round(dev.length*sh('Dirección incompleta o errada')*.7)+' entregas más']);
+  var worst=null;desp.length&&[7,8,6,5].forEach(function(dp){OPN.forEach(function(o,oi){var X=desp.filter(function(s){return s.dep===dp&&s.op===oi}),E=X.filter(DONE).length,V=X.filter(function(s){return s.e==='devuelta'}).length;if(E+V>=6){var r=E/(E+V);if(!worst||r<worst.r)worst={r:r,dp:dp,oi:oi,n:E+V}}})});
+  if(worst&&worst.r<.8)ideas.push(['Redistribuir la zona '+DEPS[worst.dp],OPN[worst.oi]+' entrega '+Math.round(worst.r*100)+' % allí ('+worst.n+' pedidos). Probar otro operador en esa zona.','Objetivo: llevarlo al promedio de la operación']);
+  var wa=null;ASE.forEach(function(x,i){var X=S.filter(function(s){return s.a===i}),c=X.filter(function(s){return s.mot==='Documento no coincide con el titular'||s.mot==='Dirección incompleta o errada'||s.e==='rechazada'}).length;if(X.length>=10){var r=c/X.length;if(!wa||r>wa.r)wa={r:r,i:i,c:c}}});
+  if(wa&&F.a<0)ideas.push(['Refuerzo a '+ASE[wa.i].n,wa.c+' de sus ventas se cayeron por datos, dirección o documento ('+Math.round(wa.r*100)+' %). Escuchar sus grabaciones y ajustar el cierre.','Retroalimentación con calidad esta semana']);
+  ideas.push(['Validar el documento del titular en la venta',Math.round(sh('Documento no coincide con el titular')*100)+' % se cae porque el documento no coincide. Foto del documento por WhatsApp antes de validar.','Hasta '+Math.round(dev.length*sh('Documento no coincide con el titular')*.8)+' entregas más']);
+  $('ideas').innerHTML=ideas.slice(0,4).map(function(x){return '<div class="idea"><b>'+x[0]+'</b><small>'+x[1]+'</small><div class="imp">'+x[2]+'</div></div>'}).join('');
+}
+$('ase').addEventListener('click',function(e){var t=e.target.closest('tr[data-a]');if(!t)return;F.a=+t.dataset.a;render();toast('Filtrado por '+ASE[F.a].n)});
+$('acts').addEventListener('click',function(e){var b=e.target.closest('[data-a]');if(b)toast(b.dataset.a+': disponible en el módulo real.')});
+
+function bucket(i){if(F.gran==='d')return i;if(F.gran==='w')return i-((dow(i)+6)%7);var x=dObj(i);return Math.round((Date.UTC(x.getUTCFullYear(),x.getUTCMonth(),1)-BASE)/864e5)}
+function blabel(k){if(F.gran==='d')return dt(k);if(F.gran==='w')return 'Sem '+dt(Math.max(k,0));var m=mon(Math.max(k,0));return MES[m].slice(0,3)}
+function trend(S){
+  var keys=[],map={};for(var i=F.from;i<=F.to;i++){var k=bucket(i);if(!(k in map)){map[k]={a:0,e:0,p:0,c:0,n:0};keys.push(k)}}
+  S.forEach(function(s){var b=map[bucket(s.d)];if(!b)return;b.n++;if(s.e==='activada')b.a++;else if(s.e==='entregada')b.e++;else if(s.e==='rechazada'||s.e==='devuelta')b.c++;else b.p++});
+  var W=960,H=250,L=44,Rr=44,T=14,B=30,pw=W-L-Rr,ph=H-T-B,mx=1;keys.forEach(function(k){mx=Math.max(mx,map[k].n)});
+  var step=mx<=10?2:mx<=40?10:mx<=100?25:mx<=200?50:mx<=500?100:250,top=Math.ceil(mx/step)*step,y=function(v){return T+ph-(v/top)*ph},bw=pw/keys.length,o='';
+  for(var v=0;v<=top;v+=step){o+='<line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="var(--line)"/><text x="'+(L-8)+'" y="'+(y(v)+4)+'" text-anchor="end">'+v+'</text>'}
+  [0,50,100].forEach(function(p){o+='<text x="'+(W-Rr+8)+'" y="'+(T+ph-p/100*ph+4)+'">'+p+' %</text>'});
+  var every=Math.ceil(keys.length/12),line='';
+  keys.forEach(function(k,j){var b=map[k],x=L+j*bw+bw*.15,w=Math.max(1,bw*.7),cur=0;
+    [['a','var(--accent)'],['e','var(--ok-l)'],['p','var(--warn)'],['c','var(--bad)']].forEach(function(z){var h=b[z[0]]/top*ph;if(h>0){o+='<rect x="'+x.toFixed(1)+'" y="'+(y(cur)-h).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'" fill="'+z[1]+'"/>';cur+=b[z[0]]}});
+    o+='<rect x="'+(L+j*bw).toFixed(1)+'" y="'+T+'" width="'+bw.toFixed(1)+'" height="'+ph+'" fill="transparent"><title>'+blabel(k)+': '+b.n+' ventas · '+b.a+' activadas · '+b.e+' entregadas sin activar · '+b.p+' en proceso · '+b.c+' caídas · venta neta '+pc(b.a,b.n)+'</title></rect>';
+    if(b.n){var py=T+ph-(b.a/b.n)*ph;line+=(line?' L':'M')+(L+j*bw+bw/2).toFixed(1)+' '+py.toFixed(1)}
+    if(j%every===0)o+='<text x="'+(L+j*bw+bw/2)+'" y="'+(H-10)+'" text-anchor="middle">'+blabel(k)+'</text>'});
+  if(line)o+='<path d="'+line+'" fill="none" stroke="var(--ink)" stroke-width="1.6"/>';
+  $('trend').innerHTML=o;$('trend-sub').textContent='Por fecha de venta · '+({d:'por día',w:'por semana',m:'por mes'})[F.gran]+' · eje derecho: % venta neta';
+}
+
+/* ---------- trazabilidad ---------- */
+var ST={venta:['Venta registrada','ne'],validada:['Validada','ac'],despachada:['Despachada','ac'],ruta:['En ruta','ac'],entregada:['Entregada','wa'],activada:['Activada','ok'],devuelta:['Devuelta','ba'],rechazada:['Rechazada en validación','ba']};
+var filt='todas',selId=null,lim=40;
+function vis(S){return S.filter(function(r){if(filt==='alerta')return!!alerta(r)&&r.e!=='activada';if(filt==='entregada')return r.e==='entregada';if(filt==='activada')return r.e==='activada';if(filt==='ruta')return MOV(r)||r.e==='validada'||r.e==='venta';if(filt==='caida')return r.e==='devuelta'||r.e==='rechazada';return true}).sort(function(a,b){return b.d-a.d||(a.id<b.id?1:-1)})}
+function traza(S){
+  var n=S.length,c=function(f){return S.filter(f).length},val=c(function(r){return r.vd!==null&&r.e!=='rechazada'}),des=c(function(r){return r.dd!==null}),ent=c(DONE),act=c(function(r){return r.e==='activada'}),cai=c(function(r){return r.e==='devuelta'||r.e==='rechazada'});
+  $('tk').innerHTML=kpiHtml([['Ventas',nf.format(n),'registradas en Flow'],['Validadas',nf.format(val),pc(val,n)+' de las ventas'],['Despachadas',nf.format(des),pc(des,n)],['Entregadas',nf.format(ent),pc(ent,n)],['Activadas',nf.format(act),pc(act,n)],['Venta neta',pc(act,n),cai+' caídas · '+(n-act-cai)+' en proceso','hl']]);
+  var Fx=[['todas','Todas'],['alerta','Con alerta'],['ruta','En proceso'],['entregada','Entregadas sin activar'],['activada','Activadas'],['caida','Devueltas o rechazadas']];
+  $('chips').innerHTML=Fx.map(function(f){return '<button class="chip" data-f="'+f[0]+'" aria-pressed="'+(filt===f[0])+'">'+f[1]+'</button>'}).join('');
+  var v=vis(S);if(!v.some(function(r){return r.id===selId}))selId=v.length?v[0].id:null;
+  $('count').textContent=nf.format(v.length)+' de '+nf.format(n)+' ventas';
+  $('rows').innerHTML=v.slice(0,lim).map(function(r){var s=ST[r.e],al=alerta(r),bad=r.e==='devuelta'||r.e==='rechazada';return '<tr data-p="'+r.id+'" class="'+(r.id===selId?'sel':'')+'"><td class="m">'+r.id+'</td><td>'+dt(r.d)+'</td><td>'+r.c+'</td><td class="m">'+r.tel+'</td><td class="m">'+r.sim+'</td><td>'+ASE[r.a].n+'</td><td>'+(r.op<0?'—':OPN[r.op])+'</td><td><span class="b '+s[1]+'">'+s[0]+'</span></td><td><span class="al'+(bad?' bad':'')+'">'+esc(al)+'</span></td></tr>'}).join('')||'<tr><td colspan="9" class="note">Sin ventas con este filtro.</td></tr>';
+  $('more').innerHTML=v.length>lim?'<button class="btn" id="mbtn">Mostrar 40 más</button>':'';
+  det();
+}
+function det(){var r=BY[selId];if(!r){$('det').innerHTML='<p class="note">Seleccione una venta.</p>';return}
+  var caida=r.e==='devuelta'||r.e==='rechazada',al=alerta(r);
+  var steps=[['Venta registrada',dt(r.d)+' · llamada con grabación · '+ASE[r.a].n,'Flow',true],
+    ['Validada por calidad',r.e==='rechazada'?r.mot:(r.vd!==null?dt(r.vd)+' · audio de aceptación y datos completos':''),'Flow',r.vd!==null,r.e==='rechazada'],
+    ['Despachada',r.dd!==null?dt(r.dd)+' · guía '+r.g+' · '+OPN[r.op]:'','Sábana',r.dd!==null],
+    ['En ruta',r.dd!==null&&r.e!=='despachada'?'Mensajero asignado':'','Sábana',r.dd!==null&&r.e!=='despachada'],
+    ['Entregada',r.e==='devuelta'?dt(r.ed)+' · '+r.mot:(r.ed!==null?dt(r.ed)+(r.pv?' · primera visita':' · segunda visita'):''),'Sábana',r.ed!==null,r.e==='devuelta'],
+    ['SIM activada',r.ad!==null?dt(r.ad)+' · confirmada por el operador':'','Operador',r.ad!==null]];
+  var html='',stop=false,pend=false;steps.forEach(function(s){if(stop)return;var cls=s[4]?'fail':(s[3]?'done':(!pend&&!caida?'now':''));if(!s[3]&&!s[4])pend=true;if(s[4])stop=true;
+    html+='<li class="'+cls+'"><span class="dot"></span><div><b>'+(s[4]&&r.e==='devuelta'?'No entregada':(s[4]?'Rechazada en validación':s[0]))+'<span class="src">'+s[2]+'</span></b><small>'+(s[1]||(cls==='now'?'Pendiente'+(al?' · '+al:''):'—'))+'</small></div></li>'});
+  $('det').innerHTML='<div><p class="eyebrow">'+r.id+'</p><h3>'+r.c+'</h3></div><dl class="kv"><dt>Línea</dt><dd class="m">'+r.tel+'</dd><dt>SIM</dt><dd class="m">'+r.sim+'</dd><dt>Producto</dt><dd>'+PROD[r.pr][0]+'</dd><dt>Asesor</dt><dd>'+ASE[r.a].n+'</dd><dt>Operador</dt><dd>'+(r.op<0?'Sin asignar':OPN[r.op])+'</dd><dt>Zona</dt><dd>'+DEPS[r.dep]+'</dd></dl><ol class="tl">'+html+'</ol><div class="btns"><button class="btn" data-a="Grabación de la venta">Escuchar la venta</button><button class="btn" data-a="WhatsApp de seguimiento">Enviar WhatsApp</button><button class="btn pri" data-a="Gestión de back office">Crear gestión</button></div>'}
+$('chips').addEventListener('click',function(e){var b=e.target.closest('.chip');if(!b)return;filt=b.dataset.f;lim=40;traza(sel())});
+$('rows').addEventListener('click',function(e){var t=e.target.closest('tr[data-p]');if(!t)return;selId=t.dataset.p;[].forEach.call($('rows').children,function(x){x.classList.toggle('sel',x===t)});det()});
+$('more').addEventListener('click',function(e){if(e.target.id==='mbtn'){lim+=40;traza(sel())}});
+$('det').addEventListener('click',function(e){var b=e.target.closest('[data-a]');if(b)toast(b.dataset.a+': disponible en el módulo real.')});
+function parseCSV(t){var L=String(t).split(/\r?\n/).filter(function(x){return x.trim()}),sep=L[0].indexOf(';')>=0?';':',',h=L.shift().toLowerCase().split(sep).map(function(x){return x.trim().normalize('NFD').replace(/[̀-ͯ]/g,'')});
+  return L.map(function(l){var c=l.split(sep),o={};h.forEach(function(k,i){o[k]=(c[i]||'').trim()});return o})}
+$('file').addEventListener('change',function(){var f=this.files[0];if(!f)return;var rd=new FileReader();
+  rd.onload=function(){var rows=parseCSV(rd.result),ok=0,miss=0,mp={'despachado':'despachada','en ruta':'ruta','entregado':'entregada','devuelto':'devuelta','activada':'activada'};
+    rows.forEach(function(c){var r=BY[c.pedido];if(!r){miss++;return}ok++;var e=mp[(c.estado||'').toLowerCase()];if(!e)return;
+      if(r.dd===null){r.dd=TODAY;r.op=r.op<0?0:r.op;r.g=c.guia||OPL[r.op]+'-'+r.id.slice(2)}if(c.guia)r.g=c.guia;
+      if(e==='entregada'||e==='activada'||e==='devuelta'){if(r.ed===null)r.ed=TODAY}if(e==='activada'&&r.ad===null)r.ad=TODAY;if(e==='devuelta')r.mot=c.novedad||'Otros';r.e=e});
+    $('upinfo').textContent=f.name+' · '+rows.length+' filas · '+ok+' cruzadas con ventas · '+miss+' sin venta en Flow';render();toast('Sábana cargada: '+ok+' ventas actualizadas.')};rd.readAsText(f);this.value=''});
+
+/* ---------- conciliación ---------- */
+$('tarifas').innerHTML=PROD.map(function(p){return p[0]+': <b style="color:var(--ink);font-weight:500">'+bs(p[1])+'</b>'}).join('<br>')+'<br>Por SIM activada en el mes.';
+var LIQ={},cfilt='rec',climit=50,picked={};
+function activadas(m){return D.filter(function(s){return s.e==='activada'&&mon(s.ad)===m})}
+function sample(m){var R2=mulberry(900+m),rows=[],ours=activadas(m);
+  ours.forEach(function(s){var r=R2(),t=PROD[s.pr][1];if(r<.035)return;
+    if(r<.06){rows.push({pedido:s.id,linea:s.tel,producto:PROD[s.pr][0],valor:t-(t>=45000?12000:4000),concepto:'Comisión'});return}
+    rows.push({pedido:s.id,linea:s.tel,producto:PROD[s.pr][0],valor:t,concepto:'Comisión'})});
+  var prev=activadas(m-1).length?activadas(m-1):ours;prev.filter(function(){return R2()<.015}).forEach(function(s){rows.push({pedido:s.id,linea:s.tel,producto:PROD[s.pr][0],valor:-PROD[s.pr][1],concepto:'Descuento por baja temprana'})});
+  D.filter(function(s){return mon(s.d)===m&&(s.e==='devuelta'||s.e==='rechazada')}).filter(function(){return R2()<.05}).slice(0,5).forEach(function(s){rows.push({pedido:s.id,linea:s.tel,producto:PROD[s.pr][0],valor:PROD[s.pr][1],concepto:'Comisión'})});
+  rows.push({pedido:'P-91204',linea:'300 999 0012',producto:'Postpago nuevo',valor:45000,concepto:'Comisión'});
+  return rows}
+window.__liqCSV=function(m){return 'pedido,linea,producto,valor,concepto\n'+sample(m).map(function(r){return[r.pedido,r.linea,r.producto,r.valor,r.concepto].join(',')}).join('\n')};
+window.__logCSV=function(){var X=D.filter(function(s){return s.e==='ruta'||s.e==='despachada'}).slice(0,8).concat(D.filter(function(s){return s.e==='entregada'}).slice(-4));
+  var est=['entregado','entregado','devuelto','en ruta','entregado','activada','devuelto','entregado','activada','activada','activada','activada'],nov=['','','Cliente ausente','','','','Dirección incompleta o errada','','','','',''];
+  return 'pedido,estado,guia,novedad\n'+X.map(function(s,i){return[s.id,est[i]||'entregado',s.g||'',nov[i]||''].join(',')}).join('\n')};
+function concilia(){
+  var m=+$('c-mes').value,L=LIQ[m]||{name:'liquidacion_'+MES[m]+'_2026.xlsx (ejemplo)',rows:sample(m)},ours=activadas(m),idx={},out=[];
+  L.rows.forEach(function(r){var v=parseFloat(String(r.valor).replace(/[^\d.\-]/g,''))||0;(idx[r.pedido]=idx[r.pedido]||[]).push({v:v,c:(r.concepto||'').toLowerCase(),r:r})});
+  var seen={};
+  ours.forEach(function(s){seen[s.id]=1;var t=PROD[s.pr][1],rs=(idx[s.id]||[]).filter(function(x){return x.c.indexOf('desc')<0}),liq=rs.reduce(function(a,x){return a+x.v},0);
+    if(!rs.length)out.push({k:'falta',s:s,esp:t,liq:0,dif:t});else if(liq<t)out.push({k:'valor',s:s,esp:t,liq:liq,dif:t-liq});else if(liq>t)out.push({k:'mas',s:s,esp:t,liq:liq,dif:t-liq});else out.push({k:'ok',s:s,esp:t,liq:liq,dif:0})});
+  Object.keys(idx).forEach(function(p){idx[p].forEach(function(x){var s=BY[p];
+    if(x.c.indexOf('desc')>=0){out.push({k:'desc',s:s,p:p,r:x.r,esp:0,liq:x.v,dif:-x.v});return}
+    if(seen[p])return;
+    if(!s)out.push({k:'noexiste',p:p,r:x.r,esp:0,liq:x.v,dif:-x.v});else if(s.e==='activada')out.push({k:'otromes',s:s,esp:0,liq:x.v,dif:-x.v});else out.push({k:'sinact',s:s,esp:0,liq:x.v,dif:-x.v})})});
+  var K={ok:['Coincide','ok','—'],falta:['Activada y no liquidada','ba','Reclamar'],valor:['Valor menor al acordado','ba','Reclamar diferencia'],mas:['Valor mayor al acordado','wa','Revisar'],desc:['Descuento por baja temprana','wa','Pedir soporte de la baja'],sinact:['Liquidada sin activación en Flow','wa','Revisar con el cliente'],otromes:['Liquidada en otro mes','ne','Informativo'],noexiste:['Pedido que no existe en Flow','wa','Revisar con el cliente']};
+  var cnt=function(k){return out.filter(function(o){return o.k===k})},sum=function(a,f){return a.reduce(function(t,o){return t+f(o)},0)};
+  var rec=cnt('falta').concat(cnt('valor')),disp=cnt('desc'),rev=cnt('sinact').concat(cnt('noexiste'),cnt('mas')),ok=cnt('ok');
+  var esper=sum(ours,function(s){return PROD[s.pr][1]}),liqT=sum(L.rows,function(r){return parseFloat(r.valor)||0});
+  $('liqinfo').textContent=L.name+' · '+L.rows.length+' filas · '+ok.length+' coinciden · '+(out.length-ok.length)+' con hallazgo';
+  $('cg-n').textContent=L.rows.length;$('cg-ok').textContent=L.rows.length-cnt('noexiste').length;$('cg-sv').textContent=cnt('noexiste').length;
+  $('ck').innerHTML=kpiHtml([['Activadas en Flow',nf.format(ours.length),bs(esper)+' esperado'],['Liquidado por el cliente',bs(liqT),'neto de descuentos'],['Coinciden',nf.format(ok.length),pc(ok.length,ours.length)+' de las activadas'],['Por reclamar',bs(sum(rec,function(o){return o.dif})),rec.length+' pedidos','bad'],['En disputa',bs(sum(disp,function(o){return o.dif})),disp.length+' descuentos por baja'],['Diferencia total',bs(esper-liqT),rev.length+' filas para revisar','hl']]);
+  var CF=[['rec','Por reclamar ('+rec.length+')'],['desc','Descuentos ('+disp.length+')'],['rev','Para revisar ('+rev.length+')'],['ok','Coinciden ('+ok.length+')'],['todo','Todo ('+out.length+')']];
+  $('cchips').innerHTML=CF.map(function(f){return '<button class="chip" data-f="'+f[0]+'" aria-pressed="'+(cfilt===f[0])+'">'+f[1]+'</button>'}).join('');
+  var V=out.filter(function(o){return cfilt==='todo'||(cfilt==='rec'&&(o.k==='falta'||o.k==='valor'))||(cfilt==='desc'&&o.k==='desc')||(cfilt==='rev'&&(o.k==='sinact'||o.k==='noexiste'||o.k==='mas'||o.k==='otromes'))||(cfilt==='ok'&&o.k==='ok')});
+  concilia.out=out;concilia.m=m;
+  $('crows').innerHTML=V.slice(0,climit).map(function(o){var s=o.s,k=K[o.k],pid=s?s.id:o.p,can=o.k==='falta'||o.k==='valor'||o.k==='desc',key=o.k+'|'+pid;if(can&&!(key in picked))picked[key]=o.k!=='desc';
+    return '<tr><td>'+(can?'<input type="checkbox" data-k="'+key+'"'+(picked[key]?' checked':'')+' aria-label="Incluir en la reclamación">':'')+'</td><td class="m">'+pid+'</td><td class="m">'+(s?s.tel:esc(o.r.linea||''))+'</td><td>'+(s?PROD[s.pr][0]:esc(o.r.producto||''))+'</td><td>'+(s?ASE[s.a].n:'—')+'</td><td>'+(s&&s.ad!==null?dt(s.ad):(s?ST[s.e][0]:'—'))+'</td><td class="n">'+(o.esp?bs(o.esp):'—')+'</td><td class="n">'+(o.liq?bs(o.liq):'—')+'</td><td class="n" style="color:'+(o.dif>0?'var(--bad)':(o.dif<0?'var(--warn)':'inherit'))+'">'+(o.dif?(o.dif>0?'+':'−')+bs(Math.abs(o.dif)):'—')+'</td><td><span class="b '+k[1]+'">'+k[0]+'</span></td><td>'+k[2]+'</td></tr>'}).join('')||'<tr><td colspan="11" class="note">Sin filas en este grupo.</td></tr>';
+  $('cmore').innerHTML=V.length>climit?'<button class="btn" id="cmbtn">Mostrar 50 más</button>':'';
+}
+$('c-mes').addEventListener('change',function(){climit=50;$('claim').hidden=true;concilia()});
+$('cchips').addEventListener('click',function(e){var b=e.target.closest('.chip');if(!b)return;cfilt=b.dataset.f;climit=50;concilia()});
+$('cmore').addEventListener('click',function(e){if(e.target.id==='cmbtn'){climit+=50;concilia()}});
+$('crows').addEventListener('change',function(e){if(e.target.dataset.k)picked[e.target.dataset.k]=e.target.checked});
+$('mkclaim').addEventListener('click',function(){var out=concilia.out,m=concilia.m,sel=out.filter(function(o){var key=o.k+'|'+(o.s?o.s.id:o.p);return(o.k==='falta'||o.k==='valor'||o.k==='desc')&&(key in picked?picked[key]:o.k!=='desc')});
+  if(!sel.length){toast('No hay pedidos marcados para reclamar.');return}
+  var g=function(k){return sel.filter(function(o){return o.k===k})},tot=sel.reduce(function(t,o){return t+o.dif},0),txt='Reclamación a la liquidación de '+MES[m]+' 2026\nTotal reclamado: '+bs(tot)+' · '+sel.length+' pedidos\n';
+  [['falta','Ventas activadas que no aparecen en la liquidación'],['valor','Pedidos liquidados por debajo de la tarifa acordada'],['desc','Descuentos por baja temprana sin soporte']].forEach(function(z){var X=g(z[0]);if(!X.length)return;txt+='\n'+z[1]+' ('+X.length+' · '+bs(X.reduce(function(t,o){return t+o.dif},0))+')\n';
+    X.forEach(function(o){var s=o.s;txt+='  '+s.id+' · '+s.tel+' · '+PROD[s.pr][0]+(s.ad!==null?' · activada '+dt(s.ad):'')+' · '+bs(o.dif)+'\n'})});
+  txt+='\nSoporte por pedido: grabación de la venta, validación y fecha de activación en Flow.';
+  $('claimtxt').value=txt;$('claim').hidden=false;$('claim').scrollIntoView({behavior:'smooth',block:'start'})});
+$('closeclaim').addEventListener('click',function(){$('claim').hidden=true});
+$('copy').addEventListener('click',function(){var t=$('claimtxt');try{navigator.clipboard.writeText(t.value).then(function(){toast('Texto copiado.')},function(){t.select();toast('Seleccionado: copie con Ctrl+C.')})}catch(e){t.select();toast('Seleccionado: copie con Ctrl+C.')}});
+$('lfile').addEventListener('change',function(){var f=this.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){var rows=parseCSV(rd.result).filter(function(r){return r.pedido});LIQ[+$('c-mes').value]={name:f.name,rows:rows};picked={};concilia();toast('Liquidación cargada: '+rows.length+' filas.')};rd.readAsText(f);this.value=''});
+
+/* ---------- vistas ---------- */
+var view='dashboard',VIEWS=['dashboard','traza','concilia','cargas'];
+function render(){syncInputs();var S=sel();$('fsum').textContent=dt(F.from)+(F.to!==F.from?' – '+dt(F.to):'')+' · '+nf.format(S.length)+' ventas';
+  if(view==='dashboard')dash(S);else if(view==='traza')traza(S);else if(view==='concilia')concilia();else concilia()}
+function show(v){view=v;VIEWS.forEach(function(x){$('v-'+x).hidden=x!==v});$('fbar').hidden=!(v==='dashboard'||v==='traza');
+  [].forEach.call(document.querySelectorAll('#nav a[data-v]'),function(a){a.classList.toggle('on',a.dataset.v===v)});try{history.replaceState(null,'','#'+v)}catch(e){}render();scrollTo(0,0)}
+$('nav').addEventListener('click',function(e){var a=e.target.closest('a[data-v]');if(a)show(a.dataset.v)});
+window.addEventListener('hashchange',function(){var h=location.hash.slice(1);if(VIEWS.indexOf(h)>=0&&h!==view)show(h)});
+function toast(t){var e=$('toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){e.hidden=true},2400)}
+var h=location.hash.slice(1);show(VIEWS.indexOf(h)>=0?h:'dashboard');
+})();
+</script>
+</body>
+</html>
