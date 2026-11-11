@@ -129,6 +129,13 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
 .claim textarea{width:100%;min-height:220px;font:12.5px/1.55 'JetBrains Mono',monospace;border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--ink);background:var(--bg);resize:vertical}
 .toast{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--ink);color:#fff;padding:10px 14px;border-radius:10px;font-size:13px;z-index:9}
 [hidden]{display:none!important}
+.kpi.go{cursor:pointer}.kpi.go:hover{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.kpi .gl{font-size:11.5px;color:var(--accent);margin-top:4px;font-weight:500}
+#tip{position:fixed;pointer-events:none;background:#18181b;color:#fff;font-size:12.5px;line-height:1.55;padding:8px 11px;border-radius:8px;z-index:30;max-width:280px;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+#tip b{font-weight:600}
+.banner{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--warn-soft);border:1px solid #f1d6b3;border-radius:12px;cursor:pointer;flex-wrap:wrap}
+.banner b{color:var(--warn)}.banner span{flex:1;min-width:220px;font-size:13.5px}
+.mm{color:var(--bad);font-weight:500}
 </style>
 </head>
 <body>
@@ -139,7 +146,7 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
       <span>Operación</span>
       <a class="dim">Supervisión</a><a class="dim">Campañas</a>
       <span>Back office</span>
-      <a data-v="dashboard">Tablero de entregas</a><a data-v="traza">Trazabilidad de ventas</a><a data-v="concilia">Conciliación de pagos</a><a data-v="cargas">Cargas de archivos</a>
+      <a data-v="dashboard">Tablero de entregas</a><a data-v="traza">Trazabilidad de ventas</a><a data-v="alertas">Alertas de cruce</a><a data-v="concilia">Conciliación de pagos</a><a data-v="cargas">Cargas de archivos</a>
     </nav>
     <p class="by">Plataforma de <b>DesarrollAndo</b><br>Módulo propuesto para Xtendo Global</p>
   </aside>
@@ -166,6 +173,7 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
         <p class="sub">Cómo llegan las SIM al cliente: por fecha, operador logístico, departamento y asesor, y por qué no se entregan.</p></div>
         <span class="tag">PROPUESTA · DATOS DE PRUEBA</span>
       </div>
+      <div class="banner" id="banner"></div>
       <div class="kpis" id="dk"></div>
       <div class="card pad">
         <div class="hd"><h2>Ventas y resultado en el tiempo</h2><small id="trend-sub">Por fecha de venta</small></div>
@@ -214,14 +222,32 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
       <div class="grid">
         <div class="card">
           <div class="tbar"><div class="chips" id="chips"></div><span class="note" id="count"></span></div>
-          <div class="tw"><table style="min-width:980px">
-            <thead><tr><th>Pedido</th><th>Fecha</th><th>Cliente</th><th>Línea</th><th>SIM (ICCID)</th><th>Asesor</th><th>Operador</th><th>Estado</th><th>Alerta</th></tr></thead>
+          <div class="tw"><table style="min-width:1180px">
+            <thead><tr><th>Pedido</th><th>Fecha</th><th>Cliente</th><th>Línea</th><th>SIM (ICCID)</th><th>Tipificó</th><th>Tipificación</th><th>Operador</th><th>Estado</th><th>Alerta</th></tr></thead>
             <tbody id="rows"></tbody></table></div>
           <div class="more" id="more"></div>
         </div>
         <div class="card det" id="det"></div>
       </div>
       <p class="note">Números, SIM, nombres y guías son de prueba. Entrega: sábana del operador logístico. Venta y validación: Flow. Activación: reporte del operador o API.</p>
+    </section>
+
+    <!-- ============ ALERTAS ============ -->
+    <section id="v-alertas" hidden>
+      <div class="top">
+        <div><p class="eyebrow">Back office · Control</p><h1>Alertas de cruce</h1>
+        <p class="sub">Lo que no cuadra entre la tipificación del asesor en Flow, la sábana del operador logístico y la liquidación del cliente.</p></div>
+        <span class="tag">PROPUESTA · DATOS DE PRUEBA</span>
+      </div>
+      <div class="kpis" id="ak" style="grid-template-columns:repeat(4,minmax(0,1fr))"></div>
+      <div class="card">
+        <div class="tbar"><div class="chips" id="achips"></div><span class="note" id="acount"></span></div>
+        <div class="tw"><table style="min-width:1100px">
+          <thead><tr><th>Alerta</th><th>Pedido</th><th>Fecha venta</th><th>Línea</th><th>Tipificó en Flow</th><th>En sábana logística</th><th>En liquidación</th><th>Qué hacer</th></tr></thead>
+          <tbody id="arows"></tbody></table></div>
+        <div class="more" id="amore"></div>
+      </div>
+      <p class="note">El asesor que cuenta es el que tipificó la venta en Flow, con su grabación. Si la sábana o la liquidación traen otro nombre, la comisión o el reporte quedan mal asignados.</p>
     </section>
 
     <!-- ============ CONCILIACIÓN ============ -->
@@ -240,8 +266,8 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
       <div class="kpis" id="ck"></div>
       <div class="card">
         <div class="tbar"><div class="chips" id="cchips"></div><button class="btn pri" id="mkclaim">Preparar reclamación</button></div>
-        <div class="tw"><table style="min-width:1080px">
-          <thead><tr><th></th><th>Pedido</th><th>Línea</th><th>Producto</th><th>Asesor</th><th>Activación</th><th class="n">Esperado</th><th class="n">Liquidado</th><th class="n">Diferencia</th><th>Hallazgo</th><th>Acción</th></tr></thead>
+        <div class="tw"><table style="min-width:1200px">
+          <thead><tr><th></th><th>Pedido</th><th>Línea</th><th>Producto</th><th>Tipificó</th><th>En liquidación</th><th>Activación</th><th class="n">Esperado</th><th class="n">Liquidado</th><th class="n">Diferencia</th><th>Hallazgo</th><th>Acción</th></tr></thead>
           <tbody id="crows"></tbody></table></div>
         <div class="more" id="cmore"></div>
       </div>
@@ -253,7 +279,7 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
       <div class="row3">
         <div class="card pad"><h2>Tarifas acordadas (prueba)</h2><p class="note" style="margin-top:8px;font-size:13px;line-height:1.8" id="tarifas"></p></div>
         <div class="card pad"><h2>Cómo se cruza</h2><p class="note" style="margin-top:8px;font-size:13px;line-height:1.7">Por número de pedido; si no viene, por línea. Se compara contra las ventas activadas en el mes y contra la tarifa acordada por producto.</p></div>
-        <div class="card pad"><h2>Columnas de la sábana</h2><p class="note" style="margin-top:8px;font-size:13px;line-height:1.7">pedido · línea · producto · valor · concepto (comisión o descuento). Cada cliente se mapea una vez a su formato.</p></div>
+        <div class="card pad"><h2>Columnas de la sábana</h2><p class="note" style="margin-top:8px;font-size:13px;line-height:1.7">pedido · línea · asesor · producto · valor · concepto (comisión o descuento). Cada cliente se mapea una vez a su formato.</p></div>
       </div>
     </section>
 
@@ -277,6 +303,7 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
   </main>
 </div>
 <div class="toast" id="toast" hidden></div>
+<div id="tip" hidden></div>
 
 <script>
 (function(){
@@ -330,14 +357,21 @@ for(var d=0;d<=TODAY;d++){
     if(R()<.9&&ad<=TODAY){s.e='activada';s.ad=ad}
   }
 }
+var R3=mulberry(77);
+function otro(a){return(a+1+Math.floor(R3()*7))%8}
+D.forEach(function(s){s.ta=s.a;s.tip='Venta · '+PROD[s.pr][0];s.olA=null;s.liqA=null;
+  if(s.dd!==null){if(R3()<.012){s.ta=-1;s.tip=''}s.olA=R3()<.03?otro(s.a):s.a}
+  if(s.e==='activada')s.liqA=R3()<.025?otro(s.a):s.a});
+var ORPH=[];for(var q=0;q<14;q++){var od=Math.floor(R3()*TODAY),pr=pickW(R3,PW);ORPH.push({p:'P-9'+(1100+q*37),d:od,src:R3()<.5?'Sábana logística':'Liquidación',a:Math.floor(R3()*8),pr:pr,tel:'—'})}
 var BY={};D.forEach(function(s){BY[s.id]=s});
 var DONE=function(s){return s.e==='entregada'||s.e==='activada'},MOV=function(s){return s.e==='despachada'||s.e==='ruta'};
+function cruce(s){if(s.ta<0&&s.dd!==null)return 'Sin tipificación en Flow';if(s.olA!==null&&s.ta>=0&&s.olA!==s.ta)return 'Asesor distinto en la sábana';if(s.liqA!==null&&s.ta>=0&&s.liqA!==s.ta)return 'Asesor distinto en la liquidación';return ''}
 function alerta(s){
   if(s.e==='validada'&&TODAY-s.vd>=2)return 'Sin despachar hace '+(TODAY-s.vd)+' días';
   if(s.e==='entregada'&&TODAY-s.ed>=2)return TODAY-s.ed<=3?'Sin activar hace '+((TODAY-s.ed)*24)+' h':'Sin activar hace '+(TODAY-s.ed)+' días';
   if(s.e==='ruta'&&TODAY-s.dd>OPD[s.op]+1.5)return 'Entrega demorada';
   if(s.e==='devuelta'||s.e==='rechazada')return s.mot;
-  return '';
+  return cruce(s);
 }
 
 /* ---------- filtros ---------- */
@@ -364,20 +398,21 @@ $('f-dep').addEventListener('change',function(){F.dep=+this.value;render()});
 $('f-clear').addEventListener('click',function(){F.a=F.op=F.dep=-1;preset('30');render()});
 
 /* ---------- tablero ---------- */
-function kpiHtml(k){return k.map(function(x){return '<div class="card kpi'+(x[3]?' '+x[3]:'')+'"><div class="l">'+x[0]+'</div><div class="v">'+x[1]+'</div><div class="d">'+x[2]+'</div></div>'}).join('')}
+function kpiHtml(k){return k.map(function(x){return '<div class="card kpi'+(x[3]?' '+x[3]:'')+(x[4]?' go" data-go="'+x[4]+'" role="button" tabindex="0':'')+'"><div class="l">'+x[0]+'</div><div class="v">'+x[1]+'</div><div class="d">'+x[2]+'</div>'+(x[4]?'<div class="gl">Ver detalle →</div>':'')+'</div>'}).join('')}
 function dash(S){
   var desp=S.filter(function(s){return s.dd!==null}),ent=S.filter(DONE),dev=S.filter(function(s){return s.e==='devuelta'}),mov=S.filter(MOV),act=S.filter(function(s){return s.e==='activada'}),rej=S.filter(function(s){return s.e==='rechazada'});
   var tm=ent.length?ent.reduce(function(t,s){return t+s.ed-s.d},0)/ent.length:0,pv=ent.filter(function(s){return s.pv}).length;
-  $('dk').innerHTML=kpiHtml([['Ventas',nf.format(S.length),rej.length+' rechazadas en validación'],['Despachados',nf.format(desp.length),'a '+new Set(desp.map(function(s){return s.op})).size+' operadores'],['Entregados',nf.format(ent.length),pc(ent.length,desp.length)+' de lo despachado'],['En primera visita',pc(pv,ent.length),'sin reagendar'],['No entregados',nf.format(dev.length),'+ '+mov.length+' en ruta','bad'],['Venta neta',pc(act.length,S.length),nf.format(act.length)+' SIM activadas','hl']]);
+  $('dk').innerHTML=kpiHtml([['Ventas',nf.format(S.length),rej.length+' rechazadas en validación','','todas'],['Despachados',nf.format(desp.length),'a '+new Set(desp.map(function(s){return s.op})).size+' operadores','','desp'],['Entregados',nf.format(ent.length),pc(ent.length,desp.length)+' de lo despachado','','ent'],['En primera visita',pc(pv,ent.length),pv+' sin reagendar','','pv'],['No entregados',nf.format(dev.length),'+ '+mov.length+' en ruta','bad','dev'],['Venta neta',pc(act.length,S.length),nf.format(act.length)+' SIM activadas','hl','activada']]);
+  var na=alertas(S).length;$('banner').hidden=!na;$('banner').innerHTML='<b>⚠ '+na+' alertas de cruce</b><span>Ventas con el asesor distinto en la sábana o en la liquidación, o que llegan sin tipificación en Flow.</span><span style="flex:none;color:var(--accent);font-weight:500">Ver alertas →</span>';
   trend(S);
   $('ops').innerHTML=OPN.map(function(o,i){var X=desp.filter(function(s){return s.op===i});if(F.op>=0&&F.op!==i)return '<div class="op" style="opacity:.45"><div class="n"><span class="sw" style="background:'+OPC[i]+'"></span>'+o+'</div><small class="note">Fuera del filtro</small></div>';
     var E=X.filter(DONE),V=X.filter(function(s){return s.e==='devuelta'}),r=E.length+V.length,p=r?Math.round(E.length/r*100):0,t=E.length?(E.reduce(function(a,s){return a+s.ed-s.dd},0)/E.length):0;
     return '<div class="op"><div class="n"><span class="sw" style="background:'+OPC[i]+'"></span>'+o+'</div><div class="big">'+(r?p+' %':'—')+' <small>entregado</small></div><div class="meter"><i style="width:'+p+'%;background:'+OPC[i]+'"></i></div><dl><dt>Despachados</dt><dd>'+nf.format(X.length)+'</dd><dt>Entregados</dt><dd>'+nf.format(E.length)+'</dd><dt>Devueltos</dt><dd>'+V.length+' · '+pc(V.length,r)+'</dd><dt>Primera visita</dt><dd>'+pc(E.filter(function(s){return s.pv}).length,E.length)+'</dd><dt>Días en entregar</dt><dd>'+t.toFixed(1).replace('.',',')+'</dd><dt>En ruta</dt><dd>'+X.filter(MOV).length+'</dd></dl></div>'}).join('');
   var dep=DEPS.map(function(n,i){var X=desp.filter(function(s){return s.dep===i});return{n:n,t:X.length,e:X.filter(DONE).length,r:X.filter(MOV).length,v:X.filter(function(s){return s.e==='devuelta'}).length}}).filter(function(x){return x.t}).sort(function(a,b){return b.t-a.t});
-  $('deps').innerHTML=dep.length?dep.map(function(x){var e=x.e/x.t*100,r=x.r/x.t*100,v=x.v/x.t*100;return '<div class="bar"><span>'+x.n+'</span><div class="t" title="'+Math.round(e)+' % entregado · '+Math.round(r)+' % en ruta · '+Math.round(v)+' % no entregado"><i style="width:'+e+'%;background:var(--ok)"></i><i style="width:'+r+'%;background:var(--warn)"></i><i style="width:'+v+'%;background:var(--bad)"></i></div><span class="v">'+Math.round(e)+' % · '+x.t+'</span></div>'}).join(''):'<p class="note">Sin despachos en el filtro.</p>';
+  $('deps').innerHTML=dep.length?dep.map(function(x){var e=x.e/x.t*100,r=x.r/x.t*100,v=x.v/x.t*100;return '<div class="bar"><span>'+x.n+'</span><div class="t" data-tip="<b>'+x.n+'</b>|Despachados: '+x.t+'|Entregados: '+x.e+' ('+Math.round(e)+' %)|En ruta: '+x.r+'|No entregados: '+x.v+' ('+Math.round(v)+' %)"><i style="width:'+e+'%;background:var(--ok)"></i><i style="width:'+r+'%;background:var(--warn)"></i><i style="width:'+v+'%;background:var(--bad)"></i></div><span class="v">'+Math.round(e)+' % · '+x.t+'</span></div>'}).join(''):'<p class="note">Sin despachos en el filtro.</p>';
   var mc=MOT.map(function(m){return[m,dev.filter(function(s){return s.mot===m}).length]}).sort(function(a,b){return b[1]-a[1]}),mx=mc[0][1]||1;
   $('mot-sub').textContent=dev.length+' pedidos devueltos';
-  $('mot').innerHTML=dev.length?mc.map(function(m){return '<div class="r"><div class="l"><span>'+m[0]+'</span><div class="meter"><i style="width:'+(m[1]/mx*100)+'%;background:var(--bad)"></i></div></div><span class="n">'+m[1]+'</span><span class="p">'+pc(m[1],dev.length)+'</span></div>'}).join(''):'<p class="note">Sin devoluciones en el filtro.</p>';
+  $('mot').innerHTML=dev.length?mc.map(function(m){return '<div class="r" data-tip="<b>'+m[0]+'</b>|'+m[1]+' pedidos · '+pc(m[1],dev.length)+' de las devoluciones"><div class="l"><span>'+m[0]+'</span><div class="meter"><i style="width:'+(m[1]/mx*100)+'%;background:var(--bad)"></i></div></div><span class="n">'+m[1]+'</span><span class="p">'+pc(m[1],dev.length)+'</span></div>'}).join(''):'<p class="note">Sin devoluciones en el filtro.</p>';
   $('ase').innerHTML=ASE.map(function(x,i){var X=S.filter(function(s){return s.a===i});if(!X.length)return '';var cai=X.filter(function(s){return s.e==='rechazada'||s.e==='devuelta'}),cnt={};cai.forEach(function(s){cnt[s.mot]=(cnt[s.mot]||0)+1});var top=Object.keys(cnt).sort(function(a,b){return cnt[b]-cnt[a]})[0];
     var ac=X.filter(function(s){return s.e==='activada'}).length,vn=ac/X.length;
     return '<tr data-a="'+i+'" style="cursor:pointer"><td><b style="font-weight:500">'+x.n+'</b></td><td class="n">'+X.length+'</td><td class="n">'+X.filter(function(s){return s.e==='rechazada'}).length+'</td><td class="n">'+X.filter(DONE).length+'</td><td class="n">'+ac+'</td><td class="n" style="color:'+(vn<.68?'var(--bad)':'inherit')+'">'+pc(ac,X.length)+'</td><td class="n">'+X.filter(function(s){return s.e==='devuelta'}).length+'</td><td>'+(top?top+' ('+cnt[top]+')':'—')+'</td></tr>'}).join('');
@@ -396,6 +431,9 @@ function dash(S){
   ideas.push(['Validar el documento del titular en la venta',Math.round(sh('Documento no coincide con el titular')*100)+' % se cae porque el documento no coincide. Foto del documento por WhatsApp antes de validar.','Hasta '+Math.round(dev.length*sh('Documento no coincide con el titular')*.8)+' entregas más']);
   $('ideas').innerHTML=ideas.slice(0,4).map(function(x){return '<div class="idea"><b>'+x[0]+'</b><small>'+x[1]+'</small><div class="imp">'+x[2]+'</div></div>'}).join('');
 }
+function goCard(e){var c=e.target.closest('[data-go]');if(!c)return;filt=c.dataset.go;lim=40;if(view!=='traza')show('traza');else traza(sel())}
+$('dk').addEventListener('click',goCard);$('tk').addEventListener('click',goCard);
+$('banner').addEventListener('click',function(){show('alertas')});
 $('ase').addEventListener('click',function(e){var t=e.target.closest('tr[data-a]');if(!t)return;F.a=+t.dataset.a;render();toast('Filtrado por '+ASE[F.a].n)});
 $('acts').addEventListener('click',function(e){var b=e.target.closest('[data-a]');if(b)toast(b.dataset.a+': disponible en el módulo real.')});
 
@@ -411,7 +449,7 @@ function trend(S){
   var every=Math.ceil(keys.length/12),line='';
   keys.forEach(function(k,j){var b=map[k],x=L+j*bw+bw*.15,w=Math.max(1,bw*.7),cur=0;
     [['a','var(--accent)'],['e','var(--ok-l)'],['p','var(--warn)'],['c','var(--bad)']].forEach(function(z){var h=b[z[0]]/top*ph;if(h>0){o+='<rect x="'+x.toFixed(1)+'" y="'+(y(cur)-h).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'" fill="'+z[1]+'"/>';cur+=b[z[0]]}});
-    o+='<rect x="'+(L+j*bw).toFixed(1)+'" y="'+T+'" width="'+bw.toFixed(1)+'" height="'+ph+'" fill="transparent"><title>'+blabel(k)+': '+b.n+' ventas · '+b.a+' activadas · '+b.e+' entregadas sin activar · '+b.p+' en proceso · '+b.c+' caídas · venta neta '+pc(b.a,b.n)+'</title></rect>';
+    o+='<rect x="'+(L+j*bw).toFixed(1)+'" y="'+T+'" width="'+bw.toFixed(1)+'" height="'+ph+'" fill="transparent" style="cursor:crosshair" data-tip="<b>'+blabel(k)+'</b>|Ventas: '+b.n+'|Activadas: '+b.a+'|Entregadas sin activar: '+b.e+'|En proceso: '+b.p+'|Caídas: '+b.c+'|Venta neta: '+pc(b.a,b.n)+'"></rect>';
     if(b.n){var py=T+ph-(b.a/b.n)*ph;line+=(line?' L':'M')+(L+j*bw+bw/2).toFixed(1)+' '+py.toFixed(1)}
     if(j%every===0)o+='<text x="'+(L+j*bw+bw/2)+'" y="'+(H-10)+'" text-anchor="middle">'+blabel(k)+'</text>'});
   if(line)o+='<path d="'+line+'" fill="none" stroke="var(--ink)" stroke-width="1.6"/>';
@@ -421,15 +459,15 @@ function trend(S){
 /* ---------- trazabilidad ---------- */
 var ST={venta:['Venta registrada','ne'],validada:['Validada','ac'],despachada:['Despachada','ac'],ruta:['En ruta','ac'],entregada:['Entregada','wa'],activada:['Activada','ok'],devuelta:['Devuelta','ba'],rechazada:['Rechazada en validación','ba']};
 var filt='todas',selId=null,lim=40;
-function vis(S){return S.filter(function(r){if(filt==='alerta')return!!alerta(r)&&r.e!=='activada';if(filt==='entregada')return r.e==='entregada';if(filt==='activada')return r.e==='activada';if(filt==='ruta')return MOV(r)||r.e==='validada'||r.e==='venta';if(filt==='caida')return r.e==='devuelta'||r.e==='rechazada';return true}).sort(function(a,b){return b.d-a.d||(a.id<b.id?1:-1)})}
+function vis(S){return S.filter(function(r){if(filt==='alerta')return!!alerta(r)&&r.e!=='activada';if(filt==='entregada')return r.e==='entregada';if(filt==='activada')return r.e==='activada';if(filt==='ruta')return MOV(r)||r.e==='validada'||r.e==='venta';if(filt==='caida')return r.e==='devuelta'||r.e==='rechazada';if(filt==='desp')return r.dd!==null;if(filt==='ent')return DONE(r);if(filt==='pv')return DONE(r)&&r.pv;if(filt==='dev')return r.e==='devuelta';if(filt==='sintip')return r.ta<0;return true}).sort(function(a,b){return b.d-a.d||(a.id<b.id?1:-1)})}
 function traza(S){
   var n=S.length,c=function(f){return S.filter(f).length},val=c(function(r){return r.vd!==null&&r.e!=='rechazada'}),des=c(function(r){return r.dd!==null}),ent=c(DONE),act=c(function(r){return r.e==='activada'}),cai=c(function(r){return r.e==='devuelta'||r.e==='rechazada'});
-  $('tk').innerHTML=kpiHtml([['Ventas',nf.format(n),'registradas en Flow'],['Validadas',nf.format(val),pc(val,n)+' de las ventas'],['Despachadas',nf.format(des),pc(des,n)],['Entregadas',nf.format(ent),pc(ent,n)],['Activadas',nf.format(act),pc(act,n)],['Venta neta',pc(act,n),cai+' caídas · '+(n-act-cai)+' en proceso','hl']]);
-  var Fx=[['todas','Todas'],['alerta','Con alerta'],['ruta','En proceso'],['entregada','Entregadas sin activar'],['activada','Activadas'],['caida','Devueltas o rechazadas']];
+  $('tk').innerHTML=kpiHtml([['Ventas',nf.format(n),'registradas en Flow','','todas'],['Validadas',nf.format(val),pc(val,n)+' de las ventas'],['Despachadas',nf.format(des),pc(des,n),'','desp'],['Entregadas',nf.format(ent),pc(ent,n),'','ent'],['Activadas',nf.format(act),pc(act,n),'','activada'],['Venta neta',pc(act,n),cai+' caídas · '+(n-act-cai)+' en proceso','hl','activada']]);
+  var Fx=[['todas','Todas'],['alerta','Con alerta'],['ruta','En proceso'],['desp','Despachadas'],['ent','Entregadas'],['pv','Primera visita'],['entregada','Entregadas sin activar'],['activada','Activadas'],['dev','No entregadas'],['caida','Devueltas o rechazadas'],['sintip','Sin tipificación']];
   $('chips').innerHTML=Fx.map(function(f){return '<button class="chip" data-f="'+f[0]+'" aria-pressed="'+(filt===f[0])+'">'+f[1]+'</button>'}).join('');
   var v=vis(S);if(!v.some(function(r){return r.id===selId}))selId=v.length?v[0].id:null;
   $('count').textContent=nf.format(v.length)+' de '+nf.format(n)+' ventas';
-  $('rows').innerHTML=v.slice(0,lim).map(function(r){var s=ST[r.e],al=alerta(r),bad=r.e==='devuelta'||r.e==='rechazada';return '<tr data-p="'+r.id+'" class="'+(r.id===selId?'sel':'')+'"><td class="m">'+r.id+'</td><td>'+dt(r.d)+'</td><td>'+r.c+'</td><td class="m">'+r.tel+'</td><td class="m">'+r.sim+'</td><td>'+ASE[r.a].n+'</td><td>'+(r.op<0?'—':OPN[r.op])+'</td><td><span class="b '+s[1]+'">'+s[0]+'</span></td><td><span class="al'+(bad?' bad':'')+'">'+esc(al)+'</span></td></tr>'}).join('')||'<tr><td colspan="9" class="note">Sin ventas con este filtro.</td></tr>';
+  $('rows').innerHTML=v.slice(0,lim).map(function(r){var s=ST[r.e],al=alerta(r),bad=r.e==='devuelta'||r.e==='rechazada';return '<tr data-p="'+r.id+'" class="'+(r.id===selId?'sel':'')+'"><td class="m">'+r.id+'</td><td>'+dt(r.d)+'</td><td>'+r.c+'</td><td class="m">'+r.tel+'</td><td class="m">'+r.sim+'</td><td>'+(r.ta<0?'<span class="b wa">Sin tipificar</span>':ASE[r.ta].n)+'</td><td>'+(r.tip||'—')+'</td><td>'+(r.op<0?'—':OPN[r.op])+'</td><td><span class="b '+s[1]+'">'+s[0]+'</span></td><td><span class="al'+(bad?' bad':'')+'">'+esc(al)+'</span></td></tr>'}).join('')||'<tr><td colspan="10" class="note">Sin ventas con este filtro.</td></tr>';
   $('more').innerHTML=v.length>lim?'<button class="btn" id="mbtn">Mostrar 40 más</button>':'';
   det();
 }
@@ -443,7 +481,7 @@ function det(){var r=BY[selId];if(!r){$('det').innerHTML='<p class="note">Selecc
     ['SIM activada',r.ad!==null?dt(r.ad)+' · confirmada por el operador':'','Operador',r.ad!==null]];
   var html='',stop=false,pend=false;steps.forEach(function(s){if(stop)return;var cls=s[4]?'fail':(s[3]?'done':(!pend&&!caida?'now':''));if(!s[3]&&!s[4])pend=true;if(s[4])stop=true;
     html+='<li class="'+cls+'"><span class="dot"></span><div><b>'+(s[4]&&r.e==='devuelta'?'No entregada':(s[4]?'Rechazada en validación':s[0]))+'<span class="src">'+s[2]+'</span></b><small>'+(s[1]||(cls==='now'?'Pendiente'+(al?' · '+al:''):'—'))+'</small></div></li>'});
-  $('det').innerHTML='<div><p class="eyebrow">'+r.id+'</p><h3>'+r.c+'</h3></div><dl class="kv"><dt>Línea</dt><dd class="m">'+r.tel+'</dd><dt>SIM</dt><dd class="m">'+r.sim+'</dd><dt>Producto</dt><dd>'+PROD[r.pr][0]+'</dd><dt>Asesor</dt><dd>'+ASE[r.a].n+'</dd><dt>Operador</dt><dd>'+(r.op<0?'Sin asignar':OPN[r.op])+'</dd><dt>Departamento</dt><dd>'+DEPS[r.dep]+'</dd></dl><ol class="tl">'+html+'</ol><div class="btns"><button class="btn" data-a="Grabación de la venta">Escuchar la venta</button><button class="btn" data-a="WhatsApp de seguimiento">Enviar WhatsApp</button><button class="btn pri" data-a="Gestión de back office">Crear gestión</button></div>'}
+  $('det').innerHTML='<div><p class="eyebrow">'+r.id+'</p><h3>'+r.c+'</h3></div><dl class="kv"><dt>Línea</dt><dd class="m">'+r.tel+'</dd><dt>SIM</dt><dd class="m">'+r.sim+'</dd><dt>Producto</dt><dd>'+PROD[r.pr][0]+'</dd><dt>Llamada</dt><dd>'+ASE[r.a].n+'</dd><dt>Tipificó</dt><dd>'+(r.ta<0?'<span class="mm">Sin tipificación</span>':ASE[r.ta].n+' · '+r.tip)+'</dd>'+(r.olA!==null?'<dt>En sábana</dt><dd'+(r.ta>=0&&r.olA!==r.ta?' class="mm"':'')+'>'+ASE[r.olA].n+'</dd>':'')+(r.liqA!==null?'<dt>En liquidación</dt><dd'+(r.ta>=0&&r.liqA!==r.ta?' class="mm"':'')+'>'+ASE[r.liqA].n+'</dd>':'')+'<dt>Operador</dt><dd>'+(r.op<0?'Sin asignar':OPN[r.op])+'</dd><dt>Departamento</dt><dd>'+DEPS[r.dep]+'</dd></dl><ol class="tl">'+html+'</ol><div class="btns"><button class="btn" data-a="Grabación de la venta">Escuchar la venta</button><button class="btn" data-a="WhatsApp de seguimiento">Enviar WhatsApp</button><button class="btn pri" data-a="Gestión de back office">Crear gestión</button></div>'}
 $('chips').addEventListener('click',function(e){var b=e.target.closest('.chip');if(!b)return;filt=b.dataset.f;lim=40;traza(sel())});
 $('rows').addEventListener('click',function(e){var t=e.target.closest('tr[data-p]');if(!t)return;selId=t.dataset.p;[].forEach.call($('rows').children,function(x){x.classList.toggle('sel',x===t)});det()});
 $('more').addEventListener('click',function(e){if(e.target.id==='mbtn'){lim+=40;traza(sel())}});
@@ -463,13 +501,13 @@ var LIQ={},cfilt='rec',climit=50,picked={};
 function activadas(m){return D.filter(function(s){return s.e==='activada'&&mon(s.ad)===m})}
 function sample(m){var R2=mulberry(900+m),rows=[],ours=activadas(m);
   ours.forEach(function(s){var r=R2(),t=PROD[s.pr][1];if(r<.035)return;
-    if(r<.06){rows.push({pedido:s.id,linea:s.tel,producto:PROD[s.pr][0],valor:t-(t>=110?30:10),concepto:'Comisión'});return}
-    rows.push({pedido:s.id,linea:s.tel,producto:PROD[s.pr][0],valor:t,concepto:'Comisión'})});
-  var prev=activadas(m-1).length?activadas(m-1):ours;prev.filter(function(){return R2()<.015}).forEach(function(s){rows.push({pedido:s.id,linea:s.tel,producto:PROD[s.pr][0],valor:-PROD[s.pr][1],concepto:'Descuento por baja temprana'})});
-  D.filter(function(s){return mon(s.d)===m&&(s.e==='devuelta'||s.e==='rechazada')}).filter(function(){return R2()<.05}).slice(0,5).forEach(function(s){rows.push({pedido:s.id,linea:s.tel,producto:PROD[s.pr][0],valor:PROD[s.pr][1],concepto:'Comisión'})});
-  rows.push({pedido:'P-91204',linea:'+591 7999 0012',producto:'Postpago nuevo',valor:110,concepto:'Comisión'});
+    if(r<.06){rows.push({pedido:s.id,linea:s.tel,asesor:ASE[s.liqA].n,producto:PROD[s.pr][0],valor:t-(t>=110?30:10),concepto:'Comisión'});return}
+    rows.push({pedido:s.id,linea:s.tel,asesor:ASE[s.liqA].n,producto:PROD[s.pr][0],valor:t,concepto:'Comisión'})});
+  var prev=activadas(m-1).length?activadas(m-1):ours;prev.filter(function(){return R2()<.015}).forEach(function(s){rows.push({pedido:s.id,linea:s.tel,asesor:ASE[s.a].n,producto:PROD[s.pr][0],valor:-PROD[s.pr][1],concepto:'Descuento por baja temprana'})});
+  D.filter(function(s){return mon(s.d)===m&&(s.e==='devuelta'||s.e==='rechazada')}).filter(function(){return R2()<.05}).slice(0,5).forEach(function(s){rows.push({pedido:s.id,linea:s.tel,asesor:ASE[s.a].n,producto:PROD[s.pr][0],valor:PROD[s.pr][1],concepto:'Comisión'})});
+  rows.push({pedido:'P-91204',linea:'+591 7999 0012',asesor:ASE[2].n,producto:'Postpago nuevo',valor:110,concepto:'Comisión'});
   return rows}
-window.__liqCSV=function(m){return 'pedido,linea,producto,valor,concepto\n'+sample(m).map(function(r){return[r.pedido,r.linea,r.producto,r.valor,r.concepto].join(',')}).join('\n')};
+window.__liqCSV=function(m){return 'pedido,linea,asesor,producto,valor,concepto\n'+sample(m).map(function(r){return[r.pedido,r.linea,r.asesor,r.producto,r.valor,r.concepto].join(',')}).join('\n')};
 window.__logCSV=function(){var X=D.filter(function(s){return s.e==='ruta'||s.e==='despachada'}).slice(0,8).concat(D.filter(function(s){return s.e==='entregada'}).slice(-4));
   var est=['entregado','entregado','devuelto','en ruta','entregado','activada','devuelto','entregado','activada','activada','activada','activada'],nov=['','','Cliente ausente','','','','Dirección incompleta o errada','','','','',''];
   return 'pedido,estado,guia,novedad\n'+X.map(function(s,i){return[s.id,est[i]||'entregado',s.g||'',nov[i]||''].join(',')}).join('\n')};
@@ -478,11 +516,12 @@ function concilia(){
   L.rows.forEach(function(r){var v=parseFloat(String(r.valor).replace(/[^\d.\-]/g,''))||0;(idx[r.pedido]=idx[r.pedido]||[]).push({v:v,c:(r.concepto||'').toLowerCase(),r:r})});
   var seen={};
   ours.forEach(function(s){seen[s.id]=1;var t=PROD[s.pr][1],rs=(idx[s.id]||[]).filter(function(x){return x.c.indexOf('desc')<0}),liq=rs.reduce(function(a,x){return a+x.v},0);
-    if(!rs.length)out.push({k:'falta',s:s,esp:t,liq:0,dif:t});else if(liq<t)out.push({k:'valor',s:s,esp:t,liq:liq,dif:t-liq});else if(liq>t)out.push({k:'mas',s:s,esp:t,liq:liq,dif:t-liq});else out.push({k:'ok',s:s,esp:t,liq:liq,dif:0})});
+    var r0=rs.length?rs[0].r:null;if(r0&&r0.asesor){var ai=ASE.map(function(x){return x.n}).indexOf(r0.asesor);if(ai>=0)s.liqA=ai}
+    if(!rs.length)out.push({k:'falta',s:s,esp:t,liq:0,dif:t});else if(liq<t)out.push({k:'valor',s:s,esp:t,liq:liq,dif:t-liq,r0:r0});else if(liq>t)out.push({k:'mas',s:s,esp:t,liq:liq,dif:t-liq,r0:r0});else out.push({k:'ok',s:s,esp:t,liq:liq,dif:0,r0:r0})});
   Object.keys(idx).forEach(function(p){idx[p].forEach(function(x){var s=BY[p];
-    if(x.c.indexOf('desc')>=0){out.push({k:'desc',s:s,p:p,r:x.r,esp:0,liq:x.v,dif:-x.v});return}
+    if(x.c.indexOf('desc')>=0){out.push({k:'desc',s:s,p:p,r:x.r,r0:x.r,esp:0,liq:x.v,dif:-x.v});return}
     if(seen[p])return;
-    if(!s)out.push({k:'noexiste',p:p,r:x.r,esp:0,liq:x.v,dif:-x.v});else if(s.e==='activada')out.push({k:'otromes',s:s,esp:0,liq:x.v,dif:-x.v});else out.push({k:'sinact',s:s,esp:0,liq:x.v,dif:-x.v})})});
+    if(!s)out.push({k:'noexiste',p:p,r:x.r,r0:x.r,esp:0,liq:x.v,dif:-x.v});else if(s.e==='activada')out.push({k:'otromes',s:s,r0:x.r,esp:0,liq:x.v,dif:-x.v});else out.push({k:'sinact',s:s,r0:x.r,esp:0,liq:x.v,dif:-x.v})})});
   var K={ok:['Coincide','ok','—'],falta:['Activada y no liquidada','ba','Reclamar'],valor:['Valor menor al acordado','ba','Reclamar diferencia'],mas:['Valor mayor al acordado','wa','Revisar'],desc:['Descuento por baja temprana','wa','Pedir soporte de la baja'],sinact:['Liquidada sin activación en Flow','wa','Revisar con el cliente'],otromes:['Liquidada en otro mes','ne','Informativo'],noexiste:['Pedido que no existe en Flow','wa','Revisar con el cliente']};
   var cnt=function(k){return out.filter(function(o){return o.k===k})},sum=function(a,f){return a.reduce(function(t,o){return t+f(o)},0)};
   var rec=cnt('falta').concat(cnt('valor')),disp=cnt('desc'),rev=cnt('sinact').concat(cnt('noexiste'),cnt('mas')),ok=cnt('ok');
@@ -495,7 +534,7 @@ function concilia(){
   var V=out.filter(function(o){return cfilt==='todo'||(cfilt==='rec'&&(o.k==='falta'||o.k==='valor'))||(cfilt==='desc'&&o.k==='desc')||(cfilt==='rev'&&(o.k==='sinact'||o.k==='noexiste'||o.k==='mas'||o.k==='otromes'))||(cfilt==='ok'&&o.k==='ok')});
   concilia.out=out;concilia.m=m;
   $('crows').innerHTML=V.slice(0,climit).map(function(o){var s=o.s,k=K[o.k],pid=s?s.id:o.p,can=o.k==='falta'||o.k==='valor'||o.k==='desc',key=o.k+'|'+pid;if(can&&!(key in picked))picked[key]=o.k!=='desc';
-    return '<tr><td>'+(can?'<input type="checkbox" data-k="'+key+'"'+(picked[key]?' checked':'')+' aria-label="Incluir en la reclamación">':'')+'</td><td class="m">'+pid+'</td><td class="m">'+(s?s.tel:esc(o.r.linea||''))+'</td><td>'+(s?PROD[s.pr][0]:esc(o.r.producto||''))+'</td><td>'+(s?ASE[s.a].n:'—')+'</td><td>'+(s&&s.ad!==null?dt(s.ad):(s?ST[s.e][0]:'—'))+'</td><td class="n">'+(o.esp?bs(o.esp):'—')+'</td><td class="n">'+(o.liq?bs(o.liq):'—')+'</td><td class="n" style="color:'+(o.dif>0?'var(--bad)':(o.dif<0?'var(--warn)':'inherit'))+'">'+(o.dif?(o.dif>0?'+':'−')+bs(Math.abs(o.dif)):'—')+'</td><td><span class="b '+k[1]+'">'+k[0]+'</span></td><td>'+k[2]+'</td></tr>'}).join('')||'<tr><td colspan="11" class="note">Sin filas en este grupo.</td></tr>';
+    return '<tr><td>'+(can?'<input type="checkbox" data-k="'+key+'"'+(picked[key]?' checked':'')+' aria-label="Incluir en la reclamación">':'')+'</td><td class="m">'+pid+'</td><td class="m">'+(s?s.tel:esc(o.r.linea||''))+'</td><td>'+(s?PROD[s.pr][0]:esc(o.r.producto||''))+'</td><td>'+(s?(s.ta<0?'<span class="b wa">Sin tipificar</span>':ASE[s.ta].n):'—')+'</td><td'+((s&&o.r0&&o.r0.asesor&&s.ta>=0&&o.r0.asesor!==ASE[s.ta].n)?' class="mm"':'')+'>'+esc(o.r0&&o.r0.asesor?o.r0.asesor:'—')+'</td><td>'+(s&&s.ad!==null?dt(s.ad):(s?ST[s.e][0]:'—'))+'</td><td class="n">'+(o.esp?bs(o.esp):'—')+'</td><td class="n">'+(o.liq?bs(o.liq):'—')+'</td><td class="n" style="color:'+(o.dif>0?'var(--bad)':(o.dif<0?'var(--warn)':'inherit'))+'">'+(o.dif?(o.dif>0?'+':'−')+bs(Math.abs(o.dif)):'—')+'</td><td><span class="b '+k[1]+'">'+k[0]+'</span></td><td>'+k[2]+'</td></tr>'}).join('')||'<tr><td colspan="12" class="note">Sin filas en este grupo.</td></tr>';
   $('cmore').innerHTML=V.length>climit?'<button class="btn" id="cmbtn">Mostrar 50 más</button>':'';
 }
 $('c-mes').addEventListener('change',function(){climit=50;$('claim').hidden=true;concilia()});
@@ -513,11 +552,37 @@ $('closeclaim').addEventListener('click',function(){$('claim').hidden=true});
 $('copy').addEventListener('click',function(){var t=$('claimtxt');try{navigator.clipboard.writeText(t.value).then(function(){toast('Texto copiado.')},function(){t.select();toast('Seleccionado: copie con Ctrl+C.')})}catch(e){t.select();toast('Seleccionado: copie con Ctrl+C.')}});
 $('lfile').addEventListener('change',function(){var f=this.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){var rows=parseCSV(rd.result).filter(function(r){return r.pedido});LIQ[+$('c-mes').value]={name:f.name,rows:rows};picked={};concilia();toast('Liquidación cargada: '+rows.length+' filas.')};rd.readAsText(f);this.value=''});
 
+/* ---------- alertas de cruce ---------- */
+var AK={olA:['Asesor distinto en la sábana','wa','Corregir el asesor con el operador logístico'],liqA:['Asesor distinto en la liquidación','ba','Reclamar: la comisión quedó a nombre de otro asesor'],sintip:['Sin tipificación en Flow','wa','Pedir la tipificación al asesor de la llamada'],orf:['No existe en Flow','ne','Revisar con el cliente o el operador logístico']};
+var afilt='todas',alim=50;
+function alertas(S){var o=[];S.forEach(function(s){if(s.ta<0&&s.dd!==null)o.push({k:'sintip',s:s});else{if(s.olA!==null&&s.olA!==s.ta)o.push({k:'olA',s:s});if(s.liqA!==null&&s.liqA!==s.ta)o.push({k:'liqA',s:s})}});
+  ORPH.forEach(function(x){if(x.d>=F.from&&x.d<=F.to&&(F.a<0||x.a===F.a))o.push({k:'orf',x:x})});return o}
+function alertView(S){var A=alertas(S),c=function(k){return A.filter(function(o){return o.k===k}).length};
+  $('ak').innerHTML=['liqA','olA','sintip','orf'].map(function(k){return '<div class="card kpi go'+(k==='liqA'?' bad':'')+'" data-af="'+k+'" role="button" tabindex="0"><div class="l">'+AK[k][0]+'</div><div class="v">'+c(k)+'</div><div class="d">'+AK[k][2]+'</div></div>'}).join('');
+  $('achips').innerHTML=[['todas','Todas ('+A.length+')'],['liqA','Liquidación'],['olA','Sábana'],['sintip','Sin tipificación'],['orf','No existe en Flow']].map(function(f){return '<button class="chip" data-f="'+f[0]+'" aria-pressed="'+(afilt===f[0])+'">'+f[1]+'</button>'}).join('');
+  var V=A.filter(function(o){return afilt==='todas'||o.k===afilt}).sort(function(a,b){return(b.s?b.s.d:b.x.d)-(a.s?a.s.d:a.x.d)});
+  $('acount').textContent=V.length+' alertas';
+  $('arows').innerHTML=V.slice(0,alim).map(function(o){var k=AK[o.k],s=o.s;
+    if(!s){var x=o.x;return '<tr><td><span class="b '+k[1]+'">'+k[0]+'</span></td><td class="m">'+x.p+'</td><td>'+dt(x.d)+'</td><td class="m">—</td><td class="mm">No hay venta</td><td>'+(x.src==='Sábana logística'?ASE[x.a].n:'—')+'</td><td>'+(x.src==='Liquidación'?ASE[x.a].n:'—')+'</td><td style="white-space:normal;min-width:240px">'+k[2]+'</td></tr>'}
+    var tf=s.ta<0?'<span class="mm">Sin tipificar</span> <span class="note">(llamada de '+ASE[s.a].n+')</span>':ASE[s.ta].n;
+    var ol=s.olA===null?'—':'<span'+(s.ta>=0&&s.olA!==s.ta?' class="mm"':'')+'>'+ASE[s.olA].n+'</span>',lq=s.liqA===null?'—':'<span'+(s.ta>=0&&s.liqA!==s.ta?' class="mm"':'')+'>'+ASE[s.liqA].n+'</span>';
+    return '<tr data-p="'+s.id+'" style="cursor:pointer"><td><span class="b '+k[1]+'">'+k[0]+'</span></td><td class="m">'+s.id+'</td><td>'+dt(s.d)+'</td><td class="m">'+s.tel+'</td><td>'+tf+'</td><td>'+ol+'</td><td>'+lq+'</td><td style="white-space:normal;min-width:240px">'+k[2]+'</td></tr>'}).join('')||'<tr><td colspan="8" class="note">Sin alertas con este filtro.</td></tr>';
+  $('amore').innerHTML=V.length>alim?'<button class="btn" id="ambtn">Mostrar 50 más</button>':''}
+$('ak').addEventListener('click',function(e){var c=e.target.closest('[data-af]');if(c){afilt=c.dataset.af;alim=50;alertView(sel())}});
+$('achips').addEventListener('click',function(e){var b=e.target.closest('.chip');if(b){afilt=b.dataset.f;alim=50;alertView(sel())}});
+$('amore').addEventListener('click',function(e){if(e.target.id==='ambtn'){alim+=50;alertView(sel())}});
+$('arows').addEventListener('click',function(e){var t=e.target.closest('tr[data-p]');if(!t)return;selId=t.dataset.p;filt='todas';lim=40;show('traza')});
+/* ---------- tooltip ---------- */
+var TIP=$('tip');
+document.addEventListener('mousemove',function(e){var t=e.target.closest&&e.target.closest('[data-tip]');if(!t){TIP.hidden=true;return}
+  TIP.innerHTML=t.getAttribute('data-tip').split('|').join('<br>');TIP.hidden=false;var w=TIP.offsetWidth,h=TIP.offsetHeight,x=e.clientX+14,y=e.clientY+14;
+  if(x+w>innerWidth-8)x=e.clientX-w-14;if(y+h>innerHeight-8)y=e.clientY-h-14;TIP.style.left=x+'px';TIP.style.top=y+'px'});
+document.addEventListener('scroll',function(){TIP.hidden=true},true);
 /* ---------- vistas ---------- */
-var view='dashboard',VIEWS=['dashboard','traza','concilia','cargas'];
+var view='dashboard',VIEWS=['dashboard','traza','alertas','concilia','cargas'];
 function render(){syncInputs();var S=sel();$('fsum').textContent=dt(F.from)+(F.to!==F.from?' – '+dt(F.to):'')+' · '+nf.format(S.length)+' ventas';
-  if(view==='dashboard')dash(S);else if(view==='traza')traza(S);else if(view==='concilia')concilia();else concilia()}
-function show(v){view=v;VIEWS.forEach(function(x){$('v-'+x).hidden=x!==v});$('fbar').hidden=!(v==='dashboard'||v==='traza');
+  if(view==='dashboard')dash(S);else if(view==='traza')traza(S);else if(view==='alertas')alertView(S);else concilia()}
+function show(v){view=v;VIEWS.forEach(function(x){$('v-'+x).hidden=x!==v});$('fbar').hidden=!(v==='dashboard'||v==='traza'||v==='alertas');
   [].forEach.call(document.querySelectorAll('#nav a[data-v]'),function(a){a.classList.toggle('on',a.dataset.v===v)});try{history.replaceState(null,'','#'+v)}catch(e){}render();scrollTo(0,0)}
 $('nav').addEventListener('click',function(e){var a=e.target.closest('a[data-v]');if(a)show(a.dataset.v)});
 window.addEventListener('hashchange',function(){var h=location.hash.slice(1);if(VIEWS.indexOf(h)>=0&&h!==view)show(h)});
