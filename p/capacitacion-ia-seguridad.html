@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capacitación: IA básica y seguridad digital · DesarrollAndo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
+<style>
+* { margin: 0 }
+html, body { height: 100%; background: #0b0f19; overflow: hidden; }
+body { font: 32px/1.2 'Poppins', Arial, sans-serif; }
+p, li, h1, h2, h3, td, th { overflow-wrap: break-word; text-wrap: pretty }
+h1 { font-size: 96px; font-weight: 600 } h2 { font-size: 64px; font-weight: 600 } h3 { font-size: 44px; font-weight: 600 }
+table { width: 100%; border-collapse: separate; border-spacing: 0 }
+th, td { padding: .35em .6em; text-align: left }
+:root {
+  --foreground: #111827;
+  --surface-2: #111113;
+  --structural: #2b599e;
+  --highlight: #85caee;
+  --tech: #5a5396;
+  --surface-foreground: #ffffff;
+  --text-2: #a1a1aa;
+  --raiz: #c93030;
+  --corazon: #2db82d;
+  --sacro: #d4790f;
+}
+
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  color: #ffffff;
+}
+
+section {
+  counter-increment: page;
+  box-sizing: border-box;
+  padding: 128px 128px 160px;
+  background: #111827;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+section::after {
+  content: counter(page);
+  position: absolute;
+  right: 128px;
+  bottom: 64px;
+  width: 80px;
+  text-align: right;
+  font-size: 24px;
+  color: #9aa3b5;
+}
+
+section.mesh {
+  background: radial-gradient(ellipse at 92% 0%, #34397a 0%, #111827 62%);
+}
+
+section.deep {
+  background: #111113;
+}
+
+section.accent {
+  background: #2b599e;
+}
+
+section.cover {
+  padding: 128px;
+  justify-content: center;
+}
+
+section.cover::after {
+  content: none;
+}
+
+.foot {
+  position: absolute;
+  left: 128px;
+  bottom: 64px;
+  width: 1400px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 300;
+  color: #9aa3b5;
+}
+
+.eyebrow {
+  margin: 0 0 20px;
+  font-family: ui-monospace, 'Courier New', monospace;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: #85caee;
+}
+
+.accent .eyebrow {
+  color: #ffffff;
+}
+
+.title {
+  margin: 0;
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.hl {
+  color: #85caee;
+}
+
+.sub {
+  margin: 20px 0 0;
+  max-width: 1400px;
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1.55;
+  color: #c9cdd6;
+}
+
+.body {
+  margin-top: 48px;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+}
+
+.grid4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 24px;
+}
+
+.card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 36px;
+  border-radius: 8px;
+  border: 1px solid #3a3f5c;
+  background: #262a52;
+}
+
+.card.flat {
+  background: #1b2133;
+}
+
+.card-head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 18px;
+}
+
+.ico {
+  width: 44px;
+  height: 44px;
+  color: #85caee;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #ffffff;
+}
+
+.card p {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #d3d6de;
+}
+
+.card ul {
+  margin: 0;
+  padding-left: 30px;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #d3d6de;
+}
+
+.card li {
+  margin: 0 0 8px;
+}
+
+.num {
+  margin: 0;
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 1;
+  color: #85caee;
+}
+
+.big {
+  margin: 0;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #ffffff;
+}
+
+.label {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #c9cdd6;
+}
+
+.statement {
+  margin: 0;
+  max-width: 1500px;
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 1.08;
+  color: #ffffff;
+}
+
+.rise {
+  animation: rise 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i) * 80ms);
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0px); }
+}
+
+.cover-logo {
+  width: 320px;
+  height: 185px;
+  object-fit: contain;
+  margin-bottom: 56px;
+}
+
+.cover-title {
+  margin: 24px 0 0;
+  max-width: 980px;
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 1.06;
+  color: #ffffff;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
+  padding: 22px 0;
+  border-top: 1px solid #2c3247;
+}
+
+.row-time {
+  margin: 0;
+  width: 90px;
+  flex-shrink: 0;
+  font-family: ui-monospace, 'Courier New', monospace;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #85caee;
+}
+
+.row.compact .row-text {
+  font-size: 24px;
+}
+
+.row-time.wide {
+  width: 220px;
+}
+
+.row-text {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.step-num {
+  margin: 0;
+  font-family: ui-monospace, 'Courier New', monospace;
+  font-size: 40px;
+  font-weight: 300;
+  color: #85caee;
+}
+
+.prompt {
+  box-sizing: border-box;
+  margin-top: 24px;
+  padding: 32px 40px;
+  border-radius: 8px;
+  border: 1px solid #85caee;
+  background: #16203a;
+}
+
+.prompt p {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #ffffff;
+}
+
+.tag {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #85caee;
+}
+
+.tag.bad {
+  color: #ef8a8a;
+}
+
+.tag.good {
+  color: #7fd67f;
+}
+
+.tbl {
+  width: 100%;
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 28px;
+  color: #ffffff;
+}
+
+.tbl.gloss {
+  font-size: 24px;
+}
+
+.tbl.gloss td {
+  color: #d3d6de;
+}
+
+.row.light {
+  border-top: 1px solid #5f86c2;
+}
+
+.row.light .row-time {
+  color: #ffffff;
+}
+
+.accent::after {
+  color: #dbe6f5;
+}
+
+.fragment {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+
+.fragment.visible {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.q {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 32px;
+  border-radius: 8px;
+  border: 1px solid #85caee;
+  background: #16203a;
+}
+
+.qtext {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #ffffff;
+}
+
+.card.lesson {
+  background: #2b599e;
+  border: 1px solid #2b599e;
+}
+
+.card.lesson p {
+  color: #ffffff;
+}
+
+.card.lesson .tag {
+  color: #ffffff;
+}
+
+.verdict {
+  margin: 0 0 0 auto;
+  width: 440px;
+  flex-shrink: 0;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #85caee;
+}
+
+.verdict.no {
+  color: #ef8a8a;
+}
+
+.verdict.yes {
+  color: #7fd67f;
+}
+
+.opt {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #c9cdd6;
+}
+
+.msg {
+  margin: 0;
+  padding: 20px 24px;
+  border-radius: 14px;
+  background: #262a52;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #ffffff;
+}
+
+.tbl th {
+  font-weight: 600;
+  color: #85caee;
+}
+
+.strip {
+  box-sizing: border-box;
+  margin-top: 24px;
+  padding: 28px 36px;
+  border-radius: 8px;
+  background: #2b599e;
+}
+
+.strip p {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #ffffff;
+}
+
+.divider-title {
+  margin: 0;
+  max-width: 980px;
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 1.06;
+  color: #ffffff;
+}
+
+.qr-box {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 420px;
+  height: 420px;
+  border-radius: 16px;
+  border: 3px dashed #85caee;
+  background: #16203a;
+}
+
+.stage { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: 0 0; }
+.stage > section { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; isolation: isolate; }
+.stage > section:not(.active) { display: none !important; }
+.stage > section::after { content: attr(data-n) !important; }
+.hud { position: fixed; left: 50%; transform: translateX(-50%); bottom: 10px; display: flex; gap: 8px; align-items: center; font: 600 13px/1 'Poppins', Arial, sans-serif; color: #a1a1aa; opacity: .55; transition: opacity .2s; z-index: 5; }
+.hud:hover { opacity: 1; }
+.hud button { background: #1f2937; color: #fff; border: 1px solid #374151; border-radius: 8px; padding: 8px 12px; font: inherit; cursor: pointer; }
+.hud button:focus-visible { outline: 2px solid #85caee; outline-offset: 2px; }
+</style>
+</head>
+<body>
+<main class="stage" id="stage" aria-live="polite">
+<section data-n="1" id="cover" class="mesh cover">
+<img class="cover-logo" src="../assets/desarrollando-logo-blanco.png" alt="Logo de DesarrollAndo">
+<p class="eyebrow">CAPACITACIÓN VIRTUAL · 19 DE NOVIEMBRE · 7:00 P. M.</p>
+<h1 class="cover-title">Inteligencia Artificial <span class="hl">&amp; Seguridad Digital</span></h1>
+<div style="position:absolute; right:128px; top:260px; width:620px; height:560px"><svg width="620" height="560" viewBox="0 0 620 560" xmlns="http://www.w3.org/2000/svg" aria-label="Ilustración de inteligencia artificial y seguridad digital" role="img"><circle cx="320" cy="270" r="250" fill="#262a52" opacity="0.7"/><rect x="70" y="110" width="420.0" height="260.0" rx="18.0" fill="#1d2340" stroke="#85caee" stroke-width="4.0"/><rect x="88.0" y="128.0" width="384.0" height="224.0" rx="8.0" fill="#111827"/><path d="M30.0 376.0 h500.0 l-30.0 28.0 h-440.0 z" fill="#5a5396"/><rect x="220.0" y="150.0" width="230.0" height="44.0" rx="14.0" fill="#2b599e"/><rect x="110.0" y="210.0" width="250.0" height="60.0" rx="14.0" fill="#262a52" stroke="#85caee" stroke-width="2.0"/><rect x="130.0" y="226.0" width="170.0" height="8.0" rx="4.0" fill="#85caee"/><rect x="130.0" y="244.0" width="120.0" height="8.0" rx="4.0" fill="#85caee" opacity="0.6"/><rect x="240.0" y="166.0" width="150.0" height="8.0" rx="4.0" fill="#f4f6fb" opacity="0.85"/><rect x="260.0" y="286.0" width="190.0" height="36.0" rx="12.0" fill="#2b599e"/><rect x="278.0" y="300.0" width="110.0" height="8.0" rx="4.0" fill="#f4f6fb" opacity="0.85"/><path d="M470 202.5 L552.5 232.5 V292.5 C552.5 352.5 500.0 382.5 470 397.5 C440.0 382.5 387.5 352.5 387.5 292.5 V232.5 Z" fill="#2b599e" stroke="#85caee" stroke-width="3.75"/><rect x="434.0" y="295.5" width="72.0" height="58.5" rx="9.0" fill="#f4f6fb"/><path d="M447.5 295.5 V274.5 a22.5 22.5 0 0 1 45.0 0 V295.5" fill="none" stroke="#f4f6fb" stroke-width="9.0"/><circle cx="470" cy="319.5" r="7.5" fill="#2b599e"/><rect x="467.0" y="321.0" width="6.0" height="18.0" rx="3.0" fill="#2b599e"/><rect x="150" y="430" width="255.0" height="93.5" rx="17.0" fill="#f4f6fb"/><rect x="150" y="489.5" width="255.0" height="11.9" fill="#2b599e"/><rect x="165.3" y="443.6" width="34.0" height="34.0" rx="5.1" fill="#85caee"/><rect x="207.8" y="443.6" width="34.0" height="34.0" rx="5.1" fill="#85caee"/><rect x="250.3" y="443.6" width="34.0" height="34.0" rx="5.1" fill="#85caee"/><rect x="292.8" y="443.6" width="34.0" height="34.0" rx="5.1" fill="#85caee"/><rect x="335.3" y="443.6" width="34.0" height="34.0" rx="5.1" fill="#85caee"/><rect x="371.0" y="443.6" width="22.099999999999998" height="51.0" rx="4.25" fill="#85caee" opacity="0.7"/><circle cx="201.0" cy="523.5" r="18.7" fill="#111827" stroke="#f4f6fb" stroke-width="5.1"/><circle cx="345.5" cy="523.5" r="18.7" fill="#111827" stroke="#f4f6fb" stroke-width="5.1"/><path d="M90 48 Q93.96 66.04 112 70 Q93.96 73.96 90 92 Q86.04 73.96 68 70 Q86.04 66.04 90 48 Z" fill="#85caee"/><path d="M560 74 Q562.88 87.12 576 90 Q562.88 92.88 560 106 Q557.12 92.88 544 90 Q557.12 87.12 560 74 Z" fill="#f2c46d"/><path d="M40 318 Q42.16 327.84 52 330 Q42.16 332.16 40 342 Q37.84 332.16 28 330 Q37.84 327.84 40 318 Z" fill="#85caee"/></svg></div>
+
+</section>
+<section data-n="2" id="agenda" class="mesh">
+<p class="eyebrow">AGENDA · 60 MINUTOS</p>
+<h2 class="title">Agenda <span class="hl">de la Sesión</span></h2>
+<div class="body">
+<div class="row rise" style="--i:0"><p class="row-time wide">00 – 05</p><p class="row-text">Apertura, objetivos y encuesta rápida</p></div>
+<div class="row rise" style="--i:1"><p class="row-time wide">05 – 30</p><p class="row-text">Tema 1 · Inteligencia artificial: qué es, cómo funciona, herramientas, instrucciones por cargo y qué no hacer</p></div>
+<div class="row rise" style="--i:2"><p class="row-time wide">30 – 53</p><p class="row-text">Tema 2 · Seguridad de la información: equipos, programas, antivirus, correos y mensajes, casos reales</p></div>
+<div class="row rise" style="--i:3"><p class="row-time wide">53 – 60</p><p class="row-text">Evaluación, compromisos y preguntas</p></div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="3" id="objetivos" class="mesh">
+<p class="eyebrow">CAPACITACIÓN ANUAL · OBJETIVOS</p>
+<h2 class="title">Objetivos <span class="hl">de la Capacitación</span></h2>
+<div class="body grid2">
+<div class="card rise" style="--i:0">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+  <path d="M9 18h6" />
+  <path d="M10 22h4" />
+</svg><h3>Tema 1 · Inteligencia artificial</h3></div>
+<ul>
+<li>Comprender qué es la IA, cómo funciona y para qué sirve.</li>
+<li>Identificar herramientas útiles para cada cargo.</li>
+<li>Aprender a formular y enviar instrucciones (prompts).</li>
+<li>Conocer lo que no se debe hacer con la IA.</li>
+</ul>
+</div>
+<div class="card rise" style="--i:1">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+</svg><h3>Tema 2 · Seguridad de la información</h3></div>
+<ul>
+<li>Aplicar buenas prácticas con equipos, programas y antivirus.</li>
+<li>Identificar mensajes y correos fraudulentos.</li>
+<li>Saber cómo actuar y a quién reportar un incidente.</li>
+<li>Proteger los datos de conductores y pacientes.</li>
+</ul>
+</div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="4" id="encuesta" class="deep">
+<p class="eyebrow">DIAGNÓSTICO INICIAL · RESPONDA EN EL CHAT</p>
+<h2 class="title">Encuesta <span class="hl">Rápida</span></h2>
+<p class="sub">Escriba en el chat la letra de su respuesta para cada pregunta. Ejemplo: 1A, 2B, 3A.</p>
+<div class="body grid3">
+<div class="card rise" style="--i:0"><p class="step-num">01</p><h3>¿Ha usado una herramienta de IA en el último mes?</h3><p class="opt">A. Sí, con frecuencia<br>B. Alguna vez<br>C. Nunca</p></div>
+<div class="card rise" style="--i:1"><p class="step-num">02</p><h3>¿Ha recibido este año un mensaje o una llamada fraudulenta?</h3><p class="opt">A. Sí<br>B. No<br>C. No estoy seguro</p></div>
+<div class="card rise" style="--i:2"><p class="step-num">03</p><h3>¿Usa la misma contraseña en más de una cuenta?</h3><p class="opt">A. Sí<br>B. No<br>C. Prefiero no responder</p></div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="5" id="dia-a-dia" class="deep">
+<p class="eyebrow">CONTEXTO</p>
+<h2 class="title">Tareas Repetitivas <span class="hl">en la Operación</span></h2>
+<p class="sub">Una parte importante de la jornada se dedica a redactar, consolidar y revisar información.</p>
+<div class="body grid3">
+<div class="card flat rise" style="--i:0"><h3>Alcoholimetría</h3><p>Registros y reportes de los conductores que salen del terminal.</p></div>
+<div class="card flat rise" style="--i:1"><h3>Atención al público</h3><p>Respuestas, avisos y comunicados para los conductores.</p></div>
+<div class="card flat rise" style="--i:2"><h3>Promoción &amp; prevención</h3><p>Preparación de charlas y material de la IPS.</p></div>
+<div class="card flat rise" style="--i:3"><h3>Listas de chequeo</h3><p>Revisión de vehículos, aseo y desinfección.</p></div>
+<div class="card flat rise" style="--i:4"><h3>Informes médicos</h3><p>Conclusiones y recomendaciones.</p></div>
+<div class="card flat rise" style="--i:5"><h3>Pagos &amp; conciliaciones</h3><p>Cruce de listas, correos y soportes.</p></div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="6" id="cifras" class="mesh">
+<p class="eyebrow">PANORAMA</p>
+<h2 class="title">Oportunidad &amp; <span class="hl">Riesgo</span></h2>
+<p class="sub">La IA mejora la productividad; también se utiliza para cometer fraudes.</p>
+<div class="body grid3">
+<div class="card rise" style="--i:0"><p class="num">+36 %</p><p class="label">Crecimiento de las ciberamenazas en Colombia entre octubre de 2025 y marzo de 2026.</p></div>
+<div class="card rise" style="--i:1"><p class="num">64.000+</p><p class="label">Denuncias por estafas digitales en Colombia durante 2025.</p></div>
+<div class="card rise" style="--i:2"><p class="num">55 %</p><p class="label">De los colombianos no se siente seguro para reconocer contenido creado o alterado con IA.</p></div>
+</div>
+<p class="foot">Fuentes: Trellix CyberThreat Report (vía Impacto TIC) · Centro Cibernético Policial (vía DPL News) · Portafolio, 2026</p>
+
+</section>
+<section data-n="7" id="tema-1" class="mesh" data-transition="fade">
+<p class="eyebrow">TEMA 1</p>
+<div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:28px;">
+<h2 class="divider-title rise" style="--i:0">Inteligencia <span class="hl">Artificial</span></h2>
+<p class="sub rise" style="--i:1; max-width:900px; margin:0;">Qué es, cómo funciona, cómo usarla en su cargo y qué no se debe hacer.</p>
+</div>
+<div style="position:absolute; right:128px; top:310px; width:560px; height:460px"><svg width="560" height="460" viewBox="0 0 560 460" xmlns="http://www.w3.org/2000/svg" aria-label="Ilustración de un asistente de inteligencia artificial" role="img"><circle cx="280" cy="230" r="215" fill="#262a52" opacity="0.7"/><rect x="70" y="100" width="420.0" height="260.0" rx="18.0" fill="#1d2340" stroke="#85caee" stroke-width="4.0"/><rect x="88.0" y="118.0" width="384.0" height="224.0" rx="8.0" fill="#111827"/><path d="M30.0 366.0 h500.0 l-30.0 28.0 h-440.0 z" fill="#5a5396"/><rect x="220.0" y="140.0" width="230.0" height="44.0" rx="14.0" fill="#2b599e"/><rect x="110.0" y="200.0" width="250.0" height="60.0" rx="14.0" fill="#262a52" stroke="#85caee" stroke-width="2.0"/><rect x="130.0" y="216.0" width="170.0" height="8.0" rx="4.0" fill="#85caee"/><rect x="130.0" y="234.0" width="120.0" height="8.0" rx="4.0" fill="#85caee" opacity="0.6"/><rect x="240.0" y="156.0" width="150.0" height="8.0" rx="4.0" fill="#f4f6fb" opacity="0.85"/><rect x="260.0" y="276.0" width="190.0" height="36.0" rx="12.0" fill="#2b599e"/><rect x="278.0" y="290.0" width="110.0" height="8.0" rx="4.0" fill="#f4f6fb" opacity="0.85"/><path d="M470 40 Q475.4 64.6 500 70 Q475.4 75.4 470 100 Q464.6 75.4 440 70 Q464.6 64.6 470 40 Z" fill="#85caee"/><path d="M90 42 Q93.24 56.76 108 60 Q93.24 63.24 90 78 Q86.76 63.24 72 60 Q86.76 56.76 90 42 Z" fill="#f2c46d"/><path d="M500 364 Q502.88 377.12 516 380 Q502.88 382.88 500 396 Q497.12 382.88 484 380 Q497.12 377.12 500 364 Z" fill="#85caee"/></svg></div>
+
+</section>
+<section data-n="8" id="que-es" class="mesh">
+<p class="eyebrow">01 — CONCEPTO</p>
+<h2 class="title">Qué Es la <span class="hl">Inteligencia Artificial</span></h2>
+<div class="body grid2">
+<div class="card rise" style="--i:0">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" />
+</svg><h3>Asistente conversacional</h3></div>
+<p>Responde en lenguaje natural y genera textos, tablas, imágenes, audio y video.</p>
+</div>
+<div class="card rise" style="--i:1">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 5v16" />
+  <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" />
+</svg><h3>Entrenada con grandes volúmenes de datos</h3></div>
+<p>Funciona de forma similar al texto predictivo del celular, a una escala mucho mayor.</p>
+</div>
+<div class="card rise" style="--i:2">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+  <path d="M12 9v4" />
+  <path d="M12 17h.01" />
+</svg><h3>Puede cometer errores</h3></div>
+<p>Genera la respuesta más probable, no necesariamente la correcta, y puede presentar datos falsos como ciertos.</p>
+</div>
+<div class="card rise" style="--i:3">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+  <path d="M16 3.128a4 4 0 0 1 0 7.744" />
+  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+  <circle cx="9" cy="7" r="4" />
+</svg><h3>Acceso masivo</h3></div>
+<p>Está disponible de forma gratuita, en el celular y en español. Por eso exige un uso responsable.</p>
+</div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="9" id="como-funciona" class="deep">
+<p class="eyebrow">01 — FUNCIONAMIENTO</p>
+<h2 class="title">Cómo <span class="hl">Funciona</span></h2>
+<div class="body grid3">
+<div class="card flat rise" style="--i:0"><p class="step-num">01</p><h3>Instrucción</h3><p>La persona describe lo que necesita. A esto se le llama instrucción o «prompt».</p></div>
+<div class="card flat rise" style="--i:1"><p class="step-num">02</p><h3>Propuesta</h3><p>La IA genera una respuesta con base en lo aprendido y en la información suministrada.</p></div>
+<div class="card flat rise" style="--i:2"><p class="step-num">03</p><h3>Validación</h3><p>La persona revisa, ajusta y decide qué utilizar.</p></div>
+</div>
+<div class="strip rise" style="--i:3"><p><b>Principio:</b> la IA propone; la persona valida y decide. El criterio profesional no se delega.</p></div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="10" id="si-no" class="mesh">
+<p class="eyebrow">01 — ALCANCE</p>
+<h2 class="title">Alcances &amp; <span class="hl">Limitaciones</span></h2>
+<div class="body grid2">
+<div class="card rise" style="--i:0">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m16 9-5.5 5.5L8 12" />
+</svg><h3>Lo que hace bien</h3></div>
+<ul>
+<li>Redactar comunicaciones, actas e informes.</li>
+<li>Resumir documentos extensos.</li>
+<li>Explicar temas técnicos en lenguaje sencillo.</li>
+<li>Organizar datos en tablas y construir fórmulas.</li>
+<li>Generar imágenes, audio y video.</li>
+</ul>
+</div>
+<div class="card flat rise" style="--i:1">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+  <path d="M12 9v4" />
+  <path d="M12 17h.01" />
+</svg><h3>Limitaciones</h3></div>
+<ul>
+<li>No garantiza la veracidad de los datos.</li>
+<li>No reemplaza el criterio médico o técnico.</li>
+<li>No asegura la confidencialidad de lo que se ingresa.</li>
+<li>No conoce hechos recientes si no consulta internet.</li>
+<li>No asume la responsabilidad de las decisiones.</li>
+</ul>
+</div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="11" id="verdadero-falso" class="mesh">
+<p class="eyebrow">01 — VERDADERO O FALSO · VOTE EN EL CHAT</p>
+<h2 class="title">¿Verdadero <span class="hl">o Falso?</span></h2>
+<div class="body">
+<div class="row"><p class="row-time">01</p><p class="row-text">La IA verifica que sus respuestas sean ciertas.</p><p class="verdict no fragment">FALSO · Genera la respuesta más probable, no la verificada.</p></div>
+<div class="row"><p class="row-time">02</p><p class="row-text">Lo que se escribe en una IA gratuita puede quedar almacenado por el proveedor.</p><p class="verdict yes fragment">VERDADERO · Por eso no se ingresan datos sensibles.</p></div>
+<div class="row"><p class="row-time">03</p><p class="row-text">La IA puede determinar si un conductor está apto para operar.</p><p class="verdict no fragment">FALSO · Esa decisión corresponde a personal competente.</p></div>
+<div class="row"><p class="row-time">04</p><p class="row-text">Con unos segundos de audio se puede imitar la voz de una persona.</p><p class="verdict yes fragment">VERDADERO · Base de los fraudes por clonación de voz.</p></div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="12" id="caso-air-canada" class="deep">
+<p class="eyebrow">CASO REAL · AIR CANADA · 2024 · AEROLÍNEA</p>
+<h2 class="title">El Chatbot que <span class="hl">Inventó una Política</span></h2>
+<div class="body grid2">
+<div class="stack">
+<div class="card flat"><h3>Qué pasó</h3><p>Un pasajero consultó al chatbot de la aerolínea por la tarifa especial por duelo. El chatbot le indicó que podía solicitar el descuento después del viaje, algo que la política real no permitía. Al pedir el reembolso, la aerolínea lo negó.</p></div>
+<div class="q"><p class="tag">PREGUNTA AL GRUPO</p><p class="qtext">¿Quién debe responder por un error de la IA: la herramienta, la empresa o el cliente?</p></div>
+</div>
+<div class="stack">
+<div class="card fragment"><h3>Cómo se resolvió</h3><p>Air Canada argumentó que el chatbot era responsable de sus propias respuestas. En febrero de 2024, un tribunal de Canadá rechazó ese argumento y le ordenó pagar al pasajero la diferencia de tarifa.</p></div>
+<div class="card lesson fragment"><p class="tag">LECCIÓN</p><p>La empresa responde por lo que dice su IA. Toda respuesta generada debe verificarse.</p></div>
+</div>
+</div>
+<p class="foot">Fuente: Moffatt v. Air Canada, 2024 BCCRT 149, Tribunal de Resolución Civil de Columbia Británica</p>
+<div style="position:absolute; right:128px; top:76px; width:260px; height:160px"><svg width="260" height="160" viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg" aria-label="Avión y burbuja de chatbot" role="img"><rect width="260" height="160" rx="18" fill="#262a52"/><path d="M30 100 L150 82 L190 46 L206 50 L186 84 L230 80 L238 92 L186 100 L206 130 L192 134 L150 104 L36 112 Z" fill="#f4f6fb"/><rect x="150" y="18" width="88" height="46" rx="14" fill="#2b599e"/><path d="M168 64 l-6 16 l20 -16 z" fill="#2b599e"/><circle cx="174" cy="41" r="6" fill="#f4f6fb"/><circle cx="194" cy="41" r="6" fill="#f4f6fb"/><circle cx="214" cy="41" r="6" fill="#f2c46d"/></svg></div>
+
+</section>
+<section data-n="13" id="perfiles-1" class="deep">
+<p class="eyebrow">02 — APLICACIONES · IPS &amp; ATENCIÓN</p>
+<h2 class="title">Aplicaciones <span class="hl">por Cargo</span></h2>
+<div class="body grid2">
+<div class="card rise" style="--i:0">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" />
+</svg><h3>Auxiliares de enfermería</h3></div>
+<ul><li>Preparar charlas de prevención sobre alcohol y conducción.</li><li>Redactar recordatorios de las jornadas de alcoholimetría.</li></ul>
+</div>
+<div class="card rise" style="--i:1">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+  <path d="M16 3.128a4 4 0 0 1 0 7.744" />
+  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+  <circle cx="9" cy="7" r="4" />
+</svg><h3>Jefe de enfermería</h3></div>
+<ul><li>Organizar turnos y novedades del equipo en una tabla.</li><li>Convertir notas de reunión en actas con responsables.</li></ul>
+</div>
+<div class="card rise" style="--i:2">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+  <path d="m16 9-5.5 5.5L8 12" />
+</svg><h3>Médico</h3></div>
+<ul><li>Estructurar informes con datos anonimizados.</li><li>Elaborar material educativo sobre fatiga y sueño.</li></ul>
+</div>
+<div class="card rise" style="--i:3">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" />
+</svg><h3>Atención al público</h3></div>
+<ul><li>Redactar respuestas claras a las preguntas frecuentes de los conductores.</li><li>Preparar avisos para la cartelera o WhatsApp.</li></ul>
+</div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="14" id="perfiles-2" class="deep">
+<p class="eyebrow">02 — APLICACIONES · OPERACIÓN &amp; ADMINISTRACIÓN</p>
+<h2 class="title">Aplicaciones <span class="hl">por Cargo</span></h2>
+<div class="body grid2">
+<div class="card rise" style="--i:0">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+  <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+</svg><h3>Aseo de vehículos</h3></div>
+<ul><li>Elaborar listas de limpieza y desinfección por tipo de vehículo.</li><li>Explicar en lenguaje sencillo las fichas de seguridad de los productos.</li></ul>
+</div>
+<div class="card rise" style="--i:1">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z" />
+</svg><h3>Alistamiento &amp; seguridad vial</h3></div>
+<ul><li>Elaborar la lista de chequeo preoperacional.</li><li>Preparar charlas de seguridad vial de 5 minutos.</li></ul>
+</div>
+<div class="card rise" style="--i:2">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <ellipse cx="12" cy="5" rx="9" ry="3" />
+  <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+  <path d="M3 12A9 3 0 0 0 21 12" />
+</svg><h3>Tesorería &amp; administración</h3></div>
+<ul><li>Construir fórmulas de Excel paso a paso.</li><li>Redactar correos y resumir contratos o facturas.</li></ul>
+</div>
+<div class="card rise" style="--i:3">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 3v16a2 2 0 0 0 2 2h16" />
+  <path d="M18 17V9" />
+  <path d="M13 17V5" />
+  <path d="M8 17v-3" />
+</svg><h3>Gerencia</h3></div>
+<ul><li>Resumir informes extensos para los comités.</li><li>Preparar la documentación de auditoría y las presentaciones.</li></ul>
+</div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="15" id="fases-prompt" class="mesh">
+<p class="eyebrow">02 — INSTRUCCIONES (PROMPTS)</p>
+<h2 class="title">Las Seis Fases <span class="hl">de una Instrucción</span></h2>
+<div class="body grid3">
+<div class="card rise" style="--i:0"><div class="card-head"><p class="step-num">01</p><h3>Rol</h3></div><p>Quién debe ser la IA. Ej.: «Actúa como técnico en seguridad vial».</p></div>
+<div class="card rise" style="--i:1"><div class="card-head"><p class="step-num">02</p><h3>Tarea</h3></div><p>Qué debe hacer, con un verbo claro: «elabora», «resume», «explica».</p></div>
+<div class="card rise" style="--i:2"><div class="card-head"><p class="step-num">03</p><h3>Contexto</h3></div><p>Para quién y para qué. Ej.: «para conductores del turno nocturno».</p></div>
+<div class="card rise" style="--i:3"><div class="card-head"><p class="step-num">04</p><h3>Formato</h3></div><p>Cómo entregar el resultado: «en tabla», «en 5 puntos», «en una página».</p></div>
+<div class="card rise" style="--i:4"><div class="card-head"><p class="step-num">05</p><h3>Límites</h3></div><p>Qué evitar: «sin datos personales», «sin cifras que no tengan fuente».</p></div>
+<div class="card rise" style="--i:5"><div class="card-head"><p class="step-num">06</p><h3>Revisión</h3></div><p>Ajustar y verificar: «hazlo más breve», «¿de dónde sale ese dato?».</p></div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="16" id="formula" class="deep">
+<p class="eyebrow">02 — EJEMPLO COMPLETO</p>
+<h2 class="title">Una Instrucción <span class="hl">con sus Fases</span></h2>
+<div class="prompt rise" style="--i:0; margin-top:48px;">
+<p><b><span style="color:#85caee">[ROL]</span></b> Actúa como instructor de seguridad vial. <b><span style="color:#85caee">[TAREA]</span></b> Elabora una charla de 5 minutos sobre la fatiga al volante <b><span style="color:#85caee">[CONTEXTO]</span></b> dirigida a conductores de bus del turno nocturno, que se dictará antes de iniciar la jornada. <b><span style="color:#85caee">[FORMATO]</span></b> Usa lenguaje sencillo, con tres recomendaciones y una pregunta de cierre para el grupo. <b><span style="color:#85caee">[LÍMITES]</span></b> No incluyas cifras sin fuente ni nombres de personas.</p>
+</div>
+<div class="grid3" style="margin-top:24px">
+<div class="card flat rise" style="--i:1"><p class="tag">REVISIÓN 1</p><p>«Hazlo más breve: máximo 200 palabras».</p></div>
+<div class="card flat rise" style="--i:2"><p class="tag">REVISIÓN 2</p><p>«Agrega un ejemplo de una situación real en carretera».</p></div>
+<div class="card flat rise" style="--i:3"><p class="tag">REVISIÓN 3</p><p>«¿De dónde sale ese dato? Indícame la fuente».</p></div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="17" id="paso-a-paso" class="deep">
+<p class="eyebrow">02 — CÓMO ENVIAR UNA INSTRUCCIÓN</p>
+<h2 class="title">Paso a Paso <span class="hl">para Usar la Herramienta</span></h2>
+<div class="body">
+<div class="row rise" style="--i:0"><p class="row-time">01</p><p class="row-text">Abrir la herramienta desde la aplicación oficial o el sitio web del fabricante.</p></div>
+<div class="row rise" style="--i:1"><p class="row-time">02</p><p class="row-text">Iniciar sesión con la cuenta autorizada por la empresa.</p></div>
+<div class="row rise" style="--i:2"><p class="row-time">03</p><p class="row-text">Escribir o pegar la instrucción en el cuadro de texto; también se puede dictar con el micrófono.</p></div>
+<div class="row rise" style="--i:3"><p class="row-time">04</p><p class="row-text">Adjuntar un archivo o una foto solo si no contiene datos personales ni confidenciales.</p></div>
+<div class="row rise" style="--i:4"><p class="row-time">05</p><p class="row-text">Enviar, leer la respuesta y pedir ajustes en la misma conversación.</p></div>
+<div class="row rise" style="--i:5"><p class="row-time">06</p><p class="row-text">Copiar el resultado, revisarlo y verificarlo antes de usarlo.</p></div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="18" id="prompts-1" class="mesh">
+<p class="eyebrow">02 — INSTRUCCIONES POR CARGO · IPS &amp; ATENCIÓN</p>
+<h2 class="title">Instrucciones Listas <span class="hl">para Usar</span></h2>
+<div class="body grid2">
+<div class="card rise" style="--i:0"><p class="tag">AUXILIARES DE ENFERMERÍA</p><p>«Actúa como profesional de promoción y prevención. Elabora una charla de 5 minutos sobre los efectos del alcohol en la conducción, para conductores de bus, con 3 ideas clave y una pregunta final.»</p></div>
+<div class="card rise" style="--i:1"><p class="tag">JEFE DE ENFERMERÍA</p><p>«Organiza en una tabla los turnos de la próxima semana para 6 auxiliares (Auxiliar 1 a 6), en jornadas de 6:00 a. m. a 2:00 p. m. y de 2:00 p. m. a 10:00 p. m., sin más de 5 días seguidos.»</p></div>
+<div class="card rise" style="--i:2"><p class="tag">MÉDICO</p><p>«Actúa como médico en salud ocupacional. Redacta un folleto de una página sobre fatiga y sueño para conductores del turno nocturno, con 5 recomendaciones sencillas y sin mencionar medicamentos.»</p></div>
+<div class="card rise" style="--i:3"><p class="tag">ATENCIÓN AL PÚBLICO</p><p>«Actúa como asesor de atención al conductor. Redacta respuestas breves y cordiales a estas preguntas frecuentes: [preguntas]. No incluyas datos personales.»</p></div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="19" id="prompts-2" class="mesh">
+<p class="eyebrow">02 — INSTRUCCIONES POR CARGO · OPERACIÓN &amp; ADMINISTRACIÓN</p>
+<h2 class="title">Instrucciones Listas <span class="hl">para Usar</span></h2>
+<div class="body grid2">
+<div class="card rise" style="--i:0"><p class="tag">ASEO DE VEHÍCULOS</p><p>«Elabora una lista de limpieza y desinfección para un bus de pasajeros (cabina, sillas, pasamanos y ventanas), con productos y frecuencia, en una tabla para imprimir.»</p></div>
+<div class="card rise" style="--i:1"><p class="tag">ALISTAMIENTO &amp; SEGURIDAD VIAL</p><p>«Actúa como técnico en seguridad vial. Elabora una lista de chequeo preoperacional de un bus en 15 puntos (llantas, frenos, luces, documentos y kit de carretera), en una tabla con columnas Cumple / No cumple / Observación.»</p></div>
+<div class="card rise" style="--i:2"><p class="tag">TESORERÍA &amp; ADMINISTRACIÓN</p><p>«Actúa como experto en Excel. Explica paso a paso cómo comparar dos listas de facturas por número y valor, y resaltar las que no coinciden. Usa un ejemplo con datos ficticios.»</p></div>
+<div class="card rise" style="--i:3"><p class="tag">GERENCIA</p><p>«Actúa como consultor de gestión. Resume el siguiente informe [sin datos personales] en 5 hallazgos, 3 riesgos y 3 decisiones recomendadas, en formato para un comité de 10 minutos.»</p></div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="20" id="herramientas" class="deep">
+<p class="eyebrow">02 — HERRAMIENTAS</p>
+<h2 class="title">Asistentes de IA <span class="hl">de Uso General</span></h2>
+<div class="body">
+<table class="tbl">
+<tr><th style="width:22%">Herramienta</th><th style="width:20%">Fabricante</th><th style="width:58%">Fortaleza principal</th></tr>
+<tr><td>ChatGPT</td><td>OpenAI</td><td>Uso general; redacción y análisis de textos.</td></tr>
+<tr><td>Gemini</td><td>Google</td><td>Integración con Gmail, Drive y celulares Android.</td></tr>
+<tr><td>Copilot</td><td>Microsoft</td><td>Integración con Word, Excel y Outlook.</td></tr>
+<tr><td>Claude</td><td>Anthropic</td><td>Documentos extensos y redacción cuidadosa.</td></tr>
+<tr><td>Perplexity</td><td>Perplexity</td><td>Búsqueda en internet con citación de fuentes.</td></tr>
+</table>
+</div>
+<div class="strip rise" style="--i:1"><p>Descargar solo desde tiendas oficiales o el sitio del fabricante. Con información de la empresa, usar únicamente herramientas autorizadas.</p></div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="21" id="herramientas-casos" class="deep">
+<p class="eyebrow">02 — HERRAMIENTAS POR NECESIDAD</p>
+<h2 class="title">Qué Usar, Para Qué <span class="hl">&amp; con Qué Cuidado</span></h2>
+<div class="body">
+<table class="tbl gloss">
+<tr><th style="width:21%">Necesidad</th><th style="width:24%">Herramientas</th><th style="width:27%">Uso en el trabajo</th><th style="width:28%">Cuidado de seguridad</th></tr>
+<tr><td>Redactar, resumir y explicar</td><td>ChatGPT, Gemini, Claude, Copilot</td><td>Charlas, actas, correos y folletos.</td><td>Sin datos personales ni información confidencial.</td></tr>
+<tr><td>Buscar información con fuentes</td><td>Perplexity, Gemini</td><td>Normas, guías técnicas y actualización.</td><td>Confirmar siempre en la fuente oficial.</td></tr>
+<tr><td>Excel y datos</td><td>Copilot en Excel, ChatGPT</td><td>Fórmulas, consolidados y cruces de listas.</td><td>Datos ficticios o herramienta corporativa.</td></tr>
+<tr><td>Presentaciones y piezas</td><td>Canva, Gamma, Copilot en PowerPoint</td><td>Charlas, carteleras y material de prevención.</td><td>Sin fotos de pacientes ni documentos internos.</td></tr>
+<tr><td>Actas de reuniones</td><td>Transcripción de Teams o Meet, Otter</td><td>Actas de comités y reuniones de equipo.</td><td>Informar a los asistentes; nunca en consultas médicas.</td></tr>
+</table>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="22" id="demo" class="accent">
+<p class="eyebrow">02 — TALLER PRÁCTICO · PARTICIPE EN EL CHAT</p>
+<h2 class="title">Construya su Propia Instrucción</h2>
+<div class="body">
+<div class="row light rise" style="--i:0"><p class="row-time">01</p><p class="row-text">Elija una tarea real y repetitiva de su cargo.</p></div>
+<div class="row light rise" style="--i:1"><p class="row-time">02</p><p class="row-text">Escriba en el chat su instrucción con las fases: rol, tarea, contexto, formato y límites.</p></div>
+<div class="row light rise" style="--i:2"><p class="row-time">03</p><p class="row-text">El expositor ejecuta dos instrucciones en vivo y el grupo propone las revisiones.</p></div>
+<div class="row light rise" style="--i:3"><p class="row-time">04</p><p class="row-text">Condición: sin nombres, cédulas, resultados ni información confidencial real.</p></div>
+</div>
+<p class="foot" style="color:#dbe6f5">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="23" id="datos-salud" class="mesh">
+<p class="eyebrow">02 — DATOS DE SALUD</p>
+<h2 class="title">Protección de <span class="hl">Datos de Salud</span></h2>
+<p class="sub">Los datos de salud son datos sensibles (Ley 1581 de 2012) y la historia clínica es reservada.</p>
+<div class="body grid2">
+<div class="card flat rise" style="--i:0">
+<p class="tag bad">INCORRECTO</p>
+<p>«Juan Pérez, cédula 1.234.567, obtuvo resultado positivo en la alcoholimetría de hoy. Redacta el informe.»</p>
+<p>No ingresar nombres, cédulas, resultados, diagnósticos, incapacidades ni historias clínicas.</p>
+</div>
+<div class="card rise" style="--i:1">
+<p class="tag good">CORRECTO</p>
+<p>«Redacta un formato de informe de resultado positivo de alcoholimetría, con espacios en blanco para los datos.»</p>
+<p>Usar datos anonimizados («conductor A, 45 años») o solo la estructura del documento.</p>
+</div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="24" id="caso-samsung" class="deep">
+<p class="eyebrow">CASO REAL · SAMSUNG · 2023 · TECNOLOGÍA</p>
+<h2 class="title">Información Confidencial <span class="hl">en ChatGPT</span></h2>
+<div class="body grid2">
+<div class="stack">
+<div class="card flat"><h3>Qué pasó</h3><p>Ingenieros de la división de semiconductores usaron ChatGPT para resolver errores de programación. En menos de un mes se registraron tres casos en los que ingresaron información confidencial: código fuente, notas de reuniones y datos de hardware.</p></div>
+<div class="q"><p class="tag">PREGUNTA AL GRUPO</p><p class="qtext">¿Qué información de su área nunca debería salir de los sistemas de la empresa?</p></div>
+</div>
+<div class="stack">
+<div class="card fragment"><h3>Cómo lo manejó</h3><p>Samsung prohibió las herramientas de IA generativa en equipos y redes de la empresa, pidió no ingresar información corporativa desde dispositivos personales y empezó a desarrollar una herramienta interna.</p></div>
+<div class="card lesson fragment"><p class="tag">LECCIÓN</p><p>Lo que se ingresa en una IA externa sale del control de la empresa. Por eso existen las herramientas autorizadas.</p></div>
+</div>
+</div>
+<p class="foot">Fuentes: Bloomberg (vía Bloomberg Línea) · TechRadar, 2023</p>
+<div style="position:absolute; right:128px; top:76px; width:260px; height:160px"><svg width="260" height="160" viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg" aria-label="Chip y documento confidencial que sale de la empresa" role="img"><rect width="260" height="160" rx="18" fill="#262a52"/><rect x="40" y="38" width="84" height="84" rx="10" fill="#2b599e" stroke="#85caee" stroke-width="3"/><rect x="62" y="60" width="40" height="40" rx="6" fill="#85caee"/><rect x="47" y="24" width="6" height="14" fill="#85caee"/><rect x="47" y="122" width="6" height="14" fill="#85caee"/><rect x="26" y="47" width="14" height="6" fill="#85caee"/><rect x="124" y="47" width="14" height="6" fill="#85caee"/><rect x="67" y="24" width="6" height="14" fill="#85caee"/><rect x="67" y="122" width="6" height="14" fill="#85caee"/><rect x="26" y="67" width="14" height="6" fill="#85caee"/><rect x="124" y="67" width="14" height="6" fill="#85caee"/><rect x="87" y="24" width="6" height="14" fill="#85caee"/><rect x="87" y="122" width="6" height="14" fill="#85caee"/><rect x="26" y="87" width="14" height="6" fill="#85caee"/><rect x="124" y="87" width="14" height="6" fill="#85caee"/><rect x="107" y="24" width="6" height="14" fill="#85caee"/><rect x="107" y="122" width="6" height="14" fill="#85caee"/><rect x="26" y="107" width="14" height="6" fill="#85caee"/><rect x="124" y="107" width="14" height="6" fill="#85caee"/><path d="M140 80 h34" stroke="#ef8a8a" stroke-width="6" stroke-linecap="round"/><path d="M168 66 l14 14 l-14 14" fill="none" stroke="#ef8a8a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="190" y="42" width="48" height="64" rx="6" fill="#f4f6fb"/><rect x="198" y="56" width="32" height="5" rx="2" fill="#5a5396"/><rect x="198" y="68" width="26" height="5" rx="2" fill="#5a5396"/><rect x="198" y="80" width="30" height="5" rx="2" fill="#5a5396"/><circle cx="230" cy="104" r="12" fill="#ef8a8a"/><rect x="228" y="96" width="4" height="10" rx="2" fill="#111827"/><circle cx="230" cy="111" r="2.4" fill="#111827"/></svg></div>
+
+</section>
+<section data-n="25" id="politica-ia" class="accent">
+<p class="eyebrow">02 — USO RESPONSABLE DE LA IA</p>
+<h2 class="title">Reglas para el Uso de la IA en la Empresa</h2>
+<div class="body">
+<div class="row light rise" style="--i:0"><p class="row-time">01</p><p class="row-text">No ingresar nombres, cédulas, historias clínicas, resultados de alcoholimetría ni otros datos personales o sensibles en herramientas de IA no autorizadas.</p></div>
+<div class="row light rise" style="--i:1"><p class="row-time">02</p><p class="row-text">No compartir contraseñas, credenciales ni información institucional confidencial.</p></div>
+<div class="row light rise" style="--i:2"><p class="row-time">03</p><p class="row-text">Verificar los resultados: la IA puede equivocarse o inventar información.</p></div>
+<div class="row light rise" style="--i:3"><p class="row-time">04</p><p class="row-text">No utilizar la IA para emitir conceptos médicos, determinar aptitudes, aprobar revisiones de vehículos ni tomar decisiones que requieren personal competente.</p></div>
+<div class="row light rise" style="--i:4"><p class="row-time">05</p><p class="row-text">Utilizar la IA como herramienta de apoyo, manteniendo la responsabilidad y la supervisión humana.</p></div>
+</div>
+<p class="foot" style="color:#dbe6f5">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="26" id="dilemas" class="mesh">
+<p class="eyebrow">02 — DILEMAS POR CARGO · OPINE</p>
+<h2 class="title">¿Qué Haría <span class="hl">Usted?</span></h2>
+<div class="body grid3">
+<div class="card flat">
+<p class="tag">ENFERMERÍA</p>
+<p>Una compañera pega en ChatGPT la lista de resultados de alcoholimetría del día para hacer el consolidado más rápido.</p>
+<p class="verdict fragment" style="margin:0;width:auto">Incumple la regla 1. El consolidado se hace en el sistema autorizado o con datos anonimizados.</p>
+</div>
+<div class="card flat">
+<p class="tag">ALISTAMIENTO</p>
+<p>Una herramienta de IA analiza la foto de una llanta y concluye que el desgaste es aceptable.</p>
+<p class="verdict fragment" style="margin:0;width:auto">La IA no aprueba revisiones (regla 4). La decisión es del técnico, tras la inspección física.</p>
+</div>
+<div class="card flat">
+<p class="tag">TESORERÍA</p>
+<p>Llega un correo del proveedor de combustible con una nueva cuenta bancaria para el pago del mes.</p>
+<p class="verdict fragment" style="margin:0;width:auto">Verificar por segundo canal: llamar al número registrado del proveedor antes de cambiar la cuenta.</p>
+</div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="27" id="conectores" class="mesh">
+<p class="eyebrow">03 — CONECTORES · MCP · AGENTES</p>
+<h2 class="title">Conectores, MCP <span class="hl">&amp; Agentes</span></h2>
+<div class="body grid3">
+<div class="card rise" style="--i:0">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
+  <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
+</svg><h3>Conector</h3></div>
+<p>Permiso que se otorga a la IA para acceder a una aplicación, como el correo, el calendario o el almacenamiento en la nube.</p>
+</div>
+<div class="card rise" style="--i:1">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg><h3>MCP</h3></div>
+<p>Model Context Protocol: un estándar, similar al USB-C, que permite conectar la IA con distintas herramientas de la misma forma.</p>
+</div>
+<div class="card rise" style="--i:2">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z" />
+</svg><h3>Agente</h3></div>
+<p>IA que ejecuta tareas, como agendar, enviar o diligenciar formatos, dentro de reglas definidas.</p>
+</div>
+</div>
+<div class="strip rise" style="--i:3"><p><b>Ejemplo:</b> «Buscar en el correo las facturas del mes y consolidarlas en una tabla». Sin conector, la IA explica el procedimiento; con conector, lo ejecuta.</p></div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="28" id="plataformas" class="deep">
+<p class="eyebrow">03 — CASOS DE APLICACIÓN</p>
+<h2 class="title">Casos de Aplicación <span class="hl">en DesarrollAndo</span></h2>
+<p class="sub">Agentes integrados con WhatsApp, telefonía y sistemas de información.</p>
+<div class="body grid2">
+<div class="card rise" style="--i:0"><div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" />
+</svg><h3>Flow</h3></div><p>Asistente de IA en WhatsApp que responde, agenda y hace seguimiento las 24 horas.</p></div>
+<div class="card rise" style="--i:1"><div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" />
+</svg><h3>ConectAndo</h3></div><p>Contact center que graba y analiza las llamadas para mejorar la atención.</p></div>
+<div class="card rise" style="--i:2"><div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+  <path d="M16 3.128a4 4 0 0 1 0 7.744" />
+  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+  <circle cx="9" cy="7" r="4" />
+</svg><h3>ContratAndo</h3></div><p>Agentes de voz que contactan, entrevistan y califican candidatos.</p></div>
+<div class="card rise" style="--i:3"><div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
+  <path d="M22 10v6" />
+  <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
+</svg><h3>FormAndo</h3></div><p>Formaciones iniciales y cursos en formato digital.</p></div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="29" id="statement" class="accent" data-transition="fade">
+<p class="eyebrow">TEMA 2 · SEGURIDAD DE LA INFORMACIÓN</p>
+<div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+<p class="statement rise" style="--i:0; max-width:1000px; font-size:80px;">La misma tecnología que mejora la productividad también se utiliza para cometer fraudes.</p>
+</div>
+<div style="position:absolute; right:160px; top:300px; width:480px; height:480px"><svg width="480" height="480" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" aria-label="Ilustración de un escudo con candado" role="img"><circle cx="240" cy="240" r="215" fill="#111827" opacity="0.25"/><path d="M240 77.5 L377.5 127.5 V227.5 C377.5 327.5 290.0 377.5 240 402.5 C190.0 377.5 102.5 327.5 102.5 227.5 V127.5 Z" fill="#2b599e" stroke="#85caee" stroke-width="6.25"/><rect x="180.0" y="232.5" width="120.0" height="97.5" rx="15.0" fill="#f4f6fb"/><path d="M202.5 232.5 V197.5 a37.5 37.5 0 0 1 75.0 0 V232.5" fill="none" stroke="#f4f6fb" stroke-width="15.0"/><circle cx="240" cy="272.5" r="12.5" fill="#2b599e"/><rect x="235.0" y="275.0" width="10.0" height="30.0" rx="5.0" fill="#2b599e"/><path d="M400 68 Q403.96 86.04 422 90 Q403.96 93.96 400 112 Q396.04 93.96 378 90 Q396.04 86.04 400 68 Z" fill="#f4f6fb"/><path d="M80 364 Q82.88 377.12 96 380 Q82.88 382.88 80 396 Q77.12 382.88 64 380 Q77.12 377.12 80 364 Z" fill="#f4f6fb"/></svg></div>
+
+</section>
+<section data-n="30" id="modalidades" class="deep">
+<p class="eyebrow">04 — MODALIDADES DE FRAUDE</p>
+<h2 class="title">Principales Modalidades <span class="hl">de Fraude</span></h2>
+<div class="body grid3">
+<div class="card flat rise" style="--i:0"><h3>Phishing</h3><p>Correo o SMS que suplanta a un banco, la DIAN o una EPS e incluye un enlace para «verificar» datos.</p></div>
+<div class="card flat rise" style="--i:1"><h3>Suplantación en WhatsApp</h3><p>Mensaje de un supuesto conocido con «número nuevo» que solicita dinero o un código de verificación.</p></div>
+<div class="card flat rise" style="--i:2"><h3>Clonación de voz</h3><p>Llamada con la voz imitada de un directivo o familiar que solicita una transferencia urgente.</p></div>
+<div class="card flat rise" style="--i:3"><h3>Códigos QR falsos</h3><p>Código superpuesto sobre el original que dirige a una página de pago fraudulenta.</p></div>
+<div class="card flat rise" style="--i:4"><h3>Videos falsos (deepfake)</h3><p>Videos de personas conocidas, generados con IA, que promueven inversiones o aplicaciones.</p></div>
+<div class="card flat rise" style="--i:5"><h3>Descargas maliciosas</h3><p>Archivos como «factura.zip» o «comprobante.apk» que instalan software malicioso.</p></div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="31" id="anatomia-correo" class="deep">
+<p class="eyebrow">04 — CÓMO IDENTIFICAR UN CORREO FALSO</p>
+<h2 class="title">Anatomía de <span class="hl">un Correo Fraudulento</span></h2>
+<div class="body grid2">
+<div class="card flat">
+<p class="opt"><b>De:</b> Soporte Bancario &lt;alertas@banco-verifica-cuenta.com&gt; <b>(1)</b></p>
+<p class="opt"><b>Asunto:</b> URGENTE: su cuenta será bloqueada hoy <b>(2)</b></p>
+<p class="msg">Estimado cliente: <b>(3)</b><br>Detectamos un acceso inusual. Para evitar el bloqueo, confirme sus datos en las próximas 2 horas. <b>(4)</b><br><u>Verificar mi cuenta</u> <b>(5)</b></p>
+<p class="opt"><b>Adjunto:</b> comprobante_seguridad.zip <b>(6)</b></p>
+</div>
+<div>
+<div class="row compact"><p class="row-time">01</p><p class="row-text">Remitente con un dominio extraño o con letras cambiadas.</p></div>
+<div class="row compact"><p class="row-time">02</p><p class="row-text">Asunto con urgencia, amenaza o premio.</p></div>
+<div class="row compact"><p class="row-time">03</p><p class="row-text">Saludo genérico, sin el nombre de la persona.</p></div>
+<div class="row compact"><p class="row-time">04</p><p class="row-text">Plazo corto para presionar una decisión.</p></div>
+<div class="row compact"><p class="row-time">05</p><p class="row-text">Enlace: pasar el cursor sin hacer clic para ver la dirección real.</p></div>
+<div class="row compact"><p class="row-time">06</p><p class="row-text">Adjunto comprimido o ejecutable que no se esperaba.</p></div>
+</div>
+</div>
+<p class="foot">Correo de ejemplo elaborado para la capacitación</p>
+
+</section>
+<section data-n="32" id="mensaje-sospechoso" class="accent">
+<p class="eyebrow">04 — PROCEDIMIENTO</p>
+<h2 class="title">Qué Hacer ante un Mensaje Sospechoso</h2>
+<div class="body">
+<div class="row light rise" style="--i:0"><p class="row-time">01</p><p class="row-text">No abrir enlaces ni adjuntos, y no responder.</p></div>
+<div class="row light rise" style="--i:1"><p class="row-time">02</p><p class="row-text">No reenviarlo a compañeros ni a grupos de WhatsApp.</p></div>
+<div class="row light rise" style="--i:2"><p class="row-time">03</p><p class="row-text">Verificar con el supuesto remitente por un canal oficial: llamar al número registrado.</p></div>
+<div class="row light rise" style="--i:3"><p class="row-time">04</p><p class="row-text">Reportarlo al jefe inmediato o al responsable de sistemas, con una captura de pantalla.</p></div>
+<div class="row light rise" style="--i:4"><p class="row-time">05</p><p class="row-text">Marcarlo como correo no deseado o phishing y eliminarlo; en WhatsApp, reportar y bloquear.</p></div>
+<div class="row light rise" style="--i:5"><p class="row-time">06</p><p class="row-text">Si ya hizo clic o entregó datos, aplicar de inmediato el protocolo ante un incidente.</p></div>
+</div>
+<p class="foot" style="color:#dbe6f5">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="33" id="fraude-o-no" class="mesh">
+<p class="eyebrow">04 — EJERCICIO · VOTE EN EL CHAT</p>
+<h2 class="title">¿Fraude <span class="hl">o Legítimo?</span></h2>
+<div class="body grid3">
+<div class="card flat">
+<p class="tag">MENSAJE A · SMS</p>
+<p class="msg">Su paquete no pudo ser entregado. Para reprogramar la entrega, pague $3.900 hoy en el siguiente enlace: [enlace]</p>
+<p class="verdict no fragment" style="margin:0;width:auto">FRAUDE · Cobro inesperado, urgencia y enlace desconocido.</p>
+</div>
+<div class="card flat">
+<p class="tag">MENSAJE B · WHATSAPP</p>
+<p class="msg">Hola, soy el gerente. Cambié de número. Necesito que hoy transfiera $4.800.000 a un proveedor. Estoy en reunión, no me llame.</p>
+<p class="verdict no fragment" style="margin:0;width:auto">FRAUDE · Número nuevo, urgencia, pago y petición de no verificar.</p>
+</div>
+<div class="card flat">
+<p class="tag">MENSAJE C · CORREO INTERNO</p>
+<p class="msg">Les recuerdo que mañana la jornada de alcoholimetría inicia a las 6:00 a. m. en la sede principal. Coordinación operativa.</p>
+<p class="verdict yes fragment" style="margin:0;width:auto">LEGÍTIMO · No pide datos, dinero ni abrir enlaces. Ante la duda, se confirma con el remitente.</p>
+</div>
+</div>
+<p class="foot">Mensajes de ejemplo elaborados para la capacitación</p>
+
+</section>
+<section data-n="34" id="virus" class="mesh">
+<p class="eyebrow">04 — VIRUS &amp; DESCARGAS</p>
+<h2 class="title">Señales de Alerta <span class="hl">&amp; Síntomas de Infección</span></h2>
+<div class="body grid2">
+<div class="card rise" style="--i:0">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21 21-4.34-4.34" />
+  <circle cx="11" cy="11" r="8" />
+</svg><h3>Antes de abrir un mensaje o archivo</h3></div>
+<ul>
+<li>Urgencia o amenaza: «su cuenta será bloqueada hoy».</li>
+<li>Remitente que no coincide con la entidad o con caracteres alterados.</li>
+<li>Archivos .exe, .apk, .scr, .js o comprimidos con contraseña.</li>
+<li>Solicitud de «habilitar contenido» o «habilitar macros».</li>
+<li>Enlaces acortados o no solicitados.</li>
+</ul>
+</div>
+<div class="card flat rise" style="--i:1">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+  <path d="M12 9v4" />
+  <path d="M12 17h.01" />
+</svg><h3>Síntomas de un equipo comprometido</h3></div>
+<ul>
+<li>Lentitud repentina del equipo.</li>
+<li>Ventanas, anuncios o aplicaciones no instaladas por el usuario.</li>
+<li>Mensajes enviados a los contactos sin autorización.</li>
+<li>Consumo anormal de batería o de datos.</li>
+<li>Antivirus desactivado.</li>
+</ul>
+</div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="35" id="hardware-software" class="mesh">
+<p class="eyebrow">04 — EQUIPOS, PROGRAMAS &amp; ANTIVIRUS</p>
+<h2 class="title">Lo Que No Se Debe Hacer <span class="hl">con los Equipos</span></h2>
+<div class="body grid3">
+<div class="card rise" style="--i:0">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
+  <circle cx="12" cy="12" r="3" />
+</svg><h3>Hardware</h3></div>
+<ul>
+<li>Conectar memorias USB desconocidas.</li>
+<li>Dejar el equipo desbloqueado o sin supervisión.</li>
+<li>Conectar dispositivos personales a la red sin autorización.</li>
+<li>Abrir o modificar los equipos por cuenta propia.</li>
+<li>Demorar el reporte de pérdida o robo.</li>
+</ul>
+</div>
+<div class="card rise" style="--i:1">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m16 18 6-6-6-6" />
+  <path d="m8 6-6 6 6 6" />
+</svg><h3>Software</h3></div>
+<ul>
+<li>Instalar programas sin autorización.</li>
+<li>Descargar programas piratas o «cracks».</li>
+<li>Posponer indefinidamente las actualizaciones.</li>
+<li>Agregar extensiones desconocidas al navegador.</li>
+<li>Guardar contraseñas en archivos o notas.</li>
+</ul>
+</div>
+<div class="card rise" style="--i:2">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+  <path d="m16 9-5.5 5.5L8 12" />
+</svg><h3>Antivirus</h3></div>
+<ul>
+<li>Desactivarlo o desinstalarlo.</li>
+<li>Ignorar sus alertas.</li>
+<li>Usarlo sin actualizar.</li>
+<li>Abrir una USB sin analizarla primero.</li>
+<li>Instalar dos antivirus en el mismo equipo.</li>
+</ul>
+</div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="36" id="glosario-1" class="deep">
+<p class="eyebrow">04 — CONCEPTOS CLAVE · AMENAZAS</p>
+<h2 class="title">Conceptos Clave: <span class="hl">Amenazas</span></h2>
+<div class="body">
+<table class="tbl gloss">
+<tr><th style="width:19%">Término</th><th style="width:40%">Definición</th><th style="width:41%">Aplicación en la operación</th></tr>
+<tr><td>Malware</td><td>Software malicioso que ingresa a un equipo para dañar, espiar o robar información.</td><td>Un archivo «planilla_turnos.exe» que captura las contraseñas del equipo de alistamiento.</td></tr>
+<tr><td>Virus informático</td><td>Tipo de malware que se adhiere a archivos y se propaga de un equipo a otro.</td><td>Una memoria USB que pasa del equipo de enfermería al de tesorería y lo infecta.</td></tr>
+<tr><td>Ransomware</td><td>Malware que bloquea o cifra la información y exige un pago para liberarla.</td><td>Pérdida de acceso a los registros de alcoholimetría o a la programación de despachos.</td></tr>
+<tr><td>Phishing</td><td>Engaño por correo, SMS o WhatsApp que suplanta a una entidad para obtener datos o dinero.</td><td>Un correo que aparenta ser del Ministerio de Transporte o de la EPS y solicita actualizar datos.</td></tr>
+<tr><td>Riesgo de seguridad de la información</td><td>Probabilidad de que una amenaza aproveche una vulnerabilidad y afecte la información.</td><td>Contraseñas anotadas en papel junto a un equipo de uso compartido.</td></tr>
+</table>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="37" id="caso-maersk" class="deep">
+<p class="eyebrow">CASO REAL · MAERSK · 2017 · TRANSPORTE &amp; LOGÍSTICA</p>
+<h2 class="title">Un Malware Paraliza <span class="hl">una Naviera</span></h2>
+<div class="body grid2">
+<div class="stack">
+<div class="card flat"><h3>Qué pasó</h3><p>El malware NotPetya entró por la actualización de un software contable usado en Ucrania y, en minutos, inutilizó los sistemas de Maersk en oficinas y terminales portuarias de todo el mundo.</p></div>
+<div class="q"><p class="tag">PREGUNTA AL GRUPO</p><p class="qtext">Si mañana ningún computador de la empresa enciende, ¿cómo seguiría operando su área?</p></div>
+</div>
+<div class="stack">
+<div class="card fragment"><h3>Cómo lo manejó</h3><p>Los equipos pasaron a operación manual mientras TI reinstaló 4.000 servidores, 45.000 computadores y 2.500 aplicaciones en unos diez días. Un servidor de la oficina de Ghana, desconectado durante el ataque, permitió recuperar los accesos. Costo: USD 250 a 300 millones.</p></div>
+<div class="card lesson fragment"><p class="tag">LECCIÓN</p><p>La continuidad depende de copias de respaldo aisladas y de un plan para operar sin sistemas.</p></div>
+</div>
+</div>
+<p class="foot">Fuentes: Maersk, informe del tercer trimestre de 2017 · Foro Económico Mundial 2018 (vía The Register)</p>
+<div style="position:absolute; right:128px; top:76px; width:260px; height:160px"><svg width="260" height="160" viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg" aria-label="Buque portacontenedores" role="img"><rect width="260" height="160" rx="18" fill="#262a52"/><rect x="70" y="50" width="28" height="18" rx="2" fill="#2b599e"/><rect x="100" y="50" width="28" height="18" rx="2" fill="#85caee"/><rect x="130" y="50" width="28" height="18" rx="2" fill="#5a5396"/><rect x="160" y="50" width="28" height="18" rx="2" fill="#f2c46d"/><rect x="70" y="70" width="28" height="18" rx="2" fill="#2b599e"/><rect x="100" y="70" width="28" height="18" rx="2" fill="#85caee"/><rect x="130" y="70" width="28" height="18" rx="2" fill="#5a5396"/><rect x="160" y="70" width="28" height="18" rx="2" fill="#2b599e"/><rect x="194" y="40" width="22" height="50" rx="3" fill="#f4f6fb"/><rect x="198" y="46" width="14" height="8" fill="#85caee"/><path d="M40 90 H232 L210 120 H62 Z" fill="#f4f6fb"/><path d="M20 130 q15 -10 30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0" fill="none" stroke="#85caee" stroke-width="5" stroke-linecap="round"/><circle cx="60" cy="40" r="16" fill="#ef8a8a"/><path d="M53 33 l14 14 M67 33 l-14 14" stroke="#111827" stroke-width="4" stroke-linecap="round"/></svg></div>
+
+</section>
+<section data-n="38" id="glosario-2" class="mesh">
+<p class="eyebrow">04 — CONCEPTOS CLAVE · CONTROLES</p>
+<h2 class="title">Conceptos Clave: <span class="hl">Controles</span></h2>
+<div class="body">
+<table class="tbl gloss">
+<tr><th style="width:19%">Término</th><th style="width:40%">Definición</th><th style="width:41%">Aplicación en la operación</th></tr>
+<tr><td>MFA (autenticación multifactor)</td><td>Acceso con contraseña y un segundo factor, como un código en el celular o la huella.</td><td>Si roban la contraseña del correo de tesorería, sin el segundo factor no es posible ingresar.</td></tr>
+<tr><td>Cortafuegos (firewall)</td><td>Barrera que filtra el tráfico de la red: permite lo autorizado y bloquea lo demás.</td><td>Impide conexiones no autorizadas desde internet a los equipos de la sede o a las cámaras.</td></tr>
+<tr><td>Control de seguridad</td><td>Medida técnica, administrativa o física que reduce un riesgo.</td><td>Antivirus, doble aprobación de pagos y archivo de historias clínicas bajo llave.</td></tr>
+<tr><td>Bloqueo</td><td>Bloqueo de la sesión al retirarse del puesto y de la cuenta tras varios intentos fallidos.</td><td>Bloquear el equipo (Windows + L) en la casa de descanso o en el punto de alcoholimetría.</td></tr>
+<tr><td>SLA (acuerdo de nivel de servicio)</td><td>Compromiso del proveedor sobre tiempos de respuesta, disponibilidad y soporte.</td><td>Define el tiempo máximo para restablecer el sistema de despachos o de alcoholimetría.</td></tr>
+</table>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="39" id="caso-colonial" class="deep">
+<p class="eyebrow">CASO REAL · COLONIAL PIPELINE · 2021 · COMBUSTIBLES</p>
+<h2 class="title">Una Contraseña <span class="hl">Detiene un Oleoducto</span></h2>
+<div class="body grid2">
+<div class="stack">
+<div class="card flat"><h3>Qué pasó</h3><p>Los atacantes ingresaron con la contraseña filtrada de una cuenta de acceso remoto (VPN) que ya no se usaba, pero seguía activa y no tenía autenticación multifactor. Después instalaron ransomware.</p></div>
+<div class="q"><p class="tag">PREGUNTA AL GRUPO</p><p class="qtext">¿Cuántas cuentas o accesos que ya nadie usa siguen activos en su área?</p></div>
+</div>
+<div class="stack">
+<div class="card fragment"><h3>Cómo lo manejó</h3><p>La empresa apagó preventivamente el oleoducto, lo que generó escasez de combustible en la costa este de EE. UU. durante unos cinco días. Pagó un rescate de USD 4,4 millones y avisó de inmediato al FBI, que recuperó cerca de USD 2,3 millones.</p></div>
+<div class="card lesson fragment"><p class="tag">LECCIÓN</p><p>MFA en todos los accesos, cuentas inactivas deshabilitadas y reporte inmediato a las autoridades.</p></div>
+</div>
+</div>
+<p class="foot">Fuentes: BankInfoSecurity · Departamento de Justicia de EE. UU. (vía Genbeta) · El Espectador, 2021</p>
+<div style="position:absolute; right:128px; top:76px; width:260px; height:160px"><svg width="260" height="160" viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg" aria-label="Oleoducto detenido y una llave" role="img"><rect width="260" height="160" rx="18" fill="#262a52"/><rect x="16" y="88" width="228" height="26" rx="6" fill="#85caee"/><rect x="96" y="80" width="18" height="42" rx="3" fill="#2b599e"/><rect x="160" y="80" width="18" height="42" rx="3" fill="#2b599e"/><rect x="128" y="56" width="10" height="32" fill="#f4f6fb"/><rect x="108" y="48" width="50" height="10" rx="5" fill="#f4f6fb"/><circle cx="54" cy="46" r="18" fill="none" stroke="#f2c46d" stroke-width="7"/><path d="M68 56 L104 84" stroke="#f2c46d" stroke-width="7" stroke-linecap="round"/><path d="M92 74 l-8 8 M100 80 l-8 8" stroke="#f2c46d" stroke-width="5" stroke-linecap="round"/><circle cx="214" cy="46" r="18" fill="#ef8a8a"/><rect x="204" y="43" width="20" height="6" rx="3" fill="#111827"/></svg></div>
+
+</section>
+<section data-n="40" id="herramientas-seguridad" class="mesh">
+<p class="eyebrow">04 — HERRAMIENTAS DE PROTECCIÓN</p>
+<h2 class="title">Herramientas <span class="hl">para Protegerse</span></h2>
+<div class="body grid2">
+<div class="card rise" style="--i:0"><div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
+  <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
+</svg><h3>Autenticación multifactor</h3></div><p>Google Authenticator, Microsoft Authenticator o la verificación en dos pasos de WhatsApp. Activarla en el correo, el banco y WhatsApp.</p></div>
+<div class="card rise" style="--i:1"><div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+</svg><h3>Gestor de contraseñas</h3></div><p>Bitwarden o los gestores de Google y Apple. Permiten tener una contraseña única y robusta por cuenta sin memorizarlas.</p></div>
+<div class="card rise" style="--i:2"><div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21 21-4.34-4.34" />
+  <circle cx="11" cy="11" r="8" />
+</svg><h3>Revisar enlaces sospechosos</h3></div><p>VirusTotal (virustotal.com) analiza un enlace antes de abrirlo. No subir documentos confidenciales: lo que se sube se comparte con terceros.</p></div>
+<div class="card rise" style="--i:3"><div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+  <path d="M12 9v4" />
+  <path d="M12 17h.01" />
+</svg><h3>Consultar filtraciones</h3></div><p>Have I Been Pwned (haveibeenpwned.com) indica si un correo apareció en filtraciones conocidas. Si aparece, cambiar esas contraseñas.</p></div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="41" id="caso-arup" class="deep">
+<p class="eyebrow">CASO REAL · ARUP · 2024 · INGENIERÍA</p>
+<h2 class="title">Videollamada Falsa: <span class="hl">USD 25 Millones</span></h2>
+<div class="body grid2">
+<div class="stack">
+<div class="card flat"><h3>Qué pasó</h3><p>Un empleado de finanzas en Hong Kong recibió un correo del supuesto director financiero con una solicitud de transacción confidencial. Dudó, pero luego asistió a una videollamada en la que el director y otros colegas eran recreaciones hechas con IA.</p></div>
+<div class="q"><p class="tag">PREGUNTA AL GRUPO</p><p class="qtext">¿Qué le haría dudar de una videollamada con su propio jefe?</p></div>
+</div>
+<div class="stack">
+<div class="card fragment"><h3>Cómo lo manejó</h3><p>El empleado hizo 15 transferencias por cerca de USD 25 millones y descubrió el fraude al consultar con la sede central. Arup informó a la policía y confirmó que sus sistemas internos no fueron comprometidos.</p></div>
+<div class="card lesson fragment"><p class="tag">LECCIÓN</p><p>Ver y oír ya no es prueba suficiente: los pagos se verifican por un canal independiente.</p></div>
+</div>
+</div>
+<p class="foot">Fuentes: CNN · Policía de Hong Kong, 2024</p>
+<div style="position:absolute; right:128px; top:76px; width:260px; height:160px"><svg width="260" height="160" viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg" aria-label="Videollamada con un participante falso generado con IA" role="img"><rect width="260" height="160" rx="18" fill="#262a52"/><rect x="26" y="22" width="100" height="56" rx="8" fill="#1d2340" stroke="#85caee" stroke-width="2"/><circle cx="76" cy="46" r="12" fill="#ef8a8a"/><path d="M56 76 q20 -22 40 0" fill="#ef8a8a"/><rect x="64" y="40" width="24" height="6" rx="3" fill="#111827"/><rect x="134" y="22" width="100" height="56" rx="8" fill="#1d2340" stroke="#85caee" stroke-width="2"/><circle cx="184" cy="46" r="12" fill="#85caee"/><path d="M164 76 q20 -22 40 0" fill="#85caee"/><rect x="26" y="84" width="100" height="56" rx="8" fill="#1d2340" stroke="#85caee" stroke-width="2"/><circle cx="76" cy="108" r="12" fill="#85caee"/><path d="M56 138 q20 -22 40 0" fill="#85caee"/><rect x="134" y="84" width="100" height="56" rx="8" fill="#1d2340" stroke="#85caee" stroke-width="2"/><circle cx="184" cy="108" r="12" fill="#85caee"/><path d="M164 138 q20 -22 40 0" fill="#85caee"/><rect x="96" y="140" width="68" height="12" rx="6" fill="#ef8a8a"/></svg></div>
+
+</section>
+<section data-n="42" id="pagos" class="deep">
+<p class="eyebrow">04 — TESORERÍA &amp; GERENCIA</p>
+<h2 class="title">Protocolo para Pagos <span class="hl">&amp; Solicitudes Urgentes</span></h2>
+<div class="body grid3">
+<div class="card rise" style="--i:0"><p class="step-num">01</p><h3>Verificación por segundo canal</h3><p>Todo pago urgente o cambio de cuenta de un proveedor se confirma llamando al número registrado previamente.</p></div>
+<div class="card rise" style="--i:1"><p class="step-num">02</p><h3>Palabra clave interna</h3><p>Definir una palabra o pregunta de validación conocida solo por el equipo.</p></div>
+<div class="card rise" style="--i:2"><p class="step-num">03</p><h3>Doble aprobación</h3><p>Los pagos superiores a [monto] requieren la aprobación de dos personas.</p></div>
+</div>
+<div class="strip rise" style="--i:3"><p>Una solicitud para omitir el procedimiento por urgencia es, en sí misma, una señal de alerta.</p></div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="43" id="caso-keralty" class="deep">
+<p class="eyebrow">CASO REAL · KERALTY (EPS SANITAS) · 2022 · SALUD EN COLOMBIA</p>
+<h2 class="title">Ransomware en la <span class="hl">Salud Colombiana</span></h2>
+<div class="body grid2">
+<div class="stack">
+<div class="card flat"><h3>Qué pasó</h3><p>A finales de noviembre de 2022, el grupo RansomHouse atacó la infraestructura de Keralty. Cayeron la página web y los canales de atención, y se afectaron la asignación de citas, las autorizaciones y la entrega de medicamentos.</p></div>
+<div class="q"><p class="tag">PREGUNTA AL GRUPO</p><p class="qtext">Si el sistema de citas o de alcoholimetría deja de funcionar, ¿cómo atendería su área a las personas?</p></div>
+</div>
+<div class="stack">
+<div class="card fragment"><h3>Cómo lo manejó</h3><p>La empresa activó planes de contingencia y pidió a los usuarios llevar autorizaciones impresas; la Fiscalía abrió una investigación. Los atacantes publicaron archivos con información financiera y personal, y se estimó que cerca de 5,5 millones de usuarios tuvieron dificultades para acceder a los servicios.</p></div>
+<div class="card lesson fragment"><p class="tag">LECCIÓN</p><p>En salud, un incidente digital afecta la atención de las personas: se requieren contingencias en papel y datos protegidos.</p></div>
+</div>
+</div>
+<p class="foot">Fuentes: El Colombiano · Valora Analitik · Noticias Caracol, 2022</p>
+<div style="position:absolute; right:128px; top:76px; width:260px; height:160px"><svg width="260" height="160" viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg" aria-label="Edificio de salud con candado de seguridad" role="img"><rect width="260" height="160" rx="18" fill="#262a52"/><rect x="64" y="48" width="112" height="96" rx="6" fill="#f4f6fb"/><rect x="78" y="70" width="18" height="14" rx="2" fill="#85caee"/><rect x="108" y="70" width="18" height="14" rx="2" fill="#85caee"/><rect x="138" y="70" width="18" height="14" rx="2" fill="#85caee"/><rect x="78" y="94" width="18" height="14" rx="2" fill="#85caee"/><rect x="108" y="94" width="18" height="14" rx="2" fill="#85caee"/><rect x="138" y="94" width="18" height="14" rx="2" fill="#85caee"/><rect x="108" y="118" width="24" height="26" fill="#2b599e"/><rect x="110" y="20" width="20" height="44" rx="4" fill="#ef8a8a"/><rect x="98" y="32" width="44" height="20" rx="4" fill="#ef8a8a"/><rect x="186" y="84" width="50" height="42" rx="8" fill="#f2c46d"/><path d="M198 84 V72 a13 13 0 0 1 26 0 V84" fill="none" stroke="#f2c46d" stroke-width="7"/><circle cx="211" cy="102" r="6" fill="#111827"/></svg></div>
+
+</section>
+<section data-n="44" id="reglas" class="deep">
+<p class="eyebrow">05 — BUENAS PRÁCTICAS</p>
+<h2 class="title">Buenas Prácticas <span class="hl">de Seguridad Digital</span></h2>
+<div class="body grid2">
+<div class="rise" style="--i:0">
+<div class="row compact"><p class="row-time">01</p><p class="row-text">Ante solicitudes urgentes, verificar antes de actuar.</p></div>
+<div class="row compact"><p class="row-time">02</p><p class="row-text">No abrir enlaces ni archivos no esperados.</p></div>
+<div class="row compact"><p class="row-time">03</p><p class="row-text">Instalar aplicaciones solo desde tiendas oficiales.</p></div>
+<div class="row compact"><p class="row-time">04</p><p class="row-text">Activar la autenticación multifactor (MFA).</p></div>
+<div class="row compact"><p class="row-time">05</p><p class="row-text">Usar contraseñas robustas y no compartirlas.</p></div>
+</div>
+<div class="rise" style="--i:1">
+<div class="row compact"><p class="row-time">06</p><p class="row-text">Confirmar pagos por un segundo canal.</p></div>
+<div class="row compact"><p class="row-time">07</p><p class="row-text">Devolver llamadas sospechosas al número oficial.</p></div>
+<div class="row compact"><p class="row-time">08</p><p class="row-text">No ingresar datos sensibles en IA no autorizada.</p></div>
+<div class="row compact"><p class="row-time">09</p><p class="row-text">Mantener equipos y celulares actualizados.</p></div>
+<div class="row compact"><p class="row-time">10</p><p class="row-text">Bloquear el equipo al retirarse del puesto.</p></div>
+</div>
+</div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="45" id="si-caigo" class="mesh">
+<p class="eyebrow">05 — RESPUESTA A INCIDENTES</p>
+<h2 class="title">Protocolo ante <span class="hl">un Incidente</span></h2>
+<div class="body">
+<div class="row rise" style="--i:0"><p class="row-time">01</p><p class="row-text">Desconectar el equipo de la red (wifi y datos) si se descargó un archivo sospechoso.</p></div>
+<div class="row rise" style="--i:1"><p class="row-time">02</p><p class="row-text">Cambiar las contraseñas desde otro equipo y activar la autenticación multifactor.</p></div>
+<div class="row rise" style="--i:2"><p class="row-time">03</p><p class="row-text">Comunicarse con la entidad bancaria a través de su línea oficial.</p></div>
+<div class="row rise" style="--i:3"><p class="row-time">04</p><p class="row-text">Reportar de inmediato al jefe directo y al responsable de sistemas.</p></div>
+<div class="row rise" style="--i:4"><p class="row-time">05</p><p class="row-text">Registrar el reporte en el CAI Virtual de la Policía: caivirtual.policia.gov.co</p></div>
+</div>
+<div class="strip rise" style="--i:5"><p>Reportar a tiempo reduce el impacto del incidente.</p></div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="46" id="kit-para-llevar" class="deep">
+<p class="eyebrow">05 — PARA LLEVAR</p>
+<h2 class="title">Kit para Usar la IA <span class="hl">de Forma Segura</span></h2>
+<div class="body grid3">
+<div class="card rise" style="--i:0">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+  <path d="M9 18h6" />
+  <path d="M10 22h4" />
+</svg><h3>Úsela para</h3></div>
+<ul><li>Redactar charlas, actas y correos.</li><li>Resumir documentos extensos.</li><li>Organizar datos y fórmulas.</li><li>Preparar material de prevención.</li></ul>
+</div>
+<div class="card rise" style="--i:1">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9" />
+  <path d="m18 15 4-4" />
+  <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+</svg><h3>Con estas herramientas</h3></div>
+<ul><li>El asistente de IA autorizado.</li><li>Perplexity para buscar con fuentes.</li><li>Canva para piezas gráficas.</li><li>Autenticador y gestor de contraseñas.</li></ul>
+</div>
+<div class="card rise" style="--i:2">
+<div class="card-head"><svg aria-hidden="true" class="ico"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m11 17 2 2a1 1 0 1 0 3-3" />
+  <path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" />
+  <path d="m21 3 1 11h-2" />
+  <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" />
+  <path d="M3 4h8" />
+</svg><h3>Siempre cuidando</h3></div>
+<ul><li>Cero datos sensibles en IA no autorizada.</li><li>Verificar antes de usar.</li><li>Decisiones a cargo de personal competente.</li><li>Reportar de inmediato cualquier incidente.</li></ul>
+</div>
+</div>
+<div class="strip rise" style="--i:3"><p>La IA es un apoyo para trabajar mejor; la responsabilidad y el cuidado de la información son de cada persona.</p></div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="47" id="evaluacion" class="deep">
+<p class="eyebrow">EVALUACIÓN DE CONOCIMIENTOS · 10 MINUTOS</p>
+<h2 class="title">Evaluación <span class="hl">de la Capacitación</span></h2>
+<div class="body" style="display:flex; flex-direction:row; gap:64px; align-items:center;">
+<div style="flex:1;">
+<div class="row"><p class="row-time">01</p><p class="row-text">Escanee el código QR con la cámara del celular o abra el enlace que se comparte en el chat.</p></div>
+<div class="row"><p class="row-time">02</p><p class="row-text">Registre su nombre, documento y cargo, y acepte el tratamiento de datos.</p></div>
+<div class="row"><p class="row-time">03</p><p class="row-text">Responda las 10 preguntas de selección múltiple.</p></div>
+<div class="row"><p class="row-time">04</p><p class="row-text">Envíe y consulte su puntaje. Nota mínima de aprobación: 8 de 10.</p></div>
+</div>
+<div class="qr-box" style="border:none; background:#ffffff; gap:12px;">
+<svg viewBox="0 0 31 31" width="300" height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Código QR del formulario de evaluación" shape-rendering="crispEdges"><rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/><path d="M1,1H2V2H1zM2,1H3V2H2zM3,1H4V2H3zM4,1H5V2H4zM5,1H6V2H5zM6,1H7V2H6zM7,1H8V2H7zM13,1H14V2H13zM15,1H16V2H15zM18,1H19V2H18zM19,1H20V2H19zM20,1H21V2H20zM23,1H24V2H23zM24,1H25V2H24zM25,1H26V2H25zM26,1H27V2H26zM27,1H28V2H27zM28,1H29V2H28zM29,1H30V2H29zM1,2H2V3H1zM7,2H8V3H7zM12,2H13V3H12zM13,2H14V3H13zM17,2H18V3H17zM23,2H24V3H23zM29,2H30V3H29zM1,3H2V4H1zM3,3H4V4H3zM4,3H5V4H4zM5,3H6V4H5zM7,3H8V4H7zM10,3H11V4H10zM12,3H13V4H12zM13,3H14V4H13zM15,3H16V4H15zM16,3H17V4H16zM18,3H19V4H18zM21,3H22V4H21zM23,3H24V4H23zM25,3H26V4H25zM26,3H27V4H26zM27,3H28V4H27zM29,3H30V4H29zM1,4H2V5H1zM3,4H4V5H3zM4,4H5V5H4zM5,4H6V5H5zM7,4H8V5H7zM12,4H13V5H12zM13,4H14V5H13zM14,4H15V5H14zM18,4H19V5H18zM19,4H20V5H19zM20,4H21V5H20zM21,4H22V5H21zM23,4H24V5H23zM25,4H26V5H25zM26,4H27V5H26zM27,4H28V5H27zM29,4H30V5H29zM1,5H2V6H1zM3,5H4V6H3zM4,5H5V6H4zM5,5H6V6H5zM7,5H8V6H7zM11,5H12V6H11zM13,5H14V6H13zM18,5H19V6H18zM19,5H20V6H19zM21,5H22V6H21zM23,5H24V6H23zM25,5H26V6H25zM26,5H27V6H26zM27,5H28V6H27zM29,5H30V6H29zM1,6H2V7H1zM7,6H8V7H7zM9,6H10V7H9zM10,6H11V7H10zM13,6H14V7H13zM16,6H17V7H16zM17,6H18V7H17zM18,6H19V7H18zM20,6H21V7H20zM23,6H24V7H23zM29,6H30V7H29zM1,7H2V8H1zM2,7H3V8H2zM3,7H4V8H3zM4,7H5V8H4zM5,7H6V8H5zM6,7H7V8H6zM7,7H8V8H7zM9,7H10V8H9zM11,7H12V8H11zM13,7H14V8H13zM15,7H16V8H15zM17,7H18V8H17zM19,7H20V8H19zM21,7H22V8H21zM23,7H24V8H23zM24,7H25V8H24zM25,7H26V8H25zM26,7H27V8H26zM27,7H28V8H27zM28,7H29V8H28zM29,7H30V8H29zM12,8H13V9H12zM14,8H15V9H14zM18,8H19V9H18zM19,8H20V9H19zM20,8H21V9H20zM21,8H22V9H21zM1,9H2V10H1zM4,9H5V10H4zM6,9H7V10H6zM7,9H8V10H7zM9,9H10V10H9zM10,9H11V10H10zM11,9H12V10H11zM13,9H14V10H13zM15,9H16V10H15zM20,9H21V10H20zM22,9H23V10H22zM24,9H25V10H24zM3,10H4V11H3zM8,10H9V11H8zM9,10H10V11H9zM12,10H13V11H12zM14,10H15V11H14zM18,10H19V11H18zM19,10H20V11H19zM21,10H22V11H21zM23,10H24V11H23zM26,10H27V11H26zM29,10H30V11H29zM2,11H3V12H2zM4,11H5V12H4zM5,11H6V12H5zM7,11H8V12H7zM8,11H9V12H8zM9,11H10V12H9zM10,11H11V12H10zM11,11H12V12H11zM14,11H15V12H14zM15,11H16V12H15zM17,11H18V12H17zM19,11H20V12H19zM20,11H21V12H20zM24,11H25V12H24zM25,11H26V12H25zM26,11H27V12H26zM27,11H28V12H27zM28,11H29V12H28zM1,12H2V13H1zM5,12H6V13H5zM6,12H7V13H6zM12,12H13V13H12zM14,12H15V13H14zM17,12H18V13H17zM20,12H21V13H20zM21,12H22V13H21zM23,12H24V13H23zM24,12H25V13H24zM25,12H26V13H25zM27,12H28V13H27zM28,12H29V13H28zM2,13H3V14H2zM3,13H4V14H3zM4,13H5V14H4zM7,13H8V14H7zM8,13H9V14H8zM9,13H10V14H9zM10,13H11V14H10zM11,13H12V14H11zM13,13H14V14H13zM15,13H16V14H15zM17,13H18V14H17zM18,13H19V14H18zM21,13H22V14H21zM23,13H24V14H23zM26,13H27V14H26zM28,13H29V14H28zM29,13H30V14H29zM1,14H2V15H1zM3,14H4V15H3zM5,14H6V15H5zM10,14H11V15H10zM11,14H12V15H11zM14,14H15V15H14zM15,14H16V15H15zM20,14H21V15H20zM21,14H22V15H21zM22,14H23V15H22zM1,15H2V16H1zM2,15H3V16H2zM3,15H4V16H3zM5,15H6V16H5zM7,15H8V16H7zM8,15H9V16H8zM13,15H14V16H13zM14,15H15V16H14zM15,15H16V16H15zM18,15H19V16H18zM21,15H22V16H21zM22,15H23V16H22zM24,15H25V16H24zM26,15H27V16H26zM27,15H28V16H27zM28,15H29V16H28zM29,15H30V16H29zM1,16H2V17H1zM9,16H10V17H9zM10,16H11V17H10zM12,16H13V17H12zM13,16H14V17H13zM18,16H19V17H18zM19,16H20V17H19zM22,16H23V17H22zM23,16H24V17H23zM24,16H25V17H24zM26,16H27V17H26zM28,16H29V17H28zM2,17H3V18H2zM4,17H5V18H4zM5,17H6V18H5zM7,17H8V18H7zM10,17H11V18H10zM11,17H12V18H11zM14,17H15V18H14zM20,17H21V18H20zM22,17H23V18H22zM24,17H25V18H24zM28,17H29V18H28zM5,18H6V19H5zM6,18H7V19H6zM9,18H10V19H9zM10,18H11V19H10zM11,18H12V19H11zM14,18H15V19H14zM15,18H16V19H15zM17,18H18V19H17zM18,18H19V19H18zM19,18H20V19H19zM20,18H21V19H20zM22,18H23V19H22zM23,18H24V19H23zM24,18H25V19H24zM26,18H27V19H26zM29,18H30V19H29zM1,19H2V20H1zM3,19H4V20H3zM7,19H8V20H7zM15,19H16V20H15zM19,19H20V20H19zM22,19H23V20H22zM23,19H24V20H23zM24,19H25V20H24zM28,19H29V20H28zM29,19H30V20H29zM3,20H4V21H3zM4,20H5V21H4zM5,20H6V21H5zM6,20H7V21H6zM9,20H10V21H9zM13,20H14V21H13zM15,20H16V21H15zM17,20H18V21H17zM18,20H19V21H18zM20,20H21V21H20zM21,20H22V21H21zM25,20H26V21H25zM28,20H29V21H28zM29,20H30V21H29zM1,21H2V22H1zM4,21H5V22H4zM7,21H8V22H7zM8,21H9V22H8zM10,21H11V22H10zM18,21H19V22H18zM20,21H21V22H20zM21,21H22V22H21zM22,21H23V22H22zM23,21H24V22H23zM24,21H25V22H24zM25,21H26V22H25zM27,21H28V22H27zM9,22H10V23H9zM12,22H13V23H12zM15,22H16V23H15zM17,22H18V23H17zM20,22H21V23H20zM21,22H22V23H21zM25,22H26V23H25zM27,22H28V23H27zM28,22H29V23H28zM29,22H30V23H29zM1,23H2V24H1zM2,23H3V24H2zM3,23H4V24H3zM4,23H5V24H4zM5,23H6V24H5zM6,23H7V24H6zM7,23H8V24H7zM13,23H14V24H13zM17,23H18V24H17zM21,23H22V24H21zM23,23H24V24H23zM25,23H26V24H25zM28,23H29V24H28zM1,24H2V25H1zM7,24H8V25H7zM9,24H10V25H9zM11,24H12V25H11zM12,24H13V25H12zM15,24H16V25H15zM16,24H17V25H16zM17,24H18V25H17zM19,24H20V25H19zM20,24H21V25H20zM21,24H22V25H21zM25,24H26V25H25zM26,24H27V25H26zM27,24H28V25H27zM29,24H30V25H29zM1,25H2V26H1zM3,25H4V26H3zM4,25H5V26H4zM5,25H6V26H5zM7,25H8V26H7zM10,25H11V26H10zM12,25H13V26H12zM13,25H14V26H13zM16,25H17V26H16zM17,25H18V26H17zM18,25H19V26H18zM21,25H22V26H21zM22,25H23V26H22zM23,25H24V26H23zM24,25H25V26H24zM25,25H26V26H25zM29,25H30V26H29zM1,26H2V27H1zM3,26H4V27H3zM4,26H5V27H4zM5,26H6V27H5zM7,26H8V27H7zM9,26H10V27H9zM18,26H19V27H18zM19,26H20V27H19zM20,26H21V27H20zM23,26H24V27H23zM24,26H25V27H24zM25,26H26V27H25zM26,26H27V27H26zM27,26H28V27H27zM28,26H29V27H28zM1,27H2V28H1zM3,27H4V28H3zM4,27H5V28H4zM5,27H6V28H5zM7,27H8V28H7zM10,27H11V28H10zM11,27H12V28H11zM14,27H15V28H14zM20,27H21V28H20zM25,27H26V28H25zM26,27H27V28H26zM27,27H28V28H27zM29,27H30V28H29zM1,28H2V29H1zM7,28H8V29H7zM14,28H15V29H14zM16,28H17V29H16zM18,28H19V29H18zM19,28H20V29H19zM20,28H21V29H20zM21,28H22V29H21zM23,28H24V29H23zM24,28H25V29H24zM25,28H26V29H25zM28,28H29V29H28zM1,29H2V30H1zM2,29H3V30H2zM3,29H4V30H3zM4,29H5V30H4zM5,29H6V30H5zM6,29H7V30H6zM7,29H8V30H7zM9,29H10V30H9zM11,29H12V30H11zM12,29H13V30H12zM13,29H14V30H13zM15,29H16V30H15zM16,29H17V30H16zM17,29H18V30H17zM18,29H19V30H18zM21,29H22V30H21zM24,29H25V30H24zM25,29H26V30H25zM26,29H27V30H26zM28,29H29V30H28z" fill="#111827"/></svg>
+<p style="margin:0; font-family:Poppins, sans-serif; font-size:24px; letter-spacing:-0.5px; font-weight:500; color:#2b599e; white-space:nowrap;">forms.gle/Sao4kKpmXMwymscg7</p>
+</div>
+</div>
+<div class="strip"><p>La evaluación y la lista de asistencia hacen parte de la evidencia de la capacitación.</p></div>
+<p class="foot">DesarrollAndo · IA &amp; Seguridad Digital</p>
+
+</section>
+<section data-n="48" id="cierre" class="accent">
+<p class="eyebrow">CIERRE</p>
+<div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:32px;">
+<p class="statement rise" style="--i:0">Preguntas &amp; Compromisos</p>
+<p class="sub rise" style="--i:1; color:#ffffff;">En el chat: una palabra que resuma lo que se lleva de esta sesión.</p>
+<p class="big rise" style="--i:2">Compromiso: aplicar desde hoy las reglas de uso de la IA y las buenas prácticas de seguridad digital.</p>
+</div>
+
+</section>
+</main>
+<nav class="hud" aria-label="Navegación">
+<button type="button" id="ant" aria-label="Diapositiva anterior">←</button>
+<span id="cont" aria-live="polite"></span>
+<button type="button" id="sig" aria-label="Siguiente">→</button>
+<button type="button" id="pc" aria-label="Pantalla completa">⛶</button>
+</nav>
+<script>
+(function () {
+  var stage = document.getElementById('stage');
+  var slides = Array.prototype.slice.call(stage.children);
+  var i = 0;
+  function fit() {
+    var s = Math.min(innerWidth / 1920, innerHeight / 1080);
+    stage.style.transform = 'translate(-50%, -50%) scale(' + s + ')';
+    stage.style.transformOrigin = 'center center';
+  }
+  function frags(sl) {
+    var f = Array.prototype.slice.call(sl.querySelectorAll('.fragment'));
+    var groups = {}, keys = [];
+    f.forEach(function (el, k) {
+      var idx = el.hasAttribute('data-fragment-index') ? parseFloat(el.getAttribute('data-fragment-index')) : k;
+      if (!(idx in groups)) { groups[idx] = []; keys.push(idx); }
+      groups[idx].push(el);
+    });
+    keys.sort(function (a, b) { return a - b; });
+    return keys.map(function (k) { return groups[k]; });
+  }
+  function show(n, allFrags) {
+    if (n < 0 || n >= slides.length) return;
+    slides[i].classList.remove('active');
+    i = n;
+    var sl = slides[i];
+    frags(sl).forEach(function (g) { g.forEach(function (el) { el.classList.toggle('visible', !!allFrags); el.classList.remove('current-fragment'); }); });
+    sl.classList.add('active');
+    document.getElementById('cont').textContent = (i + 1) + ' / ' + slides.length;
+    if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
+  }
+  function next() {
+    var pending = frags(slides[i]).filter(function (g) { return !g[0].classList.contains('visible'); });
+    if (pending.length) {
+      slides[i].querySelectorAll('.current-fragment').forEach(function (el) { el.classList.remove('current-fragment'); });
+      pending[0].forEach(function (el) { el.classList.add('visible', 'current-fragment'); });
+    } else show(i + 1, false);
+  }
+  function prev() { show(i - 1, true); }
+  function full() {
+    var d = document.documentElement;
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (d.requestFullscreen) d.requestFullscreen();
+  }
+  addEventListener('keydown', function (e) {
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].indexOf(e.key) > -1) { e.preventDefault(); next(); }
+    else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].indexOf(e.key) > -1) { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') show(0, false);
+    else if (e.key === 'End') show(slides.length - 1, false);
+    else if (e.key === 'f' || e.key === 'F') full();
+  });
+  stage.addEventListener('click', function (e) { if (e.clientX < innerWidth / 3) prev(); else next(); });
+  document.getElementById('sig').onclick = next;
+  document.getElementById('ant').onclick = prev;
+  document.getElementById('pc').onclick = full;
+  var tx = null;
+  addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
+  addEventListener('touchend', function (e) { if (tx === null) return; var dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); } tx = null; });
+  addEventListener('hashchange', function () { var h = parseInt(location.hash.slice(1), 10); if (h >= 1 && h <= slides.length && h - 1 !== i) show(h - 1, false); });
+  addEventListener('resize', fit);
+  fit();
+  var start = parseInt(location.hash.slice(1), 10);
+  slides[0].classList.add('active');
+  show(start >= 1 && start <= slides.length ? start - 1 : 0, false);
+})();
+</script>
+</body>
+</html>
